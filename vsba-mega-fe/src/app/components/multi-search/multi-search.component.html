@@ -1,0 +1,38 @@
+<div class="relative w-80">
+    <label class="block text-white text-sm mb-1">Resource Type*</label>
+  
+    <!-- Search Input -->
+    <div class="flex flex-nowrap overflow-x-auto items-center border border-gray-300 rounded-lg bg-white px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-500">
+      <ng-container *ngFor="let item of selectedOptions">
+        <div class="flex items-center text-nowrap bg-blue-100 text-blue-800 px-2 py-1 rounded-full mr-1 mb-1">
+          {{ item }}
+          <button class="ml-1 text-blue-600" (click)="removeItem(item)">×</button>
+        </div>
+      </ng-container>
+      <input
+        type="text"
+        class="flex-1 p-1 focus:outline-none"
+        [(ngModel)]="searchText"
+        (click)="dropdownOpen = !dropdownOpen"
+        (keypress)="dropdownOpen = true"
+        (keydown)="handleKeyDown($event)"
+        (input)="filterOptions()"
+        placeholder="Search..."
+      />
+    </div>
+  
+    <!-- Dropdown -->
+    <div *ngIf="dropdownOpen" class="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto">
+      <ul class="text-gray-700">
+        <li
+          *ngFor="let option of filteredOptions"
+          (click)="selectOption(option)"
+          class="cursor-pointer px-4 py-2 hover:bg-blue-100 flex items-center"
+        >
+          <input type="checkbox" [checked]="selectedOptions.includes(option)" class="mr-2" />
+          {{ option }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  

@@ -1,1 +1,22 @@
-<p>header works!</p>
+<div class="flex justify-between items-center w-full mb-4 max-h-14 h-full bg-transparent">
+    <div class="flex justify-start items-center gap-2 text-xl font-normal h-full">
+        <div class="cursor-pointer" *ngIf="label!=''">
+            <span [ngClass]="{'text-black': sub_label=='', 'text-gray-500' : sub_label!='' }" class="cursor-pointer text-xl hover:text-indigo-600">{{label}} </span><span *ngIf="sub_label != ''" class="cursor-pointer"> / {{sub_label}}</span>
+        </div>
+    </div>
+    <div class="flex justify-end items-center gap-4">
+       
+        <i class="w-10 h-10 flex justify-center items-center bg-white border border-[#3F41D1] rounded-lg cursor-pointer hover:shadow-md">
+            <img src="../../../assets/Clock.svg" class="w-6 h-6">
+        </i>
+
+        <i class="w-10 h-10 flex justify-center items-center bg-white border border-[#3F41D1] rounded-lg cursor-pointer hover:shadow-md">
+            <img src="../../../assets/bell-ringing.svg" class="w-6 h-6">
+        </i>
+        <div class="h-7 w-[2px] bg-[#D9D9D9] rounded-full"></div>
+        <div class="flex gap-1 items-center cursor-pointer rounded-full">
+            <img class="w-8 h-8" src="https://cdn-icons-png.flaticon.com/512/6522/6522516.png" alt="">
+            <i class='bx bx-chevron-down text-2xl'></i>
+        </div>
+    </div>
+</div>
