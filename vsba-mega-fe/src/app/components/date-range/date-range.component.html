@@ -1,13 +1,13 @@
-<div class="flex relative items-center gap-2 w-[261px] h-10 bg-[#FFFFFF] border border-[#BDBDBD] rounded-lg py-[11.2px] px-3"  [ngClass]="width">
+<div class="flex relative items-center gap-16 w-[413px] h-12 bg-[#FFFFFF] border border-[#BDBDBD] rounded-lg p-4"  [ngClass]="width">
     <label class="absolute text-xs flex items-center bg-white text-[#1E1E1E99] -top-[12px] p-[2px] font-normal left-4 text-nowrap">{{ label }}</label>
     <div class="flex items-center gap-2 w-full">
-        <i class="bx bx-calendar-alt text-lg text-black cursor-pointer" (click)="openDatePicker('start')"></i>
-        <p class="text-[#1E1E1E] text-sm font-normal w-full text-nowrap" [title]="selected_start_date">{{ (selected_start_date | date :'dd/MM/yyyy') || 'From Date' }}</p>
+        <img  (click)="openDatePicker('start')" src="../../../assets/CalendarBlank.png" class="w-6 h-6 cursor-pointer" alt="calendar" />
+        <p class="text-[#1E1E1E] text-base font-normal w-full text-nowrap" [title]="selected_start_date">{{ (selected_start_date | date :'dd/MM/yyyy') || 'From Date' }}</p>
     </div>
     <span class="text-gray-600">To</span>
     <div class="flex items-center gap-2 w-full">
-        <i class="bx bx-calendar-alt text-lg text-black cursor-pointer" (click)="openDatePicker('end')">kkkk</i>
-        <p class="text-[#1E1E1E] text-sm font-normal w-full text-nowrap" [title]="selected_end_date">{{ (selected_end_date | date :'dd/MM/yyyy') || 'To Date' }}</p>
+        <img src="../../../assets/CalendarBlank.png" (click)="openDatePicker('end')" class="w-6 h-6 cursor-pointer" alt="calendar" >
+        <p class="text-[#1E1E1E] text-base font-normal w-full text-nowrap" [title]="selected_end_date">{{ (selected_end_date | date :'dd/MM/yyyy') || 'To Date' }}</p>
     </div>
     <div class="relative w-0 h-0">
         <input type="date" [id]="from_key + '_startDate'" [(ngModel)]="selected_start_date" (change)="date_change('start', $event)" class="absolute left-0 bottom-[-40px] opacity-0 pointer-events-none focus:opacity-100 focus:pointer-events-auto" />

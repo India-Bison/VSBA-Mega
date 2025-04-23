@@ -20,22 +20,15 @@
                 <label class="block font-medium">Audit Required*</label>
                 <app-radio [options]=" [{ label: 'Comprehensive Audit', value: 'Comprehensive Audit' },{ label: 'Limited Audit', value: 'Limited Audit' },{ label: 'By-Pass Audit', value: 'By-Pass Audit' }]"></app-radio>
             </div>
-            <div class="mt-4">
-                <app-date-range label="Project Date"></app-date-range>
-            </div>
-
             <div>
-                <label class="block font-medium">Recurring Days</label>
-                <div class="flex gap-2 mt-1">
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">S</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">M</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">T</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">W</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">T</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">F</span>
-                    <span class="w-8 h-8 rounded-full flex items-center justify-center border border-gray-300 text-gray-400">S</span>
+                <label class="block font-medium">Project Date*</label>
+                <div class="mt-1 flex gap-2">
+                    <app-date-input></app-date-input>
+                    <label class="block font-medium">to</label>
+                    <app-date-input></app-date-input>
                 </div>
             </div>
+            <app-week-days></app-week-days>
         </div>
 
         <!-- Right Column -->
