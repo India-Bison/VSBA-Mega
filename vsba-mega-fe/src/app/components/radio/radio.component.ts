@@ -1,11 +1,11 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-radio',
   standalone: true,
-  imports: [FormsModule,NgFor],
+  imports: [FormsModule,NgFor,CommonModule,],
   templateUrl: './radio.component.html',
   styleUrl: './radio.component.css',
   providers: [
@@ -18,7 +18,8 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 })
 export class RadioComponent implements ControlValueAccessor {
   @Input() options: { label: string; value: string }[] = [];
-
+  @Input() label: string = '';
+  @Input() is_required: boolean = false;
   value: string = '';
   onChange = (value: string) => {};
   onTouched = () => {};

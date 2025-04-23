@@ -1,25 +1,18 @@
-<div class="p-6 space-y-6 max-w-6xl mx-auto">
-    <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-bold">Add Project</h1>
-        <app-toggle-tabs [tabs]="tabList" [defaultActive]="'Project'"></app-toggle-tabs>
-    </div>
-
-    <form class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="space-y-4">
+<div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold">Add Project</h1>
+    <app-toggle-tabs [tabs]="tabList" [defaultActive]="'Project'"></app-toggle-tabs>
+</div>
+<div *ngIf="active_tab == 'Project'" class="rounded border border-[#3F41D1] w-full">
+    <div class="flex justify-between bg-white p-4 rounded shadow w-full gap-6">
+        <div class="flex flex-col gap-6 w-full">
             <app-text-input label="Project Name"></app-text-input>
-            <div>
-                <label class="block font-medium">Full Venue Required*</label>
-                <app-radio [options]=" [{ label: 'Yes', value: 'yes' },{ label: 'No', value: 'no' }]"></app-radio>
-            </div>
+            <app-radio label="Full Venue Required" [is_required]="true" [options]=" [{ label: 'Yes', value: 'yes' },{ label: 'No', value: 'no' }]"></app-radio>
             <app-select-input label="Resource Type" [options]="[{title:'name',value:'name'}]"></app-select-input>
             <div>
                 <app-text-area label="Short Description"></app-text-area>
                 <div class="text-right text-sm text-gray-500">Max 100 Words</div>
             </div>
-            <div>
-                <label class="block font-medium">Audit Required*</label>
-                <app-radio [options]=" [{ label: 'Comprehensive Audit', value: 'Comprehensive Audit' },{ label: 'Limited Audit', value: 'Limited Audit' },{ label: 'By-Pass Audit', value: 'By-Pass Audit' }]"></app-radio>
-            </div>
+            <app-radio label="Audit Required" [is_required]="true" [options]=" [{ label: 'Comprehensive Audit', value: 'Comprehensive Audit' },{ label: 'Limited Audit', value: 'Limited Audit' },{ label: 'By-Pass Audit', value: 'By-Pass Audit' }]"></app-radio>
             <div>
                 <label class="block font-medium">Project Date*</label>
                 <div class="mt-1 flex gap-2">
@@ -30,49 +23,64 @@
             </div>
             <app-week-days></app-week-days>
         </div>
-
-        <!-- Right Column -->
-        <div class="space-y-4 bg-[#F5F3FF] p-4 rounded-md">
-            <div class="flex items-center justify-between">
-                <label class="font-medium">Slot Type*</label>
-                <div class="flex gap-4">
-                    <label class="flex items-center gap-2">
-                        <input type="radio" name="slot" class="accent-[#4A44E0]" checked /> Full Day
-                    </label>
-                    <label class="flex items-center gap-2">
-                        <input type="radio" name="slot" class="accent-[#4A44E0]" /> Time Slot
-                    </label>
-                </div>
-                <button type="button" class="ml-auto bg-[#4A44E0] text-white px-4 py-1 rounded-md text-sm font-medium">+ DATE SLOT</button>
+        <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <app-radio label="Slot Type" [is_required]="true" [options]="[
+                      { label: 'Full Day', value: 'Full Day' },
+                      { label: 'Time Slot', value: 'Time Slot' }
+                    ]"></app-radio>
+                <app-button color="bg-[#E697AB] text-[#310000]" label="+ DATE SLOT"></app-button>
             </div>
 
-            <div class="space-y-2">
-                <div class="font-medium">Slot 1</div>
-                <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="DD-MM-YY to DD-MM-YY" />
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-medium text-sm">Start Time</label>
+            <app-button (click)="addSlot()" label="+ ADD SLOT"></app-button>
+
+            <form [formGroup]="slotForm">
+                <div formArrayName="slots" class="space-y-6">
+                    <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-4 shadow-sm">
+                        <h1 class="text-sm font-semibold text-gray-800">Slot {{ i + 1 }}</h1>
                         <div class="flex gap-2">
-                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="HH" />
-                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="MM" />
+                            <app-date-input label="From Date" formControlName="startDate"></app-date-input>
+                            <label class="block text-xl text-gray-700 mt-2">To</label>
+                            <app-date-input label="To Date" formControlName="endDate"></app-date-input>
                         </div>
-                    </div>
-                    <div>
-                        <label class="block font-medium text-sm">End Time</label>
-                        <div class="flex gap-2">
-                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="HH" />
-                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="MM" />
+                        <div class="flex justify-between w-full gap-2">
+                            <app-date-input [format]="'time'" formControlName="startTime" ></app-date-input>
+                            <app-select-input label="Hours" formControlName="hours" class="w-32" [is_required]="true" [options]="[
+                            { title: '1 Hrs', value: '1 Hrs' },
+                            { title: '2 Hrs', value: '2 Hrs' },
+                            { title: '3 Hrs', value: '3 Hrs' },
+                            { title: '4 Hrs', value: '4 Hrs' },
+                            { title: '5 Hrs', value: '5 Hrs' }
+                          ]"></app-select-input>
+                            <div class="relative w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="addPill(i)">
+                                <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400"></div>
+                                <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400 transform rotate-90"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <div *ngFor="let pill of (slot.get('pills')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
+                                {{ pill }}
+                                <button type="button" (click)="removePill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">
+                                    &times;
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
-
-    <!-- Footer Buttons -->
-    <div class="flex justify-end gap-4 mt-6">
-        <button type="button" class="border border-[#F04438] text-[#F04438] px-5 py-2 rounded-full font-semibold">DISCARD</button>
-        <button type="button" class="border border-[#4A44E0] text-[#4A44E0] px-5 py-2 rounded-full font-semibold">SAVE AS DRAFT</button>
-        <button type="submit" class="bg-[#F04478] text-white px-5 py-2 rounded-full font-semibold">SUBMIT</button>
+    </div>
+    <div class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
+        <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
+        <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
+        <app-button color="bg-[#E697AB] text-[#310000]" label="SUBMIT"></app-button>
+    </div>
+</div>
+<div *ngIf="active_tab == 'Sub-Project'" class="rounded border border-[#3F41D1] w-full">
+    <div class="flex justify-between bg-white p-4 rounded shadow w-full gap-6">
+        <div class="flex items-center w-full justify-between">
+            <h1 class="text-xl text-[#212121] font-medium">Add Sub Project</h1>
+            <app-button color="bg-[#3F41D1] text-[#FFFFFF]" label="ADD SUB PROJECT"></app-button>
+        </div>
     </div>
 </div>

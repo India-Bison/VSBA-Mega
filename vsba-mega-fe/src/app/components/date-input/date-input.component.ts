@@ -23,7 +23,7 @@ export class DateInputComponent  implements ControlValueAccessor {
   @Input() label = '';
   @Input() is_required: boolean = false;
   @Input() placeholder = '';
-  @Input() format: 'date' | 'timestamp' | 'month' = 'date';
+  @Input() format: 'date' | 'time' | 'month' = 'date';
   @Input() disabled: boolean = false;
   @Input() isRequired: boolean = false;
   @Input() rounded: boolean = false;
@@ -86,8 +86,13 @@ export class DateInputComponent  implements ControlValueAccessor {
     // if (!eventt || eventt === '') {
     //   return;
     // }
-    if (this.format === 'timestamp') {
-      eventt = new Date(eventt).toISOString();
+    if (this.format === 'time') {
+      const [hour, minute] = eventt.split(':');
+    const time = new Date();
+    time.setHours(+hour);
+    time.setMinutes(+minute);
+    time.setSeconds(0);
+    eventt = format(time, 'HH:mm');
     } else if (this.format === 'month') {
       eventt = eventt.substring(0, 7);
     }
