@@ -1,0 +1,85 @@
+<div class="p-6 space-y-6 max-w-6xl mx-auto">
+    <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Add Project</h1>
+        <app-toggle-tabs [tabs]="tabList" [defaultActive]="'Project'"></app-toggle-tabs>
+    </div>
+
+    <form class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="space-y-4">
+            <app-text-input label="Project Name"></app-text-input>
+            <div>
+                <label class="block font-medium">Full Venue Required*</label>
+                <app-radio [options]=" [{ label: 'Yes', value: 'yes' },{ label: 'No', value: 'no' }]"></app-radio>
+            </div>
+            <app-select-input label="Resource Type" [options]="[{title:'name',value:'name'}]"></app-select-input>
+            <div>
+                <app-text-area label="Short Description"></app-text-area>
+                <div class="text-right text-sm text-gray-500">Max 100 Words</div>
+            </div>
+            <div>
+                <label class="block font-medium">Audit Required*</label>
+                <app-radio [options]=" [{ label: 'Comprehensive Audit', value: 'Comprehensive Audit' },{ label: 'Limited Audit', value: 'Limited Audit' },{ label: 'By-Pass Audit', value: 'By-Pass Audit' }]"></app-radio>
+            </div>
+            <div class="mt-4">
+                <app-date-range label="Project Date"></app-date-range>
+            </div>
+
+            <div>
+                <label class="block font-medium">Recurring Days</label>
+                <div class="flex gap-2 mt-1">
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">S</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">M</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">T</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">W</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">T</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border text-[#4A44E0] border-[#4A44E0]">F</span>
+                    <span class="w-8 h-8 rounded-full flex items-center justify-center border border-gray-300 text-gray-400">S</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-4 bg-[#F5F3FF] p-4 rounded-md">
+            <div class="flex items-center justify-between">
+                <label class="font-medium">Slot Type*</label>
+                <div class="flex gap-4">
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="slot" class="accent-[#4A44E0]" checked /> Full Day
+                    </label>
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="slot" class="accent-[#4A44E0]" /> Time Slot
+                    </label>
+                </div>
+                <button type="button" class="ml-auto bg-[#4A44E0] text-white px-4 py-1 rounded-md text-sm font-medium">+ DATE SLOT</button>
+            </div>
+
+            <div class="space-y-2">
+                <div class="font-medium">Slot 1</div>
+                <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="DD-MM-YY to DD-MM-YY" />
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-sm">Start Time</label>
+                        <div class="flex gap-2">
+                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="HH" />
+                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="MM" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-sm">End Time</label>
+                        <div class="flex gap-2">
+                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="HH" />
+                            <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="MM" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Footer Buttons -->
+    <div class="flex justify-end gap-4 mt-6">
+        <button type="button" class="border border-[#F04438] text-[#F04438] px-5 py-2 rounded-full font-semibold">DISCARD</button>
+        <button type="button" class="border border-[#4A44E0] text-[#4A44E0] px-5 py-2 rounded-full font-semibold">SAVE AS DRAFT</button>
+        <button type="submit" class="bg-[#F04478] text-white px-5 py-2 rounded-full font-semibold">SUBMIT</button>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="flex gap-4">
+    <label
+      *ngFor="let option of options"
+      class="flex items-center cursor-pointer space-x-2"
+    >
+      <input
+        type="radio"
+        [value]="option.value"
+        [(ngModel)]="value"
+        (change)="select(option.value)"
+        class="form-radio text-blue-600 w-5 h-5"
+      />
+      <span class="text-gray-800 text-sm">{{ option.label }}</span>
+    </label>
+  </div>
+  
