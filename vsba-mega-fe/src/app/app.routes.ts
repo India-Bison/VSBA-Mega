@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DashboardLayoutPageComponent } from './pages/dashboard-layout-page/dashboard-layout-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { ProjectFormPageComponent } from './pages/project-form-page/project-form-page.component';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
@@ -11,6 +12,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardPageComponent },
+            { path: 'project/form', component: ProjectFormPageComponent },
          
             { path: '**', redirectTo: 'dashboard' },
 
