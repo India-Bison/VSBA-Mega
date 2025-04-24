@@ -13,7 +13,8 @@ export const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardPageComponent },
             { path: 'list', component: ListComponent },
-         
+            { path: 'project-list', component: ListComponent },
+
             { path: '**', redirectTo: 'dashboard' },
 
 

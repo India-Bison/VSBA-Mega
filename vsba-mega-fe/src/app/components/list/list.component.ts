@@ -1,12 +1,62 @@
-import { Component } from '@angular/core';
+import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
 export class ListComponent {
+  params: any = {};
+  items: any[] = [];
+  currentPage = 1;
+  totalPages = 1;
+  totalItems = 3;
+  itemsPerPage = 10;
 
+  columns: any = [
+    { title: 'Sr. No.', type: 'Index',key: 'index' },
+    { title: 'Type', type: 'Value', key: 'type', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
+    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
+    { title: 'Start Date-End Date', type: 'Value', key: 'startdate_enddate', class: 'text-left' },
+    { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
+  ];
+
+  ngOnInit(): void {
+    this.loadDummyData();
+  }
+
+
+  loadDummyData() {
+    this.items = [
+      {
+        type: 'Project',
+        name: 'Rudra',
+        resource_type: 'Computer Labs, Classrooms, swimming pool',
+        slot_type: 'Full Day',
+        startdate_enddate: '12/03/2025 - 25/03/2025',
+        status: 'Rejected'
+      },
+      {
+        type: 'Project',
+        name: 'Bhavesh',
+        resource_type: 'Computer Labs, Classrooms, swimming pool',
+        slot_type: 'Full Day',
+        startdate_enddate: '12/03/2025 - 25/03/2025',
+        status: 'Pending'
+      },
+      {
+        type: 'Project',
+        name: 'Mayur',
+        resource_type: 'Computer Labs, Classrooms, swimming pool',
+        slot_type: 'Full Day',
+        startdate_enddate: '12/03/2025 - 25/03/2025',
+        status: 'Approved'
+      }
+    ];
+  }
 }

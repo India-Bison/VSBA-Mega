@@ -1,1 +1,77 @@
-<p>list works!</p>
+<div *ngIf="items?.length == 0"
+    class="felx justify-center items-center border-[#3F41D1] rounded-md bg-white border border-primary  h-[calc(100%-360px)] md:h-[calc(100%-200px)]">
+    <div class="w-full h-96 p-10 flex justify-center items-center">
+        <div class="flex-col items-center justify-center">
+            <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
+            <p class="text-md text-center">No Records found</p>
+        </div>
+    </div>
+</div>
+<div
+    class="overflow-x-auto relative print-section flex flex-col gap-5 mb-4 h-[calc(100%-360px)] md:h-[calc(100%-200px)] border border-[#3F41D1] rounded-md overflow-y-auto bg-white ">
+    <div class="overflow-y-auto h-full">
+        <table class="table-auto text-text-color-600 w-full border-collapse  ">
+            <thead
+                class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] border-b border-[#CFD5F1] capitalize tracking-wider">
+                <tr>
+                    <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
+                        class="px-4 h-12 text-center truncate">
+                        <div [class]="column?.class">
+                            <ng-container *ngIf="column.key === 'index'; else showTitle">
+                                <img src="../../../assets/container.svg" alt="Caret Up" />
+                            </ng-container>
+                            <ng-template #showTitle>
+                                {{ column.title }}
+                            </ng-template>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
+                <tr *ngFor="let item of items; let i = index" class="border-b border-[#CFD5F1]">
+                    <ng-container *ngFor="let column of columns">
+                        <td *ngIf="column.type == 'Index'" class="px-4 h-16 text-center">
+                            <div>
+                                <img src="../../../assets/container.svg" alt="Caret Up" />
+                            </div>
+                        </td>
+                        <td *ngIf="column.type  == 'Value'"
+                            [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true,'text-[#03A600]': item[column.key] === 'Active' || item[column.key] === 'Approved','text-[#DF6E12]': item[column.key] === 'Inactive' || item[column.key] === 'Pending'  ,'text-red-500':item[column.key] === 'Rejected'}"
+                            class="px-4 h-16 items-center text-center">
+                            <ng-container *ngIf="column.key === 'mobile_number_icon'; else main_value">
+                                <div class="text-start items-center gap-4">
+                                    <i class="{{ item?.mobile_number_icon?.contact_number_icon }}"></i>
+                                    {{ item?.mobile_number_icon?.mobile_number &&
+                                    item?.mobile_number_icon?.mobile_number ? item?.mobile_number_icon?.mobile_number &&
+                                    item?.mobile_number_icon?.mobile_number :'-'}}
+                                </div>
+                            </ng-container>
+                            <ng-template #main_value>
+                                <div [class]="column?.class" class="flex items-center gap-1">
+                                  <img *ngIf="column.key === 'type'" src="../../../assets/CaretUp.svg" alt="Caret Up" />
+                                  <span *ngIf="column.key === 'type'; else normalText" class="font-semibold">
+                                    {{ column.uppercase ? (item[column.key] | uppercase) : (item[column.key] || '-') }}
+                                  </span>
+                                  <ng-template #normalText>
+                                    {{ column.uppercase ? (item[column.key] | uppercase) : (item[column.key] || '-') }}
+                                  </ng-template>
+                                </div>
+                              </ng-template>
+                              
+                        </td>
+                        <td *ngIf="column.type == 'Action'" class="px-4 h-16 border-b flex items-center justify-center">
+                            <div class="flex gap-2 items-center justify-center">
+                                <ng-container *ngFor="let action of column.actions">
+                                    <i *ngIf="action.condition || action.condition == undefined"
+                                        (click)="action.action(item, i)"
+                                        class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}">
+                                    </i>
+                                </ng-container>
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
