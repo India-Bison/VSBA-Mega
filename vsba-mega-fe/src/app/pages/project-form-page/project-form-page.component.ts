@@ -11,11 +11,12 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } f
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ListComponent } from '../../components/list/list.component';
 import { HeaderComponent } from '../../components/header/header.component';
+import { DateRangePickerComponent } from '../../components/date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-project-form-page',
   standalone: true,
-  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent,WeekDaysComponent,ButtonComponent,FormsModule,ReactiveFormsModule,NgFor,NgIf,ListComponent,CommonModule,HeaderComponent],
+  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent,WeekDaysComponent,ButtonComponent,FormsModule,ReactiveFormsModule,NgFor,NgIf,ListComponent,CommonModule,HeaderComponent,DateRangePickerComponent],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css'
 })
