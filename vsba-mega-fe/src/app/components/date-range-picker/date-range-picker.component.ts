@@ -19,5 +19,5 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateRangePickerComponent {
- 
+ @Input() label = 'Date Range';
 }

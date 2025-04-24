@@ -31,15 +31,15 @@
                     ]">
                     </app-radio>
     
-                    <div class="w-full">
+                    <!-- <div class="w-full">
                         <label class="block text-sm font-medium text-[#212121] text-opacity-60">Project Date*</label>
                         <div class="mt-1 flex gap-2 w-full">
                             <app-date-input class="w-full" formControlName="projectStartDate"></app-date-input>
                             <label class="block text-xl text-gray-700 mt-2">to</label>
                             <app-date-input class="w-full" formControlName="projectEndDate"></app-date-input>
                         </div>
-                    </div>
-                    <!-- <app-date-range-picker></app-date-range-picker> -->
+                    </div> -->
+                    <app-date-range-picker label="Project Date"></app-date-range-picker>
                     <app-week-days formControlName="weekdays"></app-week-days>
                 </div>
                 <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto">
@@ -59,11 +59,12 @@
                                 <span (click)="removeSlot(i)" class="cursor-pointer">—</span>
                                 Slot {{ i + 1 }}
                             </h1>
-                            <div class="flex gap-2 w-full">
+                            <!-- <div class="flex gap-2 w-full">
                                 <app-date-input label="From Date" class="w-full" formControlName="startDate"></app-date-input>
                                 <label class="block text-xl text-gray-700 mt-2">To</label>
                                 <app-date-input label="To Date" class="w-full" formControlName="endDate"></app-date-input>
-                            </div>
+                            </div> -->
+                            <app-date-range-picker class="w-full" label="Project Date"></app-date-range-picker>
                             <div class="flex justify-between w-full gap-2">
                                 <app-date-input [format]="'time'" class="w-56" formControlName="startTime"></app-date-input>
                                 <app-select-input label="Hours" formControlName="hours" class="w-56" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
