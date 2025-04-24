@@ -3,6 +3,7 @@ import { DashboardLayoutPageComponent } from './pages/dashboard-layout-page/dash
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ProjectFormPageComponent } from './pages/project-form-page/project-form-page.component';
 import { ListComponent } from './components/list/list.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
             { path: 'project/form', component: ProjectFormPageComponent },
             { path: 'list', component: ListComponent },
             { path: 'project-list', component: ListComponent },
+            { path: 'app-pagination', component: PaginationComponent },
             { path: '**', redirectTo: 'dashboard' },
 
         ]
