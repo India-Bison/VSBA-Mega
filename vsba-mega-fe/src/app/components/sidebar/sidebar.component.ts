@@ -224,19 +224,19 @@ export class SidebarComponent {
 
     },
 
-    {
-      id: 3,
-      label: 'Attendance Management',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
-      selected: false,
-      // router_link: '/attendance/list',
-      submenu: [
-        { label: 'My Attendance', router_link: '/my-attendances' },
-        { label: 'Student Attendance', router_link: '/attendance/list' },
-      ],
-      permissions: "attendance:view"
-    },
+    // {
+    //   id: 3,
+    //   label: 'Attendance Management',
+    //   icon: '../../../assets/CalendarBlank.png',
+    //   selected_icon: '../../../assets/CalendarBlank.png',
+    //   selected: false,
+    //   // router_link: '/attendance/list',
+    //   submenu: [
+    //     { label: 'My Attendance', router_link: '/my-attendances' },
+    //     { label: 'Student Attendance', router_link: '/attendance/list' },
+    //   ],
+    //   permissions: "attendance:view"
+    // },
 
     // ---Project head Learning Management---
     {
@@ -260,7 +260,6 @@ export class SidebarComponent {
       router_link: 'courses/list',
       submenu: [],
       permissions: "courses:view"
-
     },
 
     // ---Activity Management---
@@ -278,20 +277,20 @@ export class SidebarComponent {
     
 
     // ---Data  Managemnt---
-    {
-      id: 8,
-      label: 'Data  Managemnt',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
-      selected: false,
-      // router_link: '/attendance/list',
-      submenu: [
-        { label: 'Student Management', router_link: '/student-profile' },
-        { label: 'UDISE form', router_link: '/udise-form' },
-      ],
-      permissions: "student-profile:view"
+    // {
+    //   id: 8,
+    //   label: 'Data  Managemnt',
+    //   icon: '../../../assets/CalendarBlank.png',
+    //   selected_icon: '../../../assets/CalendarBlank.png',
+    //   selected: false,
+    //   // router_link: '/attendance/list',
+    //   submenu: [
+    //     { label: 'Student Management', router_link: '/student-profile' },
+    //     { label: 'UDISE form', router_link: '/udise-form' },
+    //   ],
+    //   permissions: "student-profile:view"
 
-    },
+    // },
 
     // {
     //   id: 3,
