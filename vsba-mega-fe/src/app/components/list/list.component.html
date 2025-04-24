@@ -18,7 +18,8 @@
                         class="px-4 h-12 text-center truncate">
                         <div [class]="column?.class">
                             <ng-container *ngIf="column.key === 'index'; else showTitle">
-                                <img src="../../../assets/container.svg" alt="Caret Up" />
+                                <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
+                                <input type="checkbox">
                             </ng-container>
                             <ng-template #showTitle>
                                 <span>
@@ -37,7 +38,8 @@
                     <ng-container *ngFor="let column of columns">
                         <td *ngIf="column.type == 'Index'" class="px-4 h-16 text-center">
                             <div>
-                                <img src="../../../assets/container.svg" alt="Caret Up" />
+                                <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
+                                <input class="cursor-pointer" type="checkbox">
                             </div>
                         </td>
                         <td *ngIf="column.type  == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}"
@@ -64,11 +66,7 @@
                                     <ng-container
                                         *ngIf="item[column.key] === 'Approved' || item[column.key] === 'Pending' || item[column.key] === 'Rejected'; else normalText">
                                         <button class="px-[10px] py-1 rounded-full border text-sm font-medium"
-                                            [ngClass]="{
-                        'text-[#03A600] border-[#03A600]': item[column.key] === 'Approved',
-                        'text-[#DF6E12] border-[#DF6E12]': item[column.key] === 'Pending',
-                        'text-red-500 border-red-500': item[column.key] === 'Rejected'
-                    }">
+                                            [ngClass]="{ 'text-[#03A600] border-[#03A600]': item[column.key] === 'Approved', 'text-[#DF6E12] border-[#DF6E12]': item[column.key] === 'Pending', 'text-red-500 border-red-500': item[column.key] === 'Rejected' }">
                                             {{ item[column.key] }}
                                         </button>
                                     </ng-container>
