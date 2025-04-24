@@ -1,81 +1,101 @@
 <app-header [label]="active_tab == 'Project' ? 'Project / Add Project' : 'Project / Add Project / Add Sub-Project'"></app-header>
-<div class="rounded border border-[#3F41D1] flex flex-col gap-6 w-full">
+<div class="rounded-2xl border border-[#E4E7EC] flex flex-col gap-6 w-full">
     <div class="flex flex-col bg-white p-4 rounded shadow w-full gap-6">
         <div class="flex items-center justify-between">
             <h1 *ngIf="active_tab == 'Project'" class="text-3xl font-bold">Add Project</h1>
             <h1 *ngIf="active_tab == 'Sub-Project'" class="text-xl font-bold">MHCET (01/03/2025 to 30/03/2025)</h1>
             <app-toggle-tabs [tabs]="tabList" [defaultActive]="'Project'"></app-toggle-tabs>
         </div>
-        <div *ngIf="active_tab == 'Project'" class="flex justify-between w-full gap-6">
+        <form [formGroup]="projectForm" *ngIf="active_tab == 'Project'" class="flex justify-between w-full gap-6">
             <div class="flex flex-col gap-6 w-full">
-                <app-text-input label="Project Name"></app-text-input>
-                <app-radio label="Full Venue Required" [is_required]="true" [options]=" [{ label: 'Yes', value: 'yes' },{ label: 'No', value: 'no' }]"></app-radio>
-                <app-select-input label="Resource Type" [options]="[{title:'name',value:'name'}]"></app-select-input>
+                <app-text-input label="Project Name" formControlName="projectName"></app-text-input>
+                <app-radio label="Full Venue Required" [is_required]="true" formControlName="fullVenueRequired" [options]="[
+                  { label: 'Yes', value: 'yes' },
+                  { label: 'No', value: 'no' }
+                ]">
+                </app-radio>
+
+                <app-select-input label="Resource Type" formControlName="resourceType" [options]="[{title:'name', value:'name'}]">
+                </app-select-input>
+
                 <div>
-                    <app-text-area label="Short Description"></app-text-area>
+                    <app-text-area label="Short Description" formControlName="shortDescription"></app-text-area>
                     <div class="text-right text-sm text-gray-500">Max 100 Words</div>
                 </div>
-                <app-radio label="Audit Required" [is_required]="true" [options]=" [{ label: 'Comprehensive Audit', value: 'Comprehensive Audit' },{ label: 'Limited Audit', value: 'Limited Audit' },{ label: 'By-Pass Audit', value: 'By-Pass Audit' }]"></app-radio>
+
+                <app-radio label="Audit Required" [is_required]="true" formControlName="auditRequired" [options]="[
+                  { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
+                  { label: 'Limited Audit', value: 'Limited Audit' },
+                  { label: 'By-Pass Audit', value: 'By-Pass Audit' }
+                ]">
+                </app-radio>
+
                 <div class="w-full">
                     <label class="block font-medium">Project Date*</label>
                     <div class="mt-1 flex gap-2 w-full">
-                        <app-date-input class="w-full"></app-date-input>
+                        <app-date-input class="w-full" formControlName="projectStartDate"></app-date-input>
                         <label class="block text-xl text-gray-700 mt-2">to</label>
-                        <app-date-input class="w-full"></app-date-input>
+                        <app-date-input class="w-full" formControlName="projectEndDate"></app-date-input>
                     </div>
                 </div>
-                <app-week-days></app-week-days>
+
+                <app-week-days formControlName="weekdays"></app-week-days>
             </div>
-            <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto">
+            <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto">
                 <div class="flex justify-between items-center">
-                    <app-radio label="Slot Type" [is_required]="true" [options]="[
-                              { label: 'Full Day', value: 'Full Day' },
-                              { label: 'Time Slot', value: 'Time Slot' }
-                            ]"></app-radio>
-                    <!-- <app-button  label="+ DATE SLOT"></app-button> -->
-                    <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="addSlot()" label="+ ADD SLOT"></app-button>
+                    <app-radio label="Slot Type" [is_required]="true" formControlName="slotType" [options]="[
+                    { label: 'Full Day', value: 'Full Day' },
+                    { label: 'Time Slot', value: 'Time Slot' }
+                  ]">
+                    </app-radio>
+
+                    <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="addSlot()" label="+ ADD SLOT">
+                    </app-button>
                 </div>
-                <form [formGroup]="slotForm" class="">
-                    <div formArrayName="slots" class="space-y-6">
-                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-4 shadow-sm">
-                            <h1 class="text-sm font-semibold text-gray-800">Slot {{ i + 1 }}</h1>
-                            <div class="flex gap-2 w-full">
-                                <app-date-input class="w-full" label="From Date" formControlName="startDate"></app-date-input>
-                                <label class="block text-xl text-gray-700 mt-2">To</label>
-                                <app-date-input class="w-full" label="To Date" formControlName="endDate"></app-date-input>
+                <div formArrayName="slots" class="space-y-6 overflow-y-auto max-h-[617px] no-scrollbar">
+                    <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-4 shadow-sm">
+                        <h1 class="text-sm font-semibold text-gray-800 flex items-center gap-2">
+                            <span (click)="removeSlot(i)" class="cursor-pointer">—</span>
+                            Slot {{ i + 1 }}
+                        </h1>
+                        <div class="flex gap-2 w-full">
+                            <app-date-input label="From Date" class="w-full" formControlName="startDate"></app-date-input>
+                            <label class="block text-xl text-gray-700 mt-2">To</label>
+                            <app-date-input label="To Date" class="w-full" formControlName="endDate"></app-date-input>
+                        </div>
+                        <div class="flex justify-between w-full gap-2">
+                            <app-date-input [format]="'time'" formControlName="startTime"></app-date-input>
+                            <app-select-input label="Hours" formControlName="hours" class="w-32" [is_required]="true" [options]="[
+                        { title: '1 Hrs', value: '1' },
+                        { title: '2 Hrs', value: '2' },
+                        { title: '3 Hrs', value: '3' },
+                        { title: '4 Hrs', value: '4' },
+                        { title: '5 Hrs', value: '5' }
+                      ]">
+                            </app-select-input>
+                            <div class="relative w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="addPill(i)">
+                                <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400"></div>
+                                <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400 transform rotate-90"></div>
                             </div>
-                            <div class="flex justify-between w-full gap-2">
-                                <app-date-input [format]="'time'" formControlName="startTime"></app-date-input>
-                                <app-select-input label="Hours" formControlName="hours" class="w-32" [is_required]="true" [options]="[
-                                    { title: '1 Hrs', value: '1 Hrs' },
-                                    { title: '2 Hrs', value: '2 Hrs' },
-                                    { title: '3 Hrs', value: '3 Hrs' },
-                                    { title: '4 Hrs', value: '4 Hrs' },
-                                    { title: '5 Hrs', value: '5 Hrs' }
-                                  ]"></app-select-input>
-                                <div class="relative w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="addPill(i)">
-                                    <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400"></div>
-                                    <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400 transform rotate-90"></div>
-                                </div>
-                            </div>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                <div *ngFor="let pill of (slot.get('pills')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
-                                    {{ pill }}
-                                    <button type="button" (click)="removePill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">
-                                        &times;
-                                    </button>
-                                </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <div *ngFor="let pill of (slot.get('pills')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
+                                {{ pill }}
+                                <button type="button" (click)="removePill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">
+                                    &times;
+                                </button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-        <div *ngIf="active_tab == 'Project'" class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
+        </form>
+        <div *ngIf="active_tab == 'Project'" class="flex rounded items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 bg-white">
             <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
             <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
-            <app-button color="bg-[#E697AB] text-[#310000]" label="SUBMIT"></app-button>
+            <app-button (click)="submitProjectForm()" color="bg-[#E697AB] text-[#310000]" label="SUBMIT"></app-button>
         </div>
+
         <div *ngIf="active_tab == 'Sub-Project'" class="w-full flex flex-col gap-6">
             <div class="flex items-center w-full justify-between">
                 <h1 class="text-xl text-[#212121] font-medium">Add Sub Project</h1>
