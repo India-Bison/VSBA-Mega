@@ -9,7 +9,7 @@
       <span *ngIf="is_required" class="text-red-600">*</span>
     </label>
   
-    <div *ngIf="display_value" [title]="display_value" class="flex items-center gap-2 p-2 border border-gray-300 rounded-lg h-14">
+    <div *ngIf="display_value" [title]="display_value" class="flex items-center gap-2 p-2 border border-gray-300 rounded-lg h-12">
       <span class="px-3 py-1 capitalize truncate border border-gray-300 rounded-lg min-w-12 max-w-52">
         {{ display_value }}
         <button type="button" (click)="clearSelection()" class="absolute bg-[#EBEBEB] rounded-full border z-[6] text-xl text-[#666666] h-[30px] w-[30px] right-3 top-[13px]">
@@ -22,7 +22,7 @@
             [disabled]="disabled || paramValue == 'true'"
             [(ngModel)]="value"
             (change)="handleSelectionChange($event)"
-            class="capitalize focus:border-blue-600 appearance-none top-0 left-0 w-full bg-white border border-gray-300 outline-none px-4 h-14 text-[14px] rounded-lg font-normal">
+            class="capitalize focus:border-blue-600 appearance-none top-0 left-0 w-full bg-white border border-gray-300 outline-none px-4 h-12 text-[14px] rounded-lg font-normal">
       <option value=""></option>
       <option *ngFor="let item of options" [value]="item.value">{{ item.title }}</option>
     </select>

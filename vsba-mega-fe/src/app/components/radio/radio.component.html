@@ -1,16 +1,12 @@
-<div class="flex gap-4">
-    <label
-      *ngFor="let option of options"
-      class="flex items-center cursor-pointer space-x-2"
-    >
-      <input
-        type="radio"
-        [value]="option.value"
-        [(ngModel)]="value"
-        (change)="select(option.value)"
-        class="form-radio text-blue-600 w-5 h-5"
-      />
+<div class="flex flex-col justify-between h-12">
+  <label class=" text-[#21212199] text-sm  truncate">
+    {{ label }}
+    <span *ngIf="is_required" class="text-red-600">*</span>
+  </label>
+  <div class="flex gap-10">
+    <label *ngFor="let option of options" class="flex items-center cursor-pointer space-x-2">
+      <input type="radio" [value]="option.value" [(ngModel)]="value" (change)="select(option.value)" class="form-radio text-blue-600 w-5 h-5" />
       <span class="text-gray-800 text-sm">{{ option.label }}</span>
     </label>
   </div>
-  
+</div>

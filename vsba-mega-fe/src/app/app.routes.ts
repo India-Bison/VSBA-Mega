@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DashboardLayoutPageComponent } from './pages/dashboard-layout-page/dashboard-layout-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ProjectFormPageComponent } from './pages/project-form-page/project-form-page.component';
+import { ListComponent } from './components/list/list.component';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
@@ -13,9 +14,9 @@ export const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardPageComponent },
             { path: 'project/form', component: ProjectFormPageComponent },
-         
+            { path: 'list', component: ListComponent },
+            { path: 'project-list', component: ListComponent },
             { path: '**', redirectTo: 'dashboard' },
-
 
         ]
 
