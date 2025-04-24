@@ -203,8 +203,8 @@ export class SidebarComponent {
     {
       id: 1,
       label: 'Home',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
+      icon: '../../../assets/chart-2.svg',
+      selected_icon: '../../../assets/chart-2.svg',
       selected: false,
       router_link: '/dashboard-home',
       submenu: [],
@@ -215,8 +215,8 @@ export class SidebarComponent {
     {
       id: 2,
       label: 'Project',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
+      icon: '../../../assets/document-text.svg',
+      selected_icon: '../../../assets/document-text-blue.svg',
       selected: false,
       router_link: '/dashboard',
       submenu: [],
@@ -226,8 +226,8 @@ export class SidebarComponent {
     {
       id: 4,
       label: 'Learning Management',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
+      icon: '../../../assets/building.svg',
+      selected_icon: '../../../assets/building.svg',
       selected: true,
       router_link: '/master/course/list',
       submenu: [],
