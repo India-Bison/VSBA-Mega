@@ -18,7 +18,7 @@ export class SidebarComponent {
   // showTooltip = false;
   scrollbar: any = 200;
 
-  @Output() logout_clicked : any = new EventEmitter();
+  @Output() logout_clicked: any = new EventEmitter();
 
   // Role and permissions
   userRole: string = '';
@@ -215,8 +215,19 @@ export class SidebarComponent {
     {
       id: 2,
       label: 'Project',
-      icon: '../../../assets/CalendarDots.svg',
-      selected_icon: '../../../assets/CalendarDots.svg',
+      icon: '../../../assets/document-text.svg',
+      selected_icon: '../../../assets/document-text.svg',
+      selected: false,
+      router_link: '/dashboard',
+      submenu: [],
+      permissions: "dashboard:view"
+
+    },
+    {
+      id: 3,
+      label: 'Project',
+      icon: '../../../assets/profile-2user.svg',
+      selected_icon: '../../../assets/profile-2user.svg',
       selected: false,
       router_link: '/dashboard',
       submenu: [],
@@ -226,18 +237,13 @@ export class SidebarComponent {
     {
       id: 4,
       label: 'Learning Management',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
+      icon: '../../../assets/building.svg',
+      selected_icon: '../../../assets/building.svg',
       selected: true,
       router_link: '/master/course/list',
       submenu: [],
       permissions: 'course:view'
     },
-
-    
-
-  
-   
   ]
 
 }
