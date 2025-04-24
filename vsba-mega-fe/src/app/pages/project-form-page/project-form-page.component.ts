@@ -8,12 +8,13 @@ import { DateInputComponent } from "../../components/date-input/date-input.compo
 import { WeekDaysComponent } from '../../components/week-days/week-days.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { ListComponent } from '../../components/list/list.component';
 
 @Component({
   selector: 'app-project-form-page',
   standalone: true,
-  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent,WeekDaysComponent,ButtonComponent,FormsModule,ReactiveFormsModule,NgFor,NgIf],
+  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent,WeekDaysComponent,ButtonComponent,FormsModule,ReactiveFormsModule,NgFor,NgIf,ListComponent,CommonModule],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css'
 })
