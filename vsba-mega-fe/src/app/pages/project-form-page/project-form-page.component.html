@@ -172,7 +172,7 @@
                 <!-- <app-date-range-picker></app-date-range-picker> -->
                 <app-week-days formControlName="weekdays"></app-week-days>
             </div>
-            <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto">
+            <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full mx-auto">
                 <div class="flex justify-between items-center">
                     <app-radio label="Slot Type" [is_required]="true" formControlName="slotType" [options]="[
                     { label: 'Full Day', value: 'Full Day' },
@@ -194,9 +194,9 @@
                             <label class="block text-xl text-gray-700 mt-2">To</label>
                             <app-date-input label="To Date" class="w-full" formControlName="endDate"></app-date-input>
                         </div>
-                        <div class="flex justify-between w-full gap-2">
-                            <app-date-input [format]="'time'" class="w-56" formControlName="startTime"></app-date-input>
-                            <app-select-input label="Hours" formControlName="hours" class="w-56" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
+                        <div class="flex justify-between w-full gap-3">
+                            <app-date-input [format]="'time'" class="w-[500px]" formControlName="startTime"></app-date-input>
+                            <app-select-input label="Hours" formControlName="hours" class="w-[500px]" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
                             </app-select-input>
                             <div class="relative w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="addPill(i)">
                                 <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400"></div>
