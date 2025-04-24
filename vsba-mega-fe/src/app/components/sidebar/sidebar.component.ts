@@ -18,7 +18,7 @@ export class SidebarComponent {
   // showTooltip = false;
   scrollbar: any = 200;
 
-  @Output() logout_clicked : any = new EventEmitter();
+  @Output() logout_clicked: any = new EventEmitter();
 
   // Role and permissions
   userRole: string = '';
@@ -216,7 +216,18 @@ export class SidebarComponent {
       id: 2,
       label: 'Project',
       icon: '../../../assets/document-text.svg',
-      selected_icon: '../../../assets/document-text-blue.svg',
+      selected_icon: '../../../assets/document-text.svg',
+      selected: false,
+      router_link: '/dashboard',
+      submenu: [],
+      permissions: "dashboard:view"
+
+    },
+    {
+      id: 3,
+      label: 'Project',
+      icon: '../../../assets/profile-2user.svg',
+      selected_icon: '../../../assets/profile-2user.svg',
       selected: false,
       router_link: '/list',
       submenu: [],
@@ -233,11 +244,6 @@ export class SidebarComponent {
       submenu: [],
       permissions: 'course:view'
     },
-
-    
-
-  
-   
   ]
 
 }
