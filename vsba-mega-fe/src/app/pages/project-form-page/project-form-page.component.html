@@ -3,7 +3,7 @@
     <div class="flex flex-col bg-white p-6 rounded shadow w-full gap-4">
         <div class="flex items-center justify-between">
             <h1 *ngIf="active_tab == 'Project'" class="text-xl font-medium">Add Project</h1>
-            <h1 *ngIf="active_tab == 'Sub-Project'" class="text-xl font-bold">MHCET (01/03/2025 to 30/03/2025)</h1>
+            <h1 *ngIf="active_tab == 'Sub-Project'" class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to 30/03/2025)</span></h1>
             <app-toggle-tabs [tabs]="tabList" [defaultActive]="'Project'"></app-toggle-tabs>
         </div>
         <div *ngIf="active_tab == 'Project'" class="flex flex-col w-full gap-6">
@@ -97,7 +97,7 @@
                 <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="open_sub_project.open()" label="ADD SUB PROJECT"></app-button>
             </div>
             <div class="overflow-x-auto relative print-section flex flex-col gap-5 mb-4 h-[calc(100%-360px)] md:h-[calc(100%-200px)] border border-[#3F41D1] rounded-md overflow-y-auto bg-white ">
-                <div class="overflow-x-auto h-96">
+                <div class="overflow-x-auto h-[608px]">
                     <table class="table-auto text-text-color-600 w-full border-collapse">
                         <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] border-b border-[#CFD5F1] capitalize tracking-wider">
                             <tr class="flex items-center justify-between">
@@ -114,10 +114,10 @@
                                 <th scope="col" class="px-4 h-12 text-center truncate flex items-center">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
+                        <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px]">
                             <tr class="h-full">
-                                <td colspan="5" class="px-6 py-16 text-center h-full">
-                                    <div class="flex flex-col items-center justify-center space-y-3 mt-10">
+                                <td colspan="5" class="px-6 py-16 text-center">
+                                    <div class="flex flex-col items-center justify-center space-y-3 mt-60">
                                         <h3 class="text-base font-medium text-[#3F41D1]">NO SUB-PROJECTS FOUND!</h3>
                                         <p class="text-sm text-gray-500 max-w-md">It looks like you haven't Added any sub-projects yet. To get started, click the Create button to Add your first sub-project</p>
                                     </div>
