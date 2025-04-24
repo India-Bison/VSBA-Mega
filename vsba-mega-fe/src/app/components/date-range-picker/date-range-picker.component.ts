@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
+// import {provideNativeDateAdapter} from '@angular/material/core';
+// import {MatDatepickerModule} from '@angular/material/datepicker';
+// import {MatFormFieldModule} from '@angular/material/form-field';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-date-range-picker',
   standalone: true,
-  imports: [CommonModule,FormsModule,MatFormFieldModule, MatDatepickerModule, ReactiveFormsModule, JsonPipe
+  imports: [CommonModule,FormsModule, ReactiveFormsModule, JsonPipe
     ],
   templateUrl: './date-range-picker.component.html',
   styleUrl: './date-range-picker.component.css',
-  providers: [provideNativeDateAdapter()],
+  // providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateRangePickerComponent {
