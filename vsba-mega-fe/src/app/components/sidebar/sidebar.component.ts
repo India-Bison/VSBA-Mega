@@ -229,9 +229,9 @@ export class SidebarComponent {
       icon: '../../../assets/profile-2user.svg',
       selected_icon: '../../../assets/profile-2user.svg',
       selected: false,
-      router_link: '/dashboard',
+      router_link: '/list',
       submenu: [],
-      permissions: "dashboard:view"
+      permissions: "list:view"
 
     },
     {
