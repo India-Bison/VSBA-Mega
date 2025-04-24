@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -11,25 +11,34 @@ import { FormsModule } from '@angular/forms';
 })
 export class MultiSearchComponent {
 
-  allOptions = ['Classroom', 'Computer Lab', 'Chemistry lab'];
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+
+  allOptions = ['Classroom', 'Computer Lab', 'Chemistry Lab', 'Library', 'Auditorium'];
   selectedOptions: string[] = [];
   filteredOptions: string[] = [...this.allOptions];
   searchText = '';
   dropdownOpen = false;
+  highlightedIndex = 0;
+  maxSelections = 3;
 
   filterOptions() {
     const text = this.searchText.toLowerCase();
-    this.filteredOptions = this.allOptions.filter(
-      option => option.toLowerCase().includes(text) && !this.selectedOptions.includes(option)
+    this.filteredOptions = this.allOptions.filter(option =>
+      option.toLowerCase().includes(text)
     );
   }
 
   selectOption(option: string) {
-    if (!this.selectedOptions.includes(option)) {
+    if (this.selectedOptions.includes(option)) {
+      this.removeItem(option);
+    } else if (this.selectedOptions.length < this.maxSelections) {
       this.selectedOptions.push(option);
-      this.searchText = '';
-      this.filterOptions();
+      this.scrollToRight(); // <- auto scroll
     }
+
+    this.searchText = '';
+    this.highlightedIndex = 0;
+    this.filterOptions();
   }
 
   removeItem(option: string) {
@@ -37,44 +46,50 @@ export class MultiSearchComponent {
     this.filterOptions();
   }
 
-  highlightedIndex = 0;
+  clearAll() {
+    this.selectedOptions = [];
+    this.filterOptions();
+  }
 
-handleKeyDown(event: KeyboardEvent) {
-  const optionCount = this.filteredOptions.length;
+  handleKeyDown(event: KeyboardEvent) {
+    const optionCount = this.filteredOptions.length;
 
-  switch (event.key) {
-    case 'ArrowDown':
-      if (optionCount > 0) {
+    switch (event.key) {
+      case 'ArrowDown':
         this.highlightedIndex = (this.highlightedIndex + 1) % optionCount;
         event.preventDefault();
-      }
-      break;
+        break;
 
-    case 'ArrowUp':
-      if (optionCount > 0) {
+      case 'ArrowUp':
         this.highlightedIndex = (this.highlightedIndex - 1 + optionCount) % optionCount;
         event.preventDefault();
-      }
-      break;
+        break;
 
-    case 'Enter':
-      if (this.filteredOptions[this.highlightedIndex]) {
-        this.selectOption(this.filteredOptions[this.highlightedIndex]);
-      } else if (this.searchText.trim()) {
-        this.selectOption(this.searchText.trim());
-      }
-      this.searchText = '';
-      this.highlightedIndex = 0;
-      event.preventDefault();
-      break;
+      case 'Enter':
+        const highlightedOption = this.filteredOptions[this.highlightedIndex];
+        if (highlightedOption) {
+          this.selectOption(highlightedOption);
+        } else if (this.searchText.trim()) {
+          this.selectOption(this.searchText.trim());
+        }
+        event.preventDefault();
+        break;
 
-    case 'Backspace':
-      if (!this.searchText && this.selectedOptions.length) {
-        this.selectedOptions.pop();
-        this.filterOptions();
-      }
-      break;
+      case 'Backspace':
+        if (!this.searchText && this.selectedOptions.length) {
+          this.selectedOptions.pop();
+          this.filterOptions();
+        }
+        break;
+    }
   }
-}
+
+  private scrollToRight() {
+    setTimeout(() => {
+      if (this.scrollContainer && this.scrollContainer.nativeElement) {
+        this.scrollContainer.nativeElement.scrollLeft = this.scrollContainer.nativeElement.scrollWidth;
+      }
+    });
+  }
 
 }

@@ -1,1 +1,92 @@
-<p>sidebar works!</p>
+<div class="flex relative h-screen"  (mouseleave)="closeSubmenuWithDelay()">
+    <div [ngClass]="{'w-64': isSidebarExpanded}" class="w-20 transition-all duration-300 ease-in-out h-full shadow-xl">
+      <div class="flex items-center mx-4 mt-3 pb-3 h-16 border-b border-gray sticky top-0 bg-white">
+        <div routerLink="/dashboard-home" (click)="selectItem('Home')" class="flex overflow-y-auto overflow-x-hidden items-center space-x-4 cursor-pointer">
+          <img class="max-w-12" src="https://ict-recurring-uat.web.app/assets/ict-logo-og.png" alt="logo">
+          <span *ngIf="isSidebarExpanded" class="text-lg">Vidhyanidhi</span>
+        </div>
+      </div>
+      <div class="w-full flex sticky top-20 justify-end" (click)="toggleSidebar()">
+        <i [ngClass]="{'rotate-180': isSidebarExpanded}" class='bx bx-chevron-right text-right -mt-3 -mr-3 cursor-pointer p-[2px] border border-[#3F41D1] sticky top-20 rounded-full text-indigo-600 bg-indigo-50 z-20'></i>
+      </div>
+      <ul class="space-y-4 h-full">
+        <!-- <img src="../../../assets/files.svg"> -->
+  
+        <li class="px-4 h-4/5 no-scrollbar scroll-smooth pb-3">
+          <ng-container *ngFor="let item of sidebar">
+            <div (mouseover)="openSubmenu(item.submenu)" (dblclick)="is_submenu_open=!is_submenu_open" (click)="selectItem(item?.label)" [routerLink]="item?.router_link" [ngClass]="{'border border-[#3F41D1] text-600 bg-[#e8e8f9]': item?.selected}"
+              class="flex h-10 transition-all duration-100 items-center my-5 space-x-4 cursor-pointer px-3 py-1 rounded-full hover:bg-indigo-50">
+              <div *ngIf="item.submenu.length !=0" class="flex group items-center justify-start w-10 h-10 rounded-full transition-all duration-200 group-hover:overflow-y-hidden">
+                <!-- Main Icon -->
+                <button>
+                  <img *ngIf="item.selected == false" class="min-w-6 min-h-6" [src]="item.icon" alt="icon">
+                  <img *ngIf="item.selected == true" class="min-w-6 min-h-6" [src]="item.selected_icon" alt="icon">
+                </button>
+                <div *ngIf="is_submenu_open && selected_submenu == item.submenu" [ngClass]="{'translate-x-44': isSidebarExpanded}" (mouseenter)="cancelSubmenuClose()" (mouseleave)="openSubmenu(item.submenu)" class="z-10 absolute shadow-lg rounded-xl min-w-[300px] transition-all duration-100 bg-[#EDEDFA] border border-[#3F41D1] left-[68px] max-h-[500px] overflow-y-auto">
+                  <div *ngFor="let sub of selected_submenu; let i = index">
+                    <!-- Parent Submenu Item -->
+                    <div *ngIf="sub.submenu && sub.submenu.length > 0; else singleSubmenu">
+                      <div [ngClass]="{'text-primary': expandedSubmenuIndex==i}"
+                        class="text-nowrap min-h-[50px] transition-all duration-300 ease-in-out w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 font-semibold cursor-pointer"
+                        (click)="toggleSubmenu(i)">
+                        <p>{{ sub.label }}</p>
+                        <i [ngClass]="{'-rotate-180': expandedSubmenuIndex==i}" class='bx bxs-chevron-down transition-all duration-500'></i>
+                      </div>
+                      <!-- Child Submenu Dropdown -->
+                          <div
+                          [ngClass]="{
+                            'max-h-0': expandedSubmenuIndex !== i,
+                            'max-h-[500px]': expandedSubmenuIndex === i
+                          }"
+                          class="overflow-hidden transition-all duration-300 ease-in-out"
+                          >
+                          <div
+                            *ngFor="let child of sub.submenu"
+                            [routerLink]="child.router_link"
+                            (click)="is_submenu_open = false; item.selected = true"
+                            [queryParams]="child.queryParams"
+                            class="text-nowrap min-h-[50px] w-[full] flex justify-start items-center px-6 py-2 text-sm text-gray-700 border-t border-gray-200"
+                          >
+                            {{ child.label }}
+                          </div>
+                          </div>
+  
+                    </div>
+                    <!-- Fallback: Single-level Submenu -->
+                    <ng-template #singleSubmenu>
+                      <div [routerLink]="sub.router_link" (click)="is_submenu_open = false; item.selected = true" [queryParams]="sub.queryParams" class="text-nowrap min-h-[50px] w-[228px] text-center flex justify-start items-center px-4 py-2 text-sm text-gray-700 border-t border-gray-200">
+                        {{ sub.label }}
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <!-- <i *ngIf="item.submenu.length ==0" [class]="item.icon" (click)="is_submenu_open = false;" [ngClass]="{'text-indigo-600': item.selected, 'text-[#1E1E1E]' : item.selected == false}" class='bx transition-all duration-100 bx-home-alt-2 text-2xl'></i>
+              <span *ngIf="isSidebarExpanded && item.submenu.length == 0" (click)="is_submenu_open = false" [ngClass]="{'text-indigo-600': item.selected, 'text-[#1E1E1E]' : item.selected == false}" class="text-md text-nowrap ">{{item.label}}</span>
+              <span *ngIf="isSidebarExpanded && item.submenu.length > 0"  style="margin-left: -5px;" [ngClass]="{'text-indigo-600': item.selected,  'text-[#1E1E1E]' : item.selected == false}" class="text-md text-nowrap">{{item.label}}</span> -->
+  
+              <button  (mouseover)="showTooltip($event, item.label)"
+            (mouseleave)="hideTooltip()" type="button" class="group flex items-center w-full gap-4  text-md m-auto">
+                <!-- <i *ngIf="item.submenu.length ==0" [class]="item.icon" (click)="is_submenu_open = false;" [ngClass]="{'text-indigo-600': item.selected, 'text-[#1E1E1E]' : item.selected == false}" class='bx transition-all duration-100 bx-home-alt-2 text-2xl'></i> -->
+                <img (mouseover)="is_submenu_open=false" *ngIf="item.selected == false && item.submenu?.length==0" [class]="item.icon" (click)="is_submenu_open = false" [src]="item.icon">
+                <img (mouseover)="is_submenu_open=false" *ngIf="item.selected == true && item.submenu?.length==0" [class]="item.icon" [src]="item.selected_icon">
+                <span (mouseover)="is_submenu_open=false" *ngIf="isSidebarExpanded && item.submenu.length == 0" (click)="is_submenu_open = false" [ngClass]="{'text-indigo-600': item.selected, 'text-[#1E1E1E]' : item.selected == false}" class="text-md text-nowrap ">{{item.label}}</span>
+                <span *ngIf="isSidebarExpanded && item.submenu.length > 0" style="margin-left: -5px;" [ngClass]="{'text-indigo-600': item.selected,  'text-[#1E1E1E]' : item.selected == false}" class="text-md text-nowrap">{{item.label}}</span>
+                <!-- <span *ngIf="!isSidebarExpanded" class="z-30 absolute hidden group-hover:flex -left-[20px] -top-4 -translate-y-full w-max px-2 py-1 bg-black backdrop-blur-sm rounded-lg text-center text-white text-sm opacity-80 after:border-t-gray-700">{{item.label}}</span> -->
+                <div id="tooltip-default" role="tooltip" #tooltipRef *ngIf="!isSidebarExpanded" class="absolute z-10 invisible text-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-md opacity-50 pointer-events-none" >
+                {{ tooltipText }}
+              </div>
+              </button>
+            </div>
+          </ng-container>
+          <!-- {{is_submenu_open}} -->
+        </li>
+        <li class="px-4 py-2 sticky bottom-0 border-t mx-4 bg-white" (click)="logout_emitter()">
+          <div class="flex items-center cursor-pointer px-3 py-1 gap-4 rounded-full -ml-4 hover:text-red-600">
+            <i class='bx bx-log-out text-2xl rotate-180'></i>
+            <span *ngIf="isSidebarExpanded" class="text-lg">Logout</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
