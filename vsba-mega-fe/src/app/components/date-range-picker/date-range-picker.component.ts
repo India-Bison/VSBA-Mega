@@ -11,14 +11,11 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-date-range-picker',
   standalone: true,
-  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule,
-    MatDatepickerModule,
-    MatInputModule,MatIconModule,
-    MatNativeDateModule,DatePipe
+  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule,MatDatepickerModule,MatInputModule,MatIconModule,MatNativeDateModule,DatePipe
     ],
   templateUrl: './date-range-picker.component.html',
   styleUrl: './date-range-picker.component.css',
-  providers: [provideNativeDateAdapter()],
+  // providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateRangePickerComponent {
