@@ -16,12 +16,12 @@
                     ]">
                     </app-radio>
     
-                    <app-select-input label="Resource Type" formControlName="resourceType" [options]="[{title:'name', value:'name'}]">
+                    <app-select-input label="Resource Type*" formControlName="resourceType" [options]="[{title:'name', value:'name'}]">
                     </app-select-input>
     
                     <div>
-                        <app-text-area label="Short Description" formControlName="shortDescription"></app-text-area>
-                        <div class="text-right text-sm text-gray-500">Max 100 Words</div>
+                        <app-text-area label="Short Description*" formControlName="shortDescription"></app-text-area>
+                        <div class="text-right text-xs font-normal leading-[100%] text-gray-500">Max 100 Words</div>
                     </div>
     
                     <app-radio label="Audit Required" [is_required]="true" formControlName="auditRequired" [options]="[
@@ -32,7 +32,7 @@
                     </app-radio>
     
                     <div class="w-full">
-                        <label class="block font-medium">Project Date*</label>
+                        <label class="block text-sm font-medium text-[#212121] text-opacity-60">Project Date*</label>
                         <div class="mt-1 flex gap-2 w-full">
                             <app-date-input class="w-full" formControlName="projectStartDate"></app-date-input>
                             <label class="block text-xl text-gray-700 mt-2">to</label>
