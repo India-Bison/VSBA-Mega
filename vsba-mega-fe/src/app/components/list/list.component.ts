@@ -49,12 +49,12 @@ export class ListComponent {
           {
             id: 4,
             type: 'Project',
-            name: 'Rudra - Sub',
-            resource_type: 'Lab A, Lab B',
-            slot_type: 'Half Day',
-            startdate_enddate: '15/03/2025 - 16/03/2025',
-            status: 'Rejected'
-          }
+            name: 'Bhavesh',
+            resource_type: 'Computer Labs, Classrooms, swimming pool',
+            slot_type: 'Full Day',
+            startdate_enddate: '12/03/2025 - 25/03/2025',
+            status: 'Pending'
+          },
         ]
       },
       {
@@ -73,7 +73,15 @@ export class ListComponent {
         resource_type: 'Computer Labs, Classrooms, swimming pool',
         slot_type: 'Full Day',
         startdate_enddate: '12/03/2025 - 25/03/2025',
-        status: 'Approved'
+        status: 'Approved',
+        children: [
+          { type: 'Project',
+            name: 'Shreeram',
+            resource_type: 'Computer Labs, Classrooms, swimming pool',
+            slot_type: 'Full Day',
+            startdate_enddate: '12/03/2025 - 25/03/2025',
+            status: 'Approved',}
+        ]
       }
     ];
   }
@@ -86,4 +94,9 @@ export class ListComponent {
       this.expandedState[rowIndex] = columnKey;
     }
   }
+
+  toggleExpand(item: any): void {
+    item.expanded = !item.expanded;
+  }
+  
 }

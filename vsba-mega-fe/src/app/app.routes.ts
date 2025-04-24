@@ -4,6 +4,7 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
 import { ProjectFormPageComponent } from './pages/project-form-page/project-form-page.component';
 import { ListComponent } from './components/list/list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ProjectListComponent } from './components/project-list/project-list.component';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
@@ -16,7 +17,7 @@ export const routes: Routes = [
             { path: 'dashboard', component: DashboardPageComponent },
             { path: 'project/form', component: ProjectFormPageComponent },
             { path: 'list', component: ListComponent },
-            { path: 'project-list', component: ListComponent },
+            { path: 'project/list', component: ProjectListComponent },
             { path: 'app-pagination', component: PaginationComponent },
             { path: '**', redirectTo: 'dashboard' },
 
