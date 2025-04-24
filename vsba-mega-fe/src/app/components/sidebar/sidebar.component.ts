@@ -233,28 +233,6 @@ export class SidebarComponent {
       submenu: [],
       permissions: 'course:view'
     },
-    {
-      id: 5,
-      label: 'Learning Management',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
-      selected: false,
-      router_link: 'courses/list',
-      submenu: [],
-      permissions: "courses:view"
-    },
-
-    // ---Activity Management---
-    {
-      id: 6,
-      label: 'Activity Management',
-      icon: '../../../assets/CalendarBlank.png',
-      selected_icon: '../../../assets/CalendarBlank.png',
-      selected: false,
-      router_link: '/ground-activity/list',
-      submenu: [],
-      permissions: "activity-management:view"
-    },
 
     
 

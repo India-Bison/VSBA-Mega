@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -34,14 +34,27 @@ export class ListComponent {
   loadDummyData() {
     this.items = [
       {
+        id:1,
         type: 'Project',
         name: 'Rudra',
         resource_type: 'Computer Labs, Classrooms, swimming pool',
         slot_type: 'Full Day',
         startdate_enddate: '12/03/2025 - 25/03/2025',
-        status: 'Rejected'
+        status: 'Rejected',
+      children : [
+        {
+          id: 4,
+          type: 'Project',
+          name: 'Rudra',
+          resource_type: 'Computer Labs, Classrooms, swimming pool',
+          slot_type: 'Full Day',
+          startdate_enddate: '12/03/2025 - 25/03/2025',
+          status: 'Rejected'
+        },
+      ]
       },
       {
+        id:2,
         type: 'Project',
         name: 'Bhavesh',
         resource_type: 'Computer Labs, Classrooms, swimming pool',
@@ -50,6 +63,7 @@ export class ListComponent {
         status: 'Pending'
       },
       {
+        id:3,
         type: 'Project',
         name: 'Mayur',
         resource_type: 'Computer Labs, Classrooms, swimming pool',
