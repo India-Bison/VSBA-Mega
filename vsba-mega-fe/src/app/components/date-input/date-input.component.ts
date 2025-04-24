@@ -57,9 +57,19 @@ export class DateInputComponent  implements ControlValueAccessor {
 
   writeValue(value: any): void {
     if (this.current_date) {
-      this.value = format(new Date(), 'yyyy-MM-dd');
-    } else if (value) {
-      this.value = format(new Date(value), 'yyyy-MM-dd');
+      const now = new Date();
+      this.value = this.format === 'time'
+        ? format(now, 'HH:mm')
+        : this.format === 'month'
+          ? format(now, 'yyyy-MM')
+          : format(now, 'yyyy-MM-dd');
+    } else if (value && !isNaN(new Date(value).getTime())) {
+      const parsedDate = new Date(value);
+      this.value = this.format === 'time'
+        ? format(parsedDate, 'HH:mm')
+        : this.format === 'month'
+          ? format(parsedDate, 'yyyy-MM')
+          : format(parsedDate, 'yyyy-MM-dd');
     } else if (this.format === 'month') {
       const today = new Date();
       this.value = format(today, 'yyyy-MM');
@@ -68,8 +78,8 @@ export class DateInputComponent  implements ControlValueAccessor {
     } else {
       this.value = null;
     }
-
   }
+  
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -87,12 +97,14 @@ export class DateInputComponent  implements ControlValueAccessor {
     //   return;
     // }
     if (this.format === 'time') {
-      const [hour, minute] = eventt.split(':');
-    const time = new Date();
-    time.setHours(+hour);
-    time.setMinutes(+minute);
-    time.setSeconds(0);
-    eventt = format(time, 'HH:mm');
+      if (eventt && eventt.includes(':')) {
+        const [hour, minute] = eventt.split(':');
+        const time = new Date();
+        time.setHours(+hour);
+        time.setMinutes(+minute);
+        time.setSeconds(0);
+        eventt = format(time, 'HH:mm');
+      }
     } else if (this.format === 'month') {
       eventt = eventt.substring(0, 7);
     }

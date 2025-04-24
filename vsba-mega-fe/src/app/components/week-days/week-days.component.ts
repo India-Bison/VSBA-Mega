@@ -41,11 +41,17 @@ export class WeekDaysComponent implements ControlValueAccessor {
     this.onChange(Array.from(this.selected).join(','));
     this.onTouched();
   }
-
-  writeValue(value: string): void {
-    const arr = value ? value.split(',').map(v => v.trim()) : [];
-    this.selected = new Set(arr);
+  writeValue(value: any): void {
+    if (Array.isArray(value)) {
+      this.selected = new Set(value);
+    } else if (typeof value === 'string') {
+      const arr = value.split(',').map((v: any) => v.trim());
+      this.selected = new Set(arr);
+    } else {
+      this.selected = new Set();
+    }
   }
+  
 
   registerOnChange(fn: any): void {
     this.onChange = fn;

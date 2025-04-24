@@ -1,10 +1,11 @@
 import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, Input, ViewChildren } from '@angular/core';
+import { PaginationComponent } from "../pagination/pagination.component";
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
