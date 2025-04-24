@@ -4,7 +4,9 @@
     <!-- Search Input -->
     <div #scrollContainer (mouseleave)="dropdownOpen = false"
     (mouseenter)="scrollContainer.focus()" class="flex flex-nowrap overflow-x-auto items-center border border-gray-300 rounded-lg bg-white px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-500">
-      <ng-container *ngFor="let item of selectedOptions">
+    <img class="sticky left-0 bg-white px-1 h-full no-scrollbar" src="../../../assets/u_search.svg" alt="">
+     
+    <ng-container *ngFor="let item of selectedOptions">
         <div class="flex items-center text-nowrap bg-[#CFD5F1] text-blue-800 px-2 py-1 rounded-full mr-1 mb-1">
           {{ item }}
           <button class="ml-1 text-blue-600" (click)="removeItem(item)">×</button>

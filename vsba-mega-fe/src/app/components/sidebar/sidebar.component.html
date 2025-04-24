@@ -11,7 +11,7 @@
       </div> -->
       <ul class="space-y-4 h-full">
         <!-- <img src="../../../assets/files.svg"> -->
-  
+        
         <li class="px-4 h-4/5 no-scrollbar scroll-smooth pb-3">
           <ng-container *ngFor="let item of sidebar">
             <div (mouseover)="openSubmenu(item.submenu)" (dblclick)="is_submenu_open=!is_submenu_open" (click)="selectItem(item?.label)" [routerLink]="item?.router_link" [ngClass]="{'border border-[#3F41D1] text-600 bg-[#e8e8f9]': item?.selected}"

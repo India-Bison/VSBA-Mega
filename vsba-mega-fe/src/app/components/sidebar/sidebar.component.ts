@@ -214,7 +214,7 @@ export class SidebarComponent {
     },
     {
       id: 2,
-      label: 'Dashboard',
+      label: 'Project',
       icon: '../../../assets/CalendarBlank.png',
       selected_icon: '../../../assets/CalendarBlank.png',
       selected: false,
@@ -223,22 +223,6 @@ export class SidebarComponent {
       permissions: "dashboard:view"
 
     },
-
-    // {
-    //   id: 3,
-    //   label: 'Attendance Management',
-    //   icon: '../../../assets/CalendarBlank.png',
-    //   selected_icon: '../../../assets/CalendarBlank.png',
-    //   selected: false,
-    //   // router_link: '/attendance/list',
-    //   submenu: [
-    //     { label: 'My Attendance', router_link: '/my-attendances' },
-    //     { label: 'Student Attendance', router_link: '/attendance/list' },
-    //   ],
-    //   permissions: "attendance:view"
-    // },
-
-    // ---Project head Learning Management---
     {
       id: 4,
       label: 'Learning Management',
@@ -249,8 +233,6 @@ export class SidebarComponent {
       submenu: [],
       permissions: 'course:view'
     },
-
-    // ---Instructor Learning Management---
     {
       id: 5,
       label: 'Learning Management',
@@ -276,48 +258,6 @@ export class SidebarComponent {
 
     
 
-    // ---Data  Managemnt---
-    // {
-    //   id: 8,
-    //   label: 'Data  Managemnt',
-    //   icon: '../../../assets/CalendarBlank.png',
-    //   selected_icon: '../../../assets/CalendarBlank.png',
-    //   selected: false,
-    //   // router_link: '/attendance/list',
-    //   submenu: [
-    //     { label: 'Student Management', router_link: '/student-profile' },
-    //     { label: 'UDISE form', router_link: '/udise-form' },
-    //   ],
-    //   permissions: "student-profile:view"
-
-    // },
-
-    // {
-    //   id: 3,
-    //   label: 'Student Profile',
-    //   icon: '../../../assets/CalendarBlank.png',
-    //   selected_icon: '../../../assets/CalendarBlank.png',
-    //   selected: false,
-    //   router_link: '/student-profile',
-    //   submenu: [],
-    //   permissions: "student-profile:view"
-
-    // },
-
-
-
-    // {
-    //   id: 6,
-    //   label: 'UDISE Form',
-    //   icon: '../../../assets/page.svg',
-    //   selected_icon: '../../../assets/udise-form-blue.svg',
-    //   selected: false,
-    //   router_link: '/udise-form',
-    //   submenu: [],
-    //   permissions: "udise:view"
-    // },
-
-   
   
    
   ]
