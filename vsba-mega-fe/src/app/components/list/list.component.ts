@@ -15,8 +15,11 @@ import { GlobalService } from '../../services/global.service';
   styleUrl: './list.component.css'
 })
 export class ListComponent {
-  params: any = {};
-  items: any[] = [];
+  // params: any = {};
+  // items: any[] = [];
+  @Input() items:any = {}
+  @Input() params: any = {};
+  @Input() columns:any
   currentPage = 1;
   totalPages = 1;
   totalItems = 3;
@@ -66,18 +69,10 @@ export class ListComponent {
   // State to track which column is expanded per row
   expandedState: { [rowIndex: number]: string | null } = {};
 
-  columns: any = [
-    { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Type', type: 'Value', key: 'audit_required', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'description', sort: true, class: 'text-left' },
-    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
-    { title: 'Slot Type', type: 'Value', key: 'project_name', class: 'text-left' },
-    { title: 'Start Date-End Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
-    { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
-  ];
+
   constructor(public gs:GlobalService){}
   ngOnInit(): void {
-    this.items = this.gs.items;
+     this.loadDummyData();
     console.log(this.items, 'Items in List Component');
     console.log(this.gs.items, 'Items in Global Service');
     
@@ -166,7 +161,7 @@ export class ListComponent {
 
   toggleAllSelection(): void {
     this.allSelected = !this.allSelected;
-    this.items.forEach(item => {
+    this.items.forEach((item:any) => {
       item.selected = this.allSelected;
   
       if (item.children && item.children.length) {
@@ -198,7 +193,7 @@ export class ListComponent {
   }
   
   checkAllSelected(): void {
-    this.allSelected = this.items.every(item => {
+    this.allSelected = this.items.every((item:any) => {
       const childrenSelected = item.children?.every((child: any) => child.selected) ?? true;
       return item.selected && childrenSelected;
     });
