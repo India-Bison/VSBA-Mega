@@ -5,18 +5,17 @@ import { ActivatedRoute } from '@angular/router';
 import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
-  selector: 'app-text-area',
-  standalone: true,
-  imports: [CommonModule,FormsModule,CapitalizStringPipe],
-  templateUrl: './text-area.component.html',
-  styleUrl: './text-area.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: TextAreaComponent
-    },
-  ],
+    selector: 'app-text-area',
+    imports: [CommonModule, FormsModule, CapitalizStringPipe],
+    templateUrl: './text-area.component.html',
+    styleUrl: './text-area.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: TextAreaComponent
+        },
+    ]
 })
 export class TextAreaComponent implements ControlValueAccessor {
  

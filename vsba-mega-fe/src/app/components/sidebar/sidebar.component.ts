@@ -5,11 +5,10 @@ import { EventEmitter } from '@angular/core';
 
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [NgFor, NgIf, NgClass, RouterLink],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+    selector: 'app-sidebar',
+    imports: [NgFor, NgIf, NgClass, RouterLink],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
 

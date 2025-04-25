@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-dynamic-icon',
-  standalone: true,
-  imports: [],
-  templateUrl: './dynamic-icon.component.html',
-  styleUrl: './dynamic-icon.component.css'
+    selector: 'app-dynamic-icon',
+    imports: [],
+    templateUrl: './dynamic-icon.component.html',
+    styleUrl: './dynamic-icon.component.css'
 })
 export class DynamicIconComponent {
   @Input() name!: string;        // Icon name (e.g., 'home', 'dashboard')

@@ -1,25 +1,30 @@
 <div class="relative w-80">  
     <!-- Search Input -->
-    <div #scrollContainer (mouseleave)="dropdownOpen = false"
-    (mouseenter)="scrollContainer.focus()" class="flex flex-nowrap overflow-x-auto items-center border border-gray-300 rounded-lg bg-white px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-500">
-    <img class="sticky left-0 bg-white px-1 h-full no-scrollbar" src="../../../assets/u_search.svg" alt="">
+    <div #scrollContainer
+    (mouseenter)="scrollContainer.focus()" class="flex flex-nowrap overflow-x-auto no-scrollbar items-center border border-gray-300 rounded-lg bg-white px-2 pl-0 shadow-sm">
+    <div class="sticky text-center left-0 py-2 px-1 h-full min-h-6 min-w-6">
+      <!-- <img class="bg-white px-2 h-full min-h-6 min-w-6" src="../../../assets/u_search.svg" alt=""> -->
+      <i class='bx bx-search text-lg px-2 h-full min-h-6 min-w-6 mt-1'></i>
+    </div>
      
-    <ng-container *ngFor="let item of selectedOptions">
-        <div class="flex items-center text-nowrap bg-[#CFD5F1] text-blue-800 px-2 py-1 rounded-full mr-1 mb-1">
-          {{ item }}
-          <button class="ml-1 text-blue-600" (click)="removeItem(item)">×</button>
-        </div>
-      </ng-container>
-      <input
-        type="text"
-        class="flex-1 p-1 focus:outline-none"
-        [(ngModel)]="searchText"
-        (click)="dropdownOpen = !dropdownOpen"
-        (keypress)="dropdownOpen = true"
-        (keydown)="handleKeyDown($event)"
-        (input)="filterOptions()"
-        [placeholder]="selectedOptions.length ? '' : 'Search...'"
-      />
+    <div class="overflow-x-auto no-scrollbar flex flex-nowrap">
+      <ng-container *ngFor="let item of selectedOptions">
+          <div class="flex items-center text-nowrap bg-[#CFD5F1] text-blue-800 px-2 py-1 rounded-full mr-1 mb-1">
+            {{ item }}
+            <button class="ml-1 text-blue-600" (click)="removeItem(item)">×</button>
+          </div>
+        </ng-container>
+        <input
+          type="text"
+          class="flex-1 p-1 focus:outline-none"
+          [(ngModel)]="searchText"
+          (click)="dropdownOpen = !dropdownOpen"
+          (keypress)="dropdownOpen = true"
+          (keydown)="handleKeyDown($event)"
+          (input)="filterOptions()"
+          [placeholder]="selectedOptions.length ? '' : 'Search...'"
+        />
+    </div>
     </div>
   
     <!-- Dropdown -->

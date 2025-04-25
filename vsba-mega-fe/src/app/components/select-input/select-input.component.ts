@@ -4,18 +4,17 @@ import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgCo
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-select-input',
-  standalone: true,
-  imports: [FormsModule,NgIf,NgFor,NgClass],
-  templateUrl: './select-input.component.html',
-  styleUrl: './select-input.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: SelectInputComponent
-    }
-  ]
+    selector: 'app-select-input',
+    imports: [FormsModule, NgIf, NgFor, NgClass],
+    templateUrl: './select-input.component.html',
+    styleUrl: './select-input.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: SelectInputComponent
+        }
+    ]
 })
 export class SelectInputComponent implements ControlValueAccessor {
   @Input() icon = '';

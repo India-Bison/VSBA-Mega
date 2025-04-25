@@ -8,11 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 
 @Component({
-  selector: 'app-list',
-  standalone: true,
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent,SearchInputComponent,ToggleTabsComponent,FormsModule],
-  templateUrl: './list.component.html',
-  styleUrl: './list.component.css'
+    selector: 'app-list',
+    imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule],
+    templateUrl: './list.component.html',
+    styleUrl: './list.component.css'
 })
 export class ListComponent {
   // params: any = {};

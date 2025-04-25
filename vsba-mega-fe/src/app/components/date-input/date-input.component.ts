@@ -6,18 +6,17 @@ import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-date-input',
-  standalone: true,
-  imports: [CommonModule, NgIf, FormsModule, CapitalizStringPipe],
-  templateUrl: './date-input.component.html',
-  styleUrl: './date-input.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: DateInputComponent
-    }
-  ]
+    selector: 'app-date-input',
+    imports: [CommonModule, NgIf, FormsModule, CapitalizStringPipe],
+    templateUrl: './date-input.component.html',
+    styleUrl: './date-input.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: DateInputComponent
+        }
+    ]
 })
 export class DateInputComponent  implements ControlValueAccessor {
   @Input() label = '';

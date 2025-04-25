@@ -11,21 +11,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { format } from 'date-fns';
 
 @Component({
-  selector: 'app-date-range-picker',
-  standalone: true,
-  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule,MatDatepickerModule,MatInputModule,MatIconModule,MatNativeDateModule,DatePipe
+    selector: 'app-date-range-picker',
+    imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
     ],
-  templateUrl: './date-range-picker.component.html',
-  styleUrl: './date-range-picker.component.css',
-   providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        multi: true,
-        useExisting: DateRangePickerComponent
-      },
-      provideNativeDateAdapter()
+    templateUrl: './date-range-picker.component.html',
+    styleUrl: './date-range-picker.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: DateRangePickerComponent
+        },
+        provideNativeDateAdapter()
     ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() label = '';
