@@ -1,6 +1,11 @@
 import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, Input, ViewChildren } from '@angular/core';
 import { PaginationComponent } from "../pagination/pagination.component";
+import { MultiSearchComponent } from '../multi-search/multi-search.component';
+import { SearchInputComponent } from '../search-input/search-input.component';
+import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
+import { FormsModule } from '@angular/forms';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-list',
@@ -72,7 +77,10 @@ export class ListComponent {
   ];
   constructor(public gs:GlobalService){}
   ngOnInit(): void {
-    this.loadDummyData();
+    this.items = this.gs.items;
+    console.log(this.items, 'Items in List Component');
+    console.log(this.gs.items, 'Items in Global Service');
+    
   }
 
   // Dummy data with children
@@ -91,6 +99,15 @@ export class ListComponent {
             id: 4,
             type: 'Project',
             name: 'Bhavesh',
+            resource_type: 'Computer Labs, Classrooms, swimming pool',
+            slot_type: 'Full Day',
+            startdate_enddate: '12/03/2025 - 25/03/2025',
+            status: 'Pending'
+          },
+          {
+            id: 5,
+            type: 'Project',
+            name: 'Arun',
             resource_type: 'Computer Labs, Classrooms, swimming pool',
             slot_type: 'Full Day',
             startdate_enddate: '12/03/2025 - 25/03/2025',
