@@ -3,17 +3,16 @@ import { Component, Input } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-radio',
-  standalone: true,
-  imports: [FormsModule,NgFor,CommonModule,],
-  templateUrl: './radio.component.html',
-  styleUrl: './radio.component.css',
-  providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: RadioComponent,
-        multi: true
-      }
+    selector: 'app-radio',
+    imports: [FormsModule, NgFor, CommonModule,],
+    templateUrl: './radio.component.html',
+    styleUrl: './radio.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: RadioComponent,
+            multi: true
+        }
     ]
 })
 export class RadioComponent implements ControlValueAccessor {

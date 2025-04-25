@@ -4,10 +4,9 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-pagination',
-  imports: [FormsModule,NgClass],
-  standalone  : true,
-  templateUrl: './pagination.component.html',
+    selector: 'app-pagination',
+    imports: [FormsModule, NgClass],
+    templateUrl: './pagination.component.html'
 })
 export class PaginationComponent {
 

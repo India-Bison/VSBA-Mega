@@ -4,18 +4,17 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-modal',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: ModalComponent
-    }
-  ]
+    selector: 'app-modal',
+    imports: [CommonModule],
+    templateUrl: './modal.component.html',
+    styleUrl: './modal.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: ModalComponent
+        }
+    ]
 })
 export class ModalComponent {
   @Input() is_popup_visible: boolean = false

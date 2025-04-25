@@ -10,11 +10,10 @@ import { DatePipe } from '@angular/common';
 import { DateRangePickerComponent } from '../../components/date-range-picker/date-range-picker.component';
 
 @Component({
-  selector: 'app-dashboard-page',
-  standalone: true,
-  imports: [HeaderComponent,MultiSearchComponent,DateRangePickerComponent],
-  templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.css'
+    selector: 'app-dashboard-page',
+    imports: [HeaderComponent, MultiSearchComponent, DateRangePickerComponent],
+    templateUrl: './dashboard-page.component.html',
+    styleUrl: './dashboard-page.component.css'
 })
 export class DashboardPageComponent {
 

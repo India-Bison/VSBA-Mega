@@ -3,11 +3,10 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-multi-search',
-  standalone: true,
-  imports: [FormsModule,NgFor,NgIf],
-  templateUrl: './multi-search.component.html',
-  styleUrl: './multi-search.component.css'
+    selector: 'app-multi-search',
+    imports: [FormsModule, NgFor, NgIf],
+    templateUrl: './multi-search.component.html',
+    styleUrl: './multi-search.component.css'
 })
 export class MultiSearchComponent {
 

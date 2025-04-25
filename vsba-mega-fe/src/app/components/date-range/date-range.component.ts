@@ -5,11 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-date-range',
-  standalone: true,
-  imports: [FormsModule,DatePipe,NgClass],
-  templateUrl: './date-range.component.html',
-  styleUrl: './date-range.component.css'
+    selector: 'app-date-range',
+    imports: [FormsModule, DatePipe, NgClass],
+    templateUrl: './date-range.component.html',
+    styleUrl: './date-range.component.css'
 })
 export class DateRangeComponent {
   @Input() label: string = 'Date Range';

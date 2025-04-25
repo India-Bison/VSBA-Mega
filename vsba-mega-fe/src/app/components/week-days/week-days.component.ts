@@ -3,18 +3,17 @@ import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-week-days',
-  standalone: true,
-  imports: [CommonModule,NgFor],
-  templateUrl: './week-days.component.html',
-  styleUrl: './week-days.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: WeekDaysComponent
-    }
-  ]
+    selector: 'app-week-days',
+    imports: [CommonModule, NgFor],
+    templateUrl: './week-days.component.html',
+    styleUrl: './week-days.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: WeekDaysComponent
+        }
+    ]
 })
 export class WeekDaysComponent implements ControlValueAccessor {
   days = [

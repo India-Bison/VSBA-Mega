@@ -2,10 +2,9 @@ import { NgClass, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-toggle-tabs',
-  standalone: true,
-  imports: [NgClass,NgFor],
-  templateUrl: './toggle-tabs.component.html',
+    selector: 'app-toggle-tabs',
+    imports: [NgClass, NgFor],
+    templateUrl: './toggle-tabs.component.html'
 })
 export class ToggleTabsComponent {
   @Input() tabs: { name: string, action: () => void }[] = [];
