@@ -99,7 +99,7 @@
                 <h1 class="text-xl text-[#212121] font-medium">Sub Projects</h1>
                 <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
             </div>
-            <app-list [pagination]="false" [columns]="columns" [items]="gs.items.sub_projects" [params]="params"></app-list>
+            <app-list [pagination]="false" [columns]="columns" [items]="gs.items.sub_projects | subProjectsOfProject : params.parent_id || params.id" [params]="params"></app-list>
         </div>
         <div class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
             <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>

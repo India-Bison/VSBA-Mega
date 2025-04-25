@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -11,31 +11,33 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { format } from 'date-fns';
 
 @Component({
-    selector: 'app-date-range-picker',
-    imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
-    ],
-    standalone: true,
-    templateUrl: './date-range-picker.component.html',
-    styleUrl: './date-range-picker.component.css',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            multi: true,
-            useExisting: DateRangePickerComponent
-        },
-        provideNativeDateAdapter()
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-date-range-picker',
+  imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
+  ],
+  standalone: true,
+  templateUrl: './date-range-picker.component.html',
+  styleUrl: './date-range-picker.component.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: DateRangePickerComponent
+    },
+    provideNativeDateAdapter()
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() label = '';
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
+  onChange = (_: any) => { };
+  onTouched = () => { };
 
   writeValue(val: any): void {
+    console.log(val, 23423412341234121234)
+
     if (val) {
       this.value = {
         start: val.start ? new Date(val.start) : null,
@@ -57,6 +59,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       start: this.value.start ? format(this.value.start, 'yyyy-MM-dd') : null,
       end: this.value.end ? format(this.value.end, 'yyyy-MM-dd') : null,
     };
+    console.log(formattedValue)
     this.onChange(formattedValue);
   }
 }
