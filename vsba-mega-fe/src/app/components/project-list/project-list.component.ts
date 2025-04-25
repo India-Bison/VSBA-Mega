@@ -77,7 +77,7 @@ export class ProjectListComponent {
   ];
 
   async edit(item: any, index: any) {
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, view: 'Project' } });
   }
   ngOnInit() {
     this.ar.queryParams.subscribe((params) => {

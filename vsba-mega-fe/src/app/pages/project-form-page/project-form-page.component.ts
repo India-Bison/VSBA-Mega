@@ -69,7 +69,10 @@ export class ProjectFormPageComponent {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
-
+        const projectData = this.gs.items.projects.find((item: any) => item.id === this.params.id);
+        if (projectData) {
+          this.patch_project_form(projectData);
+        }
       }
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
@@ -128,30 +131,28 @@ export class ProjectFormPageComponent {
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
   selected_project_id: any = {}
-  submit_form(): void {
+  submit_form(route?: any): void {
     const nextId = Math.random().toString(36).substring(2, 9);
     const formData = {
       ...this.form.value,
       id: nextId,
+      status: 'Pending',
     };
     this.selected_project_id = formData;
     this.gs.items.projects.push(formData);
+    this.gs.save_in_local_storage();
+
     console.log('Full Project Form Value:', formData);
     console.log('Updated Items:', this.gs.items);
-    this.route.navigate(['/project/form'], { queryParams: { id: nextId, view: 'Sub-Project' } });
+    if (route) {
+      this.route.navigate(['/project/form'], { queryParams: { id: nextId, view: 'Sub-Project' } });
+    } else {
+      this.route.navigate(['/project/list'], {});
+    }
   }
   add_sub_project() {
 
     this.route.navigate(['/project/form'], { queryParams: { view: 'Project', parent_id: this.params.id } });
-  }
-  submit_sub_project_form(): void {
-    const subProjectData = {
-      ...this.form.value,
-      project_id: this.params.project_id,
-    };
-    this.gs.items.sub_projects.push(subProjectData);
-    this.active_tab = 'Sub-Project';
-    console.log(this.gs.items, 'Sub-Project Data:', subProjectData);
   }
 
   dummyData = {
@@ -178,17 +179,7 @@ export class ProjectFormPageComponent {
     ]
   };
   patch_project_form(data: any) {
-    this.form.patchValue({
-      project_name: data.project_name,
-      full_venue_required: data.full_venue_required,
-      resource_type: data.resource_type,
-      description: data.description,
-      audit_required: data.audit_required,
-      project_start_date: data.project_start_date,
-      project_end_date: data.project_end_date,
-      week_days: data.week_days,
-      slot_type: data.slot_type,
-    });
+    this.form.patchValue(data);
     const slotsFormArray = this.form.get('slot_group') as FormArray;
     slotsFormArray.clear();
     data.slot_group.forEach((slot: any) => {
