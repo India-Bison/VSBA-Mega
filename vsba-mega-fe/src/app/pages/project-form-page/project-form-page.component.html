@@ -1,8 +1,8 @@
 <app-header [label]="active_tab == 'Project' ? 'Project / Add Project' : 'Project / Add Project / Add Sub-Project'"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
-    <div class="flex flex-col bg-white p-6 rounded shadow w-full gap-4">
+    <div class="flex flex-col bg-white p-6 rounded shadow w-full gap-6">
         <div class="flex items-center justify-between">
-            <h1 *ngIf="active_tab == 'Project'" class="text-xl font-medium">Add Project</h1>
+            <h1 *ngIf="active_tab == 'Project'" class="text-xl font-medium leading-[100%] tracking-2p">Add Project</h1>
             <h1 *ngIf="active_tab == 'Sub-Project'" class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to 30/03/2025)</span></h1>
             <app-toggle-tabs [tabs]="tabList" [defaultActive]="params.project_id ? 'Sub-Project' : 'Project'"></app-toggle-tabs>
         </div>
@@ -21,7 +21,7 @@
     
                     <div>
                         <app-text-area label="Short Description*" formControlName="description"></app-text-area>
-                        <div class="text-right text-xs font-normal leading-[100%] text-gray-500">Max 100 Words</div>
+                        <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words</div>
                     </div>
     
                     <app-radio label="Audit Required" [is_required]="true" formControlName="audit_required" [options]="[
@@ -39,10 +39,10 @@
                             <app-date-input class="w-full" formControlName="projectEndDate"></app-date-input>
                         </div>
                     </div> -->
-                    <app-date-range-picker formControlName="project_start_date" label="Project Date"></app-date-range-picker>
+                    <app-date-range-picker formControlName="project_start_date" label="Project Date*"></app-date-range-picker>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
-                <div class="space-y-6 bg-[#F5F3FF] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto">
+                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-[492.67px] max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
                     <div class="flex justify-between items-center">
                         <app-radio label="Slot Type" [is_required]="true"  formControlName="slot_type" [options]="[
                         { label: 'Full Day', value: 'Full Day' },
@@ -53,25 +53,20 @@
                         <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_slot()" label="+ ADD SLOT">
                         </app-button>
                     </div>
-                    <div formArrayName="slot_group" class="space-y-6 overflow-y-auto max-h-[617px] no-scrollbar">
-                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-4 shadow-sm">
-                            <h1 class="text-sm font-semibold text-gray-800 flex items-center gap-2">
+                    <div formArrayName="slot_group" class="flex flex-col gap-4">
+                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col shadow-sm">
+                            <p class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
                                 <span (click)="remove_slot(i)" class="cursor-pointer">—</span>
                                 Slot {{ i + 1 }}
-                            </h1>
-                            <!-- <div class="flex gap-2 w-full">
-                                <app-date-input label="From Date" class="w-full" formControlName="startDate"></app-date-input>
-                                <label class="block text-xl text-gray-700 mt-2">To</label>
-                                <app-date-input label="To Date" class="w-full" formControlName="endDate"></app-date-input>
-                            </div> -->
+                            </p>
                             <app-date-range-picker class="w-full" formControlName="slot_start_date" label="Project Date"></app-date-range-picker>
                             <div class="flex justify-between w-full gap-2">
-                                <app-date-input [format]="'time'" class="w-56" formControlName="start_time"></app-date-input>
-                                <app-select-input label="Hours" formControlName="hours" class="w-56" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
+                                <app-date-input [format]="'time'" class="w-32" formControlName="start_time"></app-date-input>
+                                <app-select-input label="Hours" formControlName="hours" class="w-32" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
                                 </app-select-input>
-                                <div class="relative w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(i)">
-                                    <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400"></div>
-                                    <div class="absolute w-[1.5px] h-[18.33px] bg-gray-400 transform rotate-90"></div>
+                                <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(i)">
+                                    <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1]"></div>
+                                    <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90"></div>
                                 </div>
                             </div>
                             <div class="flex flex-wrap gap-2 mt-2">
@@ -113,16 +108,5 @@
 <app-modal #open_sub_project scroll="true" label="Add Sub Project">
    
 </app-modal>
-<app-confirmation-popup
-  #confirmation_popup
-  label="Submit Project?"
-  [icon]="'bx bx-rocket'"
-  [iconColor]="'bg-blue-100'"
-  [confirmText]="'YES, SUBMIT'"
-  [confirmColor]="'bg-blue-700'"
-  [cancelText]="'CANCEL'"
-  [is_popup_visible]="false"
-  [show_cancel_icon]="false"
->
-  You're about to submit a new project. Make sure all details are correct before submitting.
-</app-confirmation-popup>
+
+
