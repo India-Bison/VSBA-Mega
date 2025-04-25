@@ -14,7 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
             multi: true,
             useExisting: SelectInputComponent
         }
-    ]
+    ],
+    standalone: true,
 })
 export class SelectInputComponent implements ControlValueAccessor {
   @Input() icon = '';

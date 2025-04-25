@@ -7,7 +7,8 @@ import { GlobalService } from '../../services/global.service';
     selector: 'app-project-list',
     imports: [ListComponent, HeaderComponent],
     templateUrl: './project-list.component.html',
-    styleUrl: './project-list.component.css'
+    styleUrl: './project-list.component.css',
+    standalone: true,
 })
 export class ProjectListComponent {
 constructor(public gs:GlobalService) {}

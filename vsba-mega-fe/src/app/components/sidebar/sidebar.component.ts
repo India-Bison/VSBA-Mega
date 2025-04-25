@@ -8,7 +8,8 @@ import { EventEmitter } from '@angular/core';
     selector: 'app-sidebar',
     imports: [NgFor, NgIf, NgClass, RouterLink],
     templateUrl: './sidebar.component.html',
-    styleUrl: './sidebar.component.css'
+    styleUrl: './sidebar.component.css',
+    standalone: true,
 })
 export class SidebarComponent {
 

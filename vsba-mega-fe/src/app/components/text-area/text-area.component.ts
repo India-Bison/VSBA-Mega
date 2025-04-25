@@ -15,7 +15,8 @@ import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
             multi: true,
             useExisting: TextAreaComponent
         },
-    ]
+    ],
+    standalone: true,
 })
 export class TextAreaComponent implements ControlValueAccessor {
  

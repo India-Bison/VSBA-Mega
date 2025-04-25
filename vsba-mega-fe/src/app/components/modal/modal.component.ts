@@ -14,7 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
             multi: true,
             useExisting: ModalComponent
         }
-    ]
+    ],
+    standalone: true,
 })
 export class ModalComponent {
   @Input() is_popup_visible: boolean = false

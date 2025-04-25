@@ -5,7 +5,8 @@ import { Component, Input } from '@angular/core';
     selector: 'app-button',
     imports: [CommonModule],
     templateUrl: './button.component.html',
-    styleUrl: './button.component.css'
+    styleUrl: './button.component.css',
+    standalone: true,
 })
 export class ButtonComponent {
 

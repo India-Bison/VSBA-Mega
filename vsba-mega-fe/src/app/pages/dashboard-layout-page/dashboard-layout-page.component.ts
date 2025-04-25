@@ -7,7 +7,8 @@ import { HeaderComponent } from '../../components/header/header.component';
     selector: 'app-dashboard-layout-page',
     imports: [SidebarComponent, RouterOutlet, HeaderComponent],
     templateUrl: './dashboard-layout-page.component.html',
-    styleUrl: './dashboard-layout-page.component.css'
+    styleUrl: './dashboard-layout-page.component.css',
+    standalone: true,
 })
 export class DashboardLayoutPageComponent {
 

@@ -14,7 +14,8 @@ import { ActivatedRoute } from '@angular/router';
             useExisting: TextInputComponent,
             multi: true
         }
-    ]
+    ],
+    standalone: true,
 })
 export class TextInputComponent implements ControlValueAccessor {
   @Input() data_list = []

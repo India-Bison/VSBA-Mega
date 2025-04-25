@@ -13,7 +13,8 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
             useExisting: RadioComponent,
             multi: true
         }
-    ]
+    ],
+    standalone: true,
 })
 export class RadioComponent implements ControlValueAccessor {
   @Input() options: { label: string; value: string }[] = [];

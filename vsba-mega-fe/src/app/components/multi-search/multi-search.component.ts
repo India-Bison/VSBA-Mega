@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
     selector: 'app-multi-search',
     imports: [FormsModule, NgFor, NgIf],
     templateUrl: './multi-search.component.html',
-    styleUrl: './multi-search.component.css'
+    styleUrl: './multi-search.component.css',
+    standalone: true,
 })
 export class MultiSearchComponent {
 

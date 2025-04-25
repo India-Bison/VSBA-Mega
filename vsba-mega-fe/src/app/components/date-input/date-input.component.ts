@@ -16,7 +16,8 @@ import { CommonModule, NgIf } from '@angular/common';
             multi: true,
             useExisting: DateInputComponent
         }
-    ]
+    ],
+    standalone: true,
 })
 export class DateInputComponent  implements ControlValueAccessor {
   @Input() label = '';

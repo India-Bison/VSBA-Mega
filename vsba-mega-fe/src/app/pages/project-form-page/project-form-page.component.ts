@@ -21,7 +21,8 @@ import { ConfirmationPopupComponent } from '../../components/confirmation-popup/
     selector: 'app-project-form-page',
     imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
     templateUrl: './project-form-page.component.html',
-    styleUrl: './project-form-page.component.css'
+    styleUrl: './project-form-page.component.css',
+    standalone: true,
 })
 export class ProjectFormPageComponent {
   active_tab = 'Project';

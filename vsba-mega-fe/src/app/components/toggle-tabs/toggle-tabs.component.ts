@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-toggle-tabs',
+    standalone: true,
     imports: [NgClass, NgFor],
     templateUrl: './toggle-tabs.component.html'
 })

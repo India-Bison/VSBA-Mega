@@ -11,7 +11,8 @@ import { GlobalService } from '../../services/global.service';
     selector: 'app-list',
     imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule],
     templateUrl: './list.component.html',
-    styleUrl: './list.component.css'
+    styleUrl: './list.component.css',
+    standalone: true,
 })
 export class ListComponent {
   // params: any = {};

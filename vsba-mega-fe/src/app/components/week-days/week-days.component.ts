@@ -13,7 +13,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
             multi: true,
             useExisting: WeekDaysComponent
         }
-    ]
+    ],
+    standalone: true,
 })
 export class WeekDaysComponent implements ControlValueAccessor {
   days = [

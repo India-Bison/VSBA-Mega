@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     selector: 'app-confirmation-popup',
     imports: [CommonModule],
     templateUrl: './confirmation-popup.component.html',
-    styleUrl: './confirmation-popup.component.css'
+    styleUrl: './confirmation-popup.component.css',
+    standalone: true,
 })
 export class ConfirmationPopupComponent {
   @Input() is_popup_visible: boolean = false

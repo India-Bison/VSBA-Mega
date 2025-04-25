@@ -13,7 +13,8 @@ import { DateRangePickerComponent } from '../../components/date-range-picker/dat
     selector: 'app-dashboard-page',
     imports: [HeaderComponent, MultiSearchComponent, DateRangePickerComponent],
     templateUrl: './dashboard-page.component.html',
-    styleUrl: './dashboard-page.component.css'
+    styleUrl: './dashboard-page.component.css',
+    standalone: true,
 })
 export class DashboardPageComponent {
 
