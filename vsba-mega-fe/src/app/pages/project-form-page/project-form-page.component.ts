@@ -84,7 +84,7 @@ export class ProjectFormPageComponent {
       }
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
-    console.log(this.gs.items, "global service data");
+    // console.log(this.gs.items, "global service data");
 
   }
 

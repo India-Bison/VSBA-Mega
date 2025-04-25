@@ -36,7 +36,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   onTouched = () => { };
 
   writeValue(val: any): void {
-    console.log(val, 23423412341234121234)
+    console.log(val, 'data')
 
     if (val) {
       this.value = {
