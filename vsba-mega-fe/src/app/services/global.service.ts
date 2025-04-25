@@ -5,5 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
 
-  constructor() { }
+  items: any[] = []
+  constructor() {
+    console.log(this.items, 'gsssssss');
+   }  
 }

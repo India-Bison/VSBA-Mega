@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-date-range-picker',
@@ -15,9 +17,46 @@ import { DatePipe } from '@angular/common';
     ],
   templateUrl: './date-range-picker.component.html',
   styleUrl: './date-range-picker.component.css',
-  // providers: [provideNativeDateAdapter()],
+   providers: [
+      {
+        provide: NG_VALUE_ACCESSOR,
+        multi: true,
+        useExisting: DateRangePickerComponent
+      },
+      provideNativeDateAdapter()
+    ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateRangePickerComponent {
- 
+export class DateRangePickerComponent implements ControlValueAccessor {
+  @Input() label = 'Date Range';
+
+  value: { start: Date | null; end: Date | null } = { start: null, end: null };
+
+  onChange = (_: any) => {};
+  onTouched = () => {};
+
+  writeValue(val: any): void {
+    if (val) {
+      this.value = {
+        start: val.start ? new Date(val.start) : null,
+        end: val.end ? new Date(val.end) : null,
+      };
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  onDateChange(): void {
+    const formattedValue = {
+      start: this.value.start ? format(this.value.start, 'yyyy-MM-dd') : null,
+      end: this.value.end ? format(this.value.end, 'yyyy-MM-dd') : null,
+    };
+    this.onChange(formattedValue);
+  }
 }

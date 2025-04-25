@@ -1,10 +1,6 @@
 import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, Input, ViewChildren } from '@angular/core';
 import { PaginationComponent } from "../pagination/pagination.component";
-import { MultiSearchComponent } from '../multi-search/multi-search.component';
-import { SearchInputComponent } from '../search-input/search-input.component';
-import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -67,14 +63,14 @@ export class ListComponent {
 
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Type', type: 'Value', key: 'type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
+    { title: 'Type', type: 'Value', key: 'audit_required', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'description', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
-    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    { title: 'Start Date-End Date', type: 'Value', key: 'startdate_enddate', class: 'text-left' },
+    { title: 'Slot Type', type: 'Value', key: 'project_name', class: 'text-left' },
+    { title: 'Start Date-End Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
   ];
-
+  constructor(public gs:GlobalService){}
   ngOnInit(): void {
     this.loadDummyData();
   }
@@ -95,15 +91,6 @@ export class ListComponent {
             id: 4,
             type: 'Project',
             name: 'Bhavesh',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Pending'
-          },
-          {
-            id: 5,
-            type: 'Project',
-            name: 'Arun',
             resource_type: 'Computer Labs, Classrooms, swimming pool',
             slot_type: 'Full Day',
             startdate_enddate: '12/03/2025 - 25/03/2025',
