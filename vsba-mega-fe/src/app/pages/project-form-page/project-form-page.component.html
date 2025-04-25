@@ -10,7 +10,7 @@
             </ng-container>
             <app-toggle-tabs [params]="params" params_name="view" [tabs]="tabList" [defaultActive]="params.view"></app-toggle-tabs>
         </div>
-        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6 px-6">
+        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <app-text-input label="Project Name" formControlName="project_name"></app-text-input>
