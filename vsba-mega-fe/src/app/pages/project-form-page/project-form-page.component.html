@@ -53,7 +53,7 @@
                         <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_slot()" label="+ ADD SLOT">
                         </app-button>
                     </div>
-                    <div formArrayName="slots" class="space-y-6 overflow-y-auto max-h-[617px] no-scrollbar">
+                    <div formArrayName="slot_group" class="space-y-6 overflow-y-auto max-h-[617px] no-scrollbar">
                         <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-4 shadow-sm">
                             <h1 class="text-sm font-semibold text-gray-800 flex items-center gap-2">
                                 <span (click)="remove_slot(i)" class="cursor-pointer">—</span>
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="flex flex-wrap gap-2 mt-2">
-                                <div *ngFor="let pill of (slot.get('pills')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
+                                <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
                                     {{ pill }}
                                     <button type="button" (click)="remove_pill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">
                                         &times;
