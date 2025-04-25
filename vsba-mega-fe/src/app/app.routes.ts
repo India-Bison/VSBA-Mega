@@ -5,13 +5,14 @@ import { ProjectFormPageComponent } from './pages/project-form-page/project-form
 import { ListComponent } from './components/list/list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
+import { canActivateAuthRole } from './auth.guard';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
 
     {
         path: '', component: DashboardLayoutPageComponent,
-        // canActivate: [canActivateAuthRole],
+        canActivate: [canActivateAuthRole],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardPageComponent },
