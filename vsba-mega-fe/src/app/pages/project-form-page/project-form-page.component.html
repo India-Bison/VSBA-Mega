@@ -1,7 +1,7 @@
 <app-header label="Project/{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
-    <div class="flex flex-col bg-white p-6 rounded shadow w-full gap-6">
-        <div class="flex items-center justify-between">
+    <div class="flex flex-col bg-white rounded-2xl shadow w-full gap-6">
+        <div class="flex items-center justify-between px-6 pt-6">
             <ng-container *ngIf="!params.parent_id">
                 <h1 class="text-xl font-medium leading-[100%] tracking-2p">{{params.id? 'Update' : 'Add'}} Project</h1>
             </ng-container>
@@ -10,7 +10,7 @@
             </ng-container>
             <app-toggle-tabs [params]="params" params_name="view" [tabs]="tabList" [defaultActive]="params.view"></app-toggle-tabs>
         </div>
-        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6">
+        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <app-text-input label="Project Name" formControlName="project_name"></app-text-input>
@@ -104,7 +104,7 @@
             </div>
             <app-list [pagination]="false" [columns]="columns" [items]="gs.items.sub_projects | subProjectsOfProject : params.parent_id || params.id" [params]="params"></app-list>
         </div>
-        <div class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
+        <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
             <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
             <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
             <app-button color="bg-[#E697AB] text-[#310000]" (click)="submit_form()" label="SUBMIT"></app-button>
