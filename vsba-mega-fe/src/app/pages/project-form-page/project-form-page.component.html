@@ -97,7 +97,7 @@
         <div *ngIf="params.view == 'Sub-Project'" class="w-full flex flex-col gap-6">
             <div class="flex items-center w-full justify-between">
                 <h1 class="text-xl text-[#212121] font-medium">Sub Projects</h1>
-                <app-button *ngIf="params.parent_id" color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
+                <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
             </div>
             <app-list [columns]="columns" [items]="gs.items.sub_projects" [params]="params"></app-list>
         </div>

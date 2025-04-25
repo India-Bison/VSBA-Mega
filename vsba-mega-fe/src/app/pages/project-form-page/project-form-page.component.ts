@@ -131,7 +131,6 @@ export class ProjectFormPageComponent {
     currentPills.splice(pillIndex, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
-  selected_project_id: any = {}
   submit_form(route?: any): void {
     const nextId = Math.random().toString(36).substring(2, 9);
     const formData = {
@@ -139,8 +138,25 @@ export class ProjectFormPageComponent {
       id: nextId,
       status: 'Pending',
     };
-    this.selected_project_id = formData;
-    this.gs.items.projects.push(formData);
+    if (this.params.id) {
+      if (this.params.parent_id) {
+        let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
+        if (index !== -1) {
+          this.gs.items.sub_projects[index] = formData;
+        }
+      } else {
+        let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
+        if (index !== -1) {
+          this.gs.items.projects[index] = formData;
+        }
+      }
+    } else {
+      if (this.params.parent_id) {
+        this.gs.items.sub_projects.push(formData);
+      } else {
+        this.gs.items.projects.push(formData);
+      }
+    }
     this.gs.save_in_local_storage();
 
     console.log('Full Project Form Value:', formData);
@@ -152,7 +168,7 @@ export class ProjectFormPageComponent {
     }
   }
   add_sub_project() {
-
+    this.form.reset()
     this.route.navigate(['/project/form'], { queryParams: { view: 'Project', parent_id: this.params.id } });
   }
 
@@ -199,7 +215,7 @@ export class ProjectFormPageComponent {
     { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
+    // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
   ];
 }
