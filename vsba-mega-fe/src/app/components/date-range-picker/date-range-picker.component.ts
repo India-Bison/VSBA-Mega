@@ -14,7 +14,6 @@ import { format } from 'date-fns';
     selector: 'app-date-range-picker',
     imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
     ],
-    standalone: true,
     templateUrl: './date-range-picker.component.html',
     styleUrl: './date-range-picker.component.css',
     providers: [
