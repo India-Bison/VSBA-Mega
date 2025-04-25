@@ -131,6 +131,7 @@ export class ProjectFormPageComponent {
     currentPills.splice(pillIndex, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
+  selected_project_id:any={}
   submit_form(): void {
     const nextId = this.gs.items.length > 0 
       ? Math.max(...this.gs.items.map((item:any) => item.project_id || 0)) + 1 
@@ -139,10 +140,14 @@ export class ProjectFormPageComponent {
       ...this.form.value,
       project_id: nextId,
     };
+    this.selected_project_id = formData.project_id;
     this.gs.items.projects.push(formData);
     console.log('Full Project Form Value:', formData);
     console.log('Updated Items:', this.gs.items);
     this.route.navigate(['/project/list'], { queryParams: { project_id: nextId } });
+  }
+  add_sub_project() {
+    this.route.navigate(['/project/form'], { queryParams: { project_id: this.selected_project_id } });
   }
   submit_sub_project_form(): void {
     const subProjectData = {

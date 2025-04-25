@@ -90,7 +90,7 @@
         <div *ngIf="active_tab == 'Sub-Project'" class="w-full flex flex-col gap-6">
             <div class="flex items-center w-full justify-between">
                 <h1 class="text-xl text-[#212121] font-medium">Add Sub Project</h1>
-                <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="open_sub_project.open()" label="ADD SUB PROJECT"></app-button>
+                <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
             </div>
             <app-list [columns]="columns" [items]="gs.items.sub_projects" [params]="params"></app-list>
             <div class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
