@@ -15,11 +15,12 @@ import { DateRangePickerComponent } from '../../components/date-range-picker/dat
 import { ModalComponent } from '../../components/modal/modal.component';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 
 @Component({
   selector: 'app-project-form-page',
   standalone: true,
-  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent],
+  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent,ConfirmationPopupComponent],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css'
 })
@@ -41,6 +42,7 @@ export class ProjectFormPageComponent {
     }
   ];
   form: FormGroup;
+  sub_form: FormGroup;
 
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router) {
     this.form = this.fb.group({
@@ -55,6 +57,17 @@ export class ProjectFormPageComponent {
       slot_type: [''],
       slots: this.fb.array([])
     });
+    this.sub_form = fb.group({
+      project_name: [''],
+      full_venue_required: [''],
+      resource_type: [''],
+      description: [''],
+      audit_required: [''],
+      project_start_date: [''],
+      project_end_date: [''],
+      week_days: [[]],
+      slot_type: ['']
+    })
     this.add_slot();
   }
 
