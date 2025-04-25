@@ -5,14 +5,13 @@
   </label>
   <div class="flex gap-10">
     <label *ngFor="let option of options" class="flex items-center cursor-pointer space-x-2">
-      <input
-        type="radio"
-        [value]="option.value"
-        [checked]="option.value === value"
-        (change)="select(option.value)"
-        class="form-radio text-blue-600 w-5 h-5"
-      />
-      <span class="text-gray-800 text-sm">{{ option.label }}</span>
+      <input type="radio" [value]="option.value" [checked]="option.value === value" (change)="select(option.value)"
+        class="form-radio text-blue-600 w-5 h-5" />
+      <span [ngClass]="{
+      'text-blue-600': option.value === value,
+      'text-gray-800': option.value !== value}" class="text-sm">
+        {{ option.label }}
+      </span>
     </label>
   </div>
 </div>
