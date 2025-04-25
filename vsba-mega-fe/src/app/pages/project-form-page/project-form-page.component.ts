@@ -18,11 +18,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 
 @Component({
-  selector: 'app-project-form-page',
-  standalone: true,
-  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent,ConfirmationPopupComponent],
-  templateUrl: './project-form-page.component.html',
-  styleUrl: './project-form-page.component.css'
+    selector: 'app-project-form-page',
+    imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
+    templateUrl: './project-form-page.component.html',
+    styleUrl: './project-form-page.component.css'
 })
 export class ProjectFormPageComponent {
   active_tab = 'Project';

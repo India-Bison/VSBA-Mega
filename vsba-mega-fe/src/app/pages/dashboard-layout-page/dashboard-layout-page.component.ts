@@ -4,11 +4,10 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
-  selector: 'app-dashboard-layout-page',
-  standalone: true,
-  imports: [SidebarComponent,RouterOutlet,HeaderComponent],
-  templateUrl: './dashboard-layout-page.component.html',
-  styleUrl: './dashboard-layout-page.component.css'
+    selector: 'app-dashboard-layout-page',
+    imports: [SidebarComponent, RouterOutlet, HeaderComponent],
+    templateUrl: './dashboard-layout-page.component.html',
+    styleUrl: './dashboard-layout-page.component.css'
 })
 export class DashboardLayoutPageComponent {
 

@@ -3,11 +3,10 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-confirmation-popup',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './confirmation-popup.component.html',
-  styleUrl: './confirmation-popup.component.css'
+    selector: 'app-confirmation-popup',
+    imports: [CommonModule],
+    templateUrl: './confirmation-popup.component.html',
+    styleUrl: './confirmation-popup.component.css'
 })
 export class ConfirmationPopupComponent {
   @Input() is_popup_visible: boolean = false

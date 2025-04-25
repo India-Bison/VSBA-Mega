@@ -4,11 +4,10 @@ import { HeaderComponent } from '../header/header.component';
 import { GlobalService } from '../../services/global.service';
 
 @Component({
-  selector: 'app-project-list',
-  standalone: true,
-  imports: [ListComponent,HeaderComponent],
-  templateUrl: './project-list.component.html',
-  styleUrl: './project-list.component.css'
+    selector: 'app-project-list',
+    imports: [ListComponent, HeaderComponent],
+    templateUrl: './project-list.component.html',
+    styleUrl: './project-list.component.css'
 })
 export class ProjectListComponent {
 constructor(public gs:GlobalService) {}

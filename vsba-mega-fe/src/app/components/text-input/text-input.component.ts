@@ -4,18 +4,17 @@ import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgCo
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-text-input',
-  standalone: true,
-  imports: [FormsModule, NgIf, NgClass],
-  templateUrl: './text-input.component.html',
-  styleUrl: './text-input.component.css',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: TextInputComponent,
-      multi: true
-    }
-  ]
+    selector: 'app-text-input',
+    imports: [FormsModule, NgIf, NgClass],
+    templateUrl: './text-input.component.html',
+    styleUrl: './text-input.component.css',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: TextInputComponent,
+            multi: true
+        }
+    ]
 })
 export class TextInputComponent implements ControlValueAccessor {
   @Input() data_list = []
