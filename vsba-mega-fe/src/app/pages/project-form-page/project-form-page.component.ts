@@ -57,7 +57,7 @@ export class ProjectFormPageComponent {
       project_end_date: [''],
       week_days: [[]],
       slot_type: [''],
-      slots: this.fb.array([])
+      slot_group: this.fb.array([])
     });
     this.sub_form = fb.group({
       project_name: [''],
@@ -82,7 +82,7 @@ export class ProjectFormPageComponent {
   }
 
   get slots(): FormArray {
-    return this.form.get('slots') as FormArray;
+    return this.form.get('slot_group') as FormArray;
   }
 
   add_slot(): void {
@@ -91,7 +91,7 @@ export class ProjectFormPageComponent {
       slot_end_date: [''],
       start_time: [''],
       hours: [''],
-      pills: [[]]
+      slot_times: [[]]
     });
     this.slots.push(slotGroup);
   }
@@ -119,17 +119,17 @@ export class ProjectFormPageComponent {
         return `${hh}:${mm}`;
       };
       const pillText = `${formatTime(startDate)} - ${formatTime(endDate)}`;
-      const currentPills = slotGroup.get('pills')?.value || [];
+      const currentPills = slotGroup.get('slot_times')?.value || [];
       currentPills.push(pillText);
-      slotGroup.get('pills')?.setValue(currentPills);
+      slotGroup.get('slot_times')?.setValue(currentPills);
     }
   }
 
   remove_pill(slotIndex: number, pillIndex: number): void {
     const slotGroup = this.slots.at(slotIndex) as FormGroup;
-    const currentPills = slotGroup.get('pills')?.value || [];
+    const currentPills = slotGroup.get('slot_times')?.value || [];
     currentPills.splice(pillIndex, 1);
-    slotGroup.get('pills')?.setValue(currentPills);
+    slotGroup.get('slot_times')?.setValue(currentPills);
   }
 
   submit_form(): void {
@@ -170,7 +170,7 @@ export class ProjectFormPageComponent {
         slot_end_date: "2025-04-08",
         start_time: "12:22",
         hours: "4",
-        pills: [
+        slot_times: [
           "02:19 - 03:19",
           "02:22 - 06:22"
         ]
@@ -189,15 +189,15 @@ export class ProjectFormPageComponent {
       week_days: data.week_days,
       slot_type: data.slot_type,
     });
-    const slotsFormArray = this.form.get('slots') as FormArray;
+    const slotsFormArray = this.form.get('slot_group') as FormArray;
     slotsFormArray.clear();
-    data.slots.forEach((slot: any) => {
+    data.slot_group.forEach((slot: any) => {
       slotsFormArray.push(this.fb.group({
         slot_start_date: slot.slot_start_date,
         slot_end_date: slot.slot_end_date,
         start_time: slot.start_time,
         hours: slot.hours,
-        pills: this.fb.control(slot.pills || [])
+        slot_times: this.fb.control(slot.slot_times || [])
       }));
     });
   }
