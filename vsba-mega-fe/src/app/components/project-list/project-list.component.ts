@@ -5,16 +5,17 @@ import { GlobalService } from '../../services/global.service';
 import { SearchInputComponent } from '../search-input/search-input.component';
 import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../button/button.component';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-project-list',
-    imports: [ListComponent, HeaderComponent,SearchInputComponent,ToggleTabsComponent,ButtonComponent],
+    imports: [ListComponent, HeaderComponent,SearchInputComponent,ToggleTabsComponent,ButtonComponent, RouterLink],
     templateUrl: './project-list.component.html',
     styleUrl: './project-list.component.css',
     standalone: true,
 })
 export class ProjectListComponent {
-constructor(public gs:GlobalService) {}
+constructor(public gs:GlobalService, public route:Router) {}
   params:any={}
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
@@ -24,6 +25,12 @@ constructor(public gs:GlobalService) {}
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
     { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
+    {
+      title: 'Action', type: 'Action', actions: [
+        { title: 'Update', icon: 'bx bx-edit-alt', action: this.edit.bind(this) },
+        // { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },,
+      ]
+    },
   ];
   active_tab = 'All';
   tabList = [
@@ -66,4 +73,14 @@ constructor(public gs:GlobalService) {}
       }
     },
   ];
+
+  async edit(item: any, index: any) {
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id } });
+  }
+  ngOnInit() {
+  }
+
+  redirect_to_project(){
+
+  }
 }

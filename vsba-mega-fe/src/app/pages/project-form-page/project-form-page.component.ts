@@ -75,6 +75,9 @@ export class ProjectFormPageComponent {
   ngOnInit() {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
+      if (this.params.id) {
+        
+      }
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
     console.log(this.gs.items, "global service data");
@@ -133,23 +136,21 @@ export class ProjectFormPageComponent {
   }
   selected_project_id:any={}
   submit_form(): void {
-    const nextId = this.gs.items.length > 0 
-      ? Math.max(...this.gs.items.map((item:any) => item.project_id || 0)) + 1 
-      : 1;
+    const nextId = Math.random().toString(36).substring(2, 9);
     const formData = {
       ...this.form.value,
-      project_id: nextId,
+      id: nextId,
     };
     this.selected_project_id = formData;
     this.gs.items.projects.push(formData);
     console.log('Full Project Form Value:', formData);
     console.log('Updated Items:', this.gs.items);
-    this.route.navigate(['/project/list'], { queryParams: { project_id: nextId } });
+    this.route.navigate(['/project/form'], { queryParams: { id: nextId } });
   }
   add_sub_project() {
     console.log(this.selected_project_id, 'Selected Project ID:');
     
-    this.route.navigate(['/project/form'], { queryParams: { project_id: this.selected_project_id.project_id } });
+    this.route.navigate(['/project/form'], { queryParams: { id: this.selected_project_id.project_id } });
   }
   submit_sub_project_form(): void {
     const subProjectData = {
