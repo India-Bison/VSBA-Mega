@@ -13,7 +13,7 @@ export class AuthService {
       config: {
         url: 'https://keycloak.apps.thecontrast.in',
         realm: 'master',
-        clientId: 'ict-mega-fe'
+        clientId: 'vbsa-mega-fe'
       },
       initOptions: {
         onLoad: 'login-required',
