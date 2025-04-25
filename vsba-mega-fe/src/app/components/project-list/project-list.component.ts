@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ListComponent } from '../list/list.component';
 import { HeaderComponent } from '../header/header.component';
 import { GlobalService } from '../../services/global.service';
 import { SearchInputComponent } from '../search-input/search-input.component';
 import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../button/button.component';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-project-list',
-    imports: [ListComponent, HeaderComponent,SearchInputComponent,ToggleTabsComponent,ButtonComponent, RouterLink],
-    templateUrl: './project-list.component.html',
-    styleUrl: './project-list.component.css',
-    standalone: true,
+  selector: 'app-project-list',
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink],
+  templateUrl: './project-list.component.html',
+  styleUrl: './project-list.component.css',
+  standalone: true,
 })
 export class ProjectListComponent {
-constructor(public gs:GlobalService, public route:Router) {}
-  params:any={}
+  ar = inject(ActivatedRoute)
+  constructor(public gs: GlobalService, public route: Router) { }
+  params: any = {}
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
@@ -38,7 +39,8 @@ constructor(public gs:GlobalService, public route:Router) {}
       name: 'All',
       action: () => {
         this.active_tab = 'All',
-        console.log('All tab clicked')}
+          console.log('All tab clicked')
+      }
     },
     {
       name: 'Pending',
@@ -46,19 +48,19 @@ constructor(public gs:GlobalService, public route:Router) {}
         this.active_tab = 'Pending';
         console.log('Pending tab clicked');
       }
-    },{
+    }, {
       name: 'Approved',
       action: () => {
         this.active_tab = 'Approved';
         console.log('Approved tab clicked');
       }
-    },{
+    }, {
       name: 'Reject',
       action: () => {
         this.active_tab = 'Reject';
         console.log('Reject tab clicked');
       }
-    },{
+    }, {
       name: 'Disabled',
       action: () => {
         this.active_tab = 'Disabled';
@@ -78,9 +80,12 @@ constructor(public gs:GlobalService, public route:Router) {}
     this.route.navigate(['/project/form'], { queryParams: { id: item.id } });
   }
   ngOnInit() {
+    this.ar.queryParams.subscribe((params) => {
+      this.params = params;
+    })
   }
 
-  redirect_to_project(){
+  redirect_to_project() {
 
   }
 }

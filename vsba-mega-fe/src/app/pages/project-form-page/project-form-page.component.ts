@@ -18,29 +18,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 
 @Component({
-    selector: 'app-project-form-page',
-    imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
-    templateUrl: './project-form-page.component.html',
-    styleUrl: './project-form-page.component.css',
-    standalone: true,
+  selector: 'app-project-form-page',
+  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
+  templateUrl: './project-form-page.component.html',
+  styleUrl: './project-form-page.component.css',
+  standalone: true,
 })
 export class ProjectFormPageComponent {
   active_tab = 'Project';
   params: any = {};
-  @ViewChild('confirmation_popup') confirmation_popup:any;
-  tabList = [
+  @ViewChild('confirmation_popup') confirmation_popup: any;
+  tabList: any[] = [
     {
       name: 'Project',
-      action: () => {
-        this.active_tab = 'Project';
-      }
     },
     {
       name: 'Sub-Project',
-      action: () => {
-        this.active_tab = 'Sub-Project';
-        console.log('Sub-projects tab clicked');
-      }
     }
   ];
   form: FormGroup;
@@ -76,7 +69,7 @@ export class ProjectFormPageComponent {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
-        
+
       }
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
@@ -134,7 +127,7 @@ export class ProjectFormPageComponent {
     currentPills.splice(pillIndex, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
-  selected_project_id:any={}
+  selected_project_id: any = {}
   submit_form(): void {
     const nextId = Math.random().toString(36).substring(2, 9);
     const formData = {
@@ -149,7 +142,7 @@ export class ProjectFormPageComponent {
   }
   add_sub_project() {
     console.log(this.selected_project_id, 'Selected Project ID:');
-    
+
     this.route.navigate(['/project/form'], { queryParams: { id: this.selected_project_id.project_id } });
   }
   submit_sub_project_form(): void {
@@ -161,7 +154,7 @@ export class ProjectFormPageComponent {
     this.active_tab = 'Sub-Project';
     console.log(this.gs.items, 'Sub-Project Data:', subProjectData);
   }
-  
+
   dummyData = {
     project_name: "mayur",
     full_venue_required: "yes",
