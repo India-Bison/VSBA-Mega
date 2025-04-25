@@ -3,3 +3,17 @@
 <p class="text-3xl font-bold">dashbaord page </p>
 
 <app-date-range-picker></app-date-range-picker>
+
+<div class="grid grid-cols-6 gap-4">
+    <app-button color="bg-pink-800 text-white" (click)="Delete_Project.open()" label="Delete"></app-button>
+    <app-button color="bg-pink-800 text-white"(click)="Disable.open()" label="Disable"></app-button>
+    <app-button color="bg-pink-800 text-white" (click)="Submit.open()" label="Submit"></app-button>
+    <app-button color="bg-pink-800 text-white" (click)="sub_project.open()" label="sub-project"></app-button>
+    <app-button color="bg-pink-800 text-white" (click)="Discard.open()" label="Discard"></app-button>
+</div>
+
+<app-confirmation-popup #Delete_Project  cancelText="Cancel" confirmColor="#3F41D1" iconColor="#FFF0F0" confirmText="Yes, Delete It" label="Delete Project?" img="../../../assets/delete_img.svg">This action cannot be undone, and all associated data will be permanently removed.</app-confirmation-popup>
+<app-confirmation-popup #Disable  cancelText="Cancel" confirmColor="#3F41D1" iconColor="#FFF0F0" confirmText="Yes, Disable It" label="Disable Project?" img="../../../assets/Disable_img.svg" >This project will be disabled and become inactive. You can re-enable it anytime.</app-confirmation-popup>
+<app-confirmation-popup #Submit  cancelText="Cancel" confirmColor="#3F41D1" iconColor="#E1E8F5" confirmText="Yes, Submit" label="Submit Project?" img="../../../assets/Submit_img.svg" >You're about to Submit a new project. Make sure all details are correct before submitting.</app-confirmation-popup>
+<app-confirmation-popup #sub_project  cancelText="Cancel" confirmColor="#3F41D1" iconColor="#E1E8F5" confirmText="Add Sub-project" label="Continue without sub-project?" img="../../../assets/Submit_img.svg" >Proceed without adding subprojects? You can add them later if needed.</app-confirmation-popup>
+<app-confirmation-popup #Discard cancelText="Cancel" confirmColor="#FA2912" iconColor="#FFF0F0" confirmText="Yes, Discard It" label="Discard Project?" img="../../../assets/Discard_img.svg" >This project will be Discarded and Changes will not be saved.</app-confirmation-popup>

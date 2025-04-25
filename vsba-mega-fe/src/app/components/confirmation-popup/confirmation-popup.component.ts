@@ -17,6 +17,7 @@ export class ConfirmationPopupComponent {
   @Input() scroll: any;
   @Input() redirect = true;
   @Input() icon: string = '';           // icon name ya URL
+  @Input() img: string = '';           // icon name ya URL
   @Input() iconColor: string = '';      // bg color of the icon
   @Input() confirmText: string = 'Yes'; // Confirm button text
   @Input() confirmColor: string = 'bg-blue-600'; // Tailwind button bg class
