@@ -140,14 +140,16 @@ export class ProjectFormPageComponent {
       ...this.form.value,
       project_id: nextId,
     };
-    this.selected_project_id = formData.project_id;
+    this.selected_project_id = formData;
     this.gs.items.projects.push(formData);
     console.log('Full Project Form Value:', formData);
     console.log('Updated Items:', this.gs.items);
     this.route.navigate(['/project/list'], { queryParams: { project_id: nextId } });
   }
   add_sub_project() {
-    this.route.navigate(['/project/form'], { queryParams: { project_id: this.selected_project_id } });
+    console.log(this.selected_project_id, 'Selected Project ID:');
+    
+    this.route.navigate(['/project/form'], { queryParams: { project_id: this.selected_project_id.project_id } });
   }
   submit_sub_project_form(): void {
     const subProjectData = {
