@@ -30,10 +30,11 @@ export class MultiSearchComponent {
   selectOption(option: string) {
     if (this.selectedOptions.includes(option)) {
       this.removeItem(option);
-    } else if (this.selectedOptions.length < this.maxSelections) {
-      this.selectedOptions.push(option);
-      this.scrollToRight(); // <- auto scroll
-    }
+    } 
+    this.selectedOptions.push(option);
+    this.scrollToRight();
+    // else if (this.selectedOptions.length < this.maxSelections) {
+    // }
 
     this.searchText = '';
     this.highlightedIndex = 0;

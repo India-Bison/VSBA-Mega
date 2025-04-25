@@ -130,7 +130,6 @@ export class ProjectFormPageComponent {
     currentPills.splice(pillIndex, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
-
   submit_form(): void {
     const nextId = this.gs.items.length > 0 
       ? Math.max(...this.gs.items.map((item:any) => item.project_id || 0)) + 1 
@@ -142,7 +141,7 @@ export class ProjectFormPageComponent {
     this.gs.items.projects.push(formData);
     console.log('Full Project Form Value:', formData);
     console.log('Updated Items:', this.gs.items);
-    this.route.navigate(['/project/form'], { queryParams: { project_id: nextId } });
+    this.route.navigate(['/project/list'], { queryParams: { project_id: nextId } });
   }
   submit_sub_project_form(): void {
     const subProjectData = {
@@ -150,6 +149,7 @@ export class ProjectFormPageComponent {
       project_id: this.params.project_id,
     };
     this.gs.items.sub_projects.push(subProjectData);
+    this.active_tab = 'Sub-Project';
     console.log(this.gs.items, 'Sub-Project Data:', subProjectData);
   }
   
@@ -200,4 +200,13 @@ export class ProjectFormPageComponent {
       }));
     });
   }
+  columns: any = [
+    { title: 'Sr. No.', type: 'Index', key: 'index' },
+    { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
+    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
+    { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
+    { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
+  ];
 }

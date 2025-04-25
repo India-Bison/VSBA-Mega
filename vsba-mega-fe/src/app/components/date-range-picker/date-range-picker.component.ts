@@ -27,7 +27,7 @@ import { format } from 'date-fns';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
-  @Input() label = 'Date Range';
+  @Input() label = '';
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
