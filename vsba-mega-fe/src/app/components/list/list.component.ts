@@ -8,18 +8,19 @@ import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 
 @Component({
-    selector: 'app-list',
-    imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule],
-    templateUrl: './list.component.html',
-    styleUrl: './list.component.css',
-    standalone: true,
+  selector: 'app-list',
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule],
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.css',
+  standalone: true,
 })
 export class ListComponent {
   // params: any = {};
   // items: any[] = [];
-  @Input() items:any = {}
+  @Input() items: any = {}
   @Input() params: any = {};
-  @Input() columns:any
+  @Input() columns: any
+  @Input() pagination: boolean = true
   currentPage = 1;
   totalPages = 1;
   totalItems = 3;
@@ -30,7 +31,8 @@ export class ListComponent {
       name: 'All',
       action: () => {
         this.active_tab = 'All',
-        console.log('All tab clicked')}
+          console.log('All tab clicked')
+      }
     },
     {
       name: 'Pending',
@@ -38,19 +40,19 @@ export class ListComponent {
         this.active_tab = 'Pending';
         console.log('Pending tab clicked');
       }
-    },{
+    }, {
       name: 'Approved',
       action: () => {
         this.active_tab = 'Approved';
         console.log('Approved tab clicked');
       }
-    },{
+    }, {
       name: 'Reject',
       action: () => {
         this.active_tab = 'Reject';
         console.log('Reject tab clicked');
       }
-    },{
+    }, {
       name: 'Disabled',
       action: () => {
         this.active_tab = 'Disabled';
@@ -70,7 +72,7 @@ export class ListComponent {
   expandedState: { [rowIndex: number]: string | null } = {};
 
 
-  constructor(public gs:GlobalService){}
+  constructor(public gs: GlobalService) { }
   ngOnInit(): void {
     // this.items = this.gs.items
     //  this.loadDummyData();
@@ -128,12 +130,14 @@ export class ListComponent {
         startdate_enddate: '12/03/2025 - 25/03/2025',
         status: 'Approved',
         children: [
-          { type: 'Project',
+          {
+            type: 'Project',
             name: 'Shreeram',
             resource_type: 'Computer Labs, Classrooms, swimming pool',
             slot_type: 'Full Day',
             startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Approved',}
+            status: 'Approved',
+          }
         ]
       }
     ];
@@ -151,7 +155,7 @@ export class ListComponent {
   toggleExpand(item: any): void {
     item.expanded = !item.expanded;
   }
-  
+
   // Pagination funcation
   async handlePageChange(page: number) {
     this.currentPage = page;
@@ -161,44 +165,44 @@ export class ListComponent {
 
   toggleAllSelection(): void {
     this.allSelected = !this.allSelected;
-    this.items.forEach((item:any) => {
+    this.items.forEach((item: any) => {
       item.selected = this.allSelected;
-  
+
       if (item.children && item.children.length) {
-        item.children.forEach((child:any) => {
+        item.children.forEach((child: any) => {
           child.selected = this.allSelected;
         });
       }
     });
   }
-  
+
   toggleParentSelection(item: any): void {
     item.selected = !item.selected; // now you handle flipping
     if (item.children && item.children.length) {
-      item.children.forEach((child:any) => {
+      item.children.forEach((child: any) => {
         child.selected = item.selected;
       });
     }
-    
+
     this.checkAllSelected();
   }
-  
-  
+
+
   toggleChildSelection(parent: any): void {
     // If all children selected, set parent to selected
     parent.selected = parent.children.every((child: any) => child.selected);
-  
+
     // Recheck header state
     this.checkAllSelected();
   }
-  
+
   checkAllSelected(): void {
-    this.allSelected = this.items.every((item:any) => {
+    this.allSelected = this.items.every((item: any) => {
       const childrenSelected = item.children?.every((child: any) => child.selected) ?? true;
       return item.selected && childrenSelected;
     });
   }
-  
+
 
 
 }
