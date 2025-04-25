@@ -5,7 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
 
-  items: any[] = []
+  items: any = {
+    projects: [],
+    sub_projects: []
+  };
   constructor() {
     console.log(this.items, 'gsssssss');
    }  
