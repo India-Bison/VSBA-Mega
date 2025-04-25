@@ -16,10 +16,11 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
+import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
+  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css',
   standalone: true,

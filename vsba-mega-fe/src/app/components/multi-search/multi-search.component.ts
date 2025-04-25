@@ -1,16 +1,16 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-multi-search',
-    imports: [FormsModule, NgFor, NgIf],
-    templateUrl: './multi-search.component.html',
-    styleUrl: './multi-search.component.css',
-    standalone: true,
+  selector: 'app-multi-search',
+  imports: [FormsModule, NgFor, NgIf],
+  templateUrl: './multi-search.component.html',
+  styleUrl: './multi-search.component.css',
+  standalone: true,
 })
 export class MultiSearchComponent {
-
+  @Input() label = 'Search';
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
 
   allOptions = ['Classroom', 'Computer Lab', 'Chemistry Lab', 'Library', 'Auditorium'];
@@ -31,7 +31,7 @@ export class MultiSearchComponent {
   selectOption(option: string) {
     if (this.selectedOptions.includes(option)) {
       this.removeItem(option);
-    } 
+    }
     this.selectedOptions.push(option);
     this.scrollToRight();
     // else if (this.selectedOptions.length < this.maxSelections) {
