@@ -53,7 +53,7 @@
                         <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_slot()" label="+ ADD SLOT">
                         </app-button>
                     </div>
-                    <div formArrayName="slots" class="flex flex-col gap-4">
+                    <div formArrayName="slot_group" class="flex flex-col gap-4">
                         <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col shadow-sm">
                             <p class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
                                 <span (click)="remove_slot(i)" class="cursor-pointer">—</span>
