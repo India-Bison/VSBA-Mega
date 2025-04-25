@@ -7,16 +7,8 @@
     </div>
   </div>
   
-  <div *ngIf="items?.length == 0"
-      class="felx justify-center items-center border-[#3F41D1] rounded-md bg-white border border-primary  h-[calc(100%-360px)] md:h-[calc(100%-200px)]">
-      <div class="w-full h-96 p-10 flex justify-center items-center">
-          <div class="flex-col items-center justify-center">
-              <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
-              <p class="text-md text-center">No Records found</p>
-          </div>
-      </div>
-  </div>
-  <div  class="overflow-x-auto relative print-section flex flex-col gap-5 overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
+
+  <div  class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
       <div class="overflow-y-auto h-full">
           <table class="table-auto text-text-color-600 w-full  ">
               <thead
@@ -140,6 +132,17 @@
                 
           </table>
       </div>
+
+      <div *ngIf="items?.length == 0"
+      class="felx justify-center items-center rounded-b-2xl bg-white border border-primary">
+      <div class="w-full h-96 p-10 flex justify-center items-center">
+          <div class="flex-col items-center justify-center">
+              <!-- <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" /> -->
+              <p class="text-md text-center">No Records found</p>
+          </div>
+      </div>
+  </div>
+
   </div>
 </div>
 <div class="fixed bottom-2 w-[92%]">
