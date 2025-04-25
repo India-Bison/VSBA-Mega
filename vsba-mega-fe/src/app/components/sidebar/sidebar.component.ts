@@ -201,15 +201,48 @@ export class SidebarComponent {
 
   sidebar: any = [
     {
+      id: 1,
+      label: 'Home',
+      icon: '../../../assets/chart-2.svg',
+      selected_icon: '../../../assets/chart-2.svg',
+      selected: false,
+      router_link: '/dashboard-home',
+      submenu: [],
+      permissions: "home:view"
+
+
+    },
+    {
       id: 2,
       label: 'Project',
       icon: '../../../assets/document-text.svg',
-      selected_icon: '../../../assets/document-text-blue.svg',
+      selected_icon: '../../../assets/document-text.svg',
       selected: false,
-      router_link: '/project/list',
+      router_link: '/dashboard',
       submenu: [],
       permissions: "dashboard:view"
 
+    },
+    {
+      id: 3,
+      label: 'Project',
+      icon: '../../../assets/profile-2user.svg',
+      selected_icon: '../../../assets/profile-2user.svg',
+      selected: false,
+      router_link: '/project/list',
+      submenu: [],
+      permissions: "list:view"
+
+    },
+    {
+      id: 4,
+      label: 'Learning Management',
+      icon: '../../../assets/building.svg',
+      selected_icon: '../../../assets/building.svg',
+      selected: true,
+      router_link: '/master/course/list',
+      submenu: [],
+      permissions: 'course:view'
     },
   ]
 

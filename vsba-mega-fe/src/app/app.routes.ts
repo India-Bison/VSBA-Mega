@@ -13,7 +13,7 @@ export const routes: Routes = [
         path: '', component: DashboardLayoutPageComponent,
         // canActivate: [canActivateAuthRole],
         children: [
-            { path: '', redirectTo: 'project/list', pathMatch: 'full' },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardPageComponent },
             { path: 'project/form', component: ProjectFormPageComponent },
             { path: 'list', component: ListComponent },
