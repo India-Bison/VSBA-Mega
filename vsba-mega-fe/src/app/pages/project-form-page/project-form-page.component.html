@@ -25,7 +25,8 @@
 
                     <div>
                         <app-text-area label="Short Description*" formControlName="description"></app-text-area>
-                        <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words</div>
+                        <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words
+                        </div>
                     </div>
 
                     <app-radio label="Audit Required" [is_required]="true" formControlName="audit_required" [options]="[
@@ -46,7 +47,7 @@
                     <app-date-range-picker formControlName="project_start_date"></app-date-range-picker>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
-                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-[492.67px] max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
+                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
                     <div class="flex justify-between items-center">
                         <app-radio label="Slot Type" [is_required]="true" formControlName="slot_type" [options]="[
                         { label: 'Full Day', value: 'Full Day' },
@@ -65,8 +66,8 @@
                             </p>
                             <app-date-range-picker class="w-full" formControlName="slot_start_date"></app-date-range-picker>
                             <div class="flex justify-between w-full gap-2">
-                                <app-date-input [format]="'time'" class="w-32" formControlName="start_time"></app-date-input>
-                                <app-select-input label="Hours" formControlName="hours" class="w-32" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
+                                <app-date-input [format]="'time'" class="w-52" formControlName="start_time"></app-date-input>
+                                <app-select-input label="Hours" formControlName="hours" class="w-52" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
                                 </app-select-input>
                                 <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(i)">
                                     <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1]"></div>
