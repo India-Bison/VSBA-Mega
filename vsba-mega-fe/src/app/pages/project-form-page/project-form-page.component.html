@@ -1,10 +1,14 @@
-<app-header [label]="active_tab == 'Project' ? 'Project / Add Project' : 'Project / Add Project / Add Sub-Project'"></app-header>
+<app-header label="Project/{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
     <div class="flex flex-col bg-white p-6 rounded shadow w-full gap-6">
         <div class="flex items-center justify-between">
-            <h1 *ngIf="active_tab == 'Project'" class="text-xl font-medium leading-[100%] tracking-2p">Add Project</h1>
-            <h1 *ngIf="active_tab == 'Sub-Project'" class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to 30/03/2025)</span></h1>
-            <app-toggle-tabs params_name="view" [tabs]="tabList" [defaultActive]="params.project_id ? 'Sub-Project' : 'Project'"></app-toggle-tabs>
+            <ng-container *ngIf="!params.parent_id">
+                <h1 class="text-xl font-medium leading-[100%] tracking-2p">{{params.id? 'Update' : 'Add'}} Project</h1>
+            </ng-container>
+            <ng-container *ngIf="params.parent_id">
+                <h1 class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to 30/03/2025)</span></h1>
+            </ng-container>
+            <app-toggle-tabs [params]="params" params_name="view" [tabs]="tabList" [defaultActive]="params.view"></app-toggle-tabs>
         </div>
         <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
@@ -89,8 +93,8 @@
         </div>
         <div *ngIf="params.view == 'Sub-Project'" class="w-full flex flex-col gap-6">
             <div class="flex items-center w-full justify-between">
-                <h1 class="text-xl text-[#212121] font-medium">Add Sub Project</h1>
-                <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
+                <h1 class="text-xl text-[#212121] font-medium">{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project</h1>
+                <app-button *ngIf="params.parent_id" color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
             </div>
             <app-list [columns]="columns" [items]="gs.items.sub_projects" [params]="params"></app-list>
             <div class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
