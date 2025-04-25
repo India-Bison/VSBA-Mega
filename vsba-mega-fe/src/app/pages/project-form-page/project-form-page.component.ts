@@ -16,31 +16,27 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
+import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
+import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
 
 @Component({
-    selector: 'app-project-form-page',
-    imports: [ToggleTabsComponent, RadioComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
-    templateUrl: './project-form-page.component.html',
-    styleUrl: './project-form-page.component.css',
-    standalone: true,
+  selector: 'app-project-form-page',
+  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, SubProjectsOfProjectPipe, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
+  templateUrl: './project-form-page.component.html',
+  styleUrl: './project-form-page.component.css',
+  standalone: true,
 })
 export class ProjectFormPageComponent {
   active_tab = 'Project';
   params: any = {};
-  @ViewChild('confirmation_popup') confirmation_popup:any;
-  tabList = [
+  plus_minus_index: any = 0;
+  @ViewChild('confirmation_popup') confirmation_popup: any;
+  tabList: any[] = [
     {
       name: 'Project',
-      action: () => {
-        this.active_tab = 'Project';
-      }
     },
     {
       name: 'Sub-Project',
-      action: () => {
-        this.active_tab = 'Sub-Project';
-        console.log('Sub-projects tab clicked');
-      }
     }
   ];
   form: FormGroup;
@@ -70,17 +66,26 @@ export class ProjectFormPageComponent {
       week_days: [[]],
       slot_type: ['']
     })
-    this.add_slot();
   }
   ngOnInit() {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
-        
+        let projectData: any = {}
+        if (this.params.parent_id) {
+          projectData = this.gs.items.sub_projects.find((item: any) => item.id === this.params.id);
+        } else {
+          projectData = this.gs.items.projects.find((item: any) => item.id === this.params.id);
+        }
+        if (projectData) {
+          this.patch_project_form(projectData);
+        }
+      } else {
+        this.add_slot();
       }
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
-    console.log(this.gs.items, "global service data");
+    // console.log(this.gs.items, "global service data");
 
   }
 
@@ -105,102 +110,85 @@ export class ProjectFormPageComponent {
   }
 
   add_pill(index: number): void {
-    const slotGroup = this.slots.at(index) as FormGroup;
-    const startTime = slotGroup.get('start_time')?.value;
-    const hoursValue = slotGroup.get('hours')?.value;
-    if (startTime && hoursValue) {
-      const hours = parseInt(hoursValue);
-      const [hoursPart, minutesPart] = startTime.split(':');
-      const startDate = new Date();
-      startDate.setHours(+hoursPart);
-      startDate.setMinutes(+minutesPart);
-      const endDate = new Date(startDate);
-      endDate.setHours(startDate.getHours() + hours);
-      const formatTime = (date: Date): string => {
-        const hh = String(date.getHours()).padStart(2, '0');
-        const mm = String(date.getMinutes()).padStart(2, '0');
-        return `${hh}:${mm}`;
+    const slot_group = this.slots.at(index) as FormGroup;
+    const start_time = slot_group.get('start_time')?.value;
+    const hours_value = slot_group.get('hours')?.value;
+    if (start_time && hours_value) {
+      const hours = parseInt(hours_value, 10);
+      const [hours_part, minutes_part] = start_time.split(':').map(Number);
+      const now = new Date();
+      const start_date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours_part, minutes_part);
+      const end_date = new Date(start_date);
+      end_date.setHours(end_date.getHours() + hours);
+      const format_time = (date: Date): string => {
+        let hrs = date.getHours();
+        const mins = String(date.getMinutes()).padStart(2, '0');
+        const ampm = hrs >= 12 ? 'PM' : 'AM';
+        hrs = hrs % 12;
+        hrs = hrs ? hrs : 12;
+        return `${hrs}:${mins} ${ampm}`;
       };
-      const pillText = `${formatTime(startDate)} - ${formatTime(endDate)}`;
-      const currentPills = slotGroup.get('slot_times')?.value || [];
+      const pillText = `${format_time(start_date)} - ${format_time(end_date)}`;
+      const currentPills: string[] = slot_group.get('slot_times')?.value || [];
+      if (currentPills.includes(pillText)) return;
       currentPills.push(pillText);
-      slotGroup.get('slot_times')?.setValue(currentPills);
+      slot_group.get('slot_times')?.setValue(currentPills);
+      slot_group.get('slot_times')?.markAsDirty();
+      slot_group.get('slot_times')?.updateValueAndValidity();
     }
   }
+  
 
-  remove_pill(slotIndex: number, pillIndex: number): void {
-    const slotGroup = this.slots.at(slotIndex) as FormGroup;
+  remove_pill(slot_index: number, pill_index: number): void {
+    const slotGroup = this.slots.at(slot_index) as FormGroup;
     const currentPills = slotGroup.get('slot_times')?.value || [];
-    currentPills.splice(pillIndex, 1);
+    currentPills.splice(pill_index, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
-  selected_project_id:any={}
-  submit_form(): void {
-    const nextId = Math.random().toString(36).substring(2, 9);
+  submit_form(route?: any): void {
     const formData = {
       ...this.form.value,
-      id: nextId,
+      parent_id: this.params.parent_id || undefined,
+      status: 'Pending',
     };
-    this.selected_project_id = formData;
-    this.gs.items.projects.push(formData);
-    console.log('Full Project Form Value:', formData);
-    console.log('Updated Items:', this.gs.items);
-    this.route.navigate(['/project/form'], { queryParams: { id: nextId } });
+    if (this.params.id) {
+      if (this.params.parent_id) {
+        let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
+        if (index !== -1) {
+          this.gs.items.sub_projects[index] = formData;
+        }
+      } else {
+        let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
+        if (index !== -1) {
+          this.gs.items.projects[index] = formData;
+        }
+      }
+    } else {
+      const nextId = Math.random().toString(36).substring(2, 9);
+      formData.id = nextId;
+      if (this.params.parent_id) {
+        this.gs.items.sub_projects.push(formData);
+      } else {
+        this.gs.items.projects.push(formData);
+      }
+    }
+    this.gs.save_in_local_storage();
+    if (route) {
+      this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, view: 'Sub-Project' } });
+    } else {
+      this.route.navigate(['/project/list'], {});
+    }
   }
   add_sub_project() {
-    console.log(this.selected_project_id, 'Selected Project ID:');
-    
-    this.route.navigate(['/project/form'], { queryParams: { id: this.selected_project_id.project_id } });
+    this.form.reset()
+    this.route.navigate(['/project/form'], { queryParams: { view: 'Project', parent_id: this.params.id } });
   }
-  submit_sub_project_form(): void {
-    const subProjectData = {
-      ...this.form.value,
-      project_id: this.params.project_id,
-    };
-    this.gs.items.sub_projects.push(subProjectData);
-    this.active_tab = 'Sub-Project';
-    console.log(this.gs.items, 'Sub-Project Data:', subProjectData);
-  }
-  
-  dummyData = {
-    project_name: "mayur",
-    full_venue_required: "yes",
-    resource_type: "name",
-    description: "mayurrrrrrrr",
-    audit_required: "Comprehensive Audit",
-    project_start_date: "2025-04-24",
-    project_end_date: "2025-04-16",
-    week_days: "sunday,monday,tuesday,wednesday",
-    slot_type: "Full Day",
-    slots: [
-      {
-        slot_start_date: "2025-04-02",
-        slot_end_date: "2025-04-08",
-        start_time: "12:22",
-        hours: "4",
-        slot_times: [
-          "02:19 - 03:19",
-          "02:22 - 06:22"
-        ]
-      }
-    ]
-  };
   patch_project_form(data: any) {
-    this.form.patchValue({
-      project_name: data.project_name,
-      full_venue_required: data.full_venue_required,
-      resource_type: data.resource_type,
-      description: data.description,
-      audit_required: data.audit_required,
-      project_start_date: data.project_start_date,
-      project_end_date: data.project_end_date,
-      week_days: data.week_days,
-      slot_type: data.slot_type,
-    });
-    const slotsFormArray = this.form.get('slot_group') as FormArray;
-    slotsFormArray.clear();
+    this.form.patchValue(data);
+    const slots_array = this.form.get('slot_group') as FormArray;
+    slots_array.clear();
     data.slot_group.forEach((slot: any) => {
-      slotsFormArray.push(this.fb.group({
+      slots_array.push(this.fb.group({
         slot_start_date: slot.slot_start_date,
         slot_end_date: slot.slot_end_date,
         start_time: slot.start_time,
@@ -215,7 +203,25 @@ export class ProjectFormPageComponent {
     { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
+    // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
+    {
+      title: 'Action', type: 'Action', actions: [
+        { title: 'Update', icon: 'bx bx-edit-alt', action: this.edit.bind(this) },
+        // { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },,
+      ]
+    },
   ];
+  async edit(item: any, index: any) {
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, view: 'Project' } });
+  }
+  
+  plus_minus_open_close(index: number) {
+    if (this.plus_minus_index == index) {
+      this.plus_minus_index = null;
+    } else {
+      this.plus_minus_index = index;
+    }
+  }
+
 }
