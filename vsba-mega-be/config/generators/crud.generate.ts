@@ -58,7 +58,7 @@ const copyAndReplace = (
     const files = fs.readdirSync(srcDir);
     files.forEach((file) => {
         const srcFilePath = path.join(srcDir, file);
-        const destFileName = replacePlaceholders(file, oldName, newName, apiPath); // Update file name
+        const destFileName = toDashCase(replacePlaceholders(file, oldName, newName, apiPath)); // Update file name
         const destFilePath = path.join(destDir, destFileName);
 
         if (fs.lstatSync(srcFilePath).isDirectory()) {
