@@ -32,93 +32,9 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
-          <ng-container *ngFor="let item of items; let i = index">
-            <!-- Main Row -->
-            <tr class="border-t border-t-[#e4e7ec]">
-              <ng-container *ngFor="let column of columns">
-                <td *ngIf="column.type == 'Index'" class="px-4 h-16">
-                  <div class="flex justify-center items-center">
-                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
-                  </div>
-                </td>
-
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}" class="px-4 h-16 items-center">
-
-                  <ng-container *ngIf="column.key === 'mobile_number_icon'; else main_value">
-                    <div class="text-start items-center gap-4">
-                      <i class="{{ item?.mobile_number_icon?.contact_number_icon }}"></i>
-                      {{
-                      item?.mobile_number_icon?.mobile_number &&
-                      item?.mobile_number_icon?.mobile_number ?
-                      item?.mobile_number_icon?.mobile_number : '-'
-                      }}
-                    </div>
-                  </ng-container>
-
-                  <ng-template #main_value>
-                    <div [class]="column?.class" class="flex gap-2 items-center">
-
-                      <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="column.key === 'type'" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer rotate-180 transition-transform duration-200" [class.rotate-0]="item.expanded" (click)="toggleExpand(item)" />
-
-                      <!-- Status as Button -->
-                      <ng-container *ngIf="item[column.key] === 'Approved' || item[column.key] === 'Pending' || item[column.key] === 'Rejected'; else normalText">
-                        <button class="px-[10px] py-1 rounded-full border text-sm font-medium" [ngClass]="{
-                                    'text-[#03A600] border-[#03A600]': item[column.key] === 'Approved',
-                                    'text-[#DF6E12] border-[#DF6E12]': item[column.key] === 'Pending',
-                                    'text-red-500 border-red-500': item[column.key] === 'Rejected'
-                                  }">
-                          {{ item[column.key] }}
-                        </button>
-                      </ng-container>
-
-                      <!-- Default Text Value -->
-                      <ng-template #normalText>
-                        <span [ngClass]="{
-                                  'text-[#03A600]': item[column.key] === 'Active',
-                                  'text-[#DF6E12]': item[column.key] === 'Inactive'
-                                }">
-                          {{ column.uppercase ? (item[column.key] | uppercase) : (item[column.key] || '-') }}
-                        </span>
-                      </ng-template>
-                    </div>
-                  </ng-template>
-                </td>
-
-                <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center ">
-                  <div class="flex gap-2 items-center justify-center">
-                    <ng-container *ngFor="let action of column.actions">
-                      <i *ngIf="action.condition || action.condition == undefined" (click)="action.action(item, i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}">
-                      </i>
-                    </ng-container>
-                  </div>
-                </td>
-              </ng-container>
-            </tr>
-
-            <!-- Child Rows -->
-            <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-gray-50">
-              <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-center items-center"> <input class="mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}</td>
-              <td class="px-4 h-16 text-sm">{{ child.name }}</td>
-              <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
-              <td class="px-4 h-16 text-sm">{{ child.slot_type }}</td>
-              <td class="px-4 h-16 text-sm">{{ child.startdate_enddate }}</td>
-              <td class="px-4 h-16 text-sm">
-                <button class="px-2 py-1 rounded-full border text-sm font-medium flex justify-center items-center" [ngClass]="{
-                            'text-[#03A600] border-[#03A600]': child.status === 'Approved',
-                            'text-[#DF6E12] border-[#DF6E12]': child.status === 'Pending',
-                            'text-red-500 border-red-500': child.status === 'Rejected'
-                          }">
-                  {{ child.status }}
-                </button>
-              </td>
-            </tr>
-
-          </ng-container>
+        <tbody>
+          <app-table-row *ngFor="let item of items" [item]="item" [columns]="columns"></app-table-row>
         </tbody>
-
       </table>
     </div>
 
