@@ -129,5 +129,5 @@ Dummy.belongsTo(User, { foreignKey: 'created_by_id', as: 'dummy_created_by_user'
 User.hasMany(Dummy, { foreignKey: 'updated_by_id', as: 'dummy_updated_by' });
 Dummy.belongsTo(User, { foreignKey: 'updated_by_id', as: 'dummy_updated_by_user' });
 
-//Command to Run : bun src/models/dummy.model.ts 
+//Command to Run : bun src/apis/moddel_path 
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
