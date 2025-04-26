@@ -105,7 +105,7 @@ const main = async () => {
     const newApiListEntry = `${toSnakeCase(apiName)}_details,`;
     const updatedApiListContent = apiListContent
         .replace(/\/\/ Add Imports Here/, `// Add Imports Here\n${newApiImport}`)
-        .replace(/\/\/ Add Apis Here/, `// Add Apis Here\n${newApiListEntry}`);
+        .replace(/\/\/ Add Apis Here/, `// Add Apis Here\n    ${newApiListEntry}`);
     fs.writeFileSync(apiListPath, updatedApiListContent, 'utf8');
     console.log('API list updated successfully!');
 };
