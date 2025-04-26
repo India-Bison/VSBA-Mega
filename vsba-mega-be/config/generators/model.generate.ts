@@ -15,20 +15,6 @@ const dashToPascalCase = (str: string): string => {
     .replace(/(^\w|-\w)/g, (match) => match.replace('-', '').toUpperCase()); // Convert to PascalCase
 };
 
-function execute_command(command: string, table_name: string) {
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing command: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`Database Table Generated Successfully!`);
-    process.exit(0);
-  })
-}
 
 // Main model to generate the file
 const generateModelFile = async () => {
@@ -74,7 +60,6 @@ const generateModelFile = async () => {
   let command = `bun ${targetDir}/${snakeCaseName}.model.ts`
   // Run command
   console.log(command)
-  execute_command(command, snakeCaseName + 's')
 
 };
 
