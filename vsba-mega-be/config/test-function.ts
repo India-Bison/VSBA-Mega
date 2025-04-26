@@ -43,7 +43,7 @@ export let test_function = async (tests: any[], execution_function: any) => {
         }
 
     } catch (error: any) {
-        // console.log(error)
+        console.log(error)
         console.error('Error in test : ', error.test.name)
         // console.log('Input : ', error.test.input)
         // console.log('----------')
