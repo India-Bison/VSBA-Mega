@@ -8,10 +8,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { DateRangePickerComponent } from '../../components/date-range-picker/date-range-picker.component';
+import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 
 @Component({
     selector: 'app-dashboard-page',
-    imports: [HeaderComponent, MultiSearchComponent, DateRangePickerComponent],
+    imports: [HeaderComponent, MultiSearchComponent, DateRangePickerComponent,ConfirmationPopupComponent],
     templateUrl: './dashboard-page.component.html',
     styleUrl: './dashboard-page.component.css',
     standalone: true,
