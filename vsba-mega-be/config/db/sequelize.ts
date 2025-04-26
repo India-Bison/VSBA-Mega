@@ -20,7 +20,7 @@ export const sequelize = new Sequelize(
     // },
     hooks: {
       afterConnect: async (connection: any) => {
-        await connection.query('SELECT set_limit(0.8);');
+        // await connection.query('SELECT set_limit(0.8);');
       },
     },
     pool: {
@@ -33,5 +33,5 @@ export const sequelize = new Sequelize(
       max: 5 // Retry 5 times before throwing an error
     }
   }
-  
+
 );

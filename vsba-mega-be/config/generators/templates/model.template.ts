@@ -7,22 +7,14 @@ let {{SnakeCaseModelName}}_model = {
     primaryKey: true,
     autoIncrement: true,
   },
-  delivered_by: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: "users",
-      key: "id",
-    },
-    allowNull: true,
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: "resource-types",
-      key: "id",
-    },
-    allowNull: true,
-  },
+  // user_id: {
+  //   type: DataTypes.INTEGER,
+  //   references: {
+  //     model: "users",
+  //     key: "id",
+  //   },
+  //   allowNull: true,
+  // },
   stringField: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -103,4 +95,8 @@ let model_options: ModelOptions = <any>{
   // }
 };
 
-export const {{PascalCaseModelName}} = sequelize.define("{{PascalCaseModelName}}", {{SnakeCaseModelName}}_model, model_options);`
+export const {{PascalCaseModelName}} = sequelize.define("{{PascalCaseModelName}}", {{SnakeCaseModelName}}_model, model_options);
+
+// sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
+
+`
