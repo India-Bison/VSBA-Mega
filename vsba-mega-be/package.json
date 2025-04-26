@@ -4,6 +4,7 @@
     "dev": "bun --watch src/index.ts",
     "start": "bun ./src/index.ts",
     "generate-api": "bun run config/generators/api.generate.ts",
+    "generate-crud": "bun run config/generators/crud.generate.ts",
     "generate-function": "bun run config/generators/function.generate.ts",
     "generate-model": "bun run config/generators/model.generate.ts"
   },

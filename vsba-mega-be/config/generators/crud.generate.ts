@@ -102,17 +102,21 @@ const main = async () => {
     const relativePath = apiPath.slice(1); // Remove leading slash
     const apiName = relativePath.split('/').pop() || ''; // Extract API name (last part of the path)
     const basePath = relativePath.split('/').slice(0, -1).join('/'); // Extract path without API name
-    const srcDir = path.join(__dirname, 'templates', 'dummy-api'); // Template source directory
+    const srcDir = path.join(__dirname, 'templates', 'dummy-crud'); // Template source directory
     const destDir = path.join(__dirname, '..', '..', 'src', 'apis', basePath, apiName); // Destination directory
 
     // Copy and replace files
-    copyAndReplace(srcDir, destDir, 'dummy-api', apiName, apiPath);
+    copyAndReplace(srcDir, destDir, 'dummy', apiName, apiPath);
 
     console.log('Files copied and updated successfully!');
 
     // Add Api to the API list
-    add_in_api_list(basePath, apiName);
+    add_in_api_list(basePath, 'create-' + apiName);
+    add_in_api_list(basePath, 'get-' + apiName);
+    add_in_api_list(basePath, 'get-' + apiName + '-list');
+    add_in_api_list(basePath, 'update-' + apiName);
+    add_in_api_list(basePath, 'delete-' + apiName);
+
 };
 
 main();
-
