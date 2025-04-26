@@ -3,7 +3,7 @@ import { run_tests } from "../config/run-tests";
 import { app } from "../config/hono";
 
 // Run Tests
-// await run_tests()
+await run_tests()
 
 // Configure Apis
 await configure_apis()
