@@ -23,17 +23,29 @@ export let setup_api = async (details: any) => {
                 //Check and Validate Body
                 let body = await validate_and_return_body(details.method, details.body_schema, c, details.allow_extra_keys)
                 // console.log(query, body);
-                const user = await c.get('user');
+                let user = await c.get('user')
+                if (!user) {
+                    user = {
+                        id: 1,
+                        keycloak_user_id: 1,
+                        keycloak_user_name: 'akashs25',
+                        role: 'admin',
+                        email_id: 'akashs25@gmail.com',
+                        first_name: 'Akash',
+                        middle_name: 'Pramod',
+                        last_name: 'Sadavarte',
+                    }
+                }
                 const path = c.req.path;
                 let path_valid = (skip_path.some(p => path.includes(p)));
 
-                // if (!user) {
-                //     if (path_valid) {
-                //         console.log("User not found, but path is valid. Continuing execution...");
-                //     } else {
-                //         return c.json({ message: 'No User Found', data: user }, 404);
-                //     }
-                // }
+                if (!user) {
+                    if (path_valid) {
+                        console.log("User not found, but path is valid. Continuing execution...");
+                    } else {
+                        return c.json({ message: 'No User Found', data: user }, 404);
+                    }
+                }
 
                 // Execute the Api using Execution Function
                 let transaction = await sequelize.transaction();

@@ -1,11 +1,13 @@
 import { DataTypes, ModelOptions } from "sequelize";
 import { sequelize } from "@config/db/sequelize";
+import { User } from "@config/models/user.model";
 
 let dummy_model = {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
+    unique: true
   },
   first_name: {
     type: DataTypes.STRING,
@@ -15,14 +17,23 @@ let dummy_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  // user_id: {
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: "users",
-  //     key: "id",
-  //   },
-  //   allowNull: true,
-  // },
+
+  created_by_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "users",
+      key: "id",
+    },
+    allowNull: true,
+  },
+  updated_by_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "users",
+      key: "id",
+    },
+    allowNull: true,
+  },
   // stringField: {
   //   type: DataTypes.STRING,
   //   allowNull: true,
@@ -105,5 +116,11 @@ let model_options: ModelOptions = <any>{
 
 export const Dummy = sequelize.define("dummy", dummy_model, model_options);
 
+User.hasMany(Dummy, { foreignKey: 'created_by_id', as: 'created_by' });
+Dummy.belongsTo(User, { foreignKey: 'created_by_id', as: 'created_by_user' });
+
+User.hasMany(Dummy, { foreignKey: 'updated_by_id', as: 'updated_by' });
+Dummy.belongsTo(User, { foreignKey: 'updated_by_id', as: 'updated_by_user' });
+
 //Command to Run : bun src/models/dummy.model.ts 
-sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
+// sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });

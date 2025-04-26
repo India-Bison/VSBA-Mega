@@ -6,6 +6,7 @@ let user_model = {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
+    unique: true
   },
   keyclock_user_id: {
     type: DataTypes.STRING,
@@ -66,3 +67,5 @@ let model_options: ModelOptions = <any>{
 };
 
 export const User = sequelize.define("user", user_model, model_options);
+
+// sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
