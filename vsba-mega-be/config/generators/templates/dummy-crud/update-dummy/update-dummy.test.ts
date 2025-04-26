@@ -4,7 +4,7 @@ export let update_dummy_tests: update_dummy_tests_interface[] = [
   {
     name: 'Dummy Gets Updated',
     input: {
-      id: 9
+      id: 1
     },
     check_output: (input, output) => {
       // return true;

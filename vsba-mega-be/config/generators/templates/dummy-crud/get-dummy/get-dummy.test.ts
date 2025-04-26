@@ -4,7 +4,7 @@ export let get_dummy_tests: get_dummy_tests_interface[] = [
   {
     name: 'Will Get Dummy',
     input: {
-      id: 9
+      id: 1
     },
     check_output: (input, output) => {
       console.log('input', input.id, output.data);
