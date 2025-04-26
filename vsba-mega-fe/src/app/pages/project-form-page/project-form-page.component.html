@@ -56,32 +56,35 @@
                         { label: 'Time Slot', value: 'Time Slot' }
                       ]">
                         </app-radio>
-
                         <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_slot()" label="+ ADD SLOT">
                         </app-button>
                     </div>
                     <div formArrayName="slot_group" class="flex flex-col gap-4">
-                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col shadow-sm">
-                            <p class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
-                                <span (click)="remove_slot(i)" class="cursor-pointer">—</span>
-                                Slot {{ i + 1 }}
-                            </p>
-                            <app-date-range-picker class="w-full" formControlName="slot_start_date"></app-date-range-picker>
-                            <div class="flex justify-between w-full gap-2">
-                                <app-date-input [format]="'time'" class="w-52" formControlName="start_time"></app-date-input>
-                                <app-select-input label="Hours" formControlName="hours" class="w-52" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
-                                </app-select-input>
-                                <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(i)">
-                                    <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1]"></div>
-                                    <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90"></div>
-                                </div>
+                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col shadow-sm group relative">
+                            <div class="flex justify-between items-center">
+                                <p class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
+                                    <i (click)="plus_minus_open_close(i)" [ngClass]="plus_minus_index === i ? 'bx bx-minus' : 'bx bx-plus'" class="text-sm text-gray-700 cursor-pointer"></i>
+                                    Slot {{ i + 1 }}
+                                </p>
+                                <i class="bx bx-trash top-2 right-2 text-red-500 text-xl absolute opacity-0 group-hover:opacity-100 cursor-pointer hover:text-red-600" (click)="remove_slot(i)">
+                                </i>
                             </div>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
-                                    {{ pill }}
-                                    <button type="button" (click)="remove_pill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">
-                                        &times;
-                                    </button>
+                            <div *ngIf="plus_minus_index == i">
+                                <app-date-range-picker class="w-full" formControlName="slot_start_date"></app-date-range-picker>
+                                <div class="flex justify-between w-full gap-2">
+                                    <app-date-input [format]="'time'" class="w-52" formControlName="start_time"></app-date-input>
+                                    <app-select-input label="Hours" formControlName="hours" class="w-52" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
+                                    </app-select-input>
+                                    <div *ngIf="form.get('slot_type')?.value != 'Full Day'" class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(i)">
+                                        <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1]"></div>
+                                        <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90"></div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
+                                        {{ pill }}
+                                        <button type="button" (click)="remove_pill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">&times;</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
