@@ -3,6 +3,7 @@ import * as path from 'path';
 import prompts from 'prompts';
 
 // Helper functions to convert cases
+const toDashCase = (str: string): string => str.replace(/_/g, '-').toLowerCase();
 const toSnakeCase = (str: string): string => str.replace(/-/g, '_').toLowerCase();
 const toPascalCase = (str: string): string =>
     str.replace(/(^\w|-\w)/g, (match) => match.replace('-', '').toUpperCase());
@@ -73,7 +74,7 @@ const copyAndReplace = (
 function add_in_api_list(basePath: string, apiName: string, mainApiName: string) {
     const apiListPath = path.join(__dirname, '..', '..', 'setup', 'api-list.ts');
     const apiListContent = fs.readFileSync(apiListPath, 'utf8');
-    const newApiImport = `import { ${toSnakeCase(apiName)}_details } from "@src/apis/${basePath}/${apiName}/${apiName}.details";`;
+    const newApiImport = `import { ${toSnakeCase(apiName)}_details } from "@src/apis/${toDashCase(basePath) ? toDashCase(basePath) + '/' : ''}${toDashCase(apiName)}/${toDashCase(apiName)}.details";`;
     const newApiListEntry = `${toSnakeCase(apiName)}_details,`;
     const updatedApiListContent = apiListContent
         .replace(/\/\/ Add Imports Here/, `// Add Imports Here\n${newApiImport}`)
@@ -101,9 +102,13 @@ const main = async () => {
 
     const relativePath = apiPath.slice(1); // Remove leading slash
     const apiName = relativePath.split('/').pop() || ''; // Extract API name (last part of the path)
-    const basePath = relativePath.split('/').slice(0, -1).join('/'); // Extract path without API name
+    let basePath = relativePath.split('/').slice(0, -1).join('/'); // Extract path without API name
     const srcDir = path.join(__dirname, 'templates', 'dummy-crud'); // Template source directory
     const destDir = path.join(__dirname, '..', '..', 'src', 'apis', basePath); // Destination directory
+
+    // Replace two slashes by / in basePath
+    basePath = basePath.replace(/\/\//g, '/');
+    basePath = basePath.replace(/\/\//g, '/');
 
     // Copy and replace files
     copyAndReplace(srcDir, destDir, 'dummy', apiName, apiPath);
@@ -112,7 +117,7 @@ const main = async () => {
 
     // Add Api to the API list
     add_in_api_list(basePath, 'get-' + apiName, apiName);
-    add_in_api_list(basePath, 'get' + apiName + '-list', apiName);
+    add_in_api_list(basePath, 'get-' + apiName + '-list', apiName);
     add_in_api_list(basePath, 'update-' + apiName, apiName);
     add_in_api_list(basePath, 'delete-' + apiName, apiName);
     add_in_api_list(basePath, 'create-' + apiName, apiName);
