@@ -5,7 +5,7 @@ import { dummy_api_tests } from "./dummy-api.test";
 import { z } from "zod";
 
 export let dummy_api_details = {
-    module: 'User',
+    module: 'Dummy',
     api_name: 'Dummy Api',
     api_description: 'Dummy Api Description',
     method: 'get',

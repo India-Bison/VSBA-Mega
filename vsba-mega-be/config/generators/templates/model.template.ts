@@ -95,7 +95,7 @@ let model_options: ModelOptions = <any>{
   // }
 };
 
-export const {{PascalCaseModelName}} = sequelize.define("{{PascalCaseModelName}}", {{SnakeCaseModelName}}_model, model_options);
+export const {{PascalCaseModelName}} = sequelize.define("{{SnakeCaseModelName}}", {{SnakeCaseModelName}}_model, model_options);
 
 // Command to Run : 
 sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
