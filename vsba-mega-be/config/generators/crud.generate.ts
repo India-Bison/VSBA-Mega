@@ -103,7 +103,7 @@ const main = async () => {
     const apiName = relativePath.split('/').pop() || ''; // Extract API name (last part of the path)
     const basePath = relativePath.split('/').slice(0, -1).join('/'); // Extract path without API name
     const srcDir = path.join(__dirname, 'templates', 'dummy-crud'); // Template source directory
-    const destDir = path.join(__dirname, '..', '..', 'src', 'apis', basePath, apiName); // Destination directory
+    const destDir = path.join(__dirname, '..', '..', 'src', 'apis', basePath); // Destination directory
 
     // Copy and replace files
     copyAndReplace(srcDir, destDir, 'dummy', apiName, apiPath);

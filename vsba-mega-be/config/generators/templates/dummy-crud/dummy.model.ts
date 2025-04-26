@@ -123,11 +123,11 @@ let model_options: ModelOptions = <any>{
 
 export const Dummy = sequelize.define("dummy", dummy_model, model_options);
 
-User.hasMany(Dummy, { foreignKey: 'created_by_id', as: 'created_by' });
-Dummy.belongsTo(User, { foreignKey: 'created_by_id', as: 'created_by_user' });
+User.hasMany(Dummy, { foreignKey: 'created_by_id', as: 'dummy_created_by' });
+Dummy.belongsTo(User, { foreignKey: 'created_by_id', as: 'dummy_created_by' });
 
-User.hasMany(Dummy, { foreignKey: 'updated_by_id', as: 'updated_by' });
-Dummy.belongsTo(User, { foreignKey: 'updated_by_id', as: 'updated_by_user' });
+User.hasMany(Dummy, { foreignKey: 'updated_by_id', as: 'dummy_updated_by' });
+Dummy.belongsTo(User, { foreignKey: 'updated_by_id', as: 'dummy_updated_by_user' });
 
 //Command to Run : bun src/models/dummy.model.ts 
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
