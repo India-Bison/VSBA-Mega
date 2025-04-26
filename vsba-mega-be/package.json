@@ -3,9 +3,9 @@
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "start": "bun ./src/index.ts",
-    "generate-api": "bun run generators/api.generate.ts",
-    "generate-function": "bun run generators/function.generate.ts",
-    "generate-model": "bun run generators/model.generate.ts"
+    "generate-api": "bun run config/generators/api.generate.ts",
+    "generate-function": "bun run config/generators/function.generate.ts",
+    "generate-model": "bun run config/generators/model.generate.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.2.0",
