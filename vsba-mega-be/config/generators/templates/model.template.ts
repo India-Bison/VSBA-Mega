@@ -84,6 +84,23 @@ let model_options: ModelOptions = <any>{
     //     name: 'unique_name_per_Model', //your massage
     // },
   ],
+  // defaultScope: {
+  //   where: {},
+  //   attributes: [],
+  //   include: []
+  // },
+  // scopes: {
+  //   scope_1: {
+  //     where: {
+  //       isActive: false
+  //     }
+  //   },
+  //   scope_with_variable: (name: any) => {
+  //     return {
+  //       where: { name }
+  //     }
+  //   }
+  // }
 };
 
 export const {{PascalCaseModelName}} = sequelize.define("{{PascalCaseModelName}}", {{SnakeCaseModelName}}_model, model_options);`
