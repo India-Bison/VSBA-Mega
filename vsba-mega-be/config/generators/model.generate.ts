@@ -48,18 +48,21 @@ const generateModelFile = async () => {
   }
 
   // Replace placeholders in the template
-  const modelContent = dummyModelTemplate
+  let modelContent = dummyModelTemplate
     .replace(/{{PascalCaseModelName}}/g, pascalCaseName)
     .replace(/{{SnakeCaseModelName}}/g, snakeCaseName);
+
+  // Replace // Command to Run : with command in front
+  let command = `bun ${targetDir}/${snakeCaseName}.model.ts`
+  modelContent = modelContent.replace(/\/\/ Command to Run :/g, '//Command to Run : ' + command);
 
   // Write the file
   fs.writeFileSync(filePath, modelContent.trim(), 'utf8');
   console.log(`Model file created: ${filePath}`);
   // For Sync Console - bun src/models/apiName.model.ts
   console.log(`Uncomment Sync line and Run this Command`)
-  let command = `bun ${targetDir}/${snakeCaseName}.model.ts`
-  // Run command
-  console.log(command)
+
+
 
 };
 
