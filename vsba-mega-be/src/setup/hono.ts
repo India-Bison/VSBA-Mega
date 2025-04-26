@@ -5,7 +5,6 @@ import { sequelize } from './sequelize'
 import { keycloak_auth } from '../middlewares/keycloak-auth.middleware'
 import { check_role_middleware } from '@src/middlewares/check-role.middleware'
 // import '../crons/attachment.cron';
-import "../associations/course.association";
 
 export const app = new OpenAPIHono()
 
