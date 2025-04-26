@@ -1,25 +1,27 @@
 <app-header label="Project/{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
-    <div class="flex flex-col bg-white p-6 rounded shadow w-full gap-6">
-        <div class="flex items-center justify-between">
+    <div class="flex flex-col bg-white rounded-2xl shadow w-full gap-6">
+        <div class="flex items-center justify-between px-6 pt-6">
             <ng-container *ngIf="!params.parent_id">
                 <h1 class="text-xl font-medium leading-[100%] tracking-2p">{{params.id? 'Update' : 'Add'}} Project</h1>
             </ng-container>
             <ng-container *ngIf="params.parent_id">
-                <h1 class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to 30/03/2025)</span></h1>
+                <h1 class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to
+                        30/03/2025)</span></h1>
             </ng-container>
-            <app-toggle-tabs [params]="params" params_name="view" [tabs]="tabList" [defaultActive]="params.view"></app-toggle-tabs>
+            <app-toggle-tabs [params]="params" params_name="view" [tabs]="tabList"
+                [defaultActive]="params.view"></app-toggle-tabs>
         </div>
-        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6">
+        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <app-text-input label="Project Name" formControlName="project_name"></app-text-input>
-                    <app-radio label="Full Venue Required" [is_required]="true" formControlName="full_venue_required" [options]="[
+                    <app-radio label="Full Venue Required" [is_required]="true" formControlName="full_venue_required"
+                        [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-
                     <!-- <app-select-input label="Resource Type*" formControlName="resource_type" [options]="[{title:'name', value:'name'}]">
                     </app-select-input> -->
                     <app-multi-search label="Resource Type*"></app-multi-search>
@@ -49,29 +51,43 @@
                     <app-date-range-picker formControlName="project_start_date"></app-date-range-picker>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
-                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
+                <div
+                    class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
                     <div class="flex justify-between items-center">
                         <app-radio label="Slot Type" [is_required]="true" formControlName="slot_type" [options]="[
                         { label: 'Full Day', value: 'Full Day' },
                         { label: 'Time Slot', value: 'Time Slot' }
                       ]">
                         </app-radio>
-                        <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_slot()" label="+ ADD SLOT">
-                        </app-button>
+                        <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_slot()">
+                            <img src="../../../assets/Blue Plus.svg" alt="Plus" class="w-5 h-5 inline mr-2" />ADD
+                            SLOT</app-button>
                     </div>
                     <div formArrayName="slot_group" class="flex flex-col gap-4">
-                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col shadow-sm group relative">
+                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i"
+                            class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col shadow-sm group relative">
                             <div class="flex justify-between items-center">
-                                <p class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
-                                    <i (click)="plus_minus_open_close(i)" [ngClass]="plus_minus_index === i ? 'bx bx-minus' : 'bx bx-plus'" class="text-sm text-gray-700 cursor-pointer"></i>
+                                <p
+                                    class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
+                                    <!-- <i (click)="plus_minus_open_close(i)"
+                                        [ngClass]="plus_minus_index === i ? 'bx bx-minus' : 'bx bx-plus'"
+                                        class="text-sm text-gray-700 cursor-pointer"></i> -->
+                                    <i (click)="plus_minus_open_close(i)" class="text-sm text-gray-700 cursor-pointer">
+                                        <img *ngIf="plus_minus_index === i" src="../../../assets/minus.svg" alt="Minus"
+                                            class="w-5 h-5" />
+                                        <img *ngIf="plus_minus_index !== i" src="../../../assets/Plus (2).svg"
+                                            alt="Plus" class="w-5 h-5" />
+                                    </i>
                                     Slot {{ i + 1 }}
                                 </p>
-                                <i class="bx bx-trash top-2 right-2 text-red-500 text-xl absolute opacity-0 group-hover:opacity-100 cursor-pointer hover:text-red-600" (click)="remove_slot(i)">
+                                <i class="bx bx-trash top-2 right-2 text-red-500 text-xl absolute opacity-0 group-hover:opacity-100 cursor-pointer hover:text-red-600"
+                                    (click)="remove_slot(i)">
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i">
-                                <app-date-range-picker class="w-full" formControlName="slot_start_date"></app-date-range-picker>
-                                <div class="flex justify-between w-full gap-2">
+                                <app-date-range-picker class="w-full"
+                                    formControlName="slot_start_date"></app-date-range-picker>
+                                <!-- <div class="flex justify-between w-full gap-2">
                                     <app-date-input [format]="'time'" class="w-52" formControlName="start_time"></app-date-input>
                                     <app-select-input label="Hours" formControlName="hours" class="w-52" [is_required]="true" [options]="[{ title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]">
                                     </app-select-input>
@@ -79,11 +95,30 @@
                                         <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1]"></div>
                                         <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90"></div>
                                     </div>
+                                </div> -->
+                                <div class="flex justify-between w-full gap-2">
+                                    <app-date-input [format]="'time'"
+                                        [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
+                                        formControlName="start_time">
+                                    </app-date-input>
+                                    <app-select-input label="Hours" formControlName="hours" [is_required]="true"
+                                        [options]="[ { title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]"
+                                        [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'">
+                                    </app-select-input>
+                                    <div *ngIf="form.get('slot_type')?.value != 'Full Day'"
+                                        class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100"
+                                        (click)="add_pill(i)">
+                                        <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] "></div>
+                                        <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="flex flex-wrap gap-2 mt-2">
-                                    <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
+                                    <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index"
+                                        class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
                                         {{ pill }}
-                                        <button type="button" (click)="remove_pill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">&times;</button>
+                                        <button type="button" (click)="remove_pill(i, j)"
+                                            class="ml-2 text-gray-500 text-2xl hover:text-red-500">&times;</button>
                                     </div>
                                 </div>
                             </div>
@@ -98,18 +133,23 @@
                 <app-button (click)="submit_form()" color="bg-[#E697AB] text-[#310000]" label="ADD SUB PROJECTS"></app-button>
             </div> -->
         </div>
-        <div *ngIf="params.view == 'Sub-Project'" class="w-full flex flex-col gap-6">
+        <div *ngIf="params.view == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
             <div class="flex items-center w-full justify-between">
                 <h1 class="text-xl text-[#212121] font-medium">Sub Projects</h1>
-                <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
+                <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()"
+                    label="ADD SUB PROJECT"></app-button>
             </div>
-            <app-list [pagination]="false" [columns]="columns" [items]="gs.items.sub_projects | subProjectsOfProject : params.parent_id || params.id" [params]="params"></app-list>
+            <app-list [pagination]="false" [columns]="columns"
+                [items]="gs.items.sub_projects | subProjectsOfProject : params.parent_id || params.id"
+                [params]="params"></app-list>
         </div>
-        <div class="flex rounded  items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4  bg-white">
+        <div
+            class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
             <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
             <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
             <app-button color="bg-[#E697AB] text-[#310000]" (click)="submit_form()" label="SUBMIT"></app-button>
-            <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]" label="ADD SUB PROJECTS"></app-button>
+            <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]"
+                label="ADD SUB PROJECTS"></app-button>
 
         </div>
     </div>
