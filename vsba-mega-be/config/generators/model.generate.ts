@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import prompts from 'prompts';
 import { dummyModelTemplate } from './templates/model.template';
+import { exec } from 'child_process';
 
 // Convert dash-case to snake_case
 const dashToSnakeCase = (str: string): string => {
@@ -13,6 +14,21 @@ const dashToPascalCase = (str: string): string => {
   return str
     .replace(/(^\w|-\w)/g, (match) => match.replace('-', '').toUpperCase()); // Convert to PascalCase
 };
+
+function execute_command(command: string) {
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing command: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`Database Table Generated Successfully!`);
+    process.exit(0);
+  })
+}
 
 // Main model to generate the file
 const generateModelFile = async () => {
@@ -54,7 +70,12 @@ const generateModelFile = async () => {
   fs.writeFileSync(filePath, modelContent.trim(), 'utf8');
   console.log(`Model file created: ${filePath}`);
   // For Sync Console - bun src/models/apiName.model.ts
-  console.log(`bun src/models/${snakeCaseName}.model.ts`)
+  console.log(`Uncomment Sync line and Run this Command`)
+  let command = `bun ${targetDir}/${snakeCaseName}.model.ts`
+  // Run command
+  console.log(command)
+  execute_command(command)
+
 };
 
 // Run the CLI
