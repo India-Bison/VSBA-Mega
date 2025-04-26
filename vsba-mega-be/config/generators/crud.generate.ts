@@ -112,7 +112,7 @@ const main = async () => {
 
     // Add Api to the API list
     add_in_api_list(basePath, 'get-' + apiName, apiName);
-    add_in_api_list(basePath, 'get-' + apiName, apiName + '-list');
+    add_in_api_list(basePath, 'get' + apiName + '-list', apiName);
     add_in_api_list(basePath, 'update-' + apiName, apiName);
     add_in_api_list(basePath, 'delete-' + apiName, apiName);
     add_in_api_list(basePath, 'create-' + apiName, apiName);
