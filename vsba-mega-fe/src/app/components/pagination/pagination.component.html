@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <p class="text-xs sm:text-sm gap-2 flex m-0">{{ showingFrom }} - {{ showingTo }} of {{ totalItems }}</p>
+    <div class="text-xs sm:text-sm gap-2 flex">{{ showingFrom }} - {{ showingTo }} of {{ totalItems }}</div>
     <div class="flex gap-1 sm:gap-2 items-center">
         <button (click)="handlePrevClick()" [disabled]="currentPage === 1" class="cursor-pointer">
             <i [ngClass]="{'text-gray-400': currentPage === 1}" class='bx bxs-chevron-left p-2 sm:p-3 rounded-full active:bg-white'></i>

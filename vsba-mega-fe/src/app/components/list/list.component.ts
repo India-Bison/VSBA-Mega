@@ -6,10 +6,11 @@ import { SearchInputComponent } from '../search-input/search-input.component';
 import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
   standalone: true,

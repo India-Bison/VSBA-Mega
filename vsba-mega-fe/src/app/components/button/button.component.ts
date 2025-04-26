@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
 export class ButtonComponent {
 
   @Input() color: string = '';
-  @Input() icon: string = '';
+  @Input() icon: any = '';
   @Input() label: string = '';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';   
   @Input() icon_alignment: 'left' | 'right' = 'left';
