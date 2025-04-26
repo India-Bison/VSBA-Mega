@@ -1,5 +1,5 @@
 import { DataTypes, ModelOptions } from "sequelize";
-import { sequelize } from "../setup/sequelize";
+import { sequelize } from "../config/db/sequelize";
 
 let user_model = {
   id: {

@@ -6,7 +6,7 @@ import { validate_and_return_body } from "./validate-and-return-body";
 import { send_response } from "./send-response";
 import { send_error } from "./send-error";
 import { app } from "./hono";
-import { sequelize } from "../setup/sequelize";
+import { sequelize } from "./db/sequelize";
 import { custom_error } from "./validation-function";
 
 let skip_path = ['/activity/generate-activity', '/attendance/auto-check-out']

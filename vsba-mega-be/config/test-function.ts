@@ -1,4 +1,4 @@
-import { sequelize } from "../setup/sequelize";
+import { sequelize } from "./db/sequelize";
 import { ForeignKeyConstraintError } from "sequelize";
 
 export let test_function = async (tests: any[], execution_function: any) => {
