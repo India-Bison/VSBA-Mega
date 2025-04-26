@@ -7,8 +7,6 @@ export let get_user_tests: get_user_tests_interface[] = [
       email_id: 'test@gmail.com'
     },
     check_output: (input, output) => {
-      // console.log('input', input);
-      // console.log('output', output);
       return true
     },
   }
