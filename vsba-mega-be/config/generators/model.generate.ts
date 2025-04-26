@@ -53,6 +53,8 @@ const generateModelFile = async () => {
   // Write the file
   fs.writeFileSync(filePath, modelContent.trim(), 'utf8');
   console.log(`Model file created: ${filePath}`);
+  // For Sync Console - bun src/models/apiName.model.ts
+  console.log(`bun src/models/${snakeCaseName}.model.ts`)
 };
 
 // Run the CLI
