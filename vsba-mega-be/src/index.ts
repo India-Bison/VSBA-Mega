@@ -1,6 +1,7 @@
-import { configure_apis } from "../config/configure-apis";
-import { run_tests } from "../config/run-tests";
-import { app } from "../config/hono";
+import { configure_apis } from "@config/configure-apis";
+import { app } from "@config/hono";
+import { run_tests } from "@config/run-tests";
+
 
 // Run Tests
 await run_tests()
