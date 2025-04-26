@@ -1,8 +1,11 @@
 <div class="bg-white rounded-2xl border border-[#e4e7ec]">
   <div class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
+    <div class="h-[76px] w-full flex px-6 justify-between items-center">
+      <ng-content></ng-content>
+    </div>
     <div class="overflow-y-auto h-full">
-      <table class="table-auto text-text-color-600 w-full  ">
-        <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] border-b border-[#e4e7ec] capitalize tracking-wider">
+      <table class="table-auto text-text-color-600 w-full border-t border-t-[#e4e7ec]  ">
+        <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
             <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" class="px-4 h-12 text-center truncate">
               <div [class]="column?.class">
@@ -23,7 +26,7 @@
         <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
           <ng-container *ngFor="let item of items; let i = index">
             <!-- Main Row -->
-            <tr class="border-t border-[#e4e7ec]">
+            <tr class="border-t border-t-[#e4e7ec]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.type == 'Index'" class="px-4 h-16">
                   <div class="flex justify-center items-center">
@@ -74,7 +77,7 @@
                   </ng-template>
                 </td>
 
-                <td *ngIf="column.type == 'Action'" class="px-4 h-16 border-b flex justify-center items-center ">
+                <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center ">
                   <div class="flex gap-2 items-center justify-center">
                     <ng-container *ngFor="let action of column.actions">
                       <i *ngIf="action.condition || action.condition == undefined" (click)="action.action(item, i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}">
