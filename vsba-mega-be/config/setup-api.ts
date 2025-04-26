@@ -27,6 +27,7 @@ export let setup_api = async (details: any) => {
                 if (!user) {
                     user = {
                         id: 1,
+                        user_id: 1,
                         keycloak_user_id: 1,
                         keycloak_user_name: 'akashs25',
                         role: 'admin',

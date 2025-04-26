@@ -4,7 +4,7 @@ import { run_tests } from "@config/run-tests";
 
 
 // Run Tests
-// await run_tests()
+await run_tests()
 
 // Configure Apis
 await configure_apis()

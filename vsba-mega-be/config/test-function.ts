@@ -7,6 +7,20 @@ export let test_function = async (tests: any[], execution_function: any) => {
         for (let test of tests) {
             let transaction = await sequelize.transaction();
             try {
+
+                let user = {
+                    id: 1,
+                    user_id: 1,
+                    keycloak_user_id: 1,
+                    keycloak_user_name: 'akashs25',
+                    role: 'admin',
+                    email_id: 'akashs25@gmail.com',
+                    first_name: 'Akash',
+                    middle_name: 'Pramod',
+                    last_name: 'Sadavarte',
+                }
+                test.input.user = user
+
                 let output: any = await execution_function(test.input, transaction)
                 let check_output = await test.check_output(test.input, output)
                 if (!check_output) {
@@ -29,14 +43,14 @@ export let test_function = async (tests: any[], execution_function: any) => {
         }
 
     } catch (error: any) {
-        console.log(error)
+        // console.log(error)
         console.error('Error in test : ', error.test.name)
-        console.log('Input : ', error.test.input)
-        console.log('----------')
-        console.log('Expected Output : ', error.test.output)
-        console.log('----------')
-        console.log('Actual Output : ', error.output.output)
-        console.log('----------')
+        // console.log('Input : ', error.test.input)
+        // console.log('----------')
+        // console.log('Expected Output : ', error.test.output)
+        // console.log('----------')
+        // console.log('Actual Output : ', error.output.output)
+        // console.log('----------')
         console.error('Conclusion : Test Failed')
         throw error;
     }

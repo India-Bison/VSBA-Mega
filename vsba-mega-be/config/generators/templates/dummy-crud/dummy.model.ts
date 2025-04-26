@@ -34,6 +34,10 @@ let dummy_model = {
     },
     allowNull: true,
   },
+  test_data: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  },
   // stringField: {
   //   type: DataTypes.STRING,
   //   allowNull: true,
@@ -95,11 +99,14 @@ let model_options: ModelOptions = <any>{
     //     name: 'unique_name_per_Model', //your massage
     // },
   ],
-  // defaultScope: {
-  //   where: {},
-  //   attributes: [],
-  //   include: []
-  // },
+  defaultScope: {
+    // where: {},
+    // attributes: [],
+    include: [
+      { model: User, as: 'created_by_user', attributes: ['id', 'first_name', 'last_name'] },
+      { model: User, as: 'updated_by_user', attributes: ['id', 'first_name', 'last_name'] },
+    ]
+  },
   // scopes: {
   //   scope_1: {
   //     where: {
