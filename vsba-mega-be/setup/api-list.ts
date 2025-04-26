@@ -9,10 +9,12 @@ import { create_dummy_details } from "@config/generators/templates/dummy-crud/cr
 export let api_list: any[] = [
     //User
     get_user_details,
-    // Add Apis Here
     delete_dummy_details,
     get_dummy_list_details,
     get_dummy_details,
     update_dummy_details,
     create_dummy_details,
+
+    // Add Apis Here
+
 ]

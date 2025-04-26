@@ -70,14 +70,14 @@ const copyAndReplace = (
     });
 };
 
-function add_in_api_list(basePath: string, apiName: string) {
+function add_in_api_list(basePath: string, apiName: string, mainApiName: string) {
     const apiListPath = path.join(__dirname, '..', '..', 'setup', 'api-list.ts');
     const apiListContent = fs.readFileSync(apiListPath, 'utf8');
     const newApiImport = `import { ${toSnakeCase(apiName)}_details } from "@src/apis/${basePath}/${apiName}/${apiName}.details";`;
     const newApiListEntry = `${toSnakeCase(apiName)}_details,`;
     const updatedApiListContent = apiListContent
         .replace(/\/\/ Add Imports Here/, `// Add Imports Here\n${newApiImport}`)
-        .replace(/\/\/ Add Apis Here/, `// Add Apis Here\n    ${newApiListEntry}`);
+        .replace(/\/\/ Add Apis Here/, `// Add Apis Here\n${apiName.includes('create') ? '\n' + '    //' + toPascalCase(mainApiName) + ' Apis\n' : ''}    ${newApiListEntry}`);
     fs.writeFileSync(apiListPath, updatedApiListContent, 'utf8');
     console.log('API list updated successfully!');
 }
@@ -111,11 +111,11 @@ const main = async () => {
     console.log('Files copied and updated successfully!');
 
     // Add Api to the API list
-    add_in_api_list(basePath, 'create-' + apiName);
-    add_in_api_list(basePath, 'get-' + apiName);
-    add_in_api_list(basePath, 'get-' + apiName + '-list');
-    add_in_api_list(basePath, 'update-' + apiName);
-    add_in_api_list(basePath, 'delete-' + apiName);
+    add_in_api_list(basePath, 'get-' + apiName, apiName);
+    add_in_api_list(basePath, 'get-' + apiName, apiName + '-list');
+    add_in_api_list(basePath, 'update-' + apiName, apiName);
+    add_in_api_list(basePath, 'delete-' + apiName, apiName);
+    add_in_api_list(basePath, 'create-' + apiName, apiName);
 
 };
 
