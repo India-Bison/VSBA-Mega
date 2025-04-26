@@ -1,8 +1,8 @@
 import { swaggerUI } from '@hono/swagger-ui'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { cors } from 'hono/cors'
-import { sequelize } from './sequelize'
-import { keycloak_auth } from '../middlewares/keycloak-auth.middleware'
+import { sequelize } from '../setup/sequelize'
+import { keycloak_auth } from './middlewares/keycloak-auth.middleware'
 import { check_role_middleware } from '@src/middlewares/check-role.middleware'
 // import '../crons/attachment.cron';
 

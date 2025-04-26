@@ -2,8 +2,8 @@
 import dotenv from 'dotenv';
 import jwt, { decode } from 'jsonwebtoken'
 import KcAdminClient from '@keycloak/keycloak-admin-client';
-import { find_keycloak_user_by_email } from '@src/common/keycloak.functions';
-import { get_user_by_keycloak_id } from '@src/common/user.functions';
+import { find_keycloak_user_by_email } from '@config/keycloak/keycloak.functions';
+import { get_user_by_keycloak_id } from '@config/keycloak/user.functions';
 
 dotenv.config();
 

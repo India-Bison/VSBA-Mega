@@ -1,4 +1,4 @@
-import { api_list } from "@src/setup/api-list";
+import { api_list } from "../setup/api-list";
 import { test_function } from "./test-function";
 
 export let run_tests = async () => {

@@ -1,4 +1,4 @@
-import { api_list } from "@src/setup/api-list";
+import { api_list } from "../setup/api-list";
 import { setup_api } from "./setup-api";
 
 export let configure_apis = async () => {

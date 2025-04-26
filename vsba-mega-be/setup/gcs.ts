@@ -1,16 +1,5 @@
 const { Storage } = require('@google-cloud/storage');
 
-// const storage = new Storage({
-//     projectId: process.env.GCS_PROJECT_ID,
-//     credentials: {
-//         client_email: process.env.GCS_CLIENT_EMAIL,
-//         private_key: process.env.GCS_PROVATE_KEY
-//     }
-// });
-
-// const bucketName = process.env.GCS_BUCKET_NAME;
-// const bucket = storage.bucket(bucketName);
-
 const storage = new Storage({
     projectId: 'ict-recurring',
     credentials: {

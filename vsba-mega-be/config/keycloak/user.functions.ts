@@ -1,4 +1,4 @@
-import { User } from "@src/models/user.model"
+import { User } from "../../models/user.model"
 
 export const create_db_user = async (user_data: any, keycloak_user_data: any, role: string, transaction: any) => {
     let new_user = await User.create({

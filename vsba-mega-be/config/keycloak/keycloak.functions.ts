@@ -1,8 +1,8 @@
-import { keycloak_auth_admin, keycloakAdmin } from "@src/middlewares/keycloak-auth.middleware";
+import { keycloak_auth_admin, keycloakAdmin } from "@config/middlewares/keycloak-auth.middleware";
 
 export const find_keycloak_user_by_email = async (email: any) => {
     await keycloak_auth_admin();
-    const users = await keycloakAdmin.users.find({ email });    
+    const users = await keycloakAdmin.users.find({ email });
     return users.length > 0 ? users[0] : null;
 };
 

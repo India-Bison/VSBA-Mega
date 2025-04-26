@@ -1,9 +1,9 @@
-import { api_list } from "@src/setup/api-list"
+import { api_list } from "../../setup/api-list"
 
-const skip_paths = ['swagger','/activity/generate-activity','/attendance/auto-check-out']
+const skip_paths = ['swagger', '/activity/generate-activity', '/attendance/auto-check-out']
 
 export const check_role_middleware = async (c: any, next: any) => {
-    let  user = c.get('user');
+    let user = c.get('user');
     try {
         let api_data: any = Object.values(api_list).find((item: any) => item.path == c.req.path)
         let allowed_roles = api_data?.roles
