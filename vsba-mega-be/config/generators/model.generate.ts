@@ -15,7 +15,7 @@ const dashToPascalCase = (str: string): string => {
     .replace(/(^\w|-\w)/g, (match) => match.replace('-', '').toUpperCase()); // Convert to PascalCase
 };
 
-function execute_command(command: string) {
+function execute_command(command: string, table_name: string) {
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing command: ${error.message}`);
@@ -74,7 +74,7 @@ const generateModelFile = async () => {
   let command = `bun ${targetDir}/${snakeCaseName}.model.ts`
   // Run command
   console.log(command)
-  execute_command(command)
+  execute_command(command, snakeCaseName + 's')
 
 };
 
