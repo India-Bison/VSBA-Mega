@@ -29,6 +29,7 @@ import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
 export class ProjectFormPageComponent {
   active_tab = 'Project';
   params: any = {};
+  plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   tabList: any[] = [
     {
@@ -109,33 +110,39 @@ export class ProjectFormPageComponent {
   }
 
   add_pill(index: number): void {
-    const slotGroup = this.slots.at(index) as FormGroup;
-    const startTime = slotGroup.get('start_time')?.value;
-    const hoursValue = slotGroup.get('hours')?.value;
-    if (startTime && hoursValue) {
-      const hours = parseInt(hoursValue);
-      const [hoursPart, minutesPart] = startTime.split(':');
-      const startDate = new Date();
-      startDate.setHours(+hoursPart);
-      startDate.setMinutes(+minutesPart);
-      const endDate = new Date(startDate);
-      endDate.setHours(startDate.getHours() + hours);
-      const formatTime = (date: Date): string => {
-        const hh = String(date.getHours()).padStart(2, '0');
-        const mm = String(date.getMinutes()).padStart(2, '0');
-        return `${hh}:${mm}`;
+    const slot_group = this.slots.at(index) as FormGroup;
+    const start_time = slot_group.get('start_time')?.value;
+    const hours_value = slot_group.get('hours')?.value;
+    if (start_time && hours_value) {
+      const hours = parseInt(hours_value, 10);
+      const [hours_part, minutes_part] = start_time.split(':').map(Number);
+      const now = new Date();
+      const start_date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours_part, minutes_part);
+      const end_date = new Date(start_date);
+      end_date.setHours(end_date.getHours() + hours);
+      const format_time = (date: Date): string => {
+        let hrs = date.getHours();
+        const mins = String(date.getMinutes()).padStart(2, '0');
+        const ampm = hrs >= 12 ? 'PM' : 'AM';
+        hrs = hrs % 12;
+        hrs = hrs ? hrs : 12;
+        return `${hrs}:${mins} ${ampm}`;
       };
-      const pillText = `${formatTime(startDate)} - ${formatTime(endDate)}`;
-      const currentPills = slotGroup.get('slot_times')?.value || [];
+      const pillText = `${format_time(start_date)} - ${format_time(end_date)}`;
+      const currentPills: string[] = slot_group.get('slot_times')?.value || [];
+      if (currentPills.includes(pillText)) return;
       currentPills.push(pillText);
-      slotGroup.get('slot_times')?.setValue(currentPills);
+      slot_group.get('slot_times')?.setValue(currentPills);
+      slot_group.get('slot_times')?.markAsDirty();
+      slot_group.get('slot_times')?.updateValueAndValidity();
     }
   }
+  
 
-  remove_pill(slotIndex: number, pillIndex: number): void {
-    const slotGroup = this.slots.at(slotIndex) as FormGroup;
+  remove_pill(slot_index: number, pill_index: number): void {
+    const slotGroup = this.slots.at(slot_index) as FormGroup;
     const currentPills = slotGroup.get('slot_times')?.value || [];
-    currentPills.splice(pillIndex, 1);
+    currentPills.splice(pill_index, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
   submit_form(route?: any): void {
@@ -166,9 +173,6 @@ export class ProjectFormPageComponent {
       }
     }
     this.gs.save_in_local_storage();
-
-    console.log('Full Project Form Value:', formData);
-    console.log('Updated Items:', this.gs.items);
     if (route) {
       this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, view: 'Sub-Project' } });
     } else {
@@ -179,38 +183,12 @@ export class ProjectFormPageComponent {
     this.form.reset()
     this.route.navigate(['/project/form'], { queryParams: { view: 'Project', parent_id: this.params.id } });
   }
-
-  dummyData = {
-    project_name: "mayur",
-    full_venue_required: "yes",
-    resource_type: "name",
-    description: "mayurrrrrrrr",
-    audit_required: "Comprehensive Audit",
-    project_start_date: "2025-04-24",
-    project_end_date: "2025-04-16",
-    week_days: "sunday,monday,tuesday,wednesday",
-    slot_type: "Full Day",
-    slots: [
-      {
-        slot_start_date: "2025-04-02",
-        slot_end_date: "2025-04-08",
-        start_time: "12:22",
-        hours: "4",
-        slot_times: [
-          "02:19 - 03:19",
-          "02:22 - 06:22"
-        ]
-      }
-    ]
-  };
   patch_project_form(data: any) {
-    console.log(data, "data");
     this.form.patchValue(data);
-    const slotsFormArray = this.form.get('slot_group') as FormArray;
-    // remove all slots except 1
-    slotsFormArray.clear();
+    const slots_array = this.form.get('slot_group') as FormArray;
+    slots_array.clear();
     data.slot_group.forEach((slot: any) => {
-      slotsFormArray.push(this.fb.group({
+      slots_array.push(this.fb.group({
         slot_start_date: slot.slot_start_date,
         slot_end_date: slot.slot_end_date,
         start_time: slot.start_time,
@@ -237,4 +215,13 @@ export class ProjectFormPageComponent {
   async edit(item: any, index: any) {
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, view: 'Project' } });
   }
+  
+  plus_minus_open_close(index: number) {
+    if (this.plus_minus_index == index) {
+      this.plus_minus_index = null;
+    } else {
+      this.plus_minus_index = index;
+    }
+  }
+
 }
