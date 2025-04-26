@@ -8,7 +8,7 @@ export let create_dummy_tests: create_dummy_tests_interface[] = [
       last_name: 'Sadavarte'
     },
     check_output: (input, output) => {
-      return true;
+      return output.data.id;
     },
   }
 ];
