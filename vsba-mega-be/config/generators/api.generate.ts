@@ -97,6 +97,17 @@ const main = async () => {
     copyAndReplace(srcDir, destDir, 'dummy-api', apiName, apiPath);
 
     console.log('Files copied and updated successfully!');
+
+    // Add Api to the API list
+    const apiListPath = path.join(__dirname, '..', '..', 'setup', 'api-list.ts');
+    const apiListContent = fs.readFileSync(apiListPath, 'utf8');
+    const newApiImport = `import { ${toSnakeCase(apiName)}_details } from "@src/apis/${basePath}/${apiName}/${apiName}.details";\n`;
+    const newApiListEntry = `\n    ${toSnakeCase(apiName)}_details,\n`;
+    const updatedApiListContent = apiListContent
+        .replace(/\/\/ Add Imports Here/, `// Add Imports Here\n${newApiImport}`)
+        .replace(/\/\/ Add Apis Here/, `// Add Apis Here${newApiListEntry}`);
+    fs.writeFileSync(apiListPath, updatedApiListContent, 'utf8');
+    console.log('API list updated successfully!');
 };
 
 main();
