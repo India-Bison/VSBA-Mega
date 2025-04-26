@@ -27,13 +27,13 @@ export let setup_api = async (details: any) => {
                 const path = c.req.path;
                 let path_valid = (skip_path.some(p => path.includes(p)));
 
-                if (!user) {
-                    if (path_valid) {
-                        console.log("User not found, but path is valid. Continuing execution...");
-                    } else {
-                        return c.json({ message: 'No User Found', data: user }, 404);
-                    }
-                }
+                // if (!user) {
+                //     if (path_valid) {
+                //         console.log("User not found, but path is valid. Continuing execution...");
+                //     } else {
+                //         return c.json({ message: 'No User Found', data: user }, 404);
+                //     }
+                // }
 
                 // Execute the Api using Execution Function
                 let transaction = await sequelize.transaction();

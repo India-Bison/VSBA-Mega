@@ -103,7 +103,7 @@ let model_options: ModelOptions = <any>{
   // }
 };
 
-export const Dummy = sequelize.define("Dummy", dummy_model, model_options);
+export const Dummy = sequelize.define("dummy", dummy_model, model_options);
 
 //Command to Run : bun src/models/dummy.model.ts 
-// sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
+sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
