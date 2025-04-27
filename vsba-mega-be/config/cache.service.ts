@@ -15,6 +15,9 @@ export function get_from_cache(has_cache: boolean, cache: any, id: any) {
 
 export function set_cache(has_cache: boolean, cache: any, id: any, body: any) {
     if (typeof id === 'object') {
+        if (id.test_data) {
+            return;
+        }
         id = JSON.stringify(id)
     }
     if (has_cache) {
