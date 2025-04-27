@@ -5,7 +5,7 @@ import { Dummy } from "../dummy.model"
 import { dummy_service } from "../dummy.service"
 
 let create_dummy_function = async (data: create_dummy_function_params, transaction: Transaction): Promise<create_dummy_function_return | Error_Interface> => {
-    let body: any = { ...data }
+    let body: any = { ...data.body }
     body.created_by_id = data.user?.id;
     body.updated_by_id = data.user?.id;
     let response = await dummy_service.create_dummy(body, transaction);
