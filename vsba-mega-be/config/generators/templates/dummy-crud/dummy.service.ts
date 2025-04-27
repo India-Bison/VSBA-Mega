@@ -1,7 +1,6 @@
 import { Op, Transaction } from "sequelize";
 import { Dummy } from "./dummy.model";
 import { clear_cache, delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
-import { clear } from "console";
 
 let has_cache = true;
 let dummy_cache = {};
@@ -46,7 +45,6 @@ let get_all_dummy = async (filter: any, transaction: Transaction) => {
         }
     }
     set_cache(has_cache, list_cache, filter, response);
-    console.log(list_cache)
     return response;
 }
 
