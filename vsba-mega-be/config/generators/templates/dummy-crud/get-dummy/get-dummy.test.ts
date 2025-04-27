@@ -7,7 +7,6 @@ export let get_dummy_tests: get_dummy_tests_interface[] = [
       id: 1
     },
     check_output: (input, output) => {
-      console.log('input', input.id, output.data);
       return input.id == output.data.id;
     },
   }
