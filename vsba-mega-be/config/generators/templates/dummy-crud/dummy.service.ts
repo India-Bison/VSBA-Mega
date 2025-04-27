@@ -32,4 +32,3 @@ export let dummy_service = {
     get_dummy,
     get_all_dummy
 }
-// Compare this snippet from vsba-mega-be/config/generators/templates/dummy-crud/update-dummy/update-dummy.function.ts:
