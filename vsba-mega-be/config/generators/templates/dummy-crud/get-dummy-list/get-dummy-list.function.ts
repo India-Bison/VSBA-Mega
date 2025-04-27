@@ -12,7 +12,7 @@ let get_dummy_list_function = async (data: get_dummy_list_function_params, trans
         code: 200,
         message: 'Get Dummy List Successful',
         count: dummy_data.count,
-        data: dummy_data.rows.map((dummy: any) => dummy.toJSON()),
+        data: dummy_data.rows,
     };
 };
 

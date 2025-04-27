@@ -10,7 +10,7 @@ let update_dummy_function = async (data: update_dummy_function_params, transacti
     return {
         code: 200,
         message: 'Update Dummy Successful',
-        data: updated_dummy[1]?.[0]?.toJSON()
+        data: updated_dummy
     }
 }
 

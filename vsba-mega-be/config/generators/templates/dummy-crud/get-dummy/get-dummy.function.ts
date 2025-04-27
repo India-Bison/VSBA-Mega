@@ -9,7 +9,7 @@ let get_dummy_function = async (data: get_dummy_function_params, transaction: Tr
     return {
         code: 200,
         message: 'Get Dummy Successful',
-        data: dummy?.toJSON()
+        data: dummy
     }
 }
 
