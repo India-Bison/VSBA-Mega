@@ -27,3 +27,9 @@ export function delete_from_cache(has_cache: boolean, cache: any, id: any) {
         delete cache[id]
     }
 }
+
+export function clear_cache(has_cache: boolean, cache: any, id: any) {
+    if (has_cache) {
+        cache = {}
+    }
+}

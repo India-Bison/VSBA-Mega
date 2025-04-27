@@ -1,17 +1,25 @@
 import { Op, Transaction } from "sequelize";
 import { Dummy } from "./dummy.model";
-import { delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
+import { clear_cache, delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
+import { clear } from "console";
 
 let has_cache = true;
 let dummy_cache = {};
+let list_cache = {};
 
 let create_dummy = async (body: any, transaction: Transaction) => {
-    let response = await Dummy.create(body, { transaction });
-    return response.toJSON()
+    let response: any = await Dummy.create(body, { transaction, returning: true });
+    if (response) {
+        response = response.toJSON ? response.toJSON() : response;
+    }
+    set_cache(has_cache, dummy_cache, response.id, response);
+    clear_cache(has_cache, list_cache, response);
+    return response
 }
 let update_dummy = async (id: any, body: any, transaction: Transaction) => {
     let response = await Dummy.update(body, { where: { id }, limit: 1, returning: true, transaction });
     delete_from_cache(has_cache, dummy_cache, id);
+    clear_cache(has_cache, list_cache, response);
     return response[1]?.[0]?.toJSON()
 }
 let delete_dummy = async (id: any, transaction: Transaction) => {
@@ -28,7 +36,7 @@ let get_dummy = async (id: any, transaction: Transaction) => {
     return response;
 }
 let get_all_dummy = async (filter: any, transaction: Transaction) => {
-    let response = get_from_cache(has_cache, dummy_cache, filter) || await Dummy.findAndCountAll({ where: { ...filter, test_data: { [Op.not]: true } }, transaction });
+    let response = get_from_cache(has_cache, list_cache, filter) || await Dummy.findAndCountAll({ where: { ...filter, test_data: { [Op.not]: true } }, transaction });
     if (response) {
         response = {
             count: response.count,
@@ -37,6 +45,8 @@ let get_all_dummy = async (filter: any, transaction: Transaction) => {
             })
         }
     }
+    set_cache(has_cache, list_cache, filter, response);
+    console.log(list_cache)
     return response;
 }
 
