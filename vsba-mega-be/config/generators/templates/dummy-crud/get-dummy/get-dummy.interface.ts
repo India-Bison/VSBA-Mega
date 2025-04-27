@@ -1,5 +1,7 @@
 export interface get_dummy_function_params {
-    id: number
+    query: {
+        id: number
+    },
     user?: any
 }
 

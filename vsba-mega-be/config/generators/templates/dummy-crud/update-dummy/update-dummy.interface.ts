@@ -1,14 +1,18 @@
 export interface update_dummy_function_params {
-    id: number
-    first_name?: string
-    last_name?: string
+    query: {
+        id: number
+    },
+    body: {
+        first_name?: string
+        last_name?: string
+        updated_by_id?: number
+    }
     user?: any
-    updated_by_id?: any
 }
 
 export interface update_dummy_function_return {
-    code: number,
-    message: string,
+    code: number
+    message: string
     data?: any
 }
 

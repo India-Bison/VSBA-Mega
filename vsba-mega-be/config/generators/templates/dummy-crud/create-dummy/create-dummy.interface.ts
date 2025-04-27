@@ -1,13 +1,17 @@
 export interface create_dummy_function_params {
-    first_name: string
-    last_name: string
+    query?: {},
+    body: {
+        first_name?: string
+        last_name?: string
+    },
     user?: any
+
 }
 
 export interface create_dummy_function_return {
-    code: number,
-    message: string,
-    data?: any,
+    code: number
+    message: string
+    data?: any
 }
 
 export interface create_dummy_tests_interface {

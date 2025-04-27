@@ -5,7 +5,7 @@ import { Dummy } from "../dummy.model"
 import { dummy_service } from "../dummy.service"
 
 let get_dummy_function = async (data: get_dummy_function_params, transaction: Transaction): Promise<get_dummy_function_return | Error_Interface> => {
-    const dummy = await dummy_service.get_dummy(data, transaction)
+    const dummy = await dummy_service.get_dummy(data.query.id, transaction)
     return {
         code: 200,
         message: 'Get Dummy Successful',

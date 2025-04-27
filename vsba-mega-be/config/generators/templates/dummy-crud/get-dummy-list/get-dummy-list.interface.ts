@@ -1,11 +1,13 @@
 export interface get_dummy_list_function_params {
+    query?: any
+    body?: any
     user?: any
 }
 
 export interface get_dummy_list_function_return {
-    code: number,
-    message: string,
-    data?: any,
+    code: number
+    message: string
+    data?: any
     count?: number
 }
 

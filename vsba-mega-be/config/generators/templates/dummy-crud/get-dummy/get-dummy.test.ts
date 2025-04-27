@@ -4,10 +4,12 @@ export let get_dummy_tests: get_dummy_tests_interface[] = [
   {
     name: 'Will Get Dummy',
     input: {
-      id: 1
+      query: {
+        id: 1
+      }
     },
     check_output: (input, output) => {
-      return input.id == output.data.id;
+      return input.query.id == output.data.id;
     },
   }
 ];

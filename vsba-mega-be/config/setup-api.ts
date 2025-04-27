@@ -50,7 +50,7 @@ export let setup_api = async (details: any) => {
 
                 // Execute the Api using Execution Function
                 let transaction = await sequelize.transaction();
-                let response: any | unknown = await details.execution_function({ ...query, ...body, user: user }, transaction)
+                let response: any | unknown = await details.execution_function({ query, body, user }, transaction)
 
                 // Commit the Transaction
                 await transaction.commit();

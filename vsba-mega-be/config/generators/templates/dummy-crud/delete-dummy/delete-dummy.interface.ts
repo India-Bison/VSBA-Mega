@@ -1,5 +1,7 @@
 export interface delete_dummy_function_params {
-    id: number
+    query: {
+        id: number
+    }
 }
 
 export interface delete_dummy_function_return {

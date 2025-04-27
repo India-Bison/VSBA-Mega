@@ -8,16 +8,16 @@ let create_dummy = async (body: any, transaction: Transaction) => {
     let response = await Dummy.create(body, { transaction });
     return response
 }
-let update_dummy = async (body: any, transaction: Transaction) => {
-    let response = await Dummy.update(body, { where: { id: body.id }, limit: 1, returning: true, transaction });
+let update_dummy = async (id: any, body: any, transaction: Transaction) => {
+    let response = await Dummy.update(body, { where: { id }, limit: 1, returning: true, transaction });
     return response
 }
 let delete_dummy = async (id: any, transaction: Transaction) => {
     let response = await Dummy.destroy({ where: { id: id, test_data: { [Op.not]: true } }, transaction });
     return response
 }
-let get_dummy = async (body: any, transaction: Transaction) => {
-    let response = await Dummy.findOne({ where: { id: body.id }, transaction });
+let get_dummy = async (id: any, transaction: Transaction) => {
+    let response = await Dummy.findOne({ where: { id: id }, transaction });
     return response;
 }
 let get_all_dummy = async (filter: any, transaction: Transaction) => {
