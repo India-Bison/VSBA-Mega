@@ -1,6 +1,6 @@
 import { Op, Transaction } from "sequelize";
 import { Dummy } from "./dummy.model";
-import { clear_cache, delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
+import { delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
 
 let has_cache = true;
 let dummy_cache = {};
@@ -12,18 +12,19 @@ let create_dummy = async (body: any, transaction: Transaction) => {
         response = response.toJSON ? response.toJSON() : response;
     }
     set_cache(has_cache, dummy_cache, response.id, response);
-    clear_cache(has_cache, list_cache, response);
+    list_cache = {}
     return response
 }
 let update_dummy = async (id: any, body: any, transaction: Transaction) => {
     let response = await Dummy.update(body, { where: { id }, limit: 1, returning: true, transaction });
     delete_from_cache(has_cache, dummy_cache, id);
-    clear_cache(has_cache, list_cache, response);
+    list_cache = {}
     return response[1]?.[0]?.toJSON()
 }
 let delete_dummy = async (id: any, transaction: Transaction) => {
     let response = await Dummy.destroy({ where: { id: id, test_data: { [Op.not]: true } }, transaction });
     delete_from_cache(has_cache, dummy_cache, id);
+    list_cache = {}
     return response
 }
 let get_dummy = async (id: any, transaction: Transaction) => {
@@ -55,6 +56,3 @@ export let dummy_service = {
     get_dummy,
     get_all_dummy
 }
-
-
-
