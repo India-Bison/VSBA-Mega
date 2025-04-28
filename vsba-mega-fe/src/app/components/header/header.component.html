@@ -1,8 +1,14 @@
 <div class="flex justify-between items-center w-full mb-4 max-h-14 h-full bg-transparent">
-    <div class="flex justify-start items-center gap-2 text-xl font-normal h-full">
+    <!-- <div class="flex justify-start items-center gap-2 text-xl font-normal h-full">
         <div class="cursor-pointer" *ngIf="label!=''">
-            <span [ngClass]="{'text-black': sub_label=='', 'text-gray-500' : sub_label!='' }" class="cursor-pointer text-xl hover:text-indigo-600">{{label}} </span><span *ngIf="sub_label != ''" class="cursor-pointer"> / {{sub_label}}</span>
+            <span [ngClass]="{'text-[#000000] text-opacity-[37%]': sub_label=='text-[#212121]', '' : sub_label!='' }" class="cursor-pointer text-xl hover:text-indigo-600">{{label}} </span><span *ngIf="sub_label != ''" class="cursor-pointer"> / {{sub_label}}</span>
         </div>
+    </div> -->
+    <div class="cursor-pointer" *ngIf="label != ''">
+        <!-- Label -->
+        <span class="text-[#000000] text-opacity-[37%] cursor-pointer text-xl font-normal leading-[100%] tracking-2p hover:text-indigo-600">{{label}} </span> 
+        <!-- Sub Label -->
+        <span *ngIf="sub_label != ''" class="text-[#212121] cursor-pointer text-xl font-medium leading-[100%] tracking-2p">/ {{sub_label}}</span>
     </div>
     <div class="flex justify-end items-center gap-4">
        

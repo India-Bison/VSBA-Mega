@@ -4,7 +4,7 @@ import { delete_from_cache, get_from_cache, set_cache } from "@config/cache.serv
 import { SlotGroup } from "@src/models/slot-group.model";
 import { Slot } from "@src/models/slot.model";
 
-let has_cache = true;
+let has_cache = false;
 let project_cache = {};
 let list_cache = {};
 
@@ -79,7 +79,7 @@ let get_project = async (id: any, transaction: Transaction) => {
         let response = get_from_cache(has_cache, project_cache, id) || await Project.findOne({ where: { id: id }, include: [{ model: SlotGroup }], transaction });
         if (response) {
             response = response.toJSON ? response.toJSON() : response;
-            // set_cache(has_cache, project_cache, id, response);
+            set_cache(has_cache, project_cache, id, response);
         } else {
             console.log(`Project with id ${id} not found in database.`);
         }
