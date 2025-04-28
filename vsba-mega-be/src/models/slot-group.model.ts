@@ -1,7 +1,6 @@
 import { DataTypes, ModelOptions } from "sequelize";
 import { sequelize } from "@config/db/sequelize";
 import { Project } from "@src/apis/project/project.model";
-import { User } from "@config/models/user.model";
 
 let slot_group_model = {
   id: {
@@ -33,22 +32,6 @@ let slot_group_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  created_by_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: "users",
-      key: "id",
-    },
-    allowNull: true,
-  },
-  updated_by_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: "users",
-      key: "id",
-    },
-    allowNull: true,
-  },
 };
 
 let model_options: ModelOptions = <any>{
@@ -62,10 +45,7 @@ let model_options: ModelOptions = <any>{
   defaultScope: {
     //   where: {},
     // attributes: [],
-    include: [
-      { model: User, as: 'slot_group_created_by_user', attributes: ['id', 'first_name', 'last_name'] },
-      { model: User, as: 'slot_group_updated_by_user', attributes: ['id', 'first_name', 'last_name'] },
-    ]
+    // include: []
   },
   // scopes: {
   //   scope_1: {
@@ -82,6 +62,9 @@ let model_options: ModelOptions = <any>{
 };
 
 export const SlotGroup = sequelize.define("slot_group", slot_group_model, model_options);
+
+Project.hasMany(SlotGroup, { foreignKey: 'project_id' });
+SlotGroup.belongsTo(Project, { foreignKey: 'project_id' });
 
 //Command to Run : bun src\models/slot_group.model.ts 
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });

@@ -44,7 +44,7 @@ let create_project = async (body: any, transaction: Transaction) => {
     }
 
     if (slot_ids.length > 0) {
-        await SlotGroup.update({ project_id: project.id }, { where: { id: slot_ids }, transaction })
+        await SlotGroup.update({ project_id: project.id }, { where: { id: slot_ids }, transaction });
 
         const project_slot_data = slot_ids.map((slot_ids: any) => ({
             project_id: project.id,
@@ -66,20 +66,30 @@ let update_project = async (id: any, body: any, transaction: Transaction) => {
     list_cache = {}
     return response[1]?.[0]?.toJSON()
 }
+
 let delete_project = async (id: any, transaction: Transaction) => {
     let response = await Project.destroy({ where: { id: id, test_data: { [Op.not]: true } }, transaction });
     delete_from_cache(has_cache, project_cache, id);
     list_cache = {}
     return response
 }
+
 let get_project = async (id: any, transaction: Transaction) => {
-    let response = get_from_cache(has_cache, project_cache, id) || await Project.findOne({ where: { id: id }, transaction });
-    if (response) {
-        response = response.toJSON ? response.toJSON() : response;
+    try {
+        let response = get_from_cache(has_cache, project_cache, id) || await Project.findOne({ where: { id: id }, include: [{ model: SlotGroup }], transaction });
+        if (response) {
+            response = response.toJSON ? response.toJSON() : response;
+            // set_cache(has_cache, project_cache, id, response);
+        } else {
+            console.log(`Project with id ${id} not found in database.`);
+        }
+        return response;
+    } catch (error) {
+        console.error(`Error fetching project with id ${id}:`, error);
+        throw error;
     }
-    set_cache(has_cache, project_cache, id, response);
-    return response;
 }
+
 let get_all_project = async (filter: any, transaction: Transaction) => {
     let response = get_from_cache(has_cache, list_cache, filter) || await Project.findAndCountAll({ where: { ...filter, test_data: { [Op.not]: true } }, transaction });
     if (response) {
