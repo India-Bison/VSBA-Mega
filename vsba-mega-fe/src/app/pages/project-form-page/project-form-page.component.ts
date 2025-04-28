@@ -31,16 +31,8 @@ export class ProjectFormPageComponent {
   params: any = {};
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
-  tabList: any[] = [
-    {
-      name: 'Project',
-    },
-    {
-      name: 'Sub-Project',
-    }
-  ];
+  tabList: any[] = [{name: 'Project',},{name: 'Sub-Project',}];
   form: FormGroup;
-  sub_form: FormGroup;
 
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router) {
     this.form = this.fb.group({
@@ -53,19 +45,9 @@ export class ProjectFormPageComponent {
       project_end_date: [''],
       week_days: [[]],
       slot_type: [''],
+      type: [''],
       slot_group: this.fb.array([])
     });
-    this.sub_form = fb.group({
-      name: [''],
-      full_venue_required: [''],
-      resource_type: [''],
-      description: [''],
-      audit_required: [''],
-      project_start_date: [''],
-      project_end_date: [''],
-      week_days: [[]],
-      slot_type: ['']
-    })
   }
   ngOnInit() {
     this.ar.queryParams.subscribe(async params => {
@@ -85,14 +67,10 @@ export class ProjectFormPageComponent {
       }
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
-    // console.log(this.gs.items, "global service data");
-
   }
-
   get slots(): FormArray {
     return this.form.get('slot_group') as FormArray;
   }
-
   add_slot(): void {
     const slotGroup = this.fb.group({
       slot_start_date: [''],
@@ -108,7 +86,6 @@ export class ProjectFormPageComponent {
       this.slots.removeAt(index);
     }
   }
-
   add_pill(index: number): void {
     const slot_group = this.slots.at(index) as FormGroup;
     const start_time = slot_group.get('start_time')?.value;
@@ -137,19 +114,28 @@ export class ProjectFormPageComponent {
       slot_group.get('slot_times')?.updateValueAndValidity();
     }
   }
-  
-
   remove_pill(slot_index: number, pill_index: number): void {
     const slotGroup = this.slots.at(slot_index) as FormGroup;
     const currentPills = slotGroup.get('slot_times')?.value || [];
     currentPills.splice(pill_index, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
-  submit_form(route?: any): void {
+  submit_form(route?: any) {
+    // const formData = {
+    //   ...this.form.value,
+    // };
+    // formData.type = this.params.type
+    // formData.status = 'Pending'
+    // if (!this.params.parent_id && this.params.type == 'Project') {
+    //   let response = formData
+    //   console.log(response, "project");
+    // } else if (this.params.parent_id) {
+    //   formData.parent_id = parseInt( this.params.parent_id)      
+    //   let response = formData
+    //   console.log(response, 'subproject');
+    // }
     const formData = {
-      ...this.form.value,
-      parent_id: this.params.parent_id || undefined,
-      status: 'Pending',
+      ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
     };
     if (this.params.id) {
       if (this.params.parent_id) {
@@ -174,14 +160,14 @@ export class ProjectFormPageComponent {
     }
     this.gs.save_in_local_storage();
     if (route) {
-      this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, view: 'Sub-Project' } });
+      this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
     } else {
       this.route.navigate(['/project/list'], {});
     }
   }
   add_sub_project() {
     this.form.reset()
-    this.route.navigate(['/project/form'], { queryParams: { view: 'Project', parent_id: this.params.id } });
+    this.route.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: this.params.id } });
   }
   patch_project_form(data: any) {
     this.form.patchValue(data);
@@ -213,9 +199,9 @@ export class ProjectFormPageComponent {
     },
   ];
   async edit(item: any, index: any) {
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, view: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, type: 'Project' } });
   }
-  
+
   plus_minus_open_close(index: number) {
     if (this.plus_minus_index == index) {
       this.plus_minus_index = null;

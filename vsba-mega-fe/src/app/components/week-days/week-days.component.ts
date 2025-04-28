@@ -38,7 +38,7 @@ export class WeekDaysComponent implements ControlValueAccessor {
     } else {
       this.selected.add(day);
     }
-    this.onChange(Array.from(this.selected).join(','));
+    this.onChange(Array.from(this.selected));
     this.onTouched();
   }
   writeValue(value: any): void {
@@ -51,6 +51,7 @@ export class WeekDaysComponent implements ControlValueAccessor {
       this.selected = new Set();
     }
   }
+
   
 
   registerOnChange(fn: any): void {
