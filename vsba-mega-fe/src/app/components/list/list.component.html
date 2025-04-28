@@ -17,7 +17,7 @@
         <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
             <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" class="px-4 h-12 text-center truncate">
-              <div [class]="column?.class">
+              <div *ngIf="column.title != 'Action'" [class]="column?.class">
                 <ng-container *ngIf="column.key === 'index'; else showTitle">
                   <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
