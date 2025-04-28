@@ -54,6 +54,10 @@ let project_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   parent_id: {
     type: DataTypes.INTEGER,
     references: {

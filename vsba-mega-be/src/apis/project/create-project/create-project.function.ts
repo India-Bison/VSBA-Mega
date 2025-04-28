@@ -5,19 +5,12 @@ import { project_service } from "../project.service"
 
 let create_project_function = async (data: create_project_function_params, transaction: Transaction): Promise<create_project_function_return | Error_Interface> => {
     try {
-        console.log(data);
-
         let body: any = { ...data.body }
-        body.created_by_id = data.user?.id;
-        body.updated_by_id = data.user?.id;
-        console.log(body);
+        body.created_by_id = data.user?.id || null;
+        body.updated_by_id = data.user?.id || null;
         let response = await project_service.create_project(body, transaction);
 
-        return {
-            code: 200,
-            message: 'Create Project Successful',
-            data: response
-        }
+        return { code: 200, message: 'Create Project Successful', data: response }
     } catch (error: any) {
         console.log(error.message);
         throw error.message;

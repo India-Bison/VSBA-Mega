@@ -34,7 +34,7 @@ let create_project = async (body: any, transaction: Transaction) => {
         slot_type: body.slot_type || null,
         type: body.type || null,
         status: body.status || "pending",
-        parent_id: body.parent_id || null,
+        parent_id: (body.type && body.type.toLowerCase() === "sub project") ? body.parent_id || null : null,
     }
 
     let project: any = await Project.create(project_data, { transaction, returning: true });
