@@ -24,6 +24,8 @@ export class ConfirmationPopupComponent {
   @Input() is_mandatory:boolean = false;
   @Input() show_cancel_icon:boolean = false;
   @Output() close_modal_clicked = new EventEmitter();
+  @Output() confirm_modal_clicked = new EventEmitter<void>();
+
   @HostListener('document:keydown.escape', ['$event'])
 
   handleEscape(event: KeyboardEvent) {
@@ -40,9 +42,12 @@ export class ConfirmationPopupComponent {
     this.close_modal_clicked.emit();
 
     if (this.redirect) {
-      const url = this.router.url.split('?')[0]; // Remove query parameters from the URL
-      this.router.navigateByUrl(url);
+      // const url = this.router.url.split('?')[0]; // Remove query parameters from the URL
+      // this.router.navigateByUrl(url);
     }
+  }
+  confirm() {
+    this.confirm_modal_clicked.emit();
   }
 
 }

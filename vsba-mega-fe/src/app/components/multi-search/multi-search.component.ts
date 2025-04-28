@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, Input, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-multi-search',
@@ -8,8 +8,15 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './multi-search.component.html',
   styleUrl: './multi-search.component.css',
   standalone: true,
+  providers: [
+    {
+        provide: NG_VALUE_ACCESSOR,
+        multi: true,
+        useExisting: MultiSearchComponent
+    }
+],
 })
-export class MultiSearchComponent {
+export class MultiSearchComponent implements ControlValueAccessor {
   @Input() label = 'Search';
   @Input() options: string[] = [];  // <-- Add this to accept options from parent
   
@@ -29,6 +36,30 @@ export class MultiSearchComponent {
     }
   }
   
+  
+  onChange = (_: any) => {};
+  onTouched = () => {};
+
+  writeValue(value: string[]): void {
+    if (Array.isArray(value)) {
+      this.selectedOptions = value;
+    } else {
+      this.selectedOptions = [];
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    // Optional: tuzya component la disabled state handle karaychi asel tar
+  }
+
   filterOptions() {
     const text = this.searchText.toLowerCase();
     this.filteredOptions = (this.options || []).filter(option =>
@@ -40,19 +71,23 @@ export class MultiSearchComponent {
     if (!this.selectedOptions.includes(option)) {
       this.selectedOptions.push(option);
       this.scrollToRight();
+      this.onChange(this.selectedOptions);
     }
     this.searchText = '';
     this.highlightedIndex = 0;
     this.filterOptions();
   }
   
+  
   removeItem(option: string) {
     this.selectedOptions = this.selectedOptions.filter(item => item !== option);
+    this.onChange(this.selectedOptions); 
     this.filterOptions();
   }
   
   clearAll() {
     this.selectedOptions = [];
+    this.onChange(this.selectedOptions); 
     this.filterOptions();
   }
   
@@ -83,6 +118,7 @@ export class MultiSearchComponent {
       case 'Backspace':
         if (!this.searchText && this.selectedOptions.length) {
           this.selectedOptions.pop();
+          this.onChange(this.selectedOptions); 
           this.filterOptions();
         }
         break;

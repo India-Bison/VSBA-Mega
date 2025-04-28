@@ -13,8 +13,9 @@
   <!-- No height if no content -->
 </div>
     <div class="overflow-y-auto h-full">
-      <table class="table-auto text-text-color-600 w-full border-t border-t-[#e4e7ec]  ">
-        <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
+      <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
+        <thead
+          class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
             <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" [ngClass]="{'flex justify-center items-center': column.title == 'Status'}" class="px-4 h-12 text-center truncate">
               <div *ngIf="column.title != 'Action'" [class]="column?.class">
@@ -39,11 +40,13 @@
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.type == 'Index'" class="px-4 h-16">
                   <div class="flex justify-center items-center">
-                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
+                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected"
+                      (click)="toggleParentSelection(item)">
                   </div>
                 </td>
 
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}" class="px-4 h-16 items-center">
+                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}"
+                  class="px-4 h-16 items-center">
 
                   <ng-container *ngIf="column.key === 'mobile_number_icon'; else main_value">
                     <div class="text-start items-center gap-4">
@@ -103,7 +106,9 @@
             <!-- Child Rows -->
             <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border border-t-[#e4e7ec] border-l-2 border-r-transparent border-l-[#DEB900]">
               <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-center items-center"> <input class="mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}</td>
+              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-center items-center"> <input class="mr-4"
+                  type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}
+              </td>
               <td class="px-4 h-16 text-sm">{{ child.name }}</td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
               <td class="px-4 h-16 text-sm">{{ child.slot_type }}</td>
@@ -134,10 +139,8 @@
                 </div>
               </td>
             </tr>
-
           </ng-container>
         </tbody>
-
       </table>
     </div>
 
@@ -152,5 +155,6 @@
   </div>
 </div>
 <div class="fixed bottom-2 w-[92%]" *ngIf="pagination">
-  <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
+  <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
 </div>
