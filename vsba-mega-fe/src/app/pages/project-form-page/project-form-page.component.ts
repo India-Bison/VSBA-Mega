@@ -121,49 +121,49 @@ export class ProjectFormPageComponent {
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
   submit_form(route?: any) {
-    const formData = {
-      ...this.form.value,
-    };
-    formData.type = this.params.type
-    formData.status = 'Pending'
-    if (!this.params.parent_id && this.params.type == 'Project') {
-      let response = formData
-      console.log(response, "project");
-    } else if (this.params.parent_id) {
-      formData.parent_id = parseInt( this.params.parent_id)      
-      let response = formData
-      console.log(response, 'subproject');
-    }
     // const formData = {
-    //   ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
+    //   ...this.form.value,
     // };
-    // if (this.params.id) {
-    //   if (this.params.parent_id) {
-    //     let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
-    //     if (index !== -1) {
-    //       this.gs.items.sub_projects[index] = formData;
-    //     }
-    //   } else {
-    //     let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
-    //     if (index !== -1) {
-    //       this.gs.items.projects[index] = formData;
-    //     }
-    //   }
-    // } else {
-    //   const nextId = Math.random().toString(36).substring(2, 9);
-    //   formData.id = nextId;
-    //   if (this.params.parent_id) {
-    //     this.gs.items.sub_projects.push(formData);
-    //   } else {
-    //     this.gs.items.projects.push(formData);
-    //   }
+    // formData.type = this.params.type
+    // formData.status = 'Pending'
+    // if (!this.params.parent_id && this.params.type == 'Project') {
+    //   let response = formData
+    //   console.log(response, "project");
+    // } else if (this.params.parent_id) {
+    //   formData.parent_id = parseInt( this.params.parent_id)      
+    //   let response = formData
+    //   console.log(response, 'subproject');
     // }
-    // this.gs.save_in_local_storage();
-    // if (route) {
-    //   this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
-    // } else {
-    //   this.route.navigate(['/project/list'], {});
-    // }
+    const formData = {
+      ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
+    };
+    if (this.params.id) {
+      if (this.params.parent_id) {
+        let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
+        if (index !== -1) {
+          this.gs.items.sub_projects[index] = formData;
+        }
+      } else {
+        let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
+        if (index !== -1) {
+          this.gs.items.projects[index] = formData;
+        }
+      }
+    } else {
+      const nextId = Math.random().toString(36).substring(2, 9);
+      formData.id = nextId;
+      if (this.params.parent_id) {
+        this.gs.items.sub_projects.push(formData);
+      } else {
+        this.gs.items.projects.push(formData);
+      }
+    }
+    this.gs.save_in_local_storage();
+    if (route) {
+      this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
+    } else {
+      this.route.navigate(['/project/list'], {});
+    }
   }
   add_sub_project() {
     this.form.reset()
