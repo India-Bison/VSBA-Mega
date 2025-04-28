@@ -1,11 +1,46 @@
-<mat-form-field class="w-full">
-  <mat-label>{{ label }}</mat-label>
+<!-- <div class="w-full border rounded-md px-4 py-2 flex items-center gap-3 text-gray-600 cursor-pointer" (click)="openPicker()">
+  <img class="h-10 w-10" src="../../../assets/CalendarDots.svg" alt="">
 
-  <mat-date-range-input [rangePicker]="picker">
-    <input matStartDate [value]="value.start" (dateChange)="onDateChange()" placeholder="Start date" />
-    <input matEndDate [value]="value.end" (dateChange)="value.end = $event.value; onDateChange()" placeholder="End date" />
+  <div class="flex-1 flex justify-center whitespace-nowrap">
+    <span *ngIf="value.start && value.end; else placeholder">
+      {{ value.start | date: 'dd-MM-yy' }} to {{ value.end | date: 'dd-MM-yy' }}
+    </span>
+    <ng-template #placeholder>
+      DD-MM-YY to DD-MM-YY
+    </ng-template>
+  </div>
+  <mat-date-range-input [rangePicker]="picker" class="hidden">
+    <input class="hidden" matStartDate [(ngModel)]="value.start" />
+    <input class="hidden" matEndDate [(ngModel)]="value.end" />
   </mat-date-range-input>
 
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
-</mat-form-field>
+</div> -->
+
+
+<div
+  class="w-full border rounded-md px-4 py-2 flex items-center gap-3 text-gray-600 cursor-pointer"
+  (click)="openPicker()"
+>
+<div class="-ml-10">
+  <mat-date-range-input [rangePicker]="picker" class="hidden text-[1px]">
+    <input class="hidden" matStartDate [(ngModel)]="value.start"  placeholder="DD-MM-YY"  />
+    <input class="hidden" matEndDate [(ngModel)]="value.end"  placeholder="DD-MM-YY"  />
+  </mat-date-range-input>
+
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</div>
+  <img class="h-6 w-6" src="../../../assets/CalendarDots.svg" alt="">
+
+  <div class="flex-1 flex justify-start whitespace-nowrap">
+    <span class="[word-spacing:0.16rem]" *ngIf="value.start && value.end; else placeholder">
+      {{ value.start | date: 'dd-MM-yy' }} To {{ value.end | date: 'dd-MM-yy' }}
+    </span>
+    <ng-template class="[word-spacing:0.16rem]" #placeholder>
+      <div class="[word-spacing:0.16rem]">
+        DD-MM-YY To DD-MM-YY
+      </div>
+    </ng-template>
+  </div>
+ 
+</div>
