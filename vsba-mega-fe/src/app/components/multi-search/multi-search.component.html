@@ -3,8 +3,8 @@
   <label *ngIf="label" [for]="label"
     class="pointer-events-none absolute text-base font-normal text-[#666666] duration-300 transform -translate-y-7 scale-75 top-2 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 max-w-[98%] truncate ">{{label}}</label>
 
-  <div #scrollContainer (mouseenter)="scrollContainer.focus()" class="flex flex-nowrap overflow-x-auto no-scrollbar items-center border border-gray-300 rounded-lg bg-white px-2 pl-0 shadow-sm">
-    <div class="sticky text-center left-0 py-2 px-1 h-full min-h-6 min-w-6 min-h-6">
+  <div #scrollContainer (mouseenter)="scrollContainer.focus()" (click)="dropdownOpen = !dropdownOpen" class="flex flex-nowrap overflow-x-auto no-scrollbar items-center border border-gray-300 rounded-lg bg-white px-2 pl-0 shadow-sm">
+    <div class="sticky text-center left-0 py-2 px-1 h-full min-h-6 min-w-6">
       <!-- <img class="bg-white px-2 h-full min-h-6 min-w-6" src="../../../assets/u_search.svg" alt=""> -->
       <!-- <i *ngIf="false" class='bx bx-search text-lg px-2 h-full min-h-10 min-w-6 mt-1'></i> -->
       <p *ngIf="true" class=' text-lg px-2 h-full min-h-[30px] min-w-6 mt-1'></p>
@@ -17,7 +17,7 @@
           <button class="ml-[10px] text-[#3F41D1] text-lg" (click)="removeItem(item)">×</button>
         </div>
       </ng-container>
-      <input type="text" class="flex-1 p-1 text-lg focus:outline-none" [(ngModel)]="searchText" (click)="dropdownOpen = !dropdownOpen" (keypress)="dropdownOpen = true" (keydown)="handleKeyDown($event)" (input)="filterOptions()" [placeholder]="selectedOptions.length ? '' : this.label" />
+      <input type="text" class="flex-1 p-1 text-lg focus:outline-none" [(ngModel)]="searchText" (keypress)="dropdownOpen = true" (keydown)="handleKeyDown($event)" (input)="filterOptions()" [placeholder]="selectedOptions.length ? '' : this.label" />
     </div>
   </div>
 

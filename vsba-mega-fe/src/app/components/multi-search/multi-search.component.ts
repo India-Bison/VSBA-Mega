@@ -68,15 +68,25 @@ export class MultiSearchComponent implements ControlValueAccessor {
   }
   
   selectOption(option: string) {
-    if (!this.selectedOptions.includes(option)) {
-      this.selectedOptions.push(option);
-      this.scrollToRight();
-      this.onChange(this.selectedOptions);
+    const index = this.selectedOptions.indexOf(option);
+    
+    if (index === -1) {
+      // Add if not already selected and limit not reached
+      if (this.selectedOptions.length < this.maxSelections) {
+        this.selectedOptions.push(option);
+      }
+    } else {
+      // Remove if already selected
+      this.selectedOptions.splice(index, 1);
     }
+  
+    this.onChange(this.selectedOptions);
     this.searchText = '';
     this.highlightedIndex = 0;
     this.filterOptions();
   }
+  
+  
   
   
   removeItem(option: string) {
