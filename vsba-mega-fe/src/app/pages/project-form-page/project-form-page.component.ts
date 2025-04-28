@@ -29,9 +29,11 @@ import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
 export class ProjectFormPageComponent {
   active_tab = 'Project';
   params: any = {};
+  project_start_end_date: any = {};
+  slot_start_end_date: any = {};
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
-  tabList: any[] = [{name: 'Project',},{name: 'Sub-Project',}];
+  tabList: any[] = [{ name: 'Project', }, { name: 'Sub-Project', }];
   form: FormGroup;
 
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router) {
@@ -120,6 +122,7 @@ export class ProjectFormPageComponent {
     currentPills.splice(pill_index, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
+
   submit_form(route?: any) {
     // const formData = {
     //   ...this.form.value,
@@ -135,7 +138,7 @@ export class ProjectFormPageComponent {
     //   console.log(response, 'subproject');
     // }
     const formData = {
-      ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
+      ...this.form.value, parent_id: this.params.parent_id || undefined, status: 'Pending',
     };
     if (this.params.id) {
       if (this.params.parent_id) {

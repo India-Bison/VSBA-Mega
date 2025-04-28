@@ -33,7 +33,8 @@
                       { label: 'Third Party Audit', value: 'Third-Party -Audit' }
                     ]">
                     </app-radio>
-                    <app-date-range-picker formControlName="project_start_date"></app-date-range-picker>
+                    <app-date-range-picker [(ngModel)]="project_start_end_date"
+                    (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
                 <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
@@ -61,7 +62,8 @@
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i">
-                                <app-date-range-picker class="w-full" formControlName="slot_start_date"></app-date-range-picker>
+                                <app-date-range-picker class="w-full" [(ngModel)]="slot_start_end_date"
+                                (ngModelChange)="gs.start_end_date_formate_return(form, slot_start_end_date, 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                                 <div class="flex justify-between w-full gap-2">
                                     <app-date-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
                                     </app-date-input>
