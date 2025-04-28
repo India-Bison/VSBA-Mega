@@ -15,7 +15,7 @@ let project_model = {
     allowNull: true,
   },
   full_venue_required: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   resource_type: {
