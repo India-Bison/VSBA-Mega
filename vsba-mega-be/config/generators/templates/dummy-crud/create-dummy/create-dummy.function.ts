@@ -1,7 +1,6 @@
 import { Error_Interface } from "@config/interfaces/error.interface"
 import { create_dummy_function_params, create_dummy_function_return } from "./create-dummy.interface"
 import { Transaction } from "sequelize"
-import { Dummy } from "../dummy.model"
 import { dummy_service } from "../dummy.service"
 
 let create_dummy_function = async (data: create_dummy_function_params, transaction: Transaction): Promise<create_dummy_function_return | Error_Interface> => {

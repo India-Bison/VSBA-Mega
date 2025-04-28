@@ -1,5 +1,8 @@
 export interface get_dummy_list_function_params {
-    query?: any
+    query?: {
+        page?: number
+        page_size?: number
+    }
     body?: any
     user?: any
 }
