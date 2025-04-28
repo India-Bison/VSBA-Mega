@@ -107,11 +107,16 @@
               <td class="px-4 h-16 text-sm">{{ child.slot_type }}</td>
               <!-- <td class="px-4 h-16 text-sm">{{ child.startdate_enddate }}</td> -->
               <td class="px-4 h-16 text-sm">
-                <button class="px-2 py-1 rounded-full border text-sm font-medium flex justify-center items-center" [ngClass]="{
-                            'text-[#03A600] border-[#03A600]': child.status === 'Approved',
-                            'text-[#DF6E12] border-[#DF6E12]': child.status === 'Pending',
-                            'text-red-500 border-red-500': child.status === 'Rejected'
+                <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{
+                            'text-[#03A600]': child.status === 'Approved',
+                            'text-[#DF6E12]': child.status === 'Pending',
+                            'text-red-500 ': child.status === 'Rejected'
                           }">
+                          <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{
+                            'bg-[#03A600]': child.status === 'Approved',
+                            'bg-[#DF6E12]': child.status === 'Pending',
+                            'bg-red-500 ': child.status === 'Rejected'
+                          }"></div>
                   {{ child.status }}
                 </button>
               </td>
