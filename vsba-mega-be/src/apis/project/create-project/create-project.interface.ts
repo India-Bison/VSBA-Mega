@@ -2,6 +2,7 @@ export interface create_project_function_params {
     query?: {},
     body: {
         name: string;
+        short_name?: string;
         full_venue_required?: string;
         resource_type?: any
         description?: string;
