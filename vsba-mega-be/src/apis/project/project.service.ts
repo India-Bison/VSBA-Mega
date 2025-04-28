@@ -9,32 +9,32 @@ let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
-    const slot_data = body.slot_groups.map((slot: any) => ({
-        slot_start_date: slot.slot_start_date,
-        slot_end_date: slot.slot_end_date,
-        start_time: slot.start_time,
-        end_time: slot.end_time,
-        hours: slot.hours,
-        slot_times: slot.slot_times,
+    const slot_data: any = body.slot_groups.map((slot: any) => ({
+        slot_start_date: slot.slot_start_date || null,
+        slot_end_date: slot.slot_end_date || null,
+        start_time: slot.start_time || null,
+        end_time: slot.end_time || null,
+        hours: slot.hours || null,
+        slot_times: slot.slot_times || null,
         project_id: null
     }));
 
     const create_slots = await SlotGroup.bulkCreate(slot_data, { transaction, returning: true });
     const slot_ids = create_slots.map((slot: any) => slot.id);
 
-    const project_data = {
+    const project_data: any = {
         name: body.name,
-        full_venue_required: body.full_venue_required,
-        resource_type: body.resource_type,
-        description: body.description,
-        audit_required: body.audit_required,
-        project_start_date: body.project_start_date,
-        project_end_date: body.project_end_date,
-        week_days: body.week_days,
-        slot_type: body.slot_type,
-        type: body.type,
-        status: body.status,
-        parent_id: body.parent_id,
+        full_venue_required: body.full_venue_required || null,
+        resource_type: body.resource_type || [],
+        description: body.description || null,
+        audit_required: body.audit_required || null,
+        project_start_date: body.project_start_date || null,
+        project_end_date: body.project_end_date || null,
+        week_days: body.week_days || [],
+        slot_type: body.slot_type || null,
+        type: body.type || null,
+        status: body.status || "pending",
+        parent_id: body.parent_id || null,
     }
 
     let project: any = await Project.create(project_data, { transaction, returning: true });
