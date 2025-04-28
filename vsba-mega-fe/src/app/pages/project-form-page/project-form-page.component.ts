@@ -18,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-form-page',
@@ -33,10 +34,11 @@ export class ProjectFormPageComponent {
   slot_start_end_date: any = {};
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
-  tabList: any[] = [{ name: 'Project', }, { name: 'Sub-Project', }];
+  @ViewChild('submit_Form_page') submit_Form_page: any;
+  tabList: any[] = [{name: 'Project',},{name: 'Sub-Project',}];
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router) {
+  constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps:ProjectService) {
     this.form = this.fb.group({
       name: [''],
       full_venue_required: [''],
@@ -124,49 +126,52 @@ export class ProjectFormPageComponent {
   }
 
   submit_form(route?: any) {
-    // const formData = {
-    //   ...this.form.value,
-    // };
-    // formData.type = this.params.type
-    // formData.status = 'Pending'
-    // if (!this.params.parent_id && this.params.type == 'Project') {
-    //   let response = formData
-    //   console.log(response, "project");
-    // } else if (this.params.parent_id) {
-    //   formData.parent_id = parseInt( this.params.parent_id)      
-    //   let response = formData
-    //   console.log(response, 'subproject');
-    // }
     const formData = {
-      ...this.form.value, parent_id: this.params.parent_id || undefined, status: 'Pending',
+      ...this.form.value,
     };
-    if (this.params.id) {
-      if (this.params.parent_id) {
-        let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
-        if (index !== -1) {
-          this.gs.items.sub_projects[index] = formData;
-        }
-      } else {
-        let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
-        if (index !== -1) {
-          this.gs.items.projects[index] = formData;
-        }
-      }
-    } else {
-      const nextId = Math.random().toString(36).substring(2, 9);
-      formData.id = nextId;
-      if (this.params.parent_id) {
-        this.gs.items.sub_projects.push(formData);
-      } else {
-        this.gs.items.projects.push(formData);
-      }
+    formData.type = this.params.type
+    formData.status = 'Pending'
+    if (!this.params.parent_id && this.params.type == 'Project') {
+      let response = this.ps.add(formData)
+      console.log(response, "project");
+    } else if (this.params.parent_id) {
+      formData.parent_id = parseInt( this.params.parent_id)      
+      let response = formData
+      console.log(response, 'subproject');
     }
-    this.gs.save_in_local_storage();
-    if (route) {
-      this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
-    } else {
-      this.route.navigate(['/project/list'], {});
-    }
+    // const formData = {
+    //   ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
+    // };
+    // console.log(formData,"why");
+    
+    // if (this.params.id) {
+    //   if (this.params.parent_id) {
+    //     let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
+    //     if (index !== -1) {
+    //       this.gs.items.sub_projects[index] = formData;
+    //     }
+    //   } else {
+    //     let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
+    //     if (index !== -1) {
+    //       this.gs.items.projects[index] = formData;
+    //     }
+    //   }
+    // } else {
+    //   const nextId = Math.random().toString(36).substring(2, 9);
+    //   formData.id = nextId;
+    //   if (this.params.parent_id) {
+    //     this.gs.items.sub_projects.push(formData);
+    //   } else {
+    //     this.gs.items.projects.push(formData);
+    //   }
+    // }
+    // this.gs.save_in_local_storage();
+    // this.submit_Form_page.close()
+    // if (route) {
+    //   this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
+    // } else {
+    //   this.route.navigate(['/project/list'], {});
+    // }
   }
   add_sub_project() {
     this.form.reset()

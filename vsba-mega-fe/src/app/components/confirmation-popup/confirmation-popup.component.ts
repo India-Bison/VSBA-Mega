@@ -40,14 +40,10 @@ export class ConfirmationPopupComponent {
     if (!this.is_popup_visible) return;
     this.is_popup_visible = false;
     this.close_modal_clicked.emit();
-
-    if (this.redirect) {
-      // const url = this.router.url.split('?')[0]; // Remove query parameters from the URL
-      // this.router.navigateByUrl(url);
-    }
   }
   confirm() {
     this.confirm_modal_clicked.emit();
+    this.is_popup_visible = false;
   }
 
 }

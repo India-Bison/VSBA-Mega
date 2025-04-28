@@ -6,10 +6,11 @@ import { SearchInputComponent } from '../search-input/search-input.component';
 import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink,CommonModule,NgFor],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
@@ -21,7 +22,7 @@ export class ProjectListComponent {
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
     // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
@@ -78,7 +79,7 @@ export class ProjectListComponent {
 
   async edit(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, view: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
   }
   ngOnInit() {
     this.ar.queryParams.subscribe((params) => {
