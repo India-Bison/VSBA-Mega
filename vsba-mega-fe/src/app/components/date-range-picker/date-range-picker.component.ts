@@ -43,7 +43,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       if (ngControl) {
         this.control = ngControl.control as FormControl;
       } else {
-        // Component is missing form control binding
+        console.error('Component is missing form control binding');
       }
     }, 100);
   }

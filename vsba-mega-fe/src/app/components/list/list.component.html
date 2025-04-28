@@ -13,19 +13,20 @@
   <!-- No height if no content -->
 </div>
     <div class="overflow-y-auto h-full">
-      <table class="table-auto text-text-color-600 w-full border-t border-t-[#e4e7ec]  ">
-        <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
+      <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
+        <thead
+          class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" class="px-4 h-12 text-center truncate">
-              <div [class]="column?.class">
+            <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" [ngClass]="{'flex justify-center items-center': column.title == 'Status'}" class="px-4 h-12 text-center truncate">
+              <div *ngIf="column.title != 'Action'" [class]="column?.class">
                 <ng-container *ngIf="column.key === 'index'; else showTitle">
                   <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <span>
+                  <span [ngClass]="{'justify-center': column.title == 'Status'}" class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block ml-1" />
+                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" />
                   </span>
                 </ng-template>
               </div>
@@ -35,15 +36,17 @@
         <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
           <ng-container *ngFor="let item of items; let i = index">
             <!-- Main Row -->
-            <tr class="border-t border-t-[#e4e7ec]">
+            <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.type == 'Index'" class="px-4 h-16">
                   <div class="flex justify-center items-center">
-                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
+                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected"
+                      (click)="toggleParentSelection(item)">
                   </div>
                 </td>
 
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}" class="px-4 h-16 items-center">
+                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}"
+                  class="px-4 h-16 items-center">
 
                   <ng-container *ngIf="column.key === 'mobile_number_icon'; else main_value">
                     <div class="text-start items-center gap-4">
@@ -60,17 +63,18 @@
                     <div [class]="column?.class" class="flex gap-2 items-center">
 
                       <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="column.key === 'type'" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer rotate-180 transition-transform duration-200" [class.rotate-0]="item.expanded" (click)="toggleExpand(item)" />
-
+                      <img *ngIf="item[column.key] == 'Full Day' && item.children" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
                       <!-- Status as Button -->
                       <ng-container *ngIf="item[column.key] === 'Approved' || item[column.key] === 'Pending' || item[column.key] === 'Rejected'; else normalText">
-                        <button class="px-[10px] py-1 rounded-full border text-sm font-medium" [ngClass]="{
-                                    'text-[#03A600] border-[#03A600]': item[column.key] === 'Approved',
-                                    'text-[#DF6E12] border-[#DF6E12]': item[column.key] === 'Pending',
-                                    'text-red-500 border-red-500': item[column.key] === 'Rejected'
-                                  }">
-                          {{ item[column.key] }}
-                        </button>
+                       <div class="flex justify-center items-center w-full">
+                         <button class="px-[10px] py-1 rounded-full border text-sm font-medium" [ngClass]="{
+                                     'text-[#03A600] border-[#03A600]': item[column.key] === 'Approved',
+                                     'text-[#DF6E12] border-[#DF6E12]': item[column.key] === 'Pending',
+                                     'text-red-500 border-red-500': item[column.key] === 'Rejected'
+                                   }">
+                           {{ item[column.key] }}
+                         </button>
+                       </div>
                       </ng-container>
 
                       <!-- Default Text Value -->
@@ -87,38 +91,56 @@
                 </td>
 
                 <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center ">
-                  <div class="flex gap-2 items-center justify-center">
-                    <ng-container *ngFor="let action of column.actions">
-                      <i *ngIf="action.condition || action.condition == undefined" (click)="action.action(item, i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}">
-                      </i>
+                  <div class="flex gap-2 -m-2 items-center justify-center">
+                    <ng-container >
+                      <!-- <i *ngIf="action.condition || action.condition == undefined" (click)="action.action(item, i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}"></i> -->
+                      <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt="">
+
                     </ng-container>
                   </div>
                 </td>
+               
               </ng-container>
             </tr>
 
             <!-- Child Rows -->
-            <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-gray-50">
+            <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-center items-center"> <input class="mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}</td>
+              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-center items-center"> <input class="mr-4"
+                  type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}
+              </td>
               <td class="px-4 h-16 text-sm">{{ child.name }}</td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
               <td class="px-4 h-16 text-sm">{{ child.slot_type }}</td>
-              <td class="px-4 h-16 text-sm">{{ child.startdate_enddate }}</td>
+              <!-- <td class="px-4 h-16 text-sm">{{ child.startdate_enddate }}</td> -->
               <td class="px-4 h-16 text-sm">
-                <button class="px-2 py-1 rounded-full border text-sm font-medium flex justify-center items-center" [ngClass]="{
-                            'text-[#03A600] border-[#03A600]': child.status === 'Approved',
-                            'text-[#DF6E12] border-[#DF6E12]': child.status === 'Pending',
-                            'text-red-500 border-red-500': child.status === 'Rejected'
-                          }">
-                  {{ child.status }}
-                </button>
+                <div class="flex justify-center items-center">
+                  <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{
+                              'text-[#03A600]': child.status === 'Approved',
+                              'text-[#DF6E12]': child.status === 'Pending',
+                              'text-red-500 ': child.status === 'Rejected'
+                            }">
+                            <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{
+                              'bg-[#03A600]': child.status === 'Approved',
+                              'bg-[#DF6E12]': child.status === 'Pending',
+                              'bg-red-500 ': child.status === 'Rejected'
+                            }"></div>
+                    {{ child.status }}
+                  </button>
+                </div>
+              </td>
+              <td class="px-4 h-16 flex justify-center items-center ">
+                <div class="flex gap-2 -m-2 items-center justify-center">
+                  <ng-container >
+                    <!-- <i *ngIf="action.condition || action.condition == undefined" (click)="action.action(item, i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}"></i> -->
+                    <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt="">
+
+                  </ng-container>
+                </div>
               </td>
             </tr>
-
           </ng-container>
         </tbody>
-
       </table>
     </div>
 
@@ -133,5 +155,6 @@
   </div>
 </div>
 <div class="fixed bottom-2 w-[92%]" *ngIf="pagination">
-  <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
+  <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
 </div>
