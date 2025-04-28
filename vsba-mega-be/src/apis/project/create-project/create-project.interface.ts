@@ -2,6 +2,7 @@ export interface create_project_function_params {
     query?: {},
     body: {
         name: string;
+        short_name?: string;
         full_venue_required?: string;
         resource_type?: any
         description?: string;
@@ -13,13 +14,13 @@ export interface create_project_function_params {
         type?: string;
         status?: string;
         parent_id?: number;
-        slot_group?: {
+        slot_groups?: {
             slot_start_date?: string;
             slot_end_date?: string;
             start_time?: string;
             end_time?: string;
             hours?: string;
-            slot_times?: string[];
+            slot_times?: string | string[];
         }[];
     };
     user?: any;
