@@ -6,14 +6,13 @@ export let update_project_tests: update_project_tests_interface[] = [
     input: {
       query: { id: 1 },
       body: {
-        first_name: 'John',
-        last_name: 'Doe',
+        name: 'John',
       }
     },
     check_output: (input, output) => {
       // return true;
       return input.query.id == output.data.id
-        && output.data.first_name == input.body.first_name
+        && output.data.name == input.body.name
     },
   }
 ];

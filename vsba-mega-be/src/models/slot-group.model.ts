@@ -10,7 +10,12 @@ let slot_group_model = {
   },
   project_id: {
     type: DataTypes.INTEGER,
+    references: {
+      model: "projects",
+      key: "id",
+    },
     allowNull: true,
+    onDelete: 'CASCADE'
   },
   start_time: {
     type: DataTypes.STRING,

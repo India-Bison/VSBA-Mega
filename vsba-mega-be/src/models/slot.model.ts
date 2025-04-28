@@ -16,6 +16,7 @@ let slot_model = {
       key: "id",
     },
     allowNull: true,
+    onDelete: 'CASCADE'
   },
   slot_group_id: {
     type: DataTypes.INTEGER,
@@ -24,6 +25,7 @@ let slot_model = {
       key: "id",
     },
     allowNull: true,
+    onDelete: 'CASCADE'
   },
 };
 
@@ -59,8 +61,8 @@ export const Slot = sequelize.define("slot", slot_model, model_options);
 Project.hasMany(Slot, { foreignKey: 'project_id', onDelete: 'CASCADE' });
 Slot.belongsTo(Project, { foreignKey: 'project_id', onDelete: 'CASCADE' });
 
-SlotGroup.hasMany(Slot, { foreignKey: 'project_id', onDelete: 'CASCADE' });
-Slot.belongsTo(SlotGroup, { foreignKey: 'project_id', onDelete: 'CASCADE' })
+SlotGroup.hasMany(Slot, { foreignKey: 'slot_group_id', onDelete: 'CASCADE' });
+Slot.belongsTo(SlotGroup, { foreignKey: 'slot_group_id', onDelete: 'CASCADE' })
 
 //Command to Run : bun src\models/slot.model.ts 
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
