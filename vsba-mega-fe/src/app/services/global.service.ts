@@ -31,7 +31,7 @@ export class GlobalService {
     }
   }
   
-  start_end_date_formate_return(form: FormGroup, date_range: any, start_control_name: string, end_control_name: string) {
+  start_end_date_formate_return(form: any, date_range: any, start_control_name: string, end_control_name: string) {
     if (date_range && date_range.start && date_range.end) {
       const form_object: any = {};
       Object.keys(form.controls).forEach(control => {

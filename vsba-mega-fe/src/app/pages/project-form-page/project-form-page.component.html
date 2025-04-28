@@ -69,8 +69,10 @@
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
-                                <app-date-range-picker class="w-full"
-                                    formControlName="slot_start_date"></app-date-range-picker>
+                                <app-date-range-picker class="w-full"   [(ngModel)]="slot_start_end_date[i]"
+                                (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')"
+                                [ngModelOptions]="{standalone: true}"
+                                    ></app-date-range-picker>
                                 <div class="flex justify-between w-full gap-2 items-center">
                                     <app-date-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'"
                                         [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
