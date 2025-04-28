@@ -1,5 +1,7 @@
 import { DataTypes, ModelOptions } from "sequelize";
 import { sequelize } from "@config/db/sequelize";
+import { Project } from "@src/apis/project/project.model";
+import { SlotGroup } from "./slot-group.model";
 
 let slot_model = {
   id: {
@@ -53,6 +55,12 @@ let model_options: ModelOptions = <any>{
 };
 
 export const Slot = sequelize.define("slot", slot_model, model_options);
+
+Project.hasMany(Slot, { foreignKey: 'project_id', onDelete: 'CASCADE' });
+Slot.belongsTo(Project, { foreignKey: 'project_id', onDelete: 'CASCADE' });
+
+SlotGroup.hasMany(Slot, { foreignKey: 'project_id', onDelete: 'CASCADE' });
+Slot.belongsTo(SlotGroup, { foreignKey: 'project_id', onDelete: 'CASCADE' })
 
 //Command to Run : bun src\models/slot.model.ts 
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });

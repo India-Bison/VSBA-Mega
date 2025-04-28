@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const create_project_body_schema = z.object({
     name: z.string(),
+    short_name: z.string().optional(),
     full_venue_required: z.string().optional(),
     resource_type: z.union([z.string(), z.array(z.string())]).optional().openapi({ example: ['resource type'] }),
     description: z.string().optional(),
@@ -13,7 +14,7 @@ export const create_project_body_schema = z.object({
     type: z.string().optional(),
     status: z.string().optional(),
     parent_id: z.number().optional(),
-    slot_group: z.array(
+    slot_groups: z.array(
         z.object({
             slot_start_date: z.string().optional(),
             slot_end_date: z.string().optional(),

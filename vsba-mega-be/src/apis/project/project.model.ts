@@ -14,6 +14,10 @@ let project_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  short_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   full_venue_required: {
     type: DataTypes.STRING,
     allowNull: true,
