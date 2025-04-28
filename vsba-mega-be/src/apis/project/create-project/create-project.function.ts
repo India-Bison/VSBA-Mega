@@ -7,7 +7,6 @@ let create_project_function = async (data: create_project_function_params, trans
     try {
         let body: any = { ...data.body }
         body.created_by_id = data.user?.id || null;
-        body.updated_by_id = data.user?.id || null;
         let response = await project_service.create_project(body, transaction);
 
         return { code: 200, message: 'Create Project Successful', data: response }

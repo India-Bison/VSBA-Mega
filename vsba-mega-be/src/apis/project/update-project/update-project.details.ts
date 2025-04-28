@@ -11,7 +11,7 @@ export let update_project_details = {
     method: 'post',
     path: '/project/update-project',
     query_schema: z.object(update_project_query_schema).strict(),
-    body_schema: z.object(update_project_body_schema).strict(),
+    body_schema: update_project_body_schema.strict(),
     execution_function: update_project_function,
     tests: update_project_tests,
     roles: ['Public']

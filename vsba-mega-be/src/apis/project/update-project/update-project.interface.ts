@@ -3,11 +3,30 @@ export interface update_project_function_params {
         id: number
     },
     body: {
-        first_name?: string
-        last_name?: string
-        updated_by_id?: number
-    }
-    user?: any
+        name?: string;
+        short_name?: string;
+        full_venue_required?: string;
+        resource_type?: any
+        description?: string;
+        audit_required?: string;
+        project_start_date?: string;
+        project_end_date?: string;
+        week_days?: string | string[];
+        slot_type?: string;
+        type?: string;
+        status?: string;
+        parent_id?: number;
+        updated_by_id?: number;
+        slot_groups?: {
+            slot_start_date?: string;
+            slot_end_date?: string;
+            start_time?: string;
+            end_time?: string;
+            hours?: string;
+            slot_times?: string | string[];
+        }[];
+    };
+    user?: any;
 }
 
 export interface update_project_function_return {
