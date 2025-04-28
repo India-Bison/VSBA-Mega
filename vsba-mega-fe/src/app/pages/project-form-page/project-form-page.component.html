@@ -9,9 +9,9 @@
                 <h1 class="text-xl font-medium">MHCET <span class="text-base font-normal text-[#666666]">(01/03/2025 to
                         30/03/2025)</span></h1>
             </ng-container>
-            <app-toggle-tabs [params]="params" params_name="view" [tabs]="tabList" [defaultActive]="params.view"></app-toggle-tabs>
+            <app-toggle-tabs [params]="params" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
         </div>
-        <div *ngIf="params.view == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
+        <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <app-text-input label="Project Name" formControlName="name"></app-text-input>
@@ -20,14 +20,12 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search label="Resource Type*" formControlName="resource_type" [options]="['mayue']"></app-multi-search>
-
+                    <app-multi-search label="Resource Type*" formControlName="resource_type" [options]="['VBSM RESOURCE TYPE']"></app-multi-search>
                     <div>
                         <app-text-area label="Short Description*" formControlName="description"></app-text-area>
                         <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words
                         </div>
                     </div>
-
                     <app-radio label="Audit Required" [is_required]="true" formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
                       { label: 'Limited Audit', value: 'Limited Audit' },
@@ -35,15 +33,6 @@
                       { label: 'Third Party Audit', value: 'Third-Party -Audit' }
                     ]">
                     </app-radio>
-
-                    <!-- <div class="w-full">
-                        <label class="block text-sm font-medium text-[#212121] text-opacity-60">Project Date*</label>
-                        <div class="mt-1 flex gap-2 w-full">
-                            <app-date-input class="w-full" formControlName="projectStartDate"></app-date-input>
-                            <label class="block text-xl text-gray-700 mt-2">to</label>
-                            <app-date-input class="w-full" formControlName="projectEndDate"></app-date-input>
-                        </div>
-                    </div> -->
                     <app-date-range-picker formControlName="project_start_date"></app-date-range-picker>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
@@ -105,7 +94,7 @@
                 </div>
             </form>
         </div>
-        <div *ngIf="params.view == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
+        <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
             <app-list [pagination]="false" [columns]="columns" [items]="gs.items.sub_projects | subProjectsOfProject : params.parent_id || params.id" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <h1 class="text-xl text-[#212121] font-medium">Sub Projects</h1>
