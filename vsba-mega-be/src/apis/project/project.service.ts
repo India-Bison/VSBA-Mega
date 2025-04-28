@@ -79,6 +79,13 @@ let get_project = async (id: any, transaction: Transaction) => {
         let response = get_from_cache(has_cache, project_cache, id) || await Project.findOne({ where: { id: id }, include: [{ model: SlotGroup }], transaction });
         if (response) {
             response = response.toJSON ? response.toJSON() : response;
+
+            if (response.type === "sub project" && response.parent_id) {
+                const parent_project = await Project.findOne({ where: { id: response.parent_id }, include: [{ model: SlotGroup }], transaction })
+                if (parent_project) {
+                    response.parent_project = parent_project.toJSON ? parent_project.toJSON() : parent_project;
+                }
+            }
             set_cache(has_cache, project_cache, id, response);
         } else {
             console.log(`Project with id ${id} not found in database.`);
@@ -90,19 +97,44 @@ let get_project = async (id: any, transaction: Transaction) => {
     }
 }
 
-let get_all_project = async (filter: any, transaction: Transaction) => {
-    let response = get_from_cache(has_cache, list_cache, filter) || await Project.findAndCountAll({ where: { ...filter, test_data: { [Op.not]: true } }, transaction });
+let get_all_project = async (data: any, transaction: Transaction) => {
+    const page = Number(data.page) > 0 ? Number(data.page) : 1;
+    const page_size = Number(data.page_size) > 0 ? Number(data.page_size) : 10;
+    const pagination = { offset: (page - 1) * page_size, limit: page_size };
+
+    let where_filter = { ...data };
+    delete where_filter.page;
+    delete where_filter.page_size;
+
+    let response = get_from_cache(has_cache, list_cache, data) || await Project.findAndCountAll({
+        where: { ...where_filter, test_data: { [Op.not]: true } },
+        include: [{ model: SlotGroup }],
+        ...pagination,
+        transaction
+    });
+
     if (response) {
         response = {
             count: response.count,
-            rows: response.rows.map((item: any) => {
-                return item.toJSON ? item.toJSON() : item;
-            })
-        }
+            rows: await Promise.all(response.rows.map(async (item: any) => {
+                let project = item.toJSON ? item.toJSON() : item;
+
+                if (project.type === "sub project" && project.parent_id) {
+                    const parent_project = await Project.findOne({ where: { id: project.parent_id }, include: [{ model: SlotGroup }], transaction });
+
+                    if (parent_project) {
+                        project.parent_project = parent_project.toJSON ? parent_project.toJSON() : parent_project;
+                    }
+                }
+                return project;
+            }))
+        };
     }
-    set_cache(has_cache, list_cache, filter, response);
+
+    set_cache(has_cache, list_cache, data, response);
     return response;
 }
+
 
 export let project_service = {
     create_project,
