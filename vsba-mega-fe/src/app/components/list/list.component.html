@@ -23,7 +23,7 @@
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <span>
+                  <span class="text-base font-medium">
                     {{ column.title }}
                     <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block ml-1" />
                   </span>
