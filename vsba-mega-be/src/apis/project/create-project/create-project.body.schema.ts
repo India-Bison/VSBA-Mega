@@ -13,7 +13,7 @@ export const create_project_body_schema = z.object({
     type: z.string().optional(),
     status: z.string().optional(),
     parent_id: z.number().optional(),
-    slot_group: z.array(
+    slot_groups: z.array(
         z.object({
             slot_start_date: z.string().optional(),
             slot_end_date: z.string().optional(),

@@ -9,7 +9,7 @@ let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
-    const slot_data = body.slot_group.map((slot: any) => ({
+    const slot_data = body.slot_groups.map((slot: any) => ({
         slot_start_date: slot.slot_start_date,
         slot_end_date: slot.slot_end_date,
         start_time: slot.start_time,

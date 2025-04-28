@@ -28,6 +28,10 @@ let slot_group_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  slot_times: {
+    type: DataTypes.JSONB,
+    allowNull: true,
+  },
   hours: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -63,8 +67,8 @@ let model_options: ModelOptions = <any>{
 
 export const SlotGroup = sequelize.define("slot_group", slot_group_model, model_options);
 
-Project.hasMany(SlotGroup, { foreignKey: 'project_id' });
-SlotGroup.belongsTo(Project, { foreignKey: 'project_id' });
+Project.hasMany(SlotGroup, { foreignKey: 'project_id', onDelete: 'CASCADE', });
+SlotGroup.belongsTo(Project, { foreignKey: 'project_id', onDelete: 'CASCADE', });
 
 //Command to Run : bun src\models/slot_group.model.ts 
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });
