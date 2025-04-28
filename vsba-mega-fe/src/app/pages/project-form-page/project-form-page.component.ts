@@ -32,7 +32,7 @@ export class ProjectFormPageComponent {
   params: any = {};
   project_start_end_date: any = {};
   slot_start_end_date: any = {};
-  selected_project_id:any = {}
+  selected_project_id: any = {}
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
@@ -58,21 +58,14 @@ export class ProjectFormPageComponent {
   ngOnInit() {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
-      // if (this.params.id) {
-      //   let projectData: any = {}
-      //   if (this.params.parent_id) {
-      //     projectData = this.gs.items.sub_projects.find((item: any) => item.id === this.params.id);
-      //   } else {
-      //     projectData = this.gs.items.projects.find((item: any) => item.id === this.params.id);
-      //   }
-      //   if (projectData) {
-      //   }
-      // } else {
       this.add_slot();
-      // }
+      if (this.params.id) {
+      }
       this.patch_project_form(this.params.id);
     })
-    this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
+    console.log(this.selected_project_id);
+    
+    this.params.parent_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
   get slots(): FormArray {
     return this.form.get('slot_groups') as FormArray;
@@ -134,29 +127,34 @@ export class ProjectFormPageComponent {
     formData.type = this.params.type
     formData.status = 'Pending'
     if (!this.params.parent_id && this.params.type == 'Project') {
+      formData.type = 'Project'
       let response = this.ps.add(formData)
-      console.log(response, "project");
+      this.route.navigate(['/project/list'], {})
     } else if (this.params.parent_id) {
       formData.parent_id = parseInt(this.params.parent_id)
-      let response = formData
-      console.log(response, 'subproject');
+      formData.type = 'Sub-Project'
+      let response = this.ps.add(formData)
+      this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: this.selected_project_id.id }, queryParamsHandling: 'merge', })
     }
   }
   async update() {
-      try {
-        let data = { ...this.form.value };
-        let response: any = await this.ps.update(this.selected_project_id, data);
-      } catch (error: any) {
-        // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
-      }
+    try {
+      let data = { ...this.form.value };
+      data.type = this.params.type
+      let response: any = await this.ps.update(this.selected_project_id.id, data);
+    } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
   }
   add_sub_project() {
-    this.form.reset()
-    this.route.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: this.params.id } });
+    const selectedProjectId = this.selected_project_id.id;
+    this.form.reset();
+    this.selected_project_id.id = selectedProjectId;
+    this.route.navigate([], { queryParams: { type: 'Project', parent_id: selectedProjectId } });
   }
+  
   async patch_project_form(data: any) {
     let dataa = await this.ps?.get(data);
-this.selected_project_id = dataa?.data?.id
     this.form.patchValue(dataa.data);
     const slots_array = this.form.get('slot_groups') as FormArray;
     slots_array.clear();
@@ -170,6 +168,9 @@ this.selected_project_id = dataa?.data?.id
           slot_times: this.fb.control(slot.slot_times || [])
         }));
       });
+      this.selected_project_id = dataa?.data
+      console.log(this.selected_project_id);
+      
     } else {
       console.log('Slot group empty aahe,');
       this.add_slot();

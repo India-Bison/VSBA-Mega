@@ -7,8 +7,8 @@
                     Project</span>
             </ng-container>
             <ng-container *ngIf="params.parent_id">
-                <span class="text-xl font-medium leading-[100%] tracking-2%">MHCET <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">(01/03/2025 to
-                        30/03/2025)</span></span>
+                <span class="text-xl font-medium leading-[100%] tracking-2%">{{selected_project_id.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{selected_project_id.project_start_date}} to
+                        {{selected_project_id.project_end_date}})</span></span>
             </ng-container>
             <app-toggle-tabs [params]="params" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
         </div>
@@ -130,9 +130,9 @@
         <div
             class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
             <app-button color="border-[#FA2912] text-[#FA2912]" (click)="update()" label="DISCARD"></app-button>
-            <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="submit_Form_page.open()"
+            <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="Continue_without_sub_project.open()"
                 label="SAVE AS DRAFT"></app-button>
-            <app-button color="bg-[#E697AB] text-[#310000]" (click)="submit_Form_page.open()" label="SUBMIT"></app-button>
+            <app-button color="bg-[#E697AB] text-[#310000]" (click)="Continue_without_sub_project.open()" label="SUBMIT"></app-button>
             <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]"
                 label="ADD SUB PROJECTS"></app-button>
         </div>
@@ -141,7 +141,11 @@
 <app-modal #open_sub_project scroll="true" label="Add Sub Project">
 
 </app-modal>
-<app-confirmation-popup #submit_Form_page label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true"
+<app-confirmation-popup #open_submit_form label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true"
     (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+    Proceed without adding subprojects? You can add them later if needed.
+</app-confirmation-popup>
+<app-confirmation-popup #Continue_without_sub_project label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true"
+    (confirm_modal_clicked)="add_sub_project()" (close_modal_clicked)="submit_form()">
     Proceed without adding subprojects? You can add them later if needed.
 </app-confirmation-popup>

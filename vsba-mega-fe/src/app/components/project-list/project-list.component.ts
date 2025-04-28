@@ -37,7 +37,7 @@ export class ProjectListComponent {
     {
       title: 'Action', type: 'Action', actions: [
         { title: 'Update', icon: 'bx bx-edit-alt', action: this.edit.bind(this) },
-        // { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },,
+        { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },
       ]
     },
   ];
@@ -87,6 +87,14 @@ export class ProjectListComponent {
   async edit(item: any, index: any) {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
+  }
+  async delete(item: any, index: any) {
+    try {
+      let data = await this.ps?.delete(item.id);
+  
+    } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
   }
  async ngOnInit() {
     this.ar.queryParams.subscribe(async(params) => {
