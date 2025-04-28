@@ -44,7 +44,7 @@ export class ProjectFormPageComponent {
 
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router) {
     this.form = this.fb.group({
-      project_name: [''],
+      name: [''],
       full_venue_required: [''],
       resource_type: [''],
       description: [''],
@@ -56,7 +56,7 @@ export class ProjectFormPageComponent {
       slot_group: this.fb.array([])
     });
     this.sub_form = fb.group({
-      project_name: [''],
+      name: [''],
       full_venue_required: [''],
       resource_type: [''],
       description: [''],
@@ -200,7 +200,7 @@ export class ProjectFormPageComponent {
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
     // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },

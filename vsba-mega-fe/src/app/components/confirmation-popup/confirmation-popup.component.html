@@ -5,8 +5,8 @@
             <span class="sr-only">Close modal</span>
         </button>
         <div class="flex flex-col items-center justify-center gap-2 p-6">
-            <div class="rounded-full p-4" [ngClass]="iconColor">
-                <i [ngClass]="icon" class="text-3xl text-white bx bx-x"></i>
+            <div class="rounded-full p-4">
+                <i [ngClass]="icon" class="text-3xl text-red-300 bx bx-x"></i>
             </div>
             <h2 class="text-xl font-semibold text-gray-800 text-center">{{ label }}</h2>
             <p class="text-center text-gray-600 text-sm">
@@ -17,7 +17,7 @@
             <button (click)="close()" class="bg-gray-100 text-blue-600 font-semibold px-6 py-2 rounded-full">
                 {{ cancelText }}
             </button>
-            <button class="text-white font-semibold px-6 py-2 rounded-full" [ngClass]="confirmColor">
+            <button (click)="confirm()" class="text-white font-semibold px-6 py-2 rounded-full" [ngClass]="confirmColor">
                 {{ confirmText }}
             </button>
         </div>
