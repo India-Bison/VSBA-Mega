@@ -18,7 +18,7 @@
           <button class="ml-[10px] text-[#3F41D1] text-lg" (click)="removeItem(item)">×</button>
         </div>
       </ng-container>
-      <input type="text" class="flex-1 p-1 text-lg focus:outline-none" [(ngModel)]="searchText" (keypress)="dropdownOpen = true" (keydown)="handleKeyDown($event)" (input)="filterOptions()" [placeholder]="selectedOptions.length || dropdownOpen ? '' : this.label" />
+      <input type="text" class="flex-1 p-1 text-[16px] focus:outline-none" [(ngModel)]="searchText" (keypress)="dropdownOpen = true" (keydown)="handleKeyDown($event)" (input)="filterOptions()" [placeholder]="selectedOptions.length || dropdownOpen ? '' : this.label" />
     </div>
   </div>
 
