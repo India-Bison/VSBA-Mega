@@ -1,5 +1,5 @@
-import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, Input, ViewChildren } from '@angular/core';
+import { CommonModule, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
 import { PaginationComponent } from "../pagination/pagination.component";
 import { MultiSearchComponent } from '../multi-search/multi-search.component';
 import { SearchInputComponent } from '../search-input/search-input.component';
@@ -10,7 +10,7 @@ import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent,CommonModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
@@ -68,6 +68,15 @@ export class ListComponent {
       }
     },
   ];
+
+  @ContentChildren('*', { descendants: true, read: ElementRef }) projectedContent!: QueryList<ElementRef>;
+
+  isContentEmpty: boolean = true;
+
+  ngAfterContentInit() {
+    // Check if there are any content children
+    this.isContentEmpty = this.projectedContent.length === 0;
+  }
 
   // State to track which column is expanded per row
   expandedState: { [rowIndex: number]: string | null } = {};

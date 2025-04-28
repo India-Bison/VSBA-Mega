@@ -1,9 +1,17 @@
 <div class="bg-white rounded-2xl border border-[#e4e7ec]">
-  <div
-    class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
-    <div class="h-[76px] w-full flex px-6 justify-between items-center">
-      <ng-content></ng-content>
-    </div>
+  <div class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
+<!-- Main container -->
+<ng-template #contentTemplate>
+  <ng-content></ng-content>
+</ng-template>
+
+<!-- Check if ng-content has anything -->
+<div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0" class="h-[76px] w-full flex px-6 justify-between items-center">
+  <ng-container [ngTemplateOutlet]="contentTemplate"></ng-container>
+</div>
+<div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0" class="w-full flex px-6 justify-between items-center">
+  <!-- No height if no content -->
+</div>
     <div class="overflow-y-auto h-full">
       <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
         <thead
@@ -125,15 +133,14 @@
       </table>
     </div>
 
-    <div *ngIf="items?.length == 0" class="felx justify-center items-center rounded-b-2xl bg-white ">
+    <div *ngIf="items?.length == 0" class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
       <div class="w-full h-96 p-10 flex justify-center items-center">
         <div class="flex-col items-center justify-center">
-          <!-- <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" /> -->
+          <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
           <p class="text-md text-center">No Records found</p>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 <div class="fixed bottom-2 w-[92%]" *ngIf="pagination">
