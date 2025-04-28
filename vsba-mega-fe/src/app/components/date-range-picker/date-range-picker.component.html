@@ -34,7 +34,7 @@
 
   <div class="flex-1 flex justify-start whitespace-nowrap">
     <span class="[word-spacing:0.16rem]" *ngIf="value.start && value.end; else placeholder">
-      {{ value.start | date: 'YY-MM-DD' }} To {{ value.end | date: 'YY-MM-DD' }}
+      {{ value.start | date: 'yy-MM-dd' }} To {{ value.end | date: 'yy-MM-dd' }}
     </span>
     <ng-template class="[word-spacing:0.16rem]" #placeholder>
       <div class="[word-spacing:0.16rem]">
