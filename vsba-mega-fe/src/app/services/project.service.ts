@@ -40,7 +40,7 @@ export class ProjectService {
 
   async get_list(filters: any) {
     try {
-      let response = await this.hs.get('/school/get-school-list', filters)
+      let response = await this.hs.get('/project/get-project-list', filters)
       return response;
     } catch (error: any) {
       throw error;
@@ -49,7 +49,7 @@ export class ProjectService {
 
   async update(id: any, value: any) {
     try {
-      let response = await this.hs.post('/school/update-school?id=' + id, {}, value)
+      let response = await this.hs.post('/project/update-project?id=' + id, {}, value)
       return response;
     } catch (error: any) {
       throw error;

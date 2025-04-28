@@ -7,6 +7,7 @@ import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-list',
@@ -17,8 +18,14 @@ import { CommonModule, NgFor } from '@angular/common';
 })
 export class ProjectListComponent {
   ar = inject(ActivatedRoute)
-  constructor(public gs: GlobalService, public route: Router) { }
+  constructor(public gs: GlobalService, public route: Router, public ps:ProjectService) { }
   params: any = {}
+  list: any = {};
+  items: any[] = []
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 0;
+  totalPages = 50;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
@@ -81,13 +88,28 @@ export class ProjectListComponent {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
   }
-  ngOnInit() {
-    this.ar.queryParams.subscribe((params) => {
+ async ngOnInit() {
+    this.ar.queryParams.subscribe(async(params) => {
       this.params = params;
+        await this.get_instructor_list_page(this.params);
     })
   }
 
   redirect_to_project() {
 
   }
+  async get_instructor_list_page(params: any) {
+    try {
+      const queryParams = { ...params, page: this.currentPage };
+      const response = await this.ps.get_list({});
+      this.totalItems = response?.count || 0;
+      const apiData = response?.data || [];
+      this.items = apiData;
+      console.log(this.items, "loggggggggggggggggggggg");
+    } catch (error: any) {
+      console.error(error?.message, '');
+      this.items = [];
+    }
+  }
+  
 }

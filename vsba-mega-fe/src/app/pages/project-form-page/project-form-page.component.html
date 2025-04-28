@@ -16,6 +16,7 @@
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <app-text-input label="Project Name" formControlName="name"></app-text-input>
+                    <app-text-input label="Short Name" formControlName="short_name"></app-text-input>
                     <app-radio label="Full Venue Required" [is_required]="true" formControlName="full_venue_required"
                         [options]="[
                       { label: 'Yes', value: 'yes' },
@@ -53,7 +54,7 @@
                             <img src="../../../assets/Blue Plus.svg" alt="Plus" class="w-5 h-5 inline mr-2" />ADD
                             SLOT</app-button>
                     </div>
-                    <div formArrayName="slot_group" class="flex flex-col gap-4">
+                    <div formArrayName="slot_groups" class="flex flex-col gap-4">
                         <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i"
                             class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-2 shadow-sm group relative">
                             <div class="flex justify-between items-center">
@@ -128,7 +129,7 @@
         </div>
         <div
             class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
-            <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
+            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="update()" label="DISCARD"></app-button>
             <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="submit_Form_page.open()"
                 label="SAVE AS DRAFT"></app-button>
             <app-button color="bg-[#E697AB] text-[#310000]" (click)="submit_Form_page.open()" label="SUBMIT"></app-button>

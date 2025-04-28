@@ -10,13 +10,9 @@ export class GlobalService {
     projects: [],
     sub_projects: []
   };
-  constructor() {
-    console.log(this.items, 'gsssssss');
-    this.get_from_local_storage();
-  }
+  constructor() {}
 
   save_in_local_storage() {
-    console.log(this.items, 'gsssssss');
     localStorage.setItem('projects', JSON.stringify(this.items.projects));
     localStorage.setItem('sub_projects', JSON.stringify(this.items.sub_projects));
   }

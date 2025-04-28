@@ -32,15 +32,17 @@ export class ProjectFormPageComponent {
   params: any = {};
   project_start_end_date: any = {};
   slot_start_end_date: any = {};
+  selected_project_id:any = {}
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
-  tabList: any[] = [{name: 'Project',},{name: 'Sub-Project',}];
+  tabList: any[] = [{ name: 'Project', }, { name: 'Sub-Project', }];
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps:ProjectService) {
+  constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps: ProjectService) {
     this.form = this.fb.group({
       name: [''],
+      short_name: [''],
       full_venue_required: [''],
       resource_type: [''],
       description: [''],
@@ -50,30 +52,30 @@ export class ProjectFormPageComponent {
       week_days: [[]],
       slot_type: [''],
       type: [''],
-      slot_group: this.fb.array([])
+      slot_groups: this.fb.array([])
     });
   }
   ngOnInit() {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
-      if (this.params.id) {
-        let projectData: any = {}
-        if (this.params.parent_id) {
-          projectData = this.gs.items.sub_projects.find((item: any) => item.id === this.params.id);
-        } else {
-          projectData = this.gs.items.projects.find((item: any) => item.id === this.params.id);
-        }
-        if (projectData) {
-          this.patch_project_form(projectData);
-        }
-      } else {
-        this.add_slot();
-      }
+      // if (this.params.id) {
+      //   let projectData: any = {}
+      //   if (this.params.parent_id) {
+      //     projectData = this.gs.items.sub_projects.find((item: any) => item.id === this.params.id);
+      //   } else {
+      //     projectData = this.gs.items.projects.find((item: any) => item.id === this.params.id);
+      //   }
+      //   if (projectData) {
+      //   }
+      // } else {
+      this.add_slot();
+      // }
+      this.patch_project_form(this.params.id);
     })
     this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
   get slots(): FormArray {
-    return this.form.get('slot_group') as FormArray;
+    return this.form.get('slot_groups') as FormArray;
   }
   add_slot(): void {
     const slotGroup = this.fb.group({
@@ -135,61 +137,43 @@ export class ProjectFormPageComponent {
       let response = this.ps.add(formData)
       console.log(response, "project");
     } else if (this.params.parent_id) {
-      formData.parent_id = parseInt( this.params.parent_id)      
+      formData.parent_id = parseInt(this.params.parent_id)
       let response = formData
       console.log(response, 'subproject');
     }
-    // const formData = {
-    //   ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
-    // };
-    // console.log(formData,"why");
-    
-    // if (this.params.id) {
-    //   if (this.params.parent_id) {
-    //     let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
-    //     if (index !== -1) {
-    //       this.gs.items.sub_projects[index] = formData;
-    //     }
-    //   } else {
-    //     let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
-    //     if (index !== -1) {
-    //       this.gs.items.projects[index] = formData;
-    //     }
-    //   }
-    // } else {
-    //   const nextId = Math.random().toString(36).substring(2, 9);
-    //   formData.id = nextId;
-    //   if (this.params.parent_id) {
-    //     this.gs.items.sub_projects.push(formData);
-    //   } else {
-    //     this.gs.items.projects.push(formData);
-    //   }
-    // }
-    // this.gs.save_in_local_storage();
-    // this.submit_Form_page.close()
-    // if (route) {
-    //   this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
-    // } else {
-    //   this.route.navigate(['/project/list'], {});
-    // }
+  }
+  async update() {
+      try {
+        let data = { ...this.form.value };
+        let response: any = await this.ps.update(this.selected_project_id, data);
+      } catch (error: any) {
+        // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+      }
   }
   add_sub_project() {
     this.form.reset()
     this.route.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: this.params.id } });
   }
-  patch_project_form(data: any) {
-    this.form.patchValue(data);
-    const slots_array = this.form.get('slot_group') as FormArray;
+  async patch_project_form(data: any) {
+    let dataa = await this.ps?.get(data);
+this.selected_project_id = dataa?.data?.id
+    this.form.patchValue(dataa.data);
+    const slots_array = this.form.get('slot_groups') as FormArray;
     slots_array.clear();
-    data.slot_group.forEach((slot: any) => {
-      slots_array.push(this.fb.group({
-        slot_start_date: slot.slot_start_date,
-        slot_end_date: slot.slot_end_date,
-        start_time: slot.start_time,
-        hours: slot.hours,
-        slot_times: this.fb.control(slot.slot_times || [])
-      }));
-    });
+    if (dataa?.data?.slot_groups && Array.isArray(dataa?.data?.slot_groups) && dataa.data.slot_groups.length > 0) {
+      dataa?.data?.slot_groups.forEach((slot: any) => {
+        slots_array.push(this.fb.group({
+          slot_start_date: slot.slot_start_date,
+          slot_end_date: slot.slot_end_date,
+          start_time: slot.start_time,
+          hours: slot.hours,
+          slot_times: this.fb.control(slot.slot_times || [])
+        }));
+      });
+    } else {
+      console.log('Slot group empty aahe,');
+      this.add_slot();
+    }
   }
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
@@ -209,7 +193,6 @@ export class ProjectFormPageComponent {
   async edit(item: any, index: any) {
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, type: 'Project' } });
   }
-
   plus_minus_open_close(index: number) {
     if (this.plus_minus_index == index) {
       this.plus_minus_index = null;
