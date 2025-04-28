@@ -31,6 +31,7 @@ export class ProjectFormPageComponent {
   params: any = {};
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
+  @ViewChild('submit_Form_page') submit_Form_page: any;
   tabList: any[] = [{name: 'Project',},{name: 'Sub-Project',}];
   form: FormGroup;
 
@@ -137,6 +138,8 @@ export class ProjectFormPageComponent {
     const formData = {
       ...this.form.value,parent_id: this.params.parent_id || undefined,status: 'Pending',
     };
+    console.log(formData,"why");
+    
     if (this.params.id) {
       if (this.params.parent_id) {
         let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
@@ -159,6 +162,7 @@ export class ProjectFormPageComponent {
       }
     }
     this.gs.save_in_local_storage();
+    this.submit_Form_page.close()
     if (route) {
       this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, type: 'Sub-Project' } });
     } else {

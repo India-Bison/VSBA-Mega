@@ -75,7 +75,7 @@
                                         [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
                                         formControlName="start_time">
                                     </app-date-input>
-                                    <div class="flex flex-col gap-4" *ngIf="form.get('slot_type')?.value == 'Full Day'">
+                                    <div class="flex gap-4" *ngIf="form.get('slot_type')?.value == 'Full Day'">
                                         <label class="text-gray-500 font-medium text-sm">Start Time</label>
                                         <app-date-input [format]="'time'"
                                             [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
@@ -126,9 +126,9 @@
         <div
             class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
             <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
-            <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="submit_Form.open()"
+            <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="submit_Form_page.open()"
                 label="SAVE AS DRAFT"></app-button>
-            <app-button color="bg-[#E697AB] text-[#310000]" (click)="submit_Form.open()" label="SUBMIT"></app-button>
+            <app-button color="bg-[#E697AB] text-[#310000]" (click)="submit_Form_page.open()" label="SUBMIT"></app-button>
             <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]"
                 label="ADD SUB PROJECTS"></app-button>
         </div>
@@ -137,8 +137,7 @@
 <app-modal #open_sub_project scroll="true" label="Add Sub Project">
 
 </app-modal>
-<app-confirmation-popup #submit_Form label="Submit Project?" cancelText="close" confirmText="open" [is_mandatory]="true"
-    (confirm_modal_clicked)="submit_form()">
-    This project will be disabled and become inactive.
-    You can re-enable it anytime.
+<app-confirmation-popup #submit_Form_page label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true"
+    (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+    Proceed without adding subprojects? You can add them later if needed.
 </app-confirmation-popup>
