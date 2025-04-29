@@ -11,14 +11,14 @@ import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink,CommonModule,NgFor],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, NgFor],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
 })
 export class ProjectListComponent {
   ar = inject(ActivatedRoute)
-  constructor(public gs: GlobalService, public route: Router, public ps:ProjectService) { }
+  constructor(public gs: GlobalService, public route: Router, public ps: ProjectService) { }
   params: any = {}
   list: any = {};
   items: any[] = []
@@ -91,25 +91,25 @@ export class ProjectListComponent {
   async delete(item: any, index: any) {
     try {
       let data = await this.ps?.delete(item.id);
-  
+
     } catch (error: any) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
- async ngOnInit() {
-    this.ar.queryParams.subscribe(async(params) => {
+  async ngOnInit() {
+    this.ar.queryParams.subscribe(async (params) => {
       this.params = params;
-        await this.get_instructor_list_page(this.params);
+      await this.get_project(this.params);
     })
   }
 
   redirect_to_project() {
 
   }
-  async get_instructor_list_page(params: any) {
+  async get_project(params: any) {
     try {
-      const queryParams = { ...params, page: this.currentPage };
-      const response = await this.ps.get_list({});
+      const queryParams = { ...params, page: this.currentPage, type: 'Project' };
+      const response = await this.ps.get_list(queryParams);
       this.totalItems = response?.count || 0;
       const apiData = response?.data || [];
       this.items = apiData;
@@ -119,5 +119,5 @@ export class ProjectListComponent {
       this.items = [];
     }
   }
-  
+
 }
