@@ -126,7 +126,8 @@ Project.belongsTo(User, { foreignKey: 'created_by_id', as: 'project_created_by_u
 User.hasMany(Project, { foreignKey: 'updated_by_id', as: 'project_updated_by' });
 Project.belongsTo(User, { foreignKey: 'updated_by_id', as: 'project_updated_by_user' });
 
-Project.belongsTo(Project, { foreignKey: 'parent_id', as: 'parent_project' })
+Project.hasMany(Project, { foreignKey: 'parent_id', as: 'children' });
+Project.belongsTo(Project, { foreignKey: 'parent_id', as: 'parent' })
 
 //Command to Run : bun src/apis/path
 // sequelize.sync({ alter: true }).then(() => { console.log("Database Connected!") }).catch((err) => { console.log(err) });

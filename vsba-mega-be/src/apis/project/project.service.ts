@@ -151,7 +151,7 @@ let get_all_project = async (data: any, transaction: Transaction) => {
 
     let response = get_from_cache(has_cache, list_cache, data) || await Project.findAndCountAll({
         where: { ...where_filter, test_data: { [Op.not]: true } },
-        include: [{ model: SlotGroup }],
+        include: [{ model: SlotGroup }, { model: Project, as: 'children' }],
         ...pagination,
         transaction
     });
@@ -177,7 +177,6 @@ let get_all_project = async (data: any, transaction: Transaction) => {
     set_cache(has_cache, list_cache, data, response);
     return response;
 }
-
 
 export let project_service = {
     create_project,
