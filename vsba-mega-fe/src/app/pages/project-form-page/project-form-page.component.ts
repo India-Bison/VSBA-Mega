@@ -142,6 +142,7 @@ export class ProjectFormPageComponent {
       let data = { ...this.form.value };
       data.type = this.params.type
       let response: any = await this.ps.update(this.selected_project_id.id, data);
+      window.history.back()
     } catch (error: any) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }

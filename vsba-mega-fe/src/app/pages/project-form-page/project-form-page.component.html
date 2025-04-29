@@ -132,9 +132,9 @@
             <app-button color="border-[#FA2912] text-[#FA2912]" (click)="update()" label="DISCARD"></app-button>
             <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="Continue_without_sub_project.open()"
                 label="SAVE AS DRAFT"></app-button>
-            <app-button color="bg-[#E697AB] text-[#310000]" (click)="Continue_without_sub_project.open()" label="SUBMIT"></app-button>
-            <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]"
-                label="ADD SUB PROJECTS"></app-button>
+                <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="Continue_without_sub_project.open()" label="SUBMIT"></app-button>
+            <app-button *ngIf="params.id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+            <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')"  color="bg-[#E697AB] text-[#310000]" label="ADD SUB PROJECTS"></app-button>
         </div>
     </div>
 </div>

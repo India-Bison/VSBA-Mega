@@ -7,6 +7,7 @@ import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ButtonComponent } from '../button/button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -82,7 +83,7 @@ export class ListComponent {
   expandedState: { [rowIndex: number]: string | null } = {};
 
 
-  constructor(public gs: GlobalService) { }
+  constructor(public gs: GlobalService, public router : Router) { }
   ngOnInit(): void {
     // this.items = this.gs.items
     //  this.loadDummyData();
@@ -225,5 +226,8 @@ export class ListComponent {
   }
 
 
+  redirect_to_project_form(id: any) {
+    this.router.navigate(['/project/form'], { queryParams: { id: id, type: 'Sub-Project' } });
+  }
 
 }
