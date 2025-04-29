@@ -19,10 +19,11 @@ import { ConfirmationPopupComponent } from '../../components/confirmation-popup/
 import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
 import { ProjectService } from '../../services/project.service';
+import { MonthHrsInputComponent } from '../../components/month-hrs-input/month-hrs-input.component';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, SubProjectsOfProjectPipe, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent],
+  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, SubProjectsOfProjectPipe, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent,MonthHrsInputComponent],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css',
   standalone: true,

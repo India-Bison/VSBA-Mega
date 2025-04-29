@@ -1,0 +1,28 @@
+<div class="flex items-center space-x-2">
+    <!-- Hours -->
+    <div class="flex flex-col justify-between items-start border w-[82px] h-[48px] rounded-[8px] pt-4 pr-2 pb-4 pl-4 relative">
+      <label class="text-gray-500 text-xs absolute top-[-10px] left-2 bg-white px-1">Hours</label>
+      <div class="flex justify-between w-full items-center">
+        <span class="text-gray-700 font-medium">{{ hours.toString().padStart(2, '0') }}</span>
+        <div class="flex flex-col">
+          <button (click)="decrement('hour')" class="text-black leading-none">▲</button>
+          <button (click)="increment('hour')" class="text-black leading-none">▼</button>
+        </div>
+      </div>
+    </div>
+  
+    <span class="text-lg font-semibold">:</span>
+  
+    <!-- Minutes -->
+    <div class="flex flex-col justify-between items-start border w-[82px] h-[48px] rounded-[8px] pt-4 pr-2 pb-4 pl-4 relative">
+      <label class="text-gray-500 text-xs absolute top-[-10px] left-2 bg-white px-1">Mins</label>
+      <div class="flex justify-between w-full items-center">
+        <span class="text-gray-700 font-medium">{{ minutes.toString().padStart(2, '0') }}</span>
+        <div class="flex flex-col">
+          <button (click)="decrement('minute')" class="text-black leading-none">▲</button>
+          <button (click)="increment('minute')" class="text-black leading-none">▼</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
