@@ -63,7 +63,7 @@
                     <div [class]="column?.class" class="flex gap-2 items-center">
 
                       <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="item[column.key] == 'Full Day' && item.children" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
+                      <img *ngIf="column.title == 'Type' && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
                       <!-- Status as Button -->
                       <ng-container *ngIf="item[column.key] === 'Approved' || item[column.key] === 'Pending' || item[column.key] === 'Rejected'; else normalText">
                        <div class="flex justify-center items-center w-full">
@@ -76,6 +76,8 @@
                          </button>
                        </div>
                       </ng-container>
+
+                      <img *ngIf="column.title == 'Type' && item?.children?.length" class="cursor-pointer" (click)="redirect_to_project_form(item?.children?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
 
                       <!-- Default Text Value -->
                       <ng-template #normalText>
@@ -154,7 +156,7 @@
     </div>
   </div>
 </div>
-<div class="fixed bottom-2 w-[92%]" *ngIf="pagination">
+<!-- <div class="fixed bottom-0 py-2 w-[92%] bg-white mt-5" *ngIf="pagination">
   <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"
     [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
-</div>
+</div> -->
