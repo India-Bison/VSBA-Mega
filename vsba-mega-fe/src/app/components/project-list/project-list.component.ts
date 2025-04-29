@@ -6,22 +6,30 @@ import { SearchInputComponent } from '../search-input/search-input.component';
 import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule, NgFor } from '@angular/common';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink,CommonModule,NgFor],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
 })
 export class ProjectListComponent {
   ar = inject(ActivatedRoute)
-  constructor(public gs: GlobalService, public route: Router) { }
+  constructor(public gs: GlobalService, public route: Router, public ps:ProjectService) { }
   params: any = {}
+  list: any = {};
+  items: any[] = []
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 0;
+  totalPages = 50;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
     // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
@@ -29,7 +37,7 @@ export class ProjectListComponent {
     {
       title: 'Action', type: 'Action', actions: [
         { title: 'Update', icon: 'bx bx-edit-alt', action: this.edit.bind(this) },
-        // { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },,
+        { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },
       ]
     },
   ];
@@ -78,15 +86,38 @@ export class ProjectListComponent {
 
   async edit(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, view: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
   }
-  ngOnInit() {
-    this.ar.queryParams.subscribe((params) => {
+  async delete(item: any, index: any) {
+    try {
+      let data = await this.ps?.delete(item.id);
+  
+    } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
+  }
+ async ngOnInit() {
+    this.ar.queryParams.subscribe(async(params) => {
       this.params = params;
+        await this.get_instructor_list_page(this.params);
     })
   }
 
   redirect_to_project() {
 
   }
+  async get_instructor_list_page(params: any) {
+    try {
+      const queryParams = { ...params, page: this.currentPage };
+      const response = await this.ps.get_list({});
+      this.totalItems = response?.count || 0;
+      const apiData = response?.data || [];
+      this.items = apiData;
+      console.log(this.items, "loggggggggggggggggggggg");
+    } catch (error: any) {
+      console.error(error?.message, '');
+      this.items = [];
+    }
+  }
+  
 }

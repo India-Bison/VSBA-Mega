@@ -18,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-form-page',
@@ -29,22 +30,19 @@ import { SubProjectsOfProjectPipe } from '../../sub-projects-of-project.pipe';
 export class ProjectFormPageComponent {
   active_tab = 'Project';
   params: any = {};
+  project_start_end_date: any = {};
+  slot_start_end_date: any = {};
+  selected_project_id: any = {}
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
-  tabList: any[] = [
-    {
-      name: 'Project',
-    },
-    {
-      name: 'Sub-Project',
-    }
-  ];
+  @ViewChild('submit_Form_page') submit_Form_page: any;
+  tabList: any[] = [{ name: 'Project', }, { name: 'Sub-Project', }];
   form: FormGroup;
-  sub_form: FormGroup;
 
-  constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router) {
+  constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps: ProjectService) {
     this.form = this.fb.group({
-      project_name: [''],
+      name: [''],
+      short_name: [''],
       full_venue_required: [''],
       resource_type: [''],
       description: [''],
@@ -53,46 +51,25 @@ export class ProjectFormPageComponent {
       project_end_date: [''],
       week_days: [[]],
       slot_type: [''],
-      slot_group: this.fb.array([])
+      type: [''],
+      slot_groups: this.fb.array([])
     });
-    this.sub_form = fb.group({
-      project_name: [''],
-      full_venue_required: [''],
-      resource_type: [''],
-      description: [''],
-      audit_required: [''],
-      project_start_date: [''],
-      project_end_date: [''],
-      week_days: [[]],
-      slot_type: ['']
-    })
   }
   ngOnInit() {
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
+      this.add_slot();
       if (this.params.id) {
-        let projectData: any = {}
-        if (this.params.parent_id) {
-          projectData = this.gs.items.sub_projects.find((item: any) => item.id === this.params.id);
-        } else {
-          projectData = this.gs.items.projects.find((item: any) => item.id === this.params.id);
-        }
-        if (projectData) {
-          this.patch_project_form(projectData);
-        }
-      } else {
-        this.add_slot();
       }
+      this.patch_project_form(this.params.id);
     })
-    this.params.project_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
-    // console.log(this.gs.items, "global service data");
-
+    console.log(this.selected_project_id);
+    
+    this.params.parent_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
-
   get slots(): FormArray {
-    return this.form.get('slot_group') as FormArray;
+    return this.form.get('slot_groups') as FormArray;
   }
-
   add_slot(): void {
     const slotGroup = this.fb.group({
       slot_start_date: [''],
@@ -108,7 +85,6 @@ export class ProjectFormPageComponent {
       this.slots.removeAt(index);
     }
   }
-
   add_pill(index: number): void {
     const slot_group = this.slots.at(index) as FormGroup;
     const start_time = slot_group.get('start_time')?.value;
@@ -137,70 +113,73 @@ export class ProjectFormPageComponent {
       slot_group.get('slot_times')?.updateValueAndValidity();
     }
   }
-  
-
   remove_pill(slot_index: number, pill_index: number): void {
     const slotGroup = this.slots.at(slot_index) as FormGroup;
     const currentPills = slotGroup.get('slot_times')?.value || [];
     currentPills.splice(pill_index, 1);
     slotGroup.get('slot_times')?.setValue(currentPills);
   }
-  submit_form(route?: any): void {
+
+  submit_form(route?: any) {
     const formData = {
       ...this.form.value,
-      parent_id: this.params.parent_id || undefined,
-      status: 'Pending',
     };
-    if (this.params.id) {
-      if (this.params.parent_id) {
-        let index = this.gs.items.sub_projects.findIndex((item: any) => item.id === this.params.id);
-        if (index !== -1) {
-          this.gs.items.sub_projects[index] = formData;
-        }
-      } else {
-        let index = this.gs.items.projects.findIndex((item: any) => item.id === this.params.id);
-        if (index !== -1) {
-          this.gs.items.projects[index] = formData;
-        }
-      }
-    } else {
-      const nextId = Math.random().toString(36).substring(2, 9);
-      formData.id = nextId;
-      if (this.params.parent_id) {
-        this.gs.items.sub_projects.push(formData);
-      } else {
-        this.gs.items.projects.push(formData);
-      }
+    formData.type = this.params.type
+    formData.status = 'Pending'
+    if (!this.params.parent_id && this.params.type == 'Project') {
+      formData.type = 'Project'
+      let response = this.ps.add(formData)
+      this.route.navigate(['/project/list'], {})
+    } else if (this.params.parent_id) {
+      formData.parent_id = parseInt(this.params.parent_id)
+      formData.type = 'Sub-Project'
+      let response = this.ps.add(formData)
+      this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: this.selected_project_id.id }, queryParamsHandling: 'merge', })
     }
-    this.gs.save_in_local_storage();
-    if (route) {
-      this.route.navigate(['/project/form'], { queryParams: { id: this.params.parent_id || formData.id, view: 'Sub-Project' } });
-    } else {
-      this.route.navigate(['/project/list'], {});
+  }
+  async update() {
+    try {
+      let data = { ...this.form.value };
+      data.type = this.params.type
+      let response: any = await this.ps.update(this.selected_project_id.id, data);
+    } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
   add_sub_project() {
-    this.form.reset()
-    this.route.navigate(['/project/form'], { queryParams: { view: 'Project', parent_id: this.params.id } });
+    const selectedProjectId = this.selected_project_id.id;
+    this.form.reset();
+    this.selected_project_id.id = selectedProjectId;
+    this.route.navigate([], { queryParams: { type: 'Project', parent_id: selectedProjectId } });
   }
-  patch_project_form(data: any) {
-    this.form.patchValue(data);
-    const slots_array = this.form.get('slot_group') as FormArray;
+  
+  async patch_project_form(data: any) {
+    let dataa = await this.ps?.get(data);
+    this.form.patchValue(dataa.data);
+    const slots_array = this.form.get('slot_groups') as FormArray;
     slots_array.clear();
-    data.slot_group.forEach((slot: any) => {
-      slots_array.push(this.fb.group({
-        slot_start_date: slot.slot_start_date,
-        slot_end_date: slot.slot_end_date,
-        start_time: slot.start_time,
-        hours: slot.hours,
-        slot_times: this.fb.control(slot.slot_times || [])
-      }));
-    });
+    if (dataa?.data?.slot_groups && Array.isArray(dataa?.data?.slot_groups) && dataa.data.slot_groups.length > 0) {
+      dataa?.data?.slot_groups.forEach((slot: any) => {
+        slots_array.push(this.fb.group({
+          slot_start_date: slot.slot_start_date,
+          slot_end_date: slot.slot_end_date,
+          start_time: slot.start_time,
+          hours: slot.hours,
+          slot_times: this.fb.control(slot.slot_times || [])
+        }));
+      });
+      this.selected_project_id = dataa?.data
+      console.log(this.selected_project_id);
+      
+    } else {
+      console.log('Slot group empty aahe,');
+      this.add_slot();
+    }
   }
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'project_name', sort: true, class: 'text-left' },
+    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
     // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
@@ -213,9 +192,8 @@ export class ProjectFormPageComponent {
     },
   ];
   async edit(item: any, index: any) {
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, view: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, type: 'Project' } });
   }
-  
   plus_minus_open_close(index: number) {
     if (this.plus_minus_index == index) {
       this.plus_minus_index = null;

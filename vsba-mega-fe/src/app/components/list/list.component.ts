@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
 import { PaginationComponent } from "../pagination/pagination.component";
 import { MultiSearchComponent } from '../multi-search/multi-search.component';
@@ -150,7 +150,18 @@ export class ListComponent {
         resource_type: 'Computer Labs, Classrooms, swimming pool',
         slot_type: 'Full Day',
         startdate_enddate: '12/03/2025 - 25/03/2025',
-        status: 'Pending'
+        status: 'Pending',
+        children: [
+          {
+            id: 4,
+            type: 'Project',
+            name: 'Bhavesh',
+            resource_type: 'Computer Labs, Classrooms, swimming pool',
+            slot_type: 'Full Day',
+            startdate_enddate: '12/03/2025 - 25/03/2025',
+            status: 'Pending'
+          },
+        ]
       },
       {
         id: 3,

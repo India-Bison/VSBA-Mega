@@ -13,19 +13,20 @@
   <!-- No height if no content -->
 </div>
     <div class="overflow-y-auto h-full">
-      <table class="table-auto text-text-color-600 w-full border-t border-t-[#e4e7ec]  ">
-        <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
+      <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
+        <thead
+          class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" class="px-4 h-12 text-center truncate">
-              <div [class]="column?.class">
+            <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" [ngClass]="{'flex justify-center items-center': column.title == 'Status'}" class="px-4 h-12 text-center truncate">
+              <div *ngIf="column.title != 'Action'" [class]="column?.class">
                 <ng-container *ngIf="column.key === 'index'; else showTitle">
                   <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <span>
+                  <span [ngClass]="{'justify-center': column.title == 'Status'}" class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block ml-1" />
+                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" />
                   </span>
                 </ng-template>
               </div>
@@ -49,5 +50,6 @@
   </div>
 </div>
 <div class="fixed bottom-2 w-[92%]" *ngIf="pagination">
-  <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
+  <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
 </div>
