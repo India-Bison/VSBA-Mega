@@ -22,7 +22,7 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search label="Resource Type*" formControlName="resource_type" [options]="['VBSM RESOURCE TYPE']"></app-multi-search>
+                    <app-multi-search label="Resource Type*" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
                     <div>
                         <app-text-area label="Short Description*" formControlName="description"></app-text-area>
                         <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words
@@ -103,8 +103,8 @@
             </app-list>
         </div>
         <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
-            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="update()" label="DISCARD"></app-button>
-            <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="add_sub_project_confirmation.open()" label="SAVE AS DRAFT"></app-button>
+            <app-button color="border-[#FA2912] text-[#FA2912]" label="DISCARD"></app-button>
+            <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
             <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
             <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
             <!-- <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]" label="ADD SUB PROJECTS"></app-button> -->
