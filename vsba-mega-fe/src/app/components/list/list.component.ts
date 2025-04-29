@@ -88,7 +88,6 @@ export class ListComponent {
     // this.items = this.gs.items
     //  this.loadDummyData();
     console.log(this.items, 'Items in List Component');
-    console.log(this.gs.items, 'Items in Global Service');
   }
 
   // Dummy data with children
