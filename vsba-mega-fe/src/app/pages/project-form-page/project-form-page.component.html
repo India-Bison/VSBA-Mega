@@ -65,6 +65,7 @@
                                 <div class="flex justify-between w-full gap-2 items-center">
                                     <app-date-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
                                     </app-date-input>
+                                    <app-month-hrs-input hourLabel="Hours" minuteLabel="Mins"></app-month-hrs-input>
                                     <div class="flex flex-col w-full gap-4" *ngIf="form.get('slot_type')?.value == 'Full Day'">
                                         <label class="text-gray-500 font-medium text-sm">Start Time</label>
                                         <app-date-input [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
