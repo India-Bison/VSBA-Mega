@@ -235,4 +235,11 @@ toggleMenu(index: number) {
   this.menuVisibleIndex = this.menuVisibleIndex === index ? null : index;
 }
 
+isDropdownOpen: number | null = null;
+
+toggleDropdown(index: number) {
+  this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
+}
+
+
 }

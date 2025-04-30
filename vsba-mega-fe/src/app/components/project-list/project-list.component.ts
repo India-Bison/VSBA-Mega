@@ -96,6 +96,7 @@ export class ProjectListComponent {
   async delete(item: any, index: any) {
     try {
       let data = await this.ps?.delete(item.id);
+      this.get_project(this.params);
 
     } catch (error: any) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
