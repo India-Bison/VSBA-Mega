@@ -28,11 +28,12 @@ export class ProjectListComponent {
   totalPages = 50;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
+    { title: 'Project Code', type: 'Value', key: 'short_name', sort: true, class: 'text-left' },
+    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left',plus_icon:true },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
+    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
+    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [
@@ -91,12 +92,12 @@ export class ProjectListComponent {
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view : 'true' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
   }
   async delete(item: any, index: any) {
     try {
       let data = await this.ps?.delete(item.id);
-
+      await this.get_project(this.params)
     } catch (error: any) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }

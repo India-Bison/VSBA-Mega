@@ -23,7 +23,7 @@ import { MonthHrsInputComponent } from '../../components/month-hrs-input/month-h
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, SubProjectsOfProjectPipe, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent,MonthHrsInputComponent],
+  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, SubProjectsOfProjectPipe, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ModalComponent, ConfirmationPopupComponent, MonthHrsInputComponent],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css',
   standalone: true,
@@ -62,8 +62,8 @@ export class ProjectFormPageComponent {
       if (this.params.id) {
         this.patch_project_form(this.params.id);
       }
-      if (this.params.parent_id) {
-        this.parent_project = (await this.ps?.get(this.params.parent_id))?.data;
+      if (this.params.parent_id || this.params.id) {
+        this.parent_project = (await this.ps?.get(this.params.parent_id ? this.params.parent_id :this.params.id))?.data;
       }
     })
 
@@ -185,17 +185,17 @@ export class ProjectFormPageComponent {
       this.add_slot();
     }
     this.project_start_end_date = {
-      start : dataa.data.project_start_date,
-      end : dataa.data.project_end_date
+      start: dataa.data.project_start_date,
+      end: dataa.data.project_end_date
     }
   }
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
+    { title: 'SUb-Project Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
+    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
+    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [
