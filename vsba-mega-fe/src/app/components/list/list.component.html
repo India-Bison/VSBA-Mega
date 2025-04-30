@@ -35,7 +35,7 @@
         <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
           <ng-container *ngFor="let item of items; let i = index">
             <!-- Main Row -->
-            <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
+            <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.type == 'Index'" class="px-4 h-16">
                   <div class="flex justify-center items-center">
@@ -74,7 +74,7 @@
                         </div>
                       </ng-container>
 
-                      <img *ngIf="column.title == 'Type' && item?.children?.length" class="cursor-pointer" (click)="redirect_to_project_form(item?.children?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
+                      <img *ngIf="column.title == 'Type' && item?.children?.length" class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.children?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
 
                       <!-- Default Text Value -->
                       <ng-template #normalText>
@@ -91,9 +91,9 @@
 
                 <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center ">
                   <div class="flex gap-2 -m-2 items-center justify-center">
+                    <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt="">
                     <ng-container *ngFor="let action of column.actions">
-                      <i (click)="action.action(item,i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}"></i>
-                      <!-- <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt=""> -->
+                      <!-- <i (click)="action.action(item,i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}"></i> -->
 
                     </ng-container>
                   </div>
