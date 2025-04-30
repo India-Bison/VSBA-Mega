@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ListComponent } from '../list/list.component';
 import { HeaderComponent } from '../header/header.component';
 import { GlobalService } from '../../services/global.service';
@@ -8,10 +8,11 @@ import { ButtonComponent } from '../button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
+import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, NgFor],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule,ConfirmationPopupComponent],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
@@ -19,6 +20,7 @@ import { ProjectService } from '../../services/project.service';
 export class ProjectListComponent {
   ar = inject(ActivatedRoute)
   constructor(public gs: GlobalService, public route: Router, public ps: ProjectService) { }
+  @ViewChild('delete_project_row') delete_project_row:any
   params: any = {}
   list: any = {};
   items: any[] = []
@@ -94,9 +96,14 @@ export class ProjectListComponent {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
   }
+  selected_delete_project:any={}
   async delete(item: any, index: any) {
+    this.delete_project_row.open()
+    this.selected_delete_project = item
+  }
+  async delet_project(){
     try {
-      let data = await this.ps?.delete(item.id);
+      let data = await this.ps?.delete(this.selected_delete_project.id);
       await this.get_project(this.params)
     } catch (error: any) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
