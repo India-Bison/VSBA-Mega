@@ -32,7 +32,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
+        <tbody class="text-sm relative font-normal text-[#1E1E1E] tracking-[0.32px] ">
           <ng-container *ngFor="let item of items; let i = index">
             <!-- Main Row -->
             <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
@@ -89,15 +89,41 @@
                   </ng-template>
                 </td>
 
-                <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center ">
-                  <div class="flex gap-2 -m-2 items-center justify-center">
-                    <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt="">
+                <td *ngIf="column.type == 'Action'" class="px-4 h-16">
+                  <div class="flex gap-2 items-center justify-center">
+                    <img
+                      class="h-6 cursor-pointer"
+                      src="https://static.thenounproject.com/png/2854151-200.png"
+                      alt="Menu"
+                      (click)="toggleMenu(i)"  
+                    />
+                
+                    <div
+                      *ngIf="menuVisibleIndex === i"
+                      class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] rounded-[4px] py-2 top-14 right-16 z-50 shadow-md"
+                    >
                     <ng-container *ngFor="let action of column.actions">
-                      <!-- <i (click)="action.action(item,i)" class="cursor-pointer {{ action.icon }} text-3xl" title="{{ action.title }}"></i> -->
-
+                        <div (click)="action.action(item,i)" class="flex justify-start items-center gap-3 p-3 cursor-pointer">
+                          <img [src]="action.icon" alt="" />
+                          <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
+                        </div>
+                        <!-- <div class="flex justify-start items-center gap-3 p-3 cursor-pointer">
+                          <img src="../../../assets/edit_icon.svg" alt="" />
+                          <span>Edit</span>
+                        </div>
+                        <div class="flex justify-start items-center gap-3 p-3 cursor-pointer">
+                          <img src="../../../assets/toggle_icon.svg" alt="" />
+                          <span>Disabled</span>
+                        </div>
+                        <div class="flex justify-start items-center gap-3 p-3 cursor-pointer">
+                          <img src="../../../assets/delete_icon_red.svg" alt="" />
+                          <span class="text-[#FA2912]">Delete</span>
+                        </div> -->
                     </ng-container>
+                    </div>
                   </div>
                 </td>
+                
 
               </ng-container>
             </tr>
@@ -105,7 +131,7 @@
             <!-- Child Rows -->
             <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-center items-center"> <input class="mr-4"
+              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input class=" ml-1 mr-4"
                   type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}
               </td>
               <td class="px-4 h-16 text-sm">{{ child.name }}</td>
