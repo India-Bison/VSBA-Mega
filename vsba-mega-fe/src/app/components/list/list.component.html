@@ -101,7 +101,7 @@
                         </div>
                       </ng-container>
 
-                      <img *ngIf="column.title == 'Type' && item?.children?.length" class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.children?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
+                      <img *ngIf="column.title == 'Type' && item?.children?.length" class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
 
                       <!-- Default Text Value -->
                       <ng-template #normalText>

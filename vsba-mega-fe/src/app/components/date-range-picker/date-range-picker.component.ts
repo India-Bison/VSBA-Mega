@@ -50,8 +50,6 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   control: any;
 
   writeValue(val: any): void {
-    console.log(val, 'data')
-
     if (val) {
       this.value = {
         start: val.start ? new Date(val.start) : null,
@@ -70,7 +68,6 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     this.value.start = event.value?.start;
     this.value.end = event.value?.end;
   }
-  
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -85,7 +82,6 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       start: this.value.start ? format(this.value.start, 'yyyy-MM-dd') : null,
       end: this.value.end ? format(this.value.end, 'yyyy-MM-dd') : null,
     };
-    console.log(formattedValue)
     this.onChange(formattedValue);
   }
 }
