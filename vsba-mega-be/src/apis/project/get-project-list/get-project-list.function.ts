@@ -5,7 +5,6 @@ import { project_service } from "../project.service";
 
 let get_project_list_function = async (data: get_project_list_function_params, transaction: Transaction): Promise<get_project_list_function_return | Error_Interface> => {
     let filter = data.query
-
     const project_data = await project_service.get_all_project(filter, transaction);
     return {
         code: 200,
