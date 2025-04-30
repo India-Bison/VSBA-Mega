@@ -165,6 +165,7 @@ export class ProjectFormPageComponent {
     this.form.patchValue(dataa.data);
     const slots_array = this.form.get('slot_groups') as FormArray;
     slots_array.clear();
+    this.slot_start_end_date = []
     if (dataa?.data?.slot_groups && Array.isArray(dataa?.data?.slot_groups) && dataa.data.slot_groups.length > 0) {
       dataa?.data?.slot_groups.forEach((slot: any) => {
         slots_array.push(this.fb.group({
@@ -174,12 +175,18 @@ export class ProjectFormPageComponent {
           hours: slot.hours,
           slot_times: this.fb.control(slot.slot_times || [])
         }));
+        this.slot_start_end_date.push({
+          start: slot.slot_start_date,
+          end: slot.slot_end_date
+        });
       });
-
-
     } else {
-      console.log('Slot group empty aahe,');
+      console.log('Slot group empty aahe');
       this.add_slot();
+    }
+    this.project_start_end_date = {
+      start : dataa.data.project_start_date,
+      end : dataa.data.project_end_date
     }
   }
   columns: any = [
