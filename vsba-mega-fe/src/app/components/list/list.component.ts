@@ -229,4 +229,10 @@ export class ListComponent {
     this.router.navigate(['/project/form'], { queryParams: { id: id, type: 'Sub-Project' } });
   }
 
+  menuVisibleIndex: number | null = null;
+
+toggleMenu(index: number) {
+  this.menuVisibleIndex = this.menuVisibleIndex === index ? null : index;
+}
+
 }

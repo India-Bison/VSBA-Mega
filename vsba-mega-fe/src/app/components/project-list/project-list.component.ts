@@ -36,8 +36,9 @@ export class ProjectListComponent {
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [
-        { title: 'Update', icon: 'bx bx-edit-alt', action: this.edit.bind(this) },
-        { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },
+        { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
+        { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
+        { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
   ];
@@ -87,6 +88,10 @@ export class ProjectListComponent {
   async edit(item: any, index: any) {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
+  }
+  async view(item: any, index: any) {
+    console.log(item, index, "item");
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view : 'true' } });
   }
   async delete(item: any, index: any) {
     try {
