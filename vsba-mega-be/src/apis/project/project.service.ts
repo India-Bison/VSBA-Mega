@@ -2,26 +2,19 @@ import { Op, Transaction } from "sequelize";
 import { Project } from "./project.model";
 import { delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
 import { SlotGroup } from "@src/models/slot-group.model";
-import { Slot } from "@src/models/slot.model";
 
 let has_cache = false;
 let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
-
-
     let project: any = await Project.create(body, { transaction, returning: true });
 
-    if (project) {
-        project = project.toJSON ? project.toJSON() : project;
-    }
+    if (project) project = project.toJSON ? project.toJSON() : project;
 
-    body.slot_groups.forEach((slot: any) => {
-        slot.project_id = project.id;
-    })
+    body.slot_groups.forEach((slot: any) => { slot.project_id = project.id })
 
-    const create_slots = await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
+    await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
 
     set_cache(has_cache, project_cache, project.id, project);
     list_cache = {};
@@ -33,10 +26,9 @@ let update_project = async (id: any, body: any, transaction: Transaction) => {
     try {
         // const old_slot_groups = await SlotGroup.destroy({ where: { project_id: id }, transaction, });
         body.slot_groups.forEach((slot: any) => slot.project_id = id);
-        const create_slots = await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
+        await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
 
         const response = await Project.update(body, { where: { id }, limit: 1, returning: true, transaction });
-
 
         delete_from_cache(has_cache, project_cache, id);
         list_cache = {};
