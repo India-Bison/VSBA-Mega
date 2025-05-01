@@ -3,11 +3,11 @@ import { format } from 'date-fns';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-date-input',
-    imports: [CommonModule, NgIf, FormsModule, CapitalizStringPipe],
+    imports: [CommonModule, NgIf, FormsModule, CapitalizStringPipe, NgClass],
     templateUrl: './date-input.component.html',
     styleUrl: './date-input.component.css',
     providers: [
@@ -29,12 +29,12 @@ export class DateInputComponent  implements ControlValueAccessor {
   @Input() rounded: boolean = false;
   @Input() minDateInput: string | null = null;  // Minimum date input
   @Input() maxDateInput: string | null = null;  // Maximum date input
-  @Output() dateSelected = new EventEmitter<string>();
   @Input() current_date: boolean = false;
+  @Output() dateSelected = new EventEmitter<string>();
 
   paramValue: any;
   control: any;
-  value: any;
+  value: any = '';
   onChange: any = () => {};
   onTouched: any = () => {};  
 
