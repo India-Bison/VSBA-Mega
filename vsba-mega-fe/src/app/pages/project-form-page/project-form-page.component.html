@@ -63,14 +63,14 @@
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
                                 <app-date-range-picker class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                                 <div class="flex justify-between w-full gap-2 items-center">
-                                    <app-date-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
+                                    <app-date-input [dependsOnDate]="form.get('startDate')?.value" *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
                                     </app-date-input>
                                     <div class="flex flex-col w-full gap-4" *ngIf="form.get('slot_type')?.value == 'Full Day'">
                                         <label class="text-gray-500 font-medium text-sm">Start Time</label>
-                                        <app-date-input [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
+                                        <app-date-input [dependsOnDate]="form.get('startDate')?.value" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
                                         </app-date-input>
                                         <label class="text-gray-500 font-medium text-sm">End Time</label>
-                                        <app-date-input [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
+                                        <app-date-input [dependsOnDate]="form.get('startDate')?.value" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
                                         </app-date-input>
                                     </div>
                                     <ng-container *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex items-center">
@@ -112,6 +112,6 @@
     </div>
 </div>
 
-<app-confirmation-popup [edit_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+<app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
     {{params.parent_id? 'Add more Sub Projects?' : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
