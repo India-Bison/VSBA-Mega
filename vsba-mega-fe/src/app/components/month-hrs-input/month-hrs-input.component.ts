@@ -49,19 +49,19 @@ export class MonthHrsInputComponent implements ControlValueAccessor {
   }
 
   increment(type: 'hour' | 'minute') {
-    if (type === 'hour') {
-      this.hours = this.hours === 23 ? 0 : this.hours + 1;
+    if (type == 'hour') {
+      this.hours = this.hours == 24 ? 0 : this.hours + 1;
     } else {
-      this.minutes = this.minutes === 59 ? 0 : this.minutes + 1;
+      this.minutes = this.minutes == 60 ? 0 : this.minutes + 1;
     }
     this.emitValue();
   }
 
   decrement(type: 'hour' | 'minute') {
-    if (type === 'hour') {
-      this.hours = this.hours === 0 ? 23 : this.hours - 1;
+    if (type == 'hour') {
+      this.hours = this.hours == 0 ? 24 : this.hours - 1;
     } else {
-      this.minutes = this.minutes === 0 ? 59 : this.minutes - 1;
+      this.minutes = this.minutes == 0 ? 60 : this.minutes - 1;
     }
     this.emitValue();
   }

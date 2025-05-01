@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ListComponent } from '../list/list.component';
 import { HeaderComponent } from '../header/header.component';
 import { GlobalService } from '../../services/global.service';
@@ -8,10 +8,12 @@ import { ButtonComponent } from '../button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
+import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
+import { title } from 'process';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, NgFor],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, ConfirmationPopupComponent],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
@@ -19,6 +21,7 @@ import { ProjectService } from '../../services/project.service';
 export class ProjectListComponent {
   ar = inject(ActivatedRoute)
   constructor(public gs: GlobalService, public route: Router, public ps: ProjectService) { }
+  @ViewChild('delete_project_row') delete_project_row: any
   params: any = {}
   list: any = {};
   items: any[] = []
@@ -28,16 +31,18 @@ export class ProjectListComponent {
   totalPages = 50;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Type', type: 'Value', key: 'slot_type', sort: true, class: 'text-left' },
-    { title: 'Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
+    { title: 'Project Code', type: 'Value', key: 'short_name', sort: true, class: 'text-left' },
+    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', plus_icon: true },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    // { title: 'Start Date-End Date', type: 'startdate_enddate', key: 'project_start_date', class: 'text-left' },
+    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
+    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
         { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.edit.bind(this) },
         { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
@@ -91,13 +96,17 @@ export class ProjectListComponent {
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view : 'true' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
   }
+  selected_delete_project: any = {}
   async delete(item: any, index: any) {
+    this.delete_project_row.open()
+    this.selected_delete_project = item
+  }
+  async delet_project() {
     try {
-      let data = await this.ps?.delete(item.id);
-      this.get_project(this.params);
-
+      let data = await this.ps?.delete(this.selected_delete_project.id);
+      await this.get_project(this.params)
     } catch (error: any) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }

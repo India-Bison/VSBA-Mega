@@ -1,58 +1,39 @@
 <div class="bg-white rounded-2xl border border-[#e4e7ec]">
-  <div class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
+  <div
+    class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
     <!-- Main container -->
     <ng-template #contentTemplate>
       <ng-content></ng-content>
     </ng-template>
 
     <!-- Check if ng-content has anything -->
-    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0" class="h-[76px] w-full flex px-6 justify-between items-center">
+    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0"
+      class="h-[76px] w-full flex px-6 justify-between items-center">
       <ng-container [ngTemplateOutlet]="contentTemplate"></ng-container>
     </div>
-    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0" class="w-full flex px-6 justify-between items-center">
+    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0"
+      class="w-full flex px-6 justify-between items-center">
       <!-- No height if no content -->
     </div>
     <div class="overflow-y-auto h-full">
       <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
-        <thead class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
+        <thead
+          class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns; let i = index" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" [ngClass]="{'flex justify-center items-center': column.title == 'Status'}" class="px-4 h-12 text-center truncate">
+            <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
+              [ngClass]="{'flex justify-center items-center': column.title == 'Status'}"
+              class="px-4 h-12 text-center truncate">
               <div *ngIf="column.title != 'Action'" [class]="column?.class">
                 <ng-container *ngIf="column.key === 'index'; else showTitle">
                   <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <span [ngClass]="{'justify-center': column.title == 'Status'}" class="flex justify-between w-full text-base font-medium">
+                  <span [ngClass]="{'justify-center': column.title == 'Status'}"
+                    class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                  <!-- Toggle Button -->
-                  <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png"
-                    alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" />
-                  
-                  <!-- Dropdown -->
-                  <div *ngIf="isDropdownOpen === i && (column.title === 'Resource Type' || column.title === 'Slot Type')"
-                    class="w-[228px] overflow-y-auto absolute top-10 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
-                    <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
-                    <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
-                      <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
-                        <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
-                      </div>
-                      <div class="flex justify-start items-center gap-2">
-                        <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
-                      </div>
-                  
-                      <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
-                  
-                      <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
-                      <div>
-                        <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
-                          <input type="checkbox" class="w-4 h-4" />
-                          <label class="text-black">Item</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
+                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'"
+                      src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" />
                   </span>
                 </ng-template>
               </div>
@@ -62,15 +43,18 @@
         <tbody class="text-sm relative font-normal text-[#1E1E1E] tracking-[0.32px] ">
           <ng-container *ngFor="let item of items; let i = index">
             <!-- Main Row -->
-            <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
+            <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}"
+              class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.type == 'Index'" class="px-4 h-16">
                   <div class="flex justify-center items-center">
-                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
+                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected"
+                      (click)="toggleParentSelection(item)">
                   </div>
                 </td>
 
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}" class="px-4 h-16 items-center">
+                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}"
+                  class="px-4 h-16 items-center">
 
                   <ng-container *ngIf="column.key === 'mobile_number_icon'; else main_value">
                     <div class="text-start items-center gap-4">
@@ -87,9 +71,13 @@
                     <div [class]="column?.class" class="flex gap-2 items-center">
 
                       <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="column.title == 'Type' && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
+                      <img *ngIf="column.sort== true && item.children?.length" src="../../../assets/CaretUp.svg"
+                        alt="Caret Up" class="cursor-pointer transition-transform duration-200"
+                        [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded"
+                        (click)="toggleExpand(item)" />
                       <!-- Status as Button -->
-                      <ng-container *ngIf="item[column.key] === 'Approved' || item[column.key] === 'Pending' || item[column.key] === 'Rejected'; else normalText">
+                      <ng-container
+                        *ngIf="item[column.key] === 'Approved' || item[column.key] === 'Pending' || item[column.key] === 'Rejected'; else normalText">
                         <div class="flex justify-center items-center w-full">
                           <button class="px-[10px] py-1 rounded-full border text-sm font-medium" [ngClass]="{
                                      'text-[#03A600] border-[#03A600]': item[column.key] === 'Approved',
@@ -101,7 +89,10 @@
                         </div>
                       </ng-container>
 
-                      <img *ngIf="column.title == 'Type' && item?.children?.length" class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
+                      <img *ngIf="column.plus_icon == true && item?.children?.length"
+                        class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
+                        (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg"
+                        alt="">
 
                       <!-- Default Text Value -->
                       <ng-template #normalText>
@@ -116,21 +107,17 @@
                   </ng-template>
                 </td>
 
-                <td *ngIf="column.type == 'Action'" class="px-4 h-16">
+                <td *ngIf="column.type == 'Action'" class="px-4 h-16 fixed mt-4">
                   <div class="flex gap-2 items-center justify-center">
-                    <img
-                      class="h-6 cursor-pointer"
-                      src="https://static.thenounproject.com/png/2854151-200.png"
-                      alt="Menu"
-                      (click)="toggleMenu(i)"  
-                    />
-                
-                    <div
-                      *ngIf="menuVisibleIndex === i"
-                      class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] rounded-[4px] py-2 top-14 right-16 z-50 shadow-md"
-                    >
-                    <ng-container *ngFor="let action of column.actions">
-                        <div (click)="action.action(item,i)" class="flex justify-start items-center gap-3 p-3 cursor-pointer">
+                    <img class="h-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png"
+                      alt="Menu" (click)="toggleMenu(i)" />
+
+                    <div *ngIf="menuVisibleIndex === i"
+                      class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-14 right-16 z-[9999] shadow-md"
+                      (click)="$event.stopPropagation()">
+                      <ng-container *ngFor="let action of column.actions">
+                        <div (click)="action.action(item,i)"
+                          class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
                           <img [src]="action.icon" alt="" />
                           <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
                         </div>
@@ -146,32 +133,36 @@
                           <img src="../../../assets/delete_icon_red.svg" alt="" />
                           <span class="text-[#FA2912]">Delete</span>
                         </div> -->
-                    </ng-container>
+                      </ng-container>
                     </div>
                   </div>
                 </td>
-                
-
               </ng-container>
             </tr>
 
             <!-- Child Rows -->
-            <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
+            <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }"
+              class="border-b border-[#e4e7ec] bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input class=" ml-1 mr-4"
-                  type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)"> {{ child.type }}
+              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input
+                  class=" ml-1 mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)">
+                {{ child.type }}
               </td>
               <td class="px-4 h-16 text-sm">{{ child.name }}</td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
               <td class="px-4 h-16 text-sm">{{ child.slot_type }}</td>
+              <td class="px-4 h-16 text-sm">{{ child.project_start_date }}</td>
+              <td class="px-4 h-16 text-sm">{{ child.project_end_date }}</td>
               <td class="px-4 h-16 text-sm">
                 <div class="flex justify-center items-center">
-                  <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{
+                  <button
+                    class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center"
+                    [ngClass]="{
                               'text-[#03A600]': child.status === 'Approved',
                               'text-[#DF6E12]': child.status === 'Pending',
                               'text-red-500 ': child.status === 'Rejected'
                             }">
-                            <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{
+                    <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{
                               'bg-[#03A600]': child.status === 'Approved',
                               'bg-[#DF6E12]': child.status === 'Pending',
                               'bg-red-500 ': child.status === 'Rejected'
@@ -182,7 +173,7 @@
               </td>
               <td class="px-4 h-16 flex justify-center items-center ">
                 <div class="flex gap-2 -m-2 items-center justify-center">
-                  <ng-container >
+                  <ng-container>
                     <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt="">
 
                   </ng-container>
@@ -220,7 +211,8 @@
       </table>
     </div>
 
-    <div *ngIf="items?.length == 0" class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
+    <div *ngIf="items?.length == 0"
+      class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
       <div class="w-full h-96 p-10 flex justify-center items-center">
         <div class="flex-col items-center justify-center">
           <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />

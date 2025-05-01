@@ -206,7 +206,7 @@ export class SidebarComponent {
       icon: '../../../assets/chart-2.svg',
       selected_icon: '../../../assets/chart-2.svg',
       selected: false,
-      router_link: '/dashboard-home',
+      router_link: '',
       submenu: [],
       permissions: "home:view"
 
@@ -218,18 +218,18 @@ export class SidebarComponent {
       icon: '../../../assets/document-text.svg',
       selected_icon: '../../../assets/document-text.svg',
       selected: false,
-      router_link: '/dashboard',
+      router_link: '/project/list',
       submenu: [],
       permissions: "dashboard:view"
 
     },
     {
       id: 3,
-      label: 'Project',
+      label: 'User',
       icon: '../../../assets/profile-2user.svg',
       selected_icon: '../../../assets/profile-2user.svg',
       selected: false,
-      router_link: '/project/list',
+      router_link: '',
       submenu: [],
       permissions: "list:view"
 
@@ -240,7 +240,7 @@ export class SidebarComponent {
       icon: '../../../assets/building.svg',
       selected_icon: '../../../assets/building.svg',
       selected: true,
-      router_link: '/master/course/list',
+      router_link: '',
       submenu: [],
       permissions: 'course:view'
     },

@@ -226,7 +226,7 @@ export class ListComponent {
 
 
   redirect_to_project_form(id: any) {
-    this.router.navigate(['/project/form'], { queryParams: { id: id, type: 'Project' } });
+    this.router.navigate(['/project/form'], { queryParams: { id: id, type: 'Sub-Project' } });
   }
 
   menuVisibleIndex: number | null = null;
