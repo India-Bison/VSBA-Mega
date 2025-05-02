@@ -166,13 +166,20 @@
 
             <!-- Child Rows -->
             <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }"
-              class="border-b border-[#e4e7ec] bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
+              class="border-b border-[#e4e7ec] group bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <td class="px-4 h-16"></td>
               <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input
                   class=" ml-1 mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)">
                 {{ child.short_name }}
               </td>
-              <td class="px-4 h-16 text-sm">{{ child.name }}</td>
+              <td class="px-4 h-16 text-sm">
+                <div class="flex gap-2 items-center">
+                  <span>{{ child.name }}</span>  <img 
+                  class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
+                  (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg"
+                  alt="">
+                </div>
+              </td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
               <td class="px-4 h-16 text-sm">{{ child.slot_type }}</td>
               <td class="px-4 h-16 text-sm">{{ child.project_start_date }}</td>
