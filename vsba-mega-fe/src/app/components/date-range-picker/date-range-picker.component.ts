@@ -12,7 +12,7 @@ import { format } from 'date-fns';
 
 @Component({
   selector: 'app-date-range-picker',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, JsonPipe, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
   ],
   standalone: true,
   templateUrl: './date-range-picker.component.html',
