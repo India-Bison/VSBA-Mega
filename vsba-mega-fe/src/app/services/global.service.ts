@@ -8,7 +8,7 @@ export class GlobalService {
   constructor( public toastr: ToastrService) {}
   toastr_shows_function(message: string, title: string, type: 'success' | 'error' | 'info' | 'warning') {
     const toastr_config = {
-      timeOut: 2000,
+      timeOut: 20000,
       progressBar: true,
       closeButton: true
     };

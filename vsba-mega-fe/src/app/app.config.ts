@@ -16,6 +16,7 @@ export const appConfig: ApplicationConfig = {
   provideHttpClient(),
   provideRouter(routes),
   provideToastr({
+    positionClass: 'toast-top-right',
     toastClass: 'custom-toastr',
     iconClasses: {
       success: 'custom-success-toast',

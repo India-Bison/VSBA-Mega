@@ -29,14 +29,15 @@ export class ProjectListComponent {
   itemsPerPage = 10;
   totalItems = 0;
   totalPages = 50;
+  filter= false;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Project Code', type: 'Value', key: 'short_name', sort: true, class: 'text-left' },
+    { title: 'Project Code', type: 'Value', key: 'short_name',  class: 'text-left' },
     { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', plus_icon: true },
-    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
-    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
-    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
-    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left' },
+    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true },
+    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left', sort: true },
+    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left', sort: true },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [
