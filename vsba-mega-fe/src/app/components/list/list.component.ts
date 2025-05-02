@@ -1,17 +1,12 @@
 import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
-import { PaginationComponent } from "../pagination/pagination.component";
-import { MultiSearchComponent } from '../multi-search/multi-search.component';
-import { SearchInputComponent } from '../search-input/search-input.component';
-import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
-import { ButtonComponent } from '../button/button.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent,CommonModule,JsonPipe],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
