@@ -1,11 +1,13 @@
 <div *ngIf="is_popup_visible"
     class="fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full bg-black bg-opacity-70 backdrop-blur-sm p-4">
     <div class="bg-white rounded-lg w-[461px] p-6">
-        <button (click)="close()" type="button" *ngIf="show_cancel_icon"
-            class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-full text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
-            <i class="bx bx-x text-xl"></i>
-            <span class="sr-only">Close modal</span>
-        </button>
+        <div class="flex justify-end">
+            <button (click)="close()" type="button" *ngIf="show_cancel_icon"
+                class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-full text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                <i class="bx bx-x text-xl"></i>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
         <div class="flex flex-col items-center justify-center gap-5">
             <div class="rounded-full flex">
                 <div *ngIf="delete_icon == true" class="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center">
