@@ -190,6 +190,9 @@ export class ProjectFormPageComponent {
     }
   }
 
+  discard(){
+   window.history.back()
+  }
 
 
 

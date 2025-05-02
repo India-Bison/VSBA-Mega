@@ -16,8 +16,10 @@
         <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
-                    <app-text-input [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
-                    <app-text-input [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
+                    <div class="flex items-center w-full gap-6">
+                        <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
+                        <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
+                    </div>
                     <app-radio label="Full Venue Required" [is_required]="true" formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
@@ -104,7 +106,7 @@
             </app-list>
         </div>
         <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
-            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="form.reset()" label="DISCARD"></app-button>
+            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="discard()" label="DISCARD"></app-button>
             <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
             <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
             <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
