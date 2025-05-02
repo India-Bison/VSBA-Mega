@@ -124,11 +124,11 @@ export class ProjectListComponent {
   async get_project(params: any) {
     try {
       const queryParams = { ...params, page: this.currentPage, type: 'Project' };
+      delete queryParams.status
       const response = await this.ps.get_list(queryParams);
       this.totalItems = response?.count || 0;
       const apiData = response?.data || [];
       this.items = apiData;
-      console.log(this.items, "loggggggggggggggggggggg");
     } catch (error: any) {
       console.error(error?.message, '');
       this.items = [];
