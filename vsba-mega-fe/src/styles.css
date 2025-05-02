@@ -17,6 +17,22 @@
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+#toast-container {
+  position: fixed !important;
+  top: 1.5rem !important;
+  right: 1.5rem !important;
+  z-index: 9999 !important;
+  pointer-events: none;
+  width: 270px;
+}
+
+#toast-container > div {
+  pointer-events: auto;
+  margin-top: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+
 .toast-base {
     display: flex;
     align-items: center;
