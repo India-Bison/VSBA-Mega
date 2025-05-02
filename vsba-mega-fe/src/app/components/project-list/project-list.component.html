@@ -8,6 +8,6 @@
     <app-button color="bg-[#E697AB] text-[#310000]" label="Project" icon="bx bx-plus" routerLink="/project/form" [queryParams]="{type:'Project'}"></app-button>
   </div>
 </app-list>
-<app-confirmation-popup #delete_project_row label="Delete Project?" [show_cancel_icon]="true" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_project_row.close()">
+<app-confirmation-popup #delete_project_row label="Delete Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_project_row.close()">
   This action cannot be undone, and all associated data will be permanently removed.
 </app-confirmation-popup>

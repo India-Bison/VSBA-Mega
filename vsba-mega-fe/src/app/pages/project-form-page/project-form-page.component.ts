@@ -50,7 +50,7 @@ export class ProjectFormPageComponent {
       project_start_date: [''],
       project_end_date: [''],
       week_days: [[]],
-      slot_type: [''],
+      slot_type: ['Time Slot'],
       type: [''],
       slot_groups: this.fb.array([])
     });
@@ -80,6 +80,7 @@ export class ProjectFormPageComponent {
       slot_start_date: [''],
       slot_end_date: [''],
       start_time: [''],
+      end_time: [''],
       hours: [''],
       slot_times: [[]]
     });
