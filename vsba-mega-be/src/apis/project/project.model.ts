@@ -1,7 +1,6 @@
 import { DataTypes, ModelOptions } from "sequelize";
 import { sequelize } from "@config/db/sequelize";
 import { User } from "@config/models/user.model";
-import { SlotGroup } from "@src/models/slot-group.model";
 
 let project_model = {
   id: {
