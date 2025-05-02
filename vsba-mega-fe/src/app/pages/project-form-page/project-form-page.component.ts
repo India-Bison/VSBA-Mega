@@ -163,6 +163,10 @@ export class ProjectFormPageComponent {
     this.route.navigate([], { queryParams: { type: 'Project', parent_id: this.params.parent_id || this.params.id } });
   }
 
+  back_to_page(){
+    this.route.navigate(['/project/list'], {})
+  }
+
   async patch_project_form(data: any) {
     let dataa = await this.ps?.get(data);
     this.form.patchValue(dataa.data);
