@@ -1,4 +1,5 @@
-<app-header label="Project" sub_label="{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
+<app-header #get_value label="Project" sub_label="{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
+{{get_value.sub_label}}
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
     <div class="flex flex-col bg-white rounded-2xl shadow w-full gap-6">
         <div class="flex items-center justify-between px-6 pt-6">
@@ -107,6 +108,7 @@
             <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
             <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
             <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+            <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
             <!-- <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]" label="ADD SUB PROJECTS"></app-button> -->
         </div>
     </div>
@@ -115,3 +117,6 @@
 <app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
     {{params.parent_id? 'Add more Sub Projects?' : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
+<app-confirmation-popup #delete_sub_project_row label="Delete Sub-Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_sub_project_row.close()">
+    This action cannot be undone, and all associated data will be permanently removed.
+  </app-confirmation-popup>
