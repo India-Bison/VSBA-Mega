@@ -57,7 +57,7 @@ export class ProjectFormPageComponent {
   }
   parent_project: any
   ngOnInit() {
-    this.gs.toastr_shows_function('mayur', 'Error', 'error')
+    // this.gs.toastr_shows_function('mayur', 'Error', 'error')
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
