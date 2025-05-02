@@ -87,7 +87,7 @@ let get_all_project = async (data: any, transaction: Transaction) => {
             rows: await Promise.all(response.rows.map(async (item: any) => {
                 let project = item.toJSON ? item.toJSON() : item;
 
-                if (project.type === "sub project" && project.parent_id) {
+                if (project.type === "Sub-Project" && project.parent_id) {
                     const parent_project = await Project.findOne({ where: { id: project.parent_id }, include: [{ model: SlotGroup }], transaction });
 
                     if (parent_project) {
