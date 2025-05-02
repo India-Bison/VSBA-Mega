@@ -40,13 +40,13 @@ export class ProjectFormPageComponent {
     this.form = this.fb.group({
       name: [''],
       short_name: [''],
-      full_venue_required: [''],
+      full_venue_required: ['yes'],
       resource_type: [''],
       description: [''],
-      audit_required: [''],
+      audit_required: ['Comprehensive Audit'],
       project_start_date: [''],
       project_end_date: [''],
-      week_days: [[]],
+      week_days: [['sunday','monday','tuesday','wednesday','thursday','friday','saturday']],
       slot_type: ['Time Slot'],
       type: [''],
       slot_groups: this.fb.array([])
@@ -57,7 +57,6 @@ export class ProjectFormPageComponent {
   }
   parent_project: any
   ngOnInit() {
-    // this.gs.toastr_shows_function('mayur', 'Error', 'error')
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {

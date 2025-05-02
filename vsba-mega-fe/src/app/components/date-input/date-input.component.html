@@ -1,10 +1,11 @@
 <div class="relative" *ngIf="format !== 'month'">
-    <input [type]="format" [disabled]="disabled || paramValue == 'true'" [(ngModel)]="value" (change)="onDateChange($event)" [id]="label" [min]="minDateInput || null" [max]="maxDateInput || null"
+    <input [type]="format" [disabled]="disabled || paramValue == 'true'" [placeholder]="placeholder" [(ngModel)]="value" (change)="onDateChange($event)" [id]="label" [min]="minDateInput || null" [max]="maxDateInput || null"
       [ngClass]="{'text-white': !value}"  class="appearance-none rounded-lg px-4 h-12 w-full text-sm text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
     <label [for]="label"
         class="pointer-events-none absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-[7px] origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[rgba(0,0,0,0.6)] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">{{label.includes('_')
         ? (label | capitalizString) : label}}<span *ngIf="is_required" class="col-span-2 text-red-600">*</span></label>
     <i *ngIf="format !== 'time'" class='absolute bx bx-calendar-alt right-4 text-xl text-black dark:text-black top-1/2 transform -translate-y-1/2 pointer-events-none'></i>
+    <i *ngIf="format == 'time'" class='absolute bx bx-time-five right-4 bg-white text-2xl text-black dark:text-black top-1/2 transform -translate-y-1/2 pointer-events-none'></i>
 </div>
 <div *ngIf="format === 'month'" class="flex items-center gap-6">
     <button (click)="changeMonth(-1)" class="w-8 h-8 border-[1px] shadow-md rounded-full border-gray-300 bg-white">

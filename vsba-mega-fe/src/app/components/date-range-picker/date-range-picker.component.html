@@ -18,18 +18,15 @@
 </div> -->
 
 
-<div
-  class="w-full border rounded-md px-4 py-2 flex items-center gap-3 text-gray-600 cursor-pointer"
-  (click)="openPicker()"
->
-<div class="-ml-10">
-  <mat-date-range-input [rangePicker]="picker" class="hidden text-[1px]">
-    <input class="hidden" matStartDate [(ngModel)]="value.start" (ngModelChange)="onDateChange()"  placeholder="DD-MM-YY"  />
-    <input class="hidden" matEndDate [(ngModel)]="value.end" (ngModelChange)="onDateChange()"  placeholder="DD-MM-YY"  />
-  </mat-date-range-input>
+<div class="w-full border rounded-md px-4 py-2 flex items-center gap-3 text-gray-600 cursor-pointer" (click)="openPicker()">
+  <div class="-ml-10">
+    <mat-date-range-input [rangePicker]="picker" class="hidden text-[1px]">
+      <input class="hidden" matStartDate [(ngModel)]="value.start" (ngModelChange)="onDateChange()" placeholder="DD-MM-YY" />
+      <input class="hidden" matEndDate [(ngModel)]="value.end" (ngModelChange)="onDateChange()" placeholder="DD-MM-YY" />
+    </mat-date-range-input>
 
-  <mat-date-range-picker #picker></mat-date-range-picker>
-</div>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </div>
   <img class="h-6 w-6" src="../../../assets/CalendarDots.svg" alt="">
 
   <div class="flex-1 flex justify-start whitespace-nowrap">
@@ -42,5 +39,5 @@
       </div>
     </ng-template>
   </div>
- 
+
 </div>
