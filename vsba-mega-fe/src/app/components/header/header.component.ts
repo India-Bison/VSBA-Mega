@@ -1,9 +1,9 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-header',
-    imports: [NgClass, NgIf, NgFor],
+    imports: [NgIf],
     templateUrl: './header.component.html',
     styleUrl: './header.component.css',
     standalone: true,
