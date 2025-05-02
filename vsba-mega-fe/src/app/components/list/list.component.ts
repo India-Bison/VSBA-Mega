@@ -240,4 +240,11 @@ export class ListComponent {
 onDocumentClick(event: MouseEvent) {
   this.menuVisibleIndex = null;
 }
+
+isDropdownOpen: number | null = null;
+
+toggleDropdown(index: number) {
+  this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
+}
+
 }

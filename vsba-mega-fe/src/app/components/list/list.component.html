@@ -20,7 +20,7 @@
         <thead
           class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
+            <th *ngFor="let column of columns;let i = index" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
               [ngClass]="{'flex justify-center items-center': column.title == 'Status'}"
               class="px-4 h-12 text-center truncate">
               <div *ngIf="column.title != 'Action'" [class]="column?.class">
@@ -32,8 +32,32 @@
                   <span [ngClass]="{'justify-center': column.title == 'Status'}"
                     class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'"
-                      src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" />
+                    <img *ngIf="column.title === 'Resource Type' || column.title === 'Slot Type'" src="../../../assets/Frame 1410266058.png"
+                    alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" />
+                  
+                  <!-- Dropdown -->
+                  <div *ngIf="isDropdownOpen === i && (column.title === 'Resource Type' || column.title === 'Slot Type')"
+                    class="w-[228px] overflow-y-auto absolute top-10 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                    <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
+                    <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
+                      <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
+                        <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
+                      </div>
+                      <div class="flex justify-start items-center gap-2">
+                        <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
+                      </div>
+                  
+                      <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
+                  
+                      <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
+                      <div>
+                        <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
+                          <input type="checkbox" class="w-4 h-4" />
+                          <label class="text-black">Item</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   </span>
                 </ng-template>
               </div>
@@ -173,31 +197,28 @@
               </td>
               <td class="px-4 h-16 flex justify-center items-center ">
                 <div class="flex gap-2 -m-2 items-center justify-center">
-                  <ng-container>
+               
                     <ng-container *ngFor="let column of columns">
-                      <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center relative">
-                        <div class="flex gap-2 items-center justify-center relative">
-                          <img class="h-6 cursor-pointer"
-                               src="https://static.thenounproject.com/png/2854151-200.png"
-                               alt="Menu"
-                               (click)="toggleMenu('child-' + i + '-' + child.id)" />
-                    
-                          <div *ngIf="menuVisibleIndex === ('child-' + i + '-' + child.id)"
-                               class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-10 right-0 z-[9999] shadow-md"
-                               (click)="$event.stopPropagation()">
-                            <ng-container *ngFor="let action of column.actions">
-                              <div (click)="action.action(child, i)"
-                                   class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
-                                <img [src]="action.icon" alt="" />
-                                <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
-                              </div>
-                            </ng-container>
-                          </div>
-                        </div>
+                      <td *ngIf="column.type == 'Action'" class="h-16 flex justify-center items-center relative">
+                        <img class="h-6 cursor-pointer"
+     src="https://static.thenounproject.com/png/2854151-200.png"
+     alt="Menu"
+     (click)="toggleMenu('child-' + i + '-' + child.id); $event.stopPropagation()" />
+
+<div *ngIf="menuVisibleIndex === ('child-' + i + '-' + child.id)"
+     class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-10 right-0 z-[9999] shadow-md"
+     (click)="$event.stopPropagation()">
+  <ng-container *ngFor="let action of column.actions">
+    <div (click)="action.action(child, i)"
+         class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+      <img [src]="action.icon" alt="" />
+      <span [ngClass]="{ 'text-red-500': action.title === 'Delete' }">{{ action.title }}</span>
+    </div>
+  </ng-container>
+</div>
+
                       </td>
                     </ng-container>
-                    
-                  </ng-container>
                 </div>
               </td>
             </tr>
