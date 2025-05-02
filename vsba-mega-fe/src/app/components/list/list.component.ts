@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
+import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
 import { PaginationComponent } from "../pagination/pagination.component";
 import { MultiSearchComponent } from '../multi-search/multi-search.component';
 import { SearchInputComponent } from '../search-input/search-input.component';
@@ -235,4 +235,8 @@ toggleMenu(index: number) {
   this.menuVisibleIndex = this.menuVisibleIndex === index ? null : index;
 }
 
+@HostListener('document:click', ['$event'])
+onDocumentClick(event: MouseEvent) {
+  this.menuVisibleIndex = null;
+}
 }
