@@ -146,7 +146,7 @@
               <td class="px-4 h-16"></td>
               <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input
                   class=" ml-1 mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)">
-                {{ child.type }}
+                {{ child.short_name }}
               </td>
               <td class="px-4 h-16 text-sm">{{ child.name }}</td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
@@ -174,8 +174,29 @@
               <td class="px-4 h-16 flex justify-center items-center ">
                 <div class="flex gap-2 -m-2 items-center justify-center">
                   <ng-container>
-                    <img class="h-6" src="https://static.thenounproject.com/png/2854151-200.png" alt="">
-
+                    <ng-container *ngFor="let column of columns">
+                      <td *ngIf="column.type == 'Action'" class="px-4 h-16 flex justify-center items-center relative">
+                        <div class="flex gap-2 items-center justify-center relative">
+                          <img class="h-6 cursor-pointer"
+                               src="https://static.thenounproject.com/png/2854151-200.png"
+                               alt="Menu"
+                               (click)="toggleMenu('child-' + i + '-' + child.id)" />
+                    
+                          <div *ngIf="menuVisibleIndex === ('child-' + i + '-' + child.id)"
+                               class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-10 right-0 z-[9999] shadow-md"
+                               (click)="$event.stopPropagation()">
+                            <ng-container *ngFor="let action of column.actions">
+                              <div (click)="action.action(child, i)"
+                                   class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                                <img [src]="action.icon" alt="" />
+                                <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </td>
+                    </ng-container>
+                    
                   </ng-container>
                 </div>
               </td>

@@ -54,6 +54,9 @@ export class ProjectFormPageComponent {
       type: [''],
       slot_groups: this.fb.array([])
     });
+    if (!this.params.id) {
+      this.add_slot()
+    }
   }
   parent_project: any
   ngOnInit() {
@@ -160,6 +163,10 @@ export class ProjectFormPageComponent {
     this.route.navigate([], { queryParams: { type: 'Project', parent_id: this.params.parent_id || this.params.id } });
   }
 
+  back_to_page(){
+    this.route.navigate(['/project/list'], {})
+  }
+
   async patch_project_form(data: any) {
     let dataa = await this.ps?.get(data);
     this.form.patchValue(dataa.data);
@@ -189,9 +196,21 @@ export class ProjectFormPageComponent {
       end: dataa.data.project_end_date
     }
   }
+
+  discard(){
+   window.history.back()
+  }
+
+
+
+
+
+
+  @ViewChild('delete_sub_project_row') delete_sub_project_row:any
+  selected_delete_sub_project: any = {}
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'SUb-Project Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
+    { title: 'Sub-Project Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
     { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
@@ -199,13 +218,32 @@ export class ProjectFormPageComponent {
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [
-        { title: 'Update', icon: 'bx bx-edit-alt', action: this.edit.bind(this) },
-        // { title: 'Delete', icon: 'bx bx-trash', action: this.delete.bind(this) },,
+        { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
+        { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.edit.bind(this) },
+        { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
   ];
   async edit(item: any, index: any) {
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, type: 'Project' } });
+  }
+  async view(item: any, index: any) {
+    console.log(item, index, "item");
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
+  }
+  async delete(item: any, index: any) {
+    this.delete_sub_project_row.open()
+    this.selected_delete_sub_project = item
+  }
+  async delet_project() {
+    try {
+      let data = await this.ps?.delete(this.selected_delete_sub_project.id);
+       this.parent_project
+       window.location.reload()
+    } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
   }
   plus_minus_open_close(index: number) {
     if (this.plus_minus_index == index) {

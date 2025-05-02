@@ -229,11 +229,12 @@ export class ListComponent {
     this.router.navigate(['/project/form'], { queryParams: { id: id, type: 'Sub-Project' } });
   }
 
-  menuVisibleIndex: number | null = null;
+  menuVisibleIndex: number | string | null = null;
 
-toggleMenu(index: number) {
-  this.menuVisibleIndex = this.menuVisibleIndex === index ? null : index;
-}
+  toggleMenu(index: number | string): void {
+    this.menuVisibleIndex = this.menuVisibleIndex === index ? null : index;
+  }
+  
 
 @HostListener('document:click', ['$event'])
 onDocumentClick(event: MouseEvent) {
