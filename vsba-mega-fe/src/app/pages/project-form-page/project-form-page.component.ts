@@ -54,6 +54,9 @@ export class ProjectFormPageComponent {
       type: [''],
       slot_groups: this.fb.array([])
     });
+    if (!this.params.id) {
+      this.add_slot()
+    }
   }
   parent_project: any
   ngOnInit() {
