@@ -213,10 +213,13 @@
 
     <div *ngIf="items?.length == 0"
       class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
-      <div class="w-full h-96 p-10 flex justify-center items-center">
-        <div class="flex-col items-center justify-center">
-          <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
-          <p class="text-md text-center">No Records found</p>
+      <div class="w-full h-[65vh] p-10 flex justify-center items-center">
+        <div class="flex flex-col items-center gap-2 justify-center">
+          <!-- <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" /> -->
+          <div class="text-[22px] text-[#3F41D1] text-center">No projects found!</div>
+          <div class="text-[#A3A3A3] text-base text-center">It looks like you haven't Added any projects yet. To get started,
+            <br>
+            click the Create button to Add your first project</div>
         </div>
       </div>
     </div>

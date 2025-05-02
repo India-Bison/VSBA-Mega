@@ -112,6 +112,6 @@
     </div>
 </div>
 
-<app-confirmation-popup [edit_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+<app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
     {{params.parent_id? 'Add more Sub Projects?' : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
