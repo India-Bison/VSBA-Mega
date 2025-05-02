@@ -151,7 +151,11 @@ export class ProjectFormPageComponent {
   async update() {
     try {
       let data = { ...this.form.value };
-      data.type = this.params.type
+      if (this.params.sub_project_update == 'true') {
+        data.type = 'Sub-Project' 
+      } else {
+        data.type = 'Project'
+      }
       let response: any = await this.ps.update(this.params.id, data);
       window.history.back()
     } catch (error: any) {
@@ -226,7 +230,7 @@ export class ProjectFormPageComponent {
     },
   ];
   async edit(item: any, index: any) {
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, type: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, parent_id: this.params.id, type: 'Project',sub_project_update:true } });
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
