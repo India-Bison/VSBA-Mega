@@ -18,9 +18,10 @@
     <div class="overflow-y-auto h-full">
       <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
         <thead
-          class="sticky top-[0px] z-10 lg:z-[15] bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
+          class="sticky top-[0px] z-10 bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns;let i = index" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
+            <th *ngFor="let column of columns;let i = index"
+              [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
               [ngClass]="{'flex justify-center items-center': column.title == 'Status'}"
               class="px-4 h-12 text-center truncate">
               <div *ngIf="column.title != 'Action'" [class]="column?.class">
@@ -29,36 +30,36 @@
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <span [ngClass]="{'justify-center': column.title == 'Status'}"
+                  <div [ngClass]="{'justify-center items-center': column.title == 'Status'}"
                     class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                    <img *ngIf="column.sort == true" src="../../../assets/Frame 1410266058.png"
-                    alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" />
-                  
-                  <!-- Dropdown -->
-                  <div *ngIf="isDropdownOpen == i && (column.sort == true || column.filter == true)"
-                    class="w-[228px] overflow-y-auto absolute top-10 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
-                    <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
-                    <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
-                      <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
-                        <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
-                      </div>
-                      <div class="flex justify-start items-center gap-2">
-                        <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
-                      </div>
-                  
-                      <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
-                  
-                      <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
-                      <div>
-                        <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
-                          <input type="checkbox" class="w-4 h-4" />
-                          <label class="text-black">Item</label>
+                    <img *ngIf="column.sort == true" src="../../../assets/Frame 1410266058.png" alt="Icon"
+                      class="inline-block cursor-pointer" (click)="toggleDropdown(i)" />
+
+                    <!-- Dropdown -->
+                    <div *ngIf="isDropdownOpen == i && (column.sort == true || column.filter == true)"
+                      class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                      <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
+                      <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
+                        <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
+                          <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
+                        </div>
+                        <div class="flex justify-start items-center gap-2">
+                          <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
+                        </div>
+
+                        <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
+
+                        <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
+                        <div>
+                          <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
+                            <input type="checkbox" class="w-4 h-4" />
+                            <label class="text-black">Item</label>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  </span>
                 </ng-template>
               </div>
             </th>
@@ -95,7 +96,7 @@
                     <div [class]="column?.class" class="flex gap-2 items-center">
 
                       <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="column.sort== true && item.children?.length" src="../../../assets/CaretUp.svg"
+                      <img *ngIf="column.title== 'Project Name' && item.children?.length" src="../../../assets/CaretUp.svg"
                         alt="Caret Up" class="cursor-pointer transition-transform duration-200"
                         [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded"
                         (click)="toggleExpand(item)" />
@@ -113,7 +114,7 @@
                         </div>
                       </ng-container>
 
-                      <img *ngIf="column.plus_icon == true && item?.children?.length"
+                      <img *ngIf="column.plus_icon == true"
                         class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
                         (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg"
                         alt="">
@@ -137,7 +138,7 @@
                       alt="Menu" (click)="toggleMenu(i) ; $event.stopPropagation()" />
 
                     <div *ngIf="menuVisibleIndex == i"
-                      class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-14 right-16 z-[9999] shadow-md"
+                      class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-10 right-10 z-[9999] shadow-md"
                       (click)="$event.stopPropagation()">
                       <ng-container *ngFor="let action of column.actions">
                         <div (click)="action.action(item,i); menuVisibleIndex = null"
@@ -174,10 +175,9 @@
               </td>
               <td class="px-4 h-16 text-sm">
                 <div class="flex gap-2 items-center">
-                  <span>{{ child.name }}</span>  <img 
-                  class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
-                  (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg"
-                  alt="">
+                  <span>{{ child.name }}</span> <img
+                    class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100"
+                    (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
                 </div>
               </td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
@@ -188,48 +188,36 @@
                 <div class="flex justify-center items-center">
                   <button
                     class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center"
-                    [ngClass]="{
-                              'text-[#03A600]': child.status == 'Approved',
-                              'text-[#DF6E12]': child.status == 'Pending',
-                              'text-red-500 ': child.status == 'Rejected'
-                            }">
-                    <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{
-                              'bg-[#03A600]': child.status == 'Approved',
-                              'bg-[#DF6E12]': child.status == 'Pending',
-                              'bg-red-500 ': child.status == 'Rejected'
-                            }"></div>
+                    [ngClass]="{ 'text-[#03A600]': child.status == 'Approved', 'text-[#DF6E12]': child.status == 'Pending', 'text-red-500 ': child.status == 'Rejected'}">
+                    <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{'bg-[#03A600]': child.status == 'Approved','bg-[#DF6E12]': child.status == 'Pending','bg-red-500 ': child.status == 'Rejected' }"></div>
                     {{ child.status }}
                   </button>
                 </div>
               </td>
               <td class="px-4 h-16 flex justify-center items-center ">
                 <div class="flex gap-2 -m-2 items-center justify-center">
-               
-                    <ng-container *ngFor="let column of columns">
-                      <td *ngIf="column.type == 'Action'" class="h-16 flex justify-center items-center relative">
-                        <img class="h-6 cursor-pointer"
-     src="https://static.thenounproject.com/png/2854151-200.png"
-     alt="Menu"
-     (click)="toggleMenu('child-' + i + '-' + child.id); $event.stopPropagation()" />
+                  <ng-container *ngFor="let column of columns">
+              <td *ngIf="column.type == 'Action'" class="h-16 flex justify-center items-center">
+                <img class="h-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png" alt="Menu"
+                  (click)="toggleMenu('child-' + i + '-' + child.id); $event.stopPropagation()" />
 
-<div *ngIf="menuVisibleIndex == ('child-' + i + '-' + child.id)"
-     class="bg-[#E8E8F9] absolute w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-10 right-0 z-[9999] shadow-md"
-     (click)="$event.stopPropagation()">
-  <ng-container *ngFor="let action of column.actions">
-    <div (click)="action.action(child, i)"
-         class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
-      <img [src]="action.icon" alt="" />
-      <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
-    </div>
-  </ng-container>
-</div>
-
-                      </td>
-                    </ng-container>
+                <div *ngIf="menuVisibleIndex == ('child-' + i + '-' + child.id)"
+                  class="bg-[#E8E8F9] fixed w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-96 right-14 z-[9999] shadow-md"
+                  (click)="$event.stopPropagation()">
+                  <ng-container *ngFor="let action of column.actions">
+                    <div (click)="action.action(child, i)"
+                      class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                      <img [src]="action.icon" alt="" />
+                      <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
+                    </div>
+                  </ng-container>
                 </div>
               </td>
-            </tr>
-            <!-- <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
+          </ng-container>
+    </div>
+    </td>
+    </tr>
+    <!-- <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.forChild" class="px-4 h-16 text-sm">
                   <ng-container *ngIf="column.key == 'status'; else normalChildCell">
@@ -255,25 +243,25 @@
               </ng-container>
             </tr> -->
 
-          </ng-container>
-        </tbody>
-      </table>
-    </div>
+    </ng-container>
+    </tbody>
+    </table>
+  </div>
 
-    <div *ngIf="items?.length == 0"
-      class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
-      <div class="w-full h-[65vh] p-10 flex justify-center items-center">
-        <div class="flex flex-col items-center gap-2 justify-center">
-          <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
-          <span>No Record found</span>
-          <!-- <div class="text-[22px] text-[#3F41D1] text-center">No projects found!</div>
+  <div *ngIf="items?.length == 0"
+    class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
+    <div class="w-full h-[65vh] p-10 flex justify-center items-center">
+      <div class="flex flex-col items-center gap-2 justify-center">
+        <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
+        <span>No Record found</span>
+        <!-- <div class="text-[22px] text-[#3F41D1] text-center">No projects found!</div>
           <div class="text-[#A3A3A3] text-base text-center">It looks like you haven't Added any projects yet. To get started,
             <br>
             click the Create button to Add your first project</div> -->
-        </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 <!-- <div class="fixed bottom-0 py-2 w-[92%] bg-white mt-5" *ngIf="pagination">
   <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"

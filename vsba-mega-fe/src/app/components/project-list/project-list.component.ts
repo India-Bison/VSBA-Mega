@@ -29,6 +29,7 @@ export class ProjectListComponent {
   itemsPerPage = 10;
   totalItems = 0;
   totalPages = 50;
+  filter= false;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Project Code', type: 'Value', key: 'short_name',  class: 'text-left' },
