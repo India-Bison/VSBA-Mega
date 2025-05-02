@@ -16,8 +16,8 @@
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <div class="flex items-center w-full gap-6">
+                        <app-text-input class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
                         <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
-                        <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
                     </div>
                     <app-radio label="Full Venue Required" [is_required]="true" formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
