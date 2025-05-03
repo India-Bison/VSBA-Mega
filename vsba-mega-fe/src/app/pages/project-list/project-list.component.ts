@@ -1,14 +1,14 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { ListComponent } from '../list/list.component';
-import { HeaderComponent } from '../header/header.component';
+import { ListComponent } from '../../components/list/list.component';
+import { HeaderComponent } from '../../components/header/header.component';
 import { GlobalService } from '../../services/global.service';
-import { SearchInputComponent } from '../search-input/search-input.component';
-import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
-import { ButtonComponent } from '../button/button.component';
+import { SearchInputComponent } from '../../components/search-input/search-input.component';
+import { ToggleTabsComponent } from '../../components/toggle-tabs/toggle-tabs.component';
+import { ButtonComponent } from '../../components/button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
-import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
+import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { title } from 'process';
 
 @Component({
