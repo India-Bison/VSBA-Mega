@@ -14,6 +14,24 @@
         </div>
         <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
+                <div class="w-full max-w-md p-4">
+                    <label class="text-sm md:text-base font-semibold text-[#3C50E0]">
+                      Project Logo
+                      <span class="ml-2 font-normal italic text-gray-500 text-xs md:text-sm">
+                        (Supported Only .JPG,.JPEG, Webp File ) (1MB)
+                      </span>
+                    </label>
+                
+                    <div class="relative mt-3">
+                      <!-- Upload Box -->
+                      <div class="w-full h-32 md:h-36 border-2 border-dashed border-[#3C50E0] rounded-lg flex items-center justify-center bg-[#EEF0FF]">
+                        <img src="../../../assets/Vector (1).svg" alt="">
+                        <!-- <svg xmlns="" class="w-10 h-10 text-[#3C50E0]" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 15V9M9 12H15M4 7C4 5.89543 4.89543 5 6 5H8.38268C8.83657 5 9.29047 4.89464 9.70711 4.70711L10.2929 4.29289C10.7095 4.10536 11.1634 4 11.6173 4H13.3827C13.8366 4 14.2905 4.10536 14.7071 4.29289L15.2929 4.70711C15.7095 4.89464 16.1634 5 16.6173 5H18C19.1046 5 20 5.89543 20 7V17C20 18.1046 19.1046 19 18 19H6C4.89543 19 4 18.1046 4 17V7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> -->
+                      </div>
+                    </div>
+                  </div>
                 <div class="flex flex-col gap-6 w-full">
                     <div class="flex items-center w-full gap-6">
                         <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
