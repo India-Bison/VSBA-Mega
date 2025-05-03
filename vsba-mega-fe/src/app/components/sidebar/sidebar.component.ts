@@ -229,7 +229,7 @@ export class SidebarComponent {
       icon: '../../../assets/profile-2user.svg',
       selected_icon: '../../../assets/profile-2user.svg',
       selected: false,
-      router_link: '',
+      router_link: '/user/list',
       submenu: [],
       permissions: "list:view"
 

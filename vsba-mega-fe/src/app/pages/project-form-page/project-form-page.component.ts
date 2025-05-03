@@ -22,7 +22,6 @@ import { ProjectService } from '../../services/project.service';
   selector: 'app-project-form-page',
   imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent],
   templateUrl: './project-form-page.component.html',
-  styleUrl: './project-form-page.component.css',
   standalone: true,
 })
 export class ProjectFormPageComponent {
