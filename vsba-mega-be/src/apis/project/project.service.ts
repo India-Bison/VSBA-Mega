@@ -96,7 +96,7 @@ let get_all_project = async (data: any, transaction: Transaction) => {
         order.push(['id', 'DESC']);
     }
 
-    if (status) filter.status = status;
+    if (status && status.toLowerCase() !== "all") filter.status = status;
 
     const all_projects: any = await Project.findAll({ where: filter, include: [{ model: SlotGroup }], order, transaction });
 
