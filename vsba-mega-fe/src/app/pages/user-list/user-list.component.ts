@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-list',
-  imports: [HeaderComponent, ListComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, ConfirmationPopupComponent,CommonModule],
+  imports: [HeaderComponent, ListComponent, SearchInputComponent, ToggleTabsComponent,CommonModule],
   templateUrl: './user-list.component.html',
 })
 export class UserListComponent {
