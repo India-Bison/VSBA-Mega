@@ -137,9 +137,9 @@
                   </ng-template>
                 </td>
 
-                <td *ngIf="column.type == 'Action'" class="px-4 h-16 fixed mt-4">
+                <td *ngIf="column.type == 'Action'" class="px-4 h-16 mt-4">
                   <div class="flex gap-2 items-center justify-center">
-                    <img class="h-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png"
+                    <img class="h-6 min-w-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png"
                       alt="Menu" (click)="toggleMenu(i) ; $event.stopPropagation()" />
 
                     <div *ngIf="menuVisibleIndex == i"
