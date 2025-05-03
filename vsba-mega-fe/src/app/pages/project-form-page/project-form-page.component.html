@@ -60,7 +60,7 @@
                                 <span class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
                                     <i (click)="plus_minus_open_close(i)" [ngClass]="plus_minus_index === i ? 'bx bx-minus' : 'bx bx-plus'" class="text-base text-gray-700 cursor-pointer"></i>
                                     Slot {{ slots.length - i }} 
-                                    <span class="text-[#A3A3A3] text-xs font-normal" *ngIf="plus_minus_index != i && slot.get('slot_start_date')?.value && slot.get('slot_end_date')?.value">({{ slot.get('slot_start_date')?.value }} To {{ slot.get('slot_end_date')?.value }})</span>
+                                    <span class="text-[#A3A3A3] text-xs font-normal" *ngIf="plus_minus_index != i && slot.get('slot_start_date')?.value && slot.get('slot_end_date')?.value">({{ slot.get('slot_start_date')?.value | date : 'dd-MM-yyyy' }} To {{ slot.get('slot_end_date')?.value | date : 'dd-MM-yyyy' }})</span>
                                 </span>
                                 <i class="bx bx-trash top-3 right-2 text-red-500 text-base opacity-0 group-hover:opacity-100 cursor-pointer hover:text-red-600" (click)="remove_slot(slots.length - 1 - i)">
                                 </i>
