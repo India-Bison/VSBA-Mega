@@ -22,7 +22,7 @@ export class ProjectService {
 
   async delete(id: number) {
     try {
-      let response = await this.hs.delete('/school/delete-school?id=' + id, {})
+      let response = await this.hs.delete('/project/delete-project?id=' + id, {})
       return response;
     } catch (error: any) {
       throw error;

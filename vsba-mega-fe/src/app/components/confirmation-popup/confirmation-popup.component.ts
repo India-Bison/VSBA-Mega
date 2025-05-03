@@ -16,6 +16,8 @@ export class ConfirmationPopupComponent {
   @Input() width: any;
   @Input() scroll: any;
   @Input() redirect = true;
+  @Input() delete_icon = false;
+  @Input() edit_icon = false;
   @Input() icon: string = '';           // icon name ya URL
   @Input() iconColor: string = '';      // bg color of the icon
   @Input() confirmText: string = 'Yes'; // Confirm button text

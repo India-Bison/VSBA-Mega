@@ -1,4 +1,4 @@
-<app-header label="Project" sub_label="{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
+<app-header #get_value label="Project" sub_label="{{params.id? 'Update' : 'Add'}} {{params.parent_id?'Sub' : ''}} Project"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
     <div class="flex flex-col bg-white rounded-2xl shadow w-full gap-6">
         <div class="flex items-center justify-between px-6 pt-6">
@@ -7,44 +7,46 @@
                     Project</span>
             </ng-container>
             <ng-container *ngIf="params.parent_id">
-                <span class="text-xl font-medium leading-[100%] tracking-2%">{{selected_project_id.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{selected_project_id.project_start_date}} to
-                        {{selected_project_id.project_end_date}})</span></span>
+                <span class="text-xl font-medium leading-[100%] tracking-2%">{{parent_project?.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{parent_project?.project_start_date}} to
+                        {{parent_project?.project_end_date}})</span></span>
             </ng-container>
-            <app-toggle-tabs [params]="params" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
+            <app-toggle-tabs *ngIf="!params.parent_id" [params]="params" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
         </div>
         <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
-                    <app-text-input label="Project Name" formControlName="name"></app-text-input>
-                    <app-text-input label="Short Name" formControlName="short_name"></app-text-input>
-                    <app-radio label="Full Venue Required" [is_required]="true" formControlName="full_venue_required"
-                        [options]="[
+                    <div class="flex items-center w-full gap-6">
+                        <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
+                        <app-text-input class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
+                    </div>
+                    <app-image-uploder [multiple]="true" formControlName="project_logo"></app-image-uploder>
+                    <app-radio label="Full Venue Required"  formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search label="Resource Type*" formControlName="resource_type" [options]="['VBSM RESOURCE TYPE']"></app-multi-search>
+                    <app-multi-search label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
                     <div>
                         <app-text-area label="Short Description*" formControlName="description"></app-text-area>
                         <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words
                         </div>
                     </div>
-                    <app-radio label="Audit Required" [is_required]="true" formControlName="audit_required" [options]="[
+                    <app-radio label="Audit Required"  formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
                       { label: 'Limited Audit', value: 'Limited Audit' },
                       { label: 'By-Pass Audit', value: 'By-Pass Audit' },
                       { label: 'Third Party Audit', value: 'Third-Party -Audit' }
                     ]">
                     </app-radio>
-                    <app-date-range-picker [(ngModel)]="project_start_end_date"
-                    (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date</label>
+                        <app-date-range-picker label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                    </div>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
-                <div
-                    class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
+                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
                     <div class="flex justify-between items-center">
-                        <app-radio label="Slot Type" [is_required]="true" #get_Value showValue="Time Slot"
-                            formControlName="slot_type" [options]="[
+                        <app-radio label="Slot Type" showValue="Time Slot" formControlName="slot_type" [options]="[
                         { label: 'Full Day', value: 'Full Day' },
                         { label: 'Time Slot', value: 'Time Slot' }
                         
@@ -55,61 +57,45 @@
                             SLOT</app-button>
                     </div>
                     <div formArrayName="slot_groups" class="flex flex-col gap-4">
-                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i"
-                            class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-2 shadow-sm group relative">
+                        <div *ngFor="let slot of slots.controls; let i = index" [formGroupName]="i" class="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex flex-col gap-2 shadow-sm group relative">
                             <div class="flex justify-between items-center">
-                                <span
-                                    class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
-                                    <i (click)="plus_minus_open_close(i)"
-                                        [ngClass]="plus_minus_index === i ? 'bx bx-minus' : 'bx bx-plus'"
-                                        class="text-base text-gray-700 cursor-pointer"></i>
+                                <span class="text-sm font-medium text-[#666666] flex items-center gap-2 leading-[100%] tracking-2p">
+                                    <i (click)="plus_minus_open_close(i)" [ngClass]="plus_minus_index === i ? 'bx bx-minus' : 'bx bx-plus'" class="text-base text-gray-700 cursor-pointer"></i>
                                     Slot {{ i + 1 }}
                                 </span>
-                                <i class="bx bx-trash top-3 right-2 text-red-500 text-base opacity-0 group-hover:opacity-100 cursor-pointer hover:text-red-600"
-                                    (click)="remove_slot(i)">
+                                <i class="bx bx-trash top-3 right-2 text-red-500 text-base opacity-0 group-hover:opacity-100 cursor-pointer hover:text-red-600" (click)="remove_slot(i)">
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
-                                <app-date-range-picker class="w-full"   [(ngModel)]="slot_start_end_date[i]"
-                                (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')"
-                                [ngModelOptions]="{standalone: true}"
-                                    ></app-date-range-picker>
+                                <app-date-range-picker class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                                 <div class="flex justify-between w-full gap-2 items-center">
-                                    <app-date-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'"
-                                        [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
-                                        formControlName="start_time">
+                                    <app-date-input placeholder="HH:MM" *ngIf="form.get('slot_type')?.value != 'Full Day'" [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
                                     </app-date-input>
-                                    <div class="flex gap-4" *ngIf="form.get('slot_type')?.value == 'Full Day'">
-                                        <label class="text-gray-500 font-medium text-sm">Start Time</label>
-                                        <app-date-input [format]="'time'"
-                                            [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
-                                            formControlName="start_time">
-                                        </app-date-input>
-                                        <label class="text-gray-500 font-medium text-sm">End Time</label>
-                                        <app-date-input [format]="'time'"
-                                            [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"
-                                            formControlName="start_time">
-                                        </app-date-input>
+                                    <div class="flex w-full gap-4 items-center" *ngIf="form.get('slot_type')?.value == 'Full Day'">
+                                        <div class="flex flex-col gap-2 w-full">
+                                            <label class="text-gray-500  w-full font-medium text-sm">Start Time</label>
+                                            <app-date-input [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
+                                            </app-date-input>
+                                        </div>
+                                        <div  class="flex flex-col gap-2 w-full">
+                                            <label class="text-gray-500 w-full font-medium text-sm">End Time</label>
+                                            <app-date-input [format]="'time'" [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'" formControlName="start_time">
+                                            </app-date-input>
+                                        </div>
                                     </div>
                                     <ng-container *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex items-center">
-                                        <app-select-input label="Hours" formControlName="hours" [is_required]="true"
-                                            [options]="[ { title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]"
-                                            [ngClass]="form.get('slot_type')?.value === 'Full Day' ? 'w-full' : 'w-52'"></app-select-input>
-                                        <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100"
-                                            (click)="add_pill(i)">
+                                        <app-select-input label="Hours" formControlName="hours" [is_required]="true" [options]="[ { title: '1 Hrs', value: '1' },{ title: '2 Hrs', value: '2' },{ title: '3 Hrs', value: '3' },{ title: '4 Hrs', value: '4' },{ title: '5 Hrs', value: '5' }]" [ngClass]="form.get('slot_type')?.value == 'Full Day' ? 'w-full' : 'w-52'"></app-select-input>
+                                        <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(i)">
                                             <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] "></div>
-                                            <div
-                                                class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90">
+                                            <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90">
                                             </div>
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="flex flex-wrap gap-2">
-                                    <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index"
-                                        class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
+                                <div *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex flex-wrap gap-2">
+                                    <div *ngFor="let pill of (slot.get('slot_times')?.value || []); let j = index" class="flex items-center bg-[#FFF6C8] text-sm text-gray-800 px-3 py-1 rounded-full shadow-sm">
                                         {{ pill }}
-                                        <button type="button" (click)="remove_pill(i, j)"
-                                            class="ml-2 text-gray-500 text-2xl hover:text-red-500">&times;</button>
+                                        <button type="button" (click)="remove_pill(i, j)" class="ml-2 text-gray-500 text-2xl hover:text-red-500">&times;</button>
                                     </div>
                                 </div>
                             </div>
@@ -119,33 +105,31 @@
             </form>
         </div>
         <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
-            <app-list [pagination]="false" [columns]="columns" [items]="gs.items.sub_projects | subProjectsOfProject : params.parent_id || params.id" [params]="params">
+            <app-list [pagination]="false" [columns]="columns" [items]="parent_project?.children" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <span class="text-xl text-[#212121] font-medium">Sub Projects</span>
-                    <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()"
-                        label="ADD SUB PROJECT"></app-button>
+                    <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
                 </div>
             </app-list>
         </div>
-        <div
-            class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
-            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="update()" label="DISCARD"></app-button>
-            <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="Continue_without_sub_project.open()"
-                label="SAVE AS DRAFT"></app-button>
-            <app-button color="bg-[#E697AB] text-[#310000]" (click)="Continue_without_sub_project.open()" label="SUBMIT"></app-button>
-            <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]"
-                label="ADD SUB PROJECTS"></app-button>
+        <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
+            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="discard()" label="DISCARD"></app-button>
+            <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
+            <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="params.type == 'Sub-Project' ? submit_popup_on_subproject_list.open()  :add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
+            <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+            <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+            <!-- <app-button *ngIf="!params.id" (click)="submit_form('Sub-Project')" color="bg-[#E697AB] text-[#310000]" label="ADD SUB PROJECTS"></app-button> -->
         </div>
     </div>
 </div>
-<app-modal #open_sub_project scroll="true" label="Add Sub Project">
 
-</app-modal>
-<app-confirmation-popup #open_submit_form label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true"
-    (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
-    Proceed without adding subprojects? You can add them later if needed.
+<app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="SUBMIT" confirmText="ADD SUB-PROJECT" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+    {{params.parent_id? 'Add more Sub Projects?' : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
-<app-confirmation-popup #Continue_without_sub_project label="Continue without sub-project?" cancelText="Submit" confirmText="Add Sub-project" [is_mandatory]="true"
-    (confirm_modal_clicked)="add_sub_project()" (close_modal_clicked)="submit_form()">
-    Proceed without adding subprojects? You can add them later if needed.
+<app-confirmation-popup [edit_icon]="true" #submit_popup_on_subproject_list label="Submit Project?" cancelText="CANCEL" confirmText="SUBMIT" [is_mandatory]="true" (confirm_modal_clicked)="back_to_page()" (close_modal_clicked)="back_to_page()">
+    You're about to Submit a new project.
+Make sure all details are correct before submitting.
 </app-confirmation-popup>
+<app-confirmation-popup #delete_sub_project_row label="Delete Sub-Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_sub_project_row.close()">
+    This action cannot be undone, and all associated data will be permanently removed.
+  </app-confirmation-popup>

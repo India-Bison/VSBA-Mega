@@ -1,0 +1,26 @@
+<div class="flex items-center space-x-2">
+  <!-- Hours -->
+  <div class="flex flex-col justify-center border w-[82px] h-[48px] rounded-lg pl-2 pr-4 py-4 relative">
+    <label
+      class="text-[#1E1E1E] text-opacity-60 text-xs leading-[100%] tracking-[2%] absolute top-[-9px] left-3 bg-white px-1">Hours</label>
+    <div class="flex justify-between w-full items-center">
+      <span class="text-[#666666] font-normal text-base leading-[100%]">{{ hours.toString().padStart(2, '0') }}</span>
+      <div class="flex flex-col gap-2">
+        <img (click)="decrement('hour')" class="" src="../../../assets/chevron-up.svg" alt="">
+        <img (click)="increment('hour')" class="" src="../../../assets/chevron-down.svg" alt="">
+      </div>
+    </div>
+  </div>
+  <img src="../../../assets/colon_icon.svg" alt="">
+  <div class="flex flex-col justify-center border w-[82px] h-[48px] rounded-[8px] pl-2 pr-4 py-4 relative">
+    <label
+      class="text-[#1E1E1E] text-opacity-60 text-xs leading-[100%] tracking-[2%] absolute top-[-9px] left-3 bg-white px-1">Mins</label>
+    <div class="flex justify-between w-full items-center">
+      <span class="text-[#666666] font-normal text-base leading-[100%]">{{ minutes.toString().padStart(2, '0') }}</span>
+      <div class="flex flex-col gap-2">
+        <img (click)="decrement('minute')" class="" src="../../../assets/chevron-up.svg" alt="">
+        <img (click)="increment('minute')" class="" src="../../../assets/chevron-down.svg" alt="">
+      </div>
+    </div>
+  </div>
+</div>

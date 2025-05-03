@@ -1,13 +1,13 @@
 import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
-import { PaginationComponent } from "../pagination/pagination.component";
-import { MultiSearchComponent } from '../multi-search/multi-search.component';
-import { SearchInputComponent } from '../search-input/search-input.component';
-import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
+import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ButtonComponent } from '../button/button.component';
 import { TableRowComponent } from '../table-row/table-row.component';
+import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
+import { SearchInputComponent } from '../search-input/search-input.component';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -83,12 +83,11 @@ export class ListComponent {
   expandedState: { [rowIndex: number]: string | null } = {};
 
 
-  constructor(public gs: GlobalService) { }
+  constructor(public gs: GlobalService, public router : Router) { }
   ngOnInit(): void {
     // this.items = this.gs.items
      this.loadDummyData();
     console.log(this.items, 'Items in List Component');
-    console.log(this.gs.items, 'Items in Global Service');
   }
 
   // Dummy data with children
@@ -246,5 +245,26 @@ export class ListComponent {
   }
 
 
+  redirect_to_project_form(id: any) {
+    this.router.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: id, } });
+  }
+
+  menuVisibleIndex: number | string | null = null;
+
+  toggleMenu(index: number | string): void {
+    this.menuVisibleIndex = this.menuVisibleIndex === index ? null : index;
+  }
+  
+
+@HostListener('document:click', ['$event'])
+onDocumentClick(event: MouseEvent) {
+  this.menuVisibleIndex = null;
+}
+
+isDropdownOpen: number | null = null;
+
+toggleDropdown(index: number) {
+  this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
+}
 
 }
