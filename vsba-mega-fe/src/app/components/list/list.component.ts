@@ -18,6 +18,8 @@ export class ListComponent {
   @Input() params: any = {};
   @Input() columns: any
   @Input() pagination: boolean = true
+  @Input() label: any = ''
+  @Input() description: any = ''
   currentPage = 1;
   totalPages = 1;
   totalItems = 3;

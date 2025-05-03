@@ -1,6 +1,7 @@
 <app-header label="Project"></app-header>
 
-<app-list [columns]="columns" [items]="items" [params]="params">
+<app-list label="No projects found!" description="It looks like you haven't Added any projects yet. To get started,
+click the Create button to Add your first project" [columns]="columns" [items]="items" [params]="params">
   <app-search-input></app-search-input>
   <div class="flex gap-4 items-center">
     <app-toggle-tabs [disabled]="!items.length && !params.status" params_name="status" [tabs]="tabList" [defaultActive]="params.status"></app-toggle-tabs>
