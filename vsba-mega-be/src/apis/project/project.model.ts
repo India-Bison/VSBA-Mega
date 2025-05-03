@@ -69,6 +69,10 @@ let project_model = {
     },
     allowNull: true,
   },
+  draft_json: {
+    type: DataTypes.JSONB,
+    allowNull: true,
+  },
   created_by_id: {
     type: DataTypes.INTEGER,
     references: {

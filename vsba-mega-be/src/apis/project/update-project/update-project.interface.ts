@@ -17,6 +17,7 @@ export interface update_project_function_params {
         status?: string;
         project_logo?: string;
         parent_id?: number;
+        draft_json?: any;
         updated_by_id?: number;
         slot_groups?: {
             slot_start_date?: string;

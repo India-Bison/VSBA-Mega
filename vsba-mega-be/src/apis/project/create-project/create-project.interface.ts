@@ -14,6 +14,7 @@ export interface create_project_function_params {
         type?: string;
         status?: string;
         project_logo?: string;
+        draft_json?: any;
         parent_id?: number;
         slot_groups?: {
             slot_start_date?: string;
