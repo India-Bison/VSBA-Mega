@@ -57,6 +57,10 @@ let project_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  project_logo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   parent_id: {
     type: DataTypes.INTEGER,
     references: {

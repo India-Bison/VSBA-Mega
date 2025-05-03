@@ -15,6 +15,7 @@ export interface update_project_function_params {
         slot_type?: string;
         type?: string;
         status?: string;
+        project_logo?: string;
         parent_id?: number;
         updated_by_id?: number;
         slot_groups?: {
@@ -23,7 +24,8 @@ export interface update_project_function_params {
             start_time?: string;
             end_time?: string;
             hours?: string;
-            slot_times?: string | string[];
+            slot_time_group?: string | string[];
+            slot_time?: string;
         }[];
     };
     user?: any;
