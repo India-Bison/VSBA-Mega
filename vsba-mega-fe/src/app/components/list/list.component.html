@@ -66,12 +66,14 @@
           </tr>
         </thead>
         <tbody>
-          <app-table-row *ngFor="let item of items" [item]="item" [columns]="columns"></app-table-row>
+          <tr *ngFor="let item of items; let i = index">
+            <td *ngFor="let column of columns">
+              <app-table-row [item]="item" [columns]="columns"></app-table-row>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
-    </td>
-    </tr>
     <!-- <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.forChild" class="px-4 h-16 text-sm">
@@ -98,10 +100,6 @@
               </ng-container>
             </tr> -->
 
-    </ng-container>
-    </tbody>
-    </table>
-  </div>
 
   <div *ngIf="items?.length == 0"
     class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
