@@ -2,6 +2,11 @@ export interface get_project_list_function_params {
     query?: {
         page?: number
         page_size?: number
+        search?: string
+        sort_by?: string
+        sort_order?: string
+        type?: string
+        status?: string
     }
     body?: any
     user?: any
