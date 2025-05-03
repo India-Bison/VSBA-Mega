@@ -17,10 +17,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 import { ProjectService } from '../../services/project.service';
+import { ImageUploderComponent } from '../../components/image-uploder/image-uploder.component';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent],
+  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent,ImageUploderComponent],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
@@ -48,6 +49,7 @@ export class ProjectFormPageComponent {
       week_days: [['sunday','monday','tuesday','wednesday','thursday','friday','saturday']],
       slot_type: ['Time Slot'],
       type: [''],
+      project_logo: [''],
       slot_groups: this.fb.array([])
     });
     if (!this.params.id) {
@@ -127,6 +129,9 @@ export class ProjectFormPageComponent {
     const formData = {
       ...this.form.value,
     };
+    console.log(formData,"file");
+    
+    return
     formData.type = this.params.type
     formData.status = 'Pending'
     if (!this.params.parent_id && this.params.type == 'Project') {

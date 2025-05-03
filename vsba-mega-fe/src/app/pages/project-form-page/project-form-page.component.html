@@ -19,6 +19,7 @@
                         <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
                         <app-text-input class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
                     </div>
+                    <app-image-uploder [multiple]="true" formControlName="project_logo"></app-image-uploder>
                     <app-radio label="Full Venue Required"  formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
