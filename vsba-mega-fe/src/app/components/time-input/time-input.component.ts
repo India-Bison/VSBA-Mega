@@ -6,7 +6,7 @@ import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
   selector: 'app-time-input',
-  imports: [FormsModule, NgIf, NgClass, CapitalizStringPipe],
+  imports: [FormsModule, NgIf, CapitalizStringPipe],
   templateUrl: './time-input.component.html',
   // styleUrl: './time-input.component.css',
   providers: [
