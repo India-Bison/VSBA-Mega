@@ -29,6 +29,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() mask: boolean = false;
   @Input() text_type: boolean = true;
   @Input() type: any = 'text';
+  @Input() type_total_latter: number = 0;
   @Output() fetch_activated = new EventEmitter<any>()
   @Output() eye_activated = new EventEmitter<any>()
 
