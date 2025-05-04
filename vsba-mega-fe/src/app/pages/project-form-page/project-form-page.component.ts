@@ -19,10 +19,11 @@ import { MultiSearchComponent } from '../../components/multi-search/multi-search
 import { ProjectService } from '../../services/project.service';
 import { ImageUploderComponent } from '../../components/image-uploder/image-uploder.component';
 import { HalfHrsOptionsListPipe } from '../../pipes/half-hrs-options-list.pipe';
+import { SubResourceTypePipe } from '../../pipes/sub-resource-type.pipe';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe],
+  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe,SubResourceTypePipe],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css',
   standalone: true,
@@ -67,8 +68,10 @@ export class ProjectFormPageComponent {
       }
       if (this.params.parent_id || this.params.id) {
         this.parent_project = (await this.ps?.get(this.params.parent_id ? this.params.parent_id : this.params.id))?.data;
+        console.log(this.parent_project,'ooooooooooooo');
       }
     })
+    
 
     this.params.parent_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
@@ -138,32 +141,30 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
+    console.log(this.form.value,"form valu by maru");
     if (this.form.valid) {
-      console.log(this.form.value,"form valu by maru");
-      
+      const formData = {
+        ...this.form.value,
+      };
+      formData.type = this.params.type
+      formData.status = 'Pending'
+      if (!this.params.parent_id && this.params.type == 'Project') {
+        formData.type = 'Project'
+        let response: any = await this.ps.add(formData)
+        if (route == 'Sub-Project') {
+          console.log(response);
+          this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: response.data.id }, queryParamsHandling: 'merge', })
+        } else {
+          this.route.navigate(['/project/list'], {})
+        }
+      } else if (this.params.parent_id) {
+        formData.parent_id = parseInt(this.params.parent_id)
+        formData.type = 'Sub-Project'
+        let response = await this.ps.add(formData)
+        this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
+      }
     } else {
       this.form.markAllAsTouched()
-    }
-    return
-    const formData = {
-      ...this.form.value,
-    };
-    formData.type = this.params.type
-    formData.status = 'Pending'
-    if (!this.params.parent_id && this.params.type == 'Project') {
-      formData.type = 'Project'
-      let response: any = await this.ps.add(formData)
-      if (route == 'Sub-Project') {
-        console.log(response);
-        this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: response.data.id }, queryParamsHandling: 'merge', })
-      } else {
-        this.route.navigate(['/project/list'], {})
-      }
-    } else if (this.params.parent_id) {
-      formData.parent_id = parseInt(this.params.parent_id)
-      formData.type = 'Sub-Project'
-      let response = await this.ps.add(formData)
-      this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
     }
   }
   async update() {
