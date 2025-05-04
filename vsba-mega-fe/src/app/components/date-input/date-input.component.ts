@@ -91,26 +91,56 @@ export class DateInputComponent  implements ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
+  inputType = 'text';
+  hasSelected = false;
+  onMouseOver() {
+    if (!this.hasSelected) {
+      this.inputType = 'time';
+    }
+  }
+  
+  onMouseLeave() {
+    if (!this.hasSelected) {
+      this.inputType = 'text';
+    }
+  }
+
   onDateChange(event: any) {
     let eventt = event.target.value
     // if (!eventt || eventt === '') {
     //   return;
     // }
+
     if (this.format === 'time') {
-      if (eventt && eventt.includes(':')) {
-        const [hour, minute] = eventt.split(':');
-        const time = new Date();
-        time.setHours(+hour);
-        time.setMinutes(+minute);
-        time.setSeconds(0);
-        eventt = format(time, 'HH:mm');
-      }
+      const [hour, minute] = eventt.split(':').map(Number);
+      const date = new Date();
+      date.setHours(hour);
+      date.setMinutes(minute);
+      date.setSeconds(0);
+      const formatted = new Intl.DateTimeFormat(navigator.language, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).format(date);
+  
+      this.value = formatted;
+      this.hasSelected = true;
+      this.inputType = 'time';
+      this.onChange(this.value);
+      this.dateSelected.emit(this.value);
     } else if (this.format === 'month') {
       eventt = eventt.substring(0, 7);
     }
     this.onChange(eventt);
     this.dateSelected.emit(eventt);
   }
+
+  is12HourFormat(): boolean {
+    const date = new Date(Date.UTC(2020, 0, 1, 13, 0, 0)); // 1 PM - स्पष्ट differentiation साठी
+    const timeString = date.toLocaleTimeString(navigator.language);
+    return /am|pm/i.test(timeString);
+  }
+  
   changeMonth(step: number) {
     let year: number, month: number;
     if (this.value) {
