@@ -51,7 +51,7 @@ export class ProjectFormPageComponent {
       project_start_date: ['', [Validators.required]],
       project_end_date: [''],
       week_days: [['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']],
-      slot_type: ['Time Slot'],
+      slot_type: [''],
       type: [''],
       project_logo: [''],
       slot_groups: this.fb.array([])
@@ -69,7 +69,6 @@ export class ProjectFormPageComponent {
       }
       if (this.params.parent_id || this.params.id) {
         this.parent_project = (await this.ps?.get(this.params.parent_id ? this.params.parent_id : this.params.id))?.data;
-        console.log(this.parent_project, 'ooooooooooooo');
       }
     })
 
