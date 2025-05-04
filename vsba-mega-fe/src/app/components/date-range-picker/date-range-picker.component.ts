@@ -32,8 +32,10 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() form_group = '';
   @Input() start_control = '';
   @Input() end_control = '';
-  @Input() min = '';
-  @Input() max = '';
+  @Input() min:any = '';
+  @Input() max:any = '';
+  @Input() not_allowed_past_date = false;
+
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
@@ -49,6 +51,11 @@ export class DateRangePickerComponent implements ControlValueAccessor {
         this.control = ngControl.control as FormControl;
       } else {
         console.error('Component is missing form control binding');
+      }
+      if (this.not_allowed_past_date) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        this.min = today;
       }
     }, 100);
   }
