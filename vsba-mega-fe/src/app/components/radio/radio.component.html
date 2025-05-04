@@ -3,20 +3,14 @@
     {{ label }}
     <span *ngIf="is_required" class="text-[#212121] text-opacity-60">*</span>
   </label>
-
   <div class="flex gap-8">
     <label *ngFor="let option of options" class="flex items-center gap-2 cursor-pointer">
-      <input type="radio"
-             [value]="option.value"
-             [checked]="option.value === value"
-             (change)="select(option.value)"
-             class="form-radio text-blue-600 w-5 h-5" />
-      <span [ngClass]="{
-        'text-[#3F41D1] font-medium': option.value === value,
-        'text-gray-700': option.value !== value
-      }" class="text-sm leading-tight">
-        {{ option.label }}
-      </span>
+      <input type="radio" [value]="option.value" [checked]="option.value === value" (change)="select(option.value)" class="form-radio text-blue-600 w-5 h-5" />
+      <span [ngClass]="{'text-[#3F41D1] font-medium': option.value === value,'text-gray-700': option.value !== value}" class="text-sm leading-tight">{{ option.label }}</span>
     </label>
   </div>
+</div>
+
+<div *ngIf="control && control.errors && (control.dirty || control.touched)" class="text-red-500 text-sm mt-1">
+  <p *ngIf="control.errors['required']">{{ label }} is required.</p>
 </div>

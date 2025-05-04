@@ -28,7 +28,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() fetch: boolean = false;
   @Input() mask: boolean = false;
   @Input() text_type: boolean = true;
-  @Input() type: any = 'text';
+  @Input() type: 'text' | 'password' | 'email' | 'number' | 'text_number' = 'text_number';
   @Input() type_total_latter: number = 0;
   @Output() fetch_activated = new EventEmitter<any>()
   @Output() eye_activated = new EventEmitter<any>()
@@ -83,5 +83,20 @@ export class TextInputComponent implements ControlValueAccessor {
   eye_clicked() {
     this.text_type = !this.text_type;
     this.eye_activated.emit(this.text_type);
+  }
+  validateInput(event: KeyboardEvent): void {
+    if (this.type === 'text') {
+      const regex = /^[A-Za-z ]$/;
+      if (!regex.test(event.key)) {
+        event.preventDefault();
+      }
+    } else if (this.type === 'number') {
+      const regex = /^[0-9]$/;
+      if (!regex.test(event.key)) {
+        event.preventDefault();
+      }
+    } else if (this.type === 'text_number') {
+     return;
+    }
   }
 }

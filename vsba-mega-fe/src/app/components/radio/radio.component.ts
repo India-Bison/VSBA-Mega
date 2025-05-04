@@ -1,6 +1,6 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Injector, Input } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
     selector: 'app-radio',
@@ -20,10 +20,26 @@ export class RadioComponent implements ControlValueAccessor {
   @Input() options: { label: string; value: string }[] = [];
   @Input() label: string = '';
   @Input() is_required: boolean = false;
+  @Input() selected_value: string = '';
   value: string = '';
   onChange = (value: string) => {};
   onTouched = () => {};
 
+  control: any;
+  constructor(public injector: Injector){}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      const ngControl = this.injector.get(NgControl, null);
+      if (ngControl) {
+        this.control = ngControl.control;
+        if (!this.control.value && this.selected_value) {
+          this.select(this.selected_value);
+          this.control.setValue(this.selected_value, { emitEvent: false });
+        }
+      }
+    });
+  }
   writeValue(val: string): void {
     this.value = val;
   }

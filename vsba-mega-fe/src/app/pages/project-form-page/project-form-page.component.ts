@@ -7,7 +7,7 @@ import { TextAreaComponent } from "../../components/text-area/text-area.componen
 import { DateInputComponent } from "../../components/date-input/date-input.component";
 import { WeekDaysComponent } from '../../components/week-days/week-days.component';
 import { ButtonComponent } from '../../components/button/button.component';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 import { ListComponent } from '../../components/list/list.component';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -40,9 +40,9 @@ export class ProjectFormPageComponent {
 
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps: ProjectService) {
     this.form = this.fb.group({
-      name: [''],
-      short_name: [''],
-      full_venue_required: ['yes'],
+      name: ['',[Validators.required]],
+      short_name: ['',[Validators.required]],
+      full_venue_required: ['',[Validators.required]],
       resource_type: [''],
       description: [''],
       audit_required: ['Comprehensive Audit'],
@@ -138,6 +138,13 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
+    if (this.form.valid) {
+      console.log(this.form.value,"form valu by maru");
+      
+    } else {
+      this.form.markAllAsTouched()
+    }
+    return
     const formData = {
       ...this.form.value,
     };
