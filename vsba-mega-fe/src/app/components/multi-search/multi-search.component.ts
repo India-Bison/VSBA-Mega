@@ -1,10 +1,11 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, ViewChild, ElementRef, SimpleChanges, Injector } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
   selector: 'app-multi-search',
-  imports: [FormsModule, NgFor, NgIf],
+  imports: [FormsModule, NgFor, NgIf,CapitalizStringPipe],
   templateUrl: './multi-search.component.html',
   styleUrl: './multi-search.component.css',
   standalone: true,
@@ -18,7 +19,9 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 })
 export class MultiSearchComponent implements ControlValueAccessor {
   @Input() label = 'Search';
-  @Input() options: string[] = [];  // <-- Add this to accept options from parent
+  @Input() options: string[] = [];
+  @Input() isRequired: any = false 
+
   
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   
@@ -35,10 +38,25 @@ export class MultiSearchComponent implements ControlValueAccessor {
       this.filteredOptions = [...this.options];
     }
   }
+
+  constructor(private injector: Injector) { }
+
   
-  
-  onChange = (_: any) => {};
-  onTouched = () => {};
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const ngControl: NgControl | null = this.injector.get(NgControl, null);
+      if (ngControl) {
+        this.control = ngControl.control as FormControl;
+      } else {
+        // Component is missing form control binding
+      }
+    }, 100);
+  }
+
+  control: any;
+  onChange: any;
+  onTouched: any;
+  value = ''
 
   writeValue(value: string[]): void {
     if (Array.isArray(value)) {
