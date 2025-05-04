@@ -13,8 +13,8 @@
   <!-- {{inputType}} -->
   <!-- {{is_focused}} -->
   <!-- {{value}} -->
-  <input (blur)="focus(false)" (focus)="focus(true)" [type]="value? 'time' : inputType" [disabled]="disabled || paramValue === 'true'" [placeholder]="inputType === 'text' ? 'Select time' : placeholder" [(ngModel)]="value" (change)="onDateChange($event)" [id]="label" [min]="minDateInput || null"
-    [max]="maxDateInput || null" class="appearance-none rounded-lg px-4 h-12 w-full text-sm text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+  <input (blur)="focus(false)" (focus)="focus(true)" [type]="value? 'time' : inputType" [disabled]="disabled || paramValue === 'true'" [placeholder]="'Select time'" [(ngModel)]="value" (change)="onDateChange($event)" [id]="label" [min]="minDateInput || null" [max]="maxDateInput || null"
+    class="appearance-none rounded-lg px-4 h-12 w-full text-sm text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
   <label [for]="label"
     class="pointer-events-none absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-[7px] origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[rgba(0,0,0,0.6)] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
     {{label.includes('_') ? (label | capitalizString) : label}}

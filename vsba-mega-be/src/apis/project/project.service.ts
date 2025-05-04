@@ -33,7 +33,7 @@ let update_project = async (id: any, body: any, transaction: Transaction) => {
             body.draft_json = body;
             body.status = "Draft";
         }
-
+        await SlotGroup.destroy({ where: { project_id: id }, transaction });
         body.slot_groups.forEach((slot: any) => slot.project_id = id);
         await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
 

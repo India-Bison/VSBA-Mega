@@ -20,10 +20,11 @@ import { ProjectService } from '../../services/project.service';
 import { ImageUploderComponent } from '../../components/image-uploder/image-uploder.component';
 import { HalfHrsOptionsListPipe } from '../../pipes/half-hrs-options-list.pipe';
 import { SubResourceTypePipe } from '../../pipes/sub-resource-type.pipe';
+import { TimeInputComponent } from '../../components/time-input/time-input.component';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe,SubResourceTypePipe],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe],
   templateUrl: './project-form-page.component.html',
   styleUrl: './project-form-page.component.css',
   standalone: true,
@@ -41,13 +42,13 @@ export class ProjectFormPageComponent {
 
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps: ProjectService) {
     this.form = this.fb.group({
-      name: ['',[Validators.required]],
-      short_name: ['',[Validators.required]],
-      full_venue_required: ['',[Validators.required]],
+      name: ['', [Validators.required]],
+      short_name: ['', [Validators.required]],
+      full_venue_required: ['', [Validators.required]],
       resource_type: [''],
-      description: ['',[Validators.required]],
-      audit_required: ['',[Validators.required]],
-      project_start_date: ['',[Validators.required]],
+      description: ['', [Validators.required]],
+      audit_required: ['', [Validators.required]],
+      project_start_date: ['', [Validators.required]],
       project_end_date: [''],
       week_days: [['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']],
       slot_type: ['Time Slot'],
@@ -68,10 +69,10 @@ export class ProjectFormPageComponent {
       }
       if (this.params.parent_id || this.params.id) {
         this.parent_project = (await this.ps?.get(this.params.parent_id ? this.params.parent_id : this.params.id))?.data;
-        console.log(this.parent_project,'ooooooooooooo');
+        console.log(this.parent_project, 'ooooooooooooo');
       }
     })
-    
+
 
     this.params.parent_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
@@ -141,7 +142,7 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
-    console.log(this.form.value,"form valu by maru");
+    console.log(this.form.value, "form valu by maru");
     if (this.form.valid) {
       const formData = {
         ...this.form.value,
