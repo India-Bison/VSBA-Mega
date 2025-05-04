@@ -1,10 +1,10 @@
-import { JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, NgSwitch, UpperCasePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table-row',
-  imports: [NgFor,NgIf, UpperCasePipe, NgClass,FormsModule,JsonPipe],
+  imports: [NgFor,NgIf, UpperCasePipe, NgClass,FormsModule,JsonPipe,NgSwitch,CommonModule],
   templateUrl: './table-row.component.html',
   styleUrl: './table-row.component.css'
 })
