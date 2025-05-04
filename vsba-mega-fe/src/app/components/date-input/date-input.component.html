@@ -12,7 +12,7 @@
 <div class="relative" *ngIf="format === 'time'" (mouseover)="onMouseOver()" (mouseleave)="onMouseLeave()">
   <!-- {{inputType}} -->
   <!-- {{is_focused}} -->
-  {{value}}
+  <!-- {{value}} -->
   <input (blur)="focus(false)" (focus)="focus(true)" [type]="value? 'time' : inputType" [disabled]="disabled || paramValue === 'true'" [placeholder]="inputType === 'text' ? 'Select time' : placeholder" [(ngModel)]="value" (change)="onDateChange($event)" [id]="label" [min]="minDateInput || null"
     [max]="maxDateInput || null" class="appearance-none rounded-lg px-4 h-12 w-full text-sm text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
   <label [for]="label"
