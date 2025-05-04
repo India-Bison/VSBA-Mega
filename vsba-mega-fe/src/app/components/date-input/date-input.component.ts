@@ -6,20 +6,20 @@ import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-date-input',
-    imports: [CommonModule, NgIf, FormsModule, CapitalizStringPipe, NgClass],
-    templateUrl: './date-input.component.html',
-    styleUrl: './date-input.component.css',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            multi: true,
-            useExisting: DateInputComponent
-        }
-    ],
-    standalone: true,
+  selector: 'app-date-input',
+  imports: [CommonModule, NgIf, FormsModule, CapitalizStringPipe, NgClass],
+  templateUrl: './date-input.component.html',
+  styleUrl: './date-input.component.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: DateInputComponent
+    }
+  ],
+  standalone: true,
 })
-export class DateInputComponent  implements ControlValueAccessor {
+export class DateInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() is_required: boolean = false;
   @Input() placeholder = '';
@@ -35,8 +35,8 @@ export class DateInputComponent  implements ControlValueAccessor {
   paramValue: any;
   control: any;
   value: any = '';
-  onChange: any = () => {};
-  onTouched: any = () => {};  
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
   constructor(private injector: Injector, public route: ActivatedRoute) { }
 
@@ -79,7 +79,7 @@ export class DateInputComponent  implements ControlValueAccessor {
       this.value = null;
     }
   }
-  
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
@@ -94,13 +94,23 @@ export class DateInputComponent  implements ControlValueAccessor {
   inputType = 'text';
   hasSelected = false;
   onMouseOver() {
-    if (!this.hasSelected) {
+    console.log('onMouseOver');
+    this.hasSelected = true;
+    if (!this.hasSelected || true) {
       this.inputType = 'time';
     }
   }
-  
+
   onMouseLeave() {
-    if (!this.hasSelected) {
+    if (!this.is_focused) {
+      this.inputType = 'text';
+    }
+  }
+
+  is_focused = false;
+  focus(value: any) {
+    this.is_focused = value;
+    if (!value) {
       this.inputType = 'text';
     }
   }
@@ -122,7 +132,7 @@ export class DateInputComponent  implements ControlValueAccessor {
         minute: '2-digit',
         hour12: false
       }).format(date);
-  
+
       this.value = formatted;
       this.hasSelected = true;
       this.inputType = 'time';
@@ -140,7 +150,7 @@ export class DateInputComponent  implements ControlValueAccessor {
     const timeString = date.toLocaleTimeString(navigator.language);
     return /am|pm/i.test(timeString);
   }
-  
+
   changeMonth(step: number) {
     let year: number, month: number;
     if (this.value) {
