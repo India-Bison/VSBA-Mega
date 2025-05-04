@@ -32,8 +32,8 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() form_group = '';
   @Input() start_control = '';
   @Input() end_control = '';
-  @Input() min = '2025-01-01';
-  @Input() max = new Date().toISOString().split('T')[0];
+  @Input() min = '';
+  @Input() max = '';
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
