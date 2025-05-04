@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule],
-  templateUrl: './list.component.html',
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe],
+  templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
 })
@@ -18,6 +18,8 @@ export class ListComponent {
   @Input() params: any = {};
   @Input() columns: any
   @Input() pagination: boolean = true
+  @Input() label: any = ''
+  @Input() description: any = ''
   currentPage = 1;
   totalPages = 1;
   totalItems = 3;

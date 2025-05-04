@@ -32,3 +32,15 @@
     </ul>
   </div>
 </div>
+
+<div *ngIf="control && control.errors && (control.dirty || control.touched)" class="error-messages">
+  <p class="text-red-500" *ngIf="control.errors.required">{{label.includes('_') ? (label | capitalizString) : label}} is required.</p>
+  <p class="text-red-500" *ngIf="control.errors.minlength">Minimum length required is {{
+      control.errors.minlength.requiredLength }}.
+  </p>
+  <p class="text-red-500" *ngIf="control.errors.maxlength">Maximum length allowed is {{
+      control.errors.maxlength.requiredLength }}.
+  </p>
+  <p class="text-red-500" *ngIf="control.errors.pattern">Please enter a valid number
+  </p>
+</div>
