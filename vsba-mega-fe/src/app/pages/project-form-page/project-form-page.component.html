@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <ng-container *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex items-center">
-                                        <app-select-input label="Hours" formControlName="hours" [is_required]="true" [options]=" '' | halfHrsOptionsList : 30" [ngClass]="form.get('slot_type')?.value == 'Full Day' ? 'w-full' : 'w-52'"></app-select-input>
+                                        <app-select-input label="Hours" formControlName="hours" [options]=" '' | halfHrsOptionsList : 30" [ngClass]="form.get('slot_type')?.value == 'Full Day' ? 'w-full' : 'w-52'"></app-select-input>
                                         <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(slots.length - 1 - i)">
                                             <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] "></div>
                                             <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90">
