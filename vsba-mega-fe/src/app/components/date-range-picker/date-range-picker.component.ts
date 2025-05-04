@@ -13,7 +13,7 @@ import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
   selector: 'app-date-range-picker',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe,CapitalizStringPipe],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe, CapitalizStringPipe],
   standalone: true,
   templateUrl: './date-range-picker.component.html',
   styleUrl: './date-range-picker.component.css',
@@ -29,13 +29,18 @@ import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() label = '';
+  @Input() form_group = '';
+  @Input() start_control = '';
+  @Input() end_control = '';
+  @Input() min = '2025-01-01';
+  @Input() max = new Date().toISOString().split('T')[0];
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
   onChange = (_: any) => { };
   onTouched = () => { };
 
-  constructor(private injector: Injector){}
+  constructor(private injector: Injector) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -63,7 +68,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   openPicker() {
     this.picker.open();
   }
-  
+
   onDateRangeChange(event: any) {
     this.value.start = event.value?.start;
     this.value.end = event.value?.end;
