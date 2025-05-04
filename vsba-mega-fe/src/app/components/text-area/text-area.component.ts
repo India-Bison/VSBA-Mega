@@ -27,6 +27,7 @@ export class TextAreaComponent implements ControlValueAccessor {
   @Input() rounded: boolean = false;
   @Input() is_required: boolean = false;
   @Input() fetch: boolean = false;
+  @Input() max_words_type: any = '';
   @Output() fetch_activated = new EventEmitter<any>()
   paramValue: any;
 

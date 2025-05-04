@@ -9,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { format } from 'date-fns';
+import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
   selector: 'app-date-range-picker',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
-  ],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe,CapitalizStringPipe],
   standalone: true,
   templateUrl: './date-range-picker.component.html',
   styleUrl: './date-range-picker.component.css',

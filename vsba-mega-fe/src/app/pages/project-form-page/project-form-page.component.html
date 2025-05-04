@@ -16,22 +16,18 @@
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
                     <div class="flex items-center w-full gap-6">
-                        <app-text-input class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
-                        <app-text-input [type_total_latter]="10" class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
+                        <app-text-input [is_required]="true" class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
+                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
                     </div>
                     <app-image-uploder [multiple]="false" formControlName="project_logo"></app-image-uploder>
-                    <app-radio label="Full Venue Required" selected_value="yes"  formControlName="full_venue_required" [options]="[
+                    <app-radio [is_required]="true" label="Full Venue Required" selected_value="yes"  formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
                     <app-multi-search label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
-                    <div>
-                        <app-text-area label="Short Description*" formControlName="description"></app-text-area>
-                        <div class="text-right text-xs font-normal leading-[100%] mt-1 text-gray-500">Max 100 Words
-                        </div>
-                    </div>
-                    <app-radio label="Audit Required"  formControlName="audit_required" [options]="[
+                    <app-text-area [max_words_type]="100" label="Short Description" [is_required]="true" formControlName="description"></app-text-area>
+                    <app-radio [is_required]="true" label="Audit Required" selected_value="Comprehensive Audit"  formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
                       { label: 'Limited Audit', value: 'Limited Audit' },
                       { label: 'By-Pass Audit', value: 'By-Pass Audit' },
@@ -39,8 +35,11 @@
                     ]">
                     </app-radio>
                     <div class="flex flex-col gap-2">
-                        <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date</label>
+                        <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date *</label>
                         <app-date-range-picker label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                        <div *ngIf="form.get('project_start_date')?.errors?.['required'] && (form.get('project_start_date')?.touched || form.get('project_start_date')?.dirty)">
+                            <p class="text-red-500">Project Date is required.</p>
+                          </div>                          
                     </div>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
