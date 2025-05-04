@@ -25,7 +25,8 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
+                    <app-multi-search *ngIf="!parent_project" label="Resource Type project" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
+                    <app-multi-search *ngIf="parent_project" label="Resource Type sub project" formControlName="resource_type" [options]="parent_project.resource_type| subResourceType"></app-multi-search>
                     <app-text-area [max_words_type]="100" label="Short Description" [is_required]="true" formControlName="description"></app-text-area>
                     <app-radio [is_required]="true" label="Audit Required" selected_value="Comprehensive Audit"  formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
@@ -82,7 +83,7 @@
                                         </div>
                                     </div>
                                     <ng-container *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex items-center">
-                                        <app-select-input label="Hours" formControlName="hours" [is_required]="true" [options]=" '' | halfHrsOptionsList : 30" [ngClass]="form.get('slot_type')?.value == 'Full Day' ? 'w-full' : 'w-52'"></app-select-input>
+                                        <app-select-input label="Hours" formControlName="hours" [options]=" '' | halfHrsOptionsList : 30" [ngClass]="form.get('slot_type')?.value == 'Full Day' ? 'w-full' : 'w-52'"></app-select-input>
                                         <div class="relative w-10 h-10 rounded-full border border-[#3F41D1] flex items-center justify-center cursor-pointer hover:bg-gray-100" (click)="add_pill(slots.length - 1 - i)">
                                             <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] "></div>
                                             <div class="absolute w-[1.5px] h-[18.33px] bg-[#3F41D1] transform rotate-90">
