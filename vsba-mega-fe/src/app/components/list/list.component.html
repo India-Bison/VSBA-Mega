@@ -1,64 +1,55 @@
 <div class="bg-white rounded-2xl border border-[#e4e7ec]">
-  <div
-    class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
+  <div class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
     <!-- Main container -->
     <ng-template #contentTemplate>
       <ng-content></ng-content>
     </ng-template>
 
     <!-- Check if ng-content has anything -->
-    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0"
-      class="h-[76px] w-full flex px-6 justify-between items-center">
+    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0" class="h-[76px] w-full flex px-6 justify-between items-center">
       <ng-container [ngTemplateOutlet]="contentTemplate"></ng-container>
     </div>
-    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0"
-      class="w-full flex px-6 justify-between items-center">
+    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0" class="w-full flex px-6 justify-between items-center">
       <!-- No height if no content -->
     </div>
     <div class="overflow-y-auto h-full">
       <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
-        <thead
-          class="sticky top-[0px] z-10 bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
+        <thead class="sticky top-[0px] z-10 bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns;let i = index"
-              [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}"
-              [ngClass]="{'flex justify-center items-center': column.title == 'Status'}"
-              class="px-4 h-12 text-center truncate">
+            <th *ngFor="let column of columns;let i = index" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" [ngClass]="{'flex justify-center items-center': column.title == 'Status'}" class="px-4 h-12 text-center truncate">
               <div *ngIf="column.title != 'Action'" [class]="column?.class">
                 <ng-container *ngIf="column.key == 'index'; else showTitle">
                   <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <div [ngClass]="{'justify-center items-center': column.title == 'Status'}"
-                    class="flex justify-between w-full text-base font-medium">
+                  <div [ngClass]="{'justify-center items-center': column.title == 'Status'}" class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                    <img *ngIf="column.sort == true" src="../../../assets/Frame 1410266058.png" alt="Icon"
-                      class="inline-block cursor-pointer" (click)="toggleDropdown(i)" />
-
-                    <!-- Dropdown -->
-                    <div *ngIf="isDropdownOpen == i && (column.sort == true || column.filter == true)"
-                      class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
-                      <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
-                      <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
-                        <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
-                          <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
-                        </div>
-                        <div class="flex justify-start items-center gap-2">
-                          <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
-                        </div>
-
-                        <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
-
-                        <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
-                        <div>
-                          <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
-                            <input type="checkbox" class="w-4 h-4" />
-                            <label class="text-black">Item</label>
+                    <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
+                    <app-mini-modal  *ngIf="column.sort == true" image_class="inline-block cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
+                      <!-- Dropdown -->
+                      <div class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                        <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
+                        <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
+                          <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
+                            <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
+                          </div>
+                          <div class="flex justify-start items-center gap-2">
+                            <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
+                          </div>
+  
+                          <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
+  
+                          <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
+                          <div>
+                            <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
+                              <input type="checkbox" class="w-4 h-4" />
+                              <label class="text-black">Item</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </app-mini-modal>
                   </div>
                 </ng-template>
               </div>
@@ -99,16 +90,13 @@
             </tr> -->
 
 
-  <div *ngIf="items?.length == 0"
-    class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
+  <div *ngIf="items?.length == 0" class="felx justify-center items-center rounded-b-2xl bg-white border-t border-[#e4e7ec]">
     <div class="w-full h-[65vh] p-10 flex justify-center items-center">
       <div class="flex flex-col items-center gap-2 justify-center">
         <img src="../../../assets/no-records.gif" class="w-[200px] h-[200px] object-contain" alt="No Records" />
-        <span>No Record found</span>
-        <!-- <div class="text-[22px] text-[#3F41D1] text-center">No projects found!</div>
-          <div class="text-[#A3A3A3] text-base text-center">It looks like you haven't Added any projects yet. To get started,
-            <br>
-            click the Create button to Add your first project</div> -->
+        <!-- <span>No Record found</span> -->
+        <div class="text-[22px] text-[#3F41D1] text-center">{{label}}</div>
+        <div class="text-[#A3A3A3] text-base text-center">{{description}}</div>
       </div>
     </div>
   </div>

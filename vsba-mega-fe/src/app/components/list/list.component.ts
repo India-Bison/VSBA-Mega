@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
@@ -8,10 +8,11 @@ import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
 import { SearchInputComponent } from '../search-input/search-input.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { Router } from '@angular/router';
+import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent,CommonModule,TableRowComponent],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent,CommonModule,TableRowComponent, MiniModalComponent, JsonPipe, DatePipe],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
@@ -23,6 +24,8 @@ export class ListComponent {
   @Input() params: any = {};
   @Input() columns: any
   @Input() pagination: boolean = true
+  @Input() label: any = ''
+  @Input() description: any = ''
   currentPage = 1;
   totalPages = 1;
   totalItems = 3;

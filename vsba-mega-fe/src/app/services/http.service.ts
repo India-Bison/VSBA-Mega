@@ -3,15 +3,16 @@ import { Injectable } from '@angular/core';
 import { GlobalService } from './global.service';
 import { Router } from '@angular/router';
 import { firstValueFrom, Observable } from 'rxjs';
+import environment from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  base_url = 'http://localhost:3000'
-  // base_url = environment.url
-  
+  // base_url = 'http://localhost:3000'
+  base_url = environment.url
+
   constructor(public http: HttpClient, public gs: GlobalService, public router: Router) { }
 
   async get(url: string, query_params: any) {
@@ -27,7 +28,7 @@ export class HttpService {
     }
   }
 
-  
+
   async delete(url: string, query_params: any) {
     try {
       let params = { ...query_params }

@@ -6,7 +6,6 @@ import { RouterOutlet } from '@angular/router';
     selector: 'app-dashboard-layout-page',
     imports: [SidebarComponent, RouterOutlet],
     templateUrl: './dashboard-layout-page.component.html',
-    styleUrl: './dashboard-layout-page.component.css',
     standalone: true,
 })
 export class DashboardLayoutPageComponent {
