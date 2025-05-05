@@ -18,6 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class ImageUploderComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() accept: string = '.jpg,.jpeg,.webp,.png';
 
   images: string[] = [];
 

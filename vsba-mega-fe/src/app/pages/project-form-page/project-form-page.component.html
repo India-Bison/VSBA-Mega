@@ -19,7 +19,7 @@
                         <app-text-input [is_required]="true" class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
                         <app-text-input [is_required]="true" [type_total_latter]="10" class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
                     </div>
-                    <app-image-uploder [multiple]="false" formControlName="project_logo"></app-image-uploder>
+                    <app-image-uploder [accept]="'.jpg,.jpeg,.webp,.png'" [multiple]="false" formControlName="project_logo"></app-image-uploder>
                     <app-radio [is_required]="true" label="Full Venue Required" selected_value="yes" formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
