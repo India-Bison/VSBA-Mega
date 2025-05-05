@@ -2,7 +2,7 @@ import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe }
 import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 
 @Component({
@@ -82,11 +82,21 @@ export class ListComponent {
   expandedState: { [rowIndex: number]: string | null } = {};
 
 
-  constructor(public gs: GlobalService, public router : Router) { }
+  constructor(public gs: GlobalService, public router : Router, public ar:ActivatedRoute) { }
   ngOnInit(): void {
     // this.items = this.gs.items
     //  this.loadDummyData();
     console.log(this.items, 'Items in List Component');
+  }
+  sortData(key: string, order: 'asc' | 'desc') {
+    this.router.navigate([], {
+      relativeTo: this.ar,
+      queryParams: {
+        sort_by: key,
+        sort_order: order
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
   // Dummy data with children
