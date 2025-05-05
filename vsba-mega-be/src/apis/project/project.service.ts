@@ -8,6 +8,11 @@ let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
+    if (body.status === "Draft") {
+        body.draft_json = structuredClone(body);
+        body.status = "Draft";
+    }
+
     let project: any = await Project.create(body, { transaction, returning: true });
 
     if (project) project = project.toJSON ? project.toJSON() : project;
@@ -24,7 +29,11 @@ let create_project = async (body: any, transaction: Transaction) => {
 
 let update_project = async (id: any, body: any, transaction: Transaction) => {
     try {
-        // const old_slot_groups = await SlotGroup.destroy({ where: { project_id: id }, transaction, });
+        if (body.status === "Draft") {
+            body.draft_json = body;
+            body.status = "Draft";
+        }
+        await SlotGroup.destroy({ where: { project_id: id }, transaction });
         body.slot_groups.forEach((slot: any) => slot.project_id = id);
         await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
 
@@ -38,7 +47,6 @@ let update_project = async (id: any, body: any, transaction: Transaction) => {
         console.log(error)
         throw error;
     }
-
 };
 
 let delete_project = async (id: any, transaction: Transaction) => {

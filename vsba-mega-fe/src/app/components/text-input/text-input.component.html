@@ -1,7 +1,7 @@
 <div class="relative">
-    <input [disabled]="disabled || paramValue == 'true'" [(ngModel)]="value" (ngModelChange)="onChange($event)" [type]="(text_type && mask) ? 'password':type" [ngClass]="{'rounded-full': rounded,'rounded-lg': !rounded,'bg-gray-300':disabled}" [id]="label" class="block p-4 w-full text-sm text-gray-900 bg-white border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" [placeholder]="placeholder" />
+    <input [disabled]="disabled || paramValue == 'true'" (keypress)="validateInput($event)" [attr.maxlength]="type_total_latter > 0 ? type_total_latter : null" [(ngModel)]="value" (ngModelChange)="onChange($event)" [type]="(text_type && mask) ? 'password':type" [ngClass]="{'rounded-full': rounded,'rounded-lg': !rounded,'bg-gray-300':disabled}" [id]="label" class="block p-4 w-full text-sm text-gray-900 bg-white border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" [placeholder]="placeholder" />
     <label [for]="label" class="pointer-events-none absolute text-base font-normal text-[#666666] duration-300 transform -translate-y-4 scale-75 top-2 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 max-w-[98%] truncate ">{{label}}<span *ngIf="is_required"
-            class="col-span-2 text-red-600">*</span></label>
+            class="col-span-2 text-[#212121] text-opacity-60">*</span></label>
     <button *ngIf="fetch" (click)="fetch_clicked()" class="text-blue-500 text-sm absolute font-medium right-4 top-3">Fetch</button>
     <button *ngIf="mask" (click)="eye_clicked()" class="text-blue-500 text-sm absolute right-4 top-3">
         <i class='bx bx-show text-xl'></i></button>

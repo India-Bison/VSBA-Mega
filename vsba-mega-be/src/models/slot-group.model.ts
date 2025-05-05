@@ -33,7 +33,11 @@ let slot_group_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  slot_times: {
+  slot_time: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  slot_time_group: {
     type: DataTypes.JSONB,
     allowNull: true,
   },

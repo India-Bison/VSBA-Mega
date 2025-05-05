@@ -9,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { format } from 'date-fns';
+import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
   selector: 'app-date-range-picker',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe
-  ],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatDatepickerModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, MatIconModule, MatNativeDateModule, DatePipe, CapitalizStringPipe],
   standalone: true,
   templateUrl: './date-range-picker.component.html',
   styleUrl: './date-range-picker.component.css',
@@ -29,13 +29,20 @@ import { format } from 'date-fns';
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() label = '';
+  @Input() form_group = '';
+  @Input() start_control = '';
+  @Input() end_control = '';
+  @Input() min:any = '';
+  @Input() max:any = '';
+  @Input() not_allowed_past_date = false;
+
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
   onChange = (_: any) => { };
   onTouched = () => { };
 
-  constructor(private injector: Injector){}
+  constructor(private injector: Injector) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -44,6 +51,11 @@ export class DateRangePickerComponent implements ControlValueAccessor {
         this.control = ngControl.control as FormControl;
       } else {
         console.error('Component is missing form control binding');
+      }
+      if (this.not_allowed_past_date) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        this.min = today;
       }
     }, 100);
   }
@@ -63,7 +75,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   openPicker() {
     this.picker.open();
   }
-  
+
   onDateRangeChange(event: any) {
     this.value.start = event.value?.start;
     this.value.end = event.value?.end;

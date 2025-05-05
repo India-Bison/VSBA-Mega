@@ -2,22 +2,23 @@ import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
-    selector: 'app-text-input',
-    imports: [FormsModule, NgIf, NgClass],
-    templateUrl: './text-input.component.html',
-    styleUrl: './text-input.component.css',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: TextInputComponent,
-            multi: true
-        }
-    ],
-    standalone: true,
+  selector: 'app-time-input',
+  imports: [FormsModule, NgIf, CapitalizStringPipe],
+  templateUrl: './time-input.component.html',
+  // styleUrl: './time-input.component.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: TimeInputComponent,
+      multi: true
+    }
+  ],
+  standalone: true,
 })
-export class TextInputComponent implements ControlValueAccessor {
+export class TimeInputComponent implements ControlValueAccessor {
   @Input() data_list = []
   @Input() label = '';
   @Input() placeholder = '';
@@ -59,7 +60,7 @@ export class TextInputComponent implements ControlValueAccessor {
   control: any;
   onTouched: any;
   value = ''
-  onChange: (value:any) => void = () => {};
+  onChange: (value: any) => void = () => { };
 
 
   writeValue(value: any): void {
@@ -96,7 +97,31 @@ export class TextInputComponent implements ControlValueAccessor {
         event.preventDefault();
       }
     } else if (this.type === 'text_number') {
-     return;
+      return;
+    }
+  }
+
+  inputType = 'text';
+  hasSelected = false;
+  onMouseOver() {
+    console.log('onMouseOver');
+    this.hasSelected = true;
+    if (!this.hasSelected || true) {
+      this.inputType = 'time';
+    }
+  }
+
+  onMouseLeave() {
+    if (!this.is_focused) {
+      this.inputType = 'text';
+    }
+  }
+
+  is_focused = false;
+  focus(value: any) {
+    this.is_focused = value;
+    if (!value) {
+      this.inputType = 'text';
     }
   }
 }
