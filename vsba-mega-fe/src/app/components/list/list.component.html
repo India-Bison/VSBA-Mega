@@ -81,18 +81,24 @@
                   </ng-container>
 
                   <ng-template #main_value>
-                    <div [class]="column?.class" class="flex gap-2 items-center">
+                    <div [class]="column?.class" [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center">
 
                       <!-- Clickable Toggle Icon for Children -->
                       <img *ngIf="column.title== 'Project Name' && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
                       <!-- Status as Button -->
                       <ng-container *ngIf="item[column.key] == 'Approved' || item[column.key] == 'Pending' || item[column.key] == 'Rejected'; else normalText">
-                        <div class="flex justify-center items-center w-full">
+                        <div *ngIf="status == 'Border'" class="flex justify-center items-center w-full">
                           <button class="px-[10px] py-1 rounded-md border text-sm font-medium" [ngClass]="{
                                      'text-[#03A600] border-[#03A600]': item[column.key] == 'Approved',
                                      'text-[#DF6E12] border-[#DF6E12]': item[column.key] == 'Pending',
                                      'text-red-500 border-red-500': item[column.key] == 'Rejected'
                                    }">
+                            {{ item[column.key] }}
+                          </button>
+                        </div>
+                        <div *ngIf="status == 'Dotted'" class="flex justify-center items-center">
+                          <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{ 'text-[#03A600]': item[column.key] == 'Approved', 'text-[#DF6E12]': item[column.key] == 'Pending', 'text-red-500 ': item[column.key] == 'Rejected'}">
+                            <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{'bg-[#03A600]': item[column.key] == 'Approved','bg-[#DF6E12]': item[column.key] == 'Pending','bg-red-500 ': item[column.key] == 'Rejected' }"></div>
                             {{ item[column.key] }}
                           </button>
                         </div>
@@ -144,7 +150,7 @@
               </td>
               <td class="px-4 h-16 text-sm">
                 <div class="flex gap-2 items-center">
-                  <span>{{ child.name }}</span> <img class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
+                  <span>{{ child.name }}</span>
                 </div>
               </td>
               <td class="px-4 h-16 text-sm">{{ child.resource_type }}</td>
