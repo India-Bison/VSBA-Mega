@@ -225,7 +225,7 @@ export class SidebarComponent {
     },
     {
       id: 3,
-      label: 'User',
+      label: 'User Management',
       icon: '../../../assets/profile-2user.svg',
       selected_icon: '../../../assets/profile-2user.svg',
       selected: false,
@@ -236,11 +236,11 @@ export class SidebarComponent {
     },
     {
       id: 4,
-      label: 'Learning Management',
+      label: 'Venue Details',
       icon: '../../../assets/building.svg',
       selected_icon: '../../../assets/building.svg',
       selected: true,
-      router_link: '',
+      router_link: 'venue/details/list',
       submenu: [],
       permissions: 'course:view'
     },
