@@ -21,6 +21,7 @@ export class ListComponent {
   @Input() pagination: boolean = true
   @Input() label: any = ''
   @Input() description: any = ''
+  @Input() status: 'Border' | 'Dotted' = 'Border';
   currentPage = 1;
   totalPages = 1;
   totalItems = 3;
