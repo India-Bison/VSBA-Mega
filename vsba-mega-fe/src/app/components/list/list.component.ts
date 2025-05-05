@@ -3,10 +3,11 @@ import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList,
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { Router } from '@angular/router';
+import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent],
   templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
