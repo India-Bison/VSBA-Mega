@@ -6,6 +6,7 @@ import { ListComponent } from './components/list/list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ProjectListComponent } from './pages/project-list/project-list.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
+import { VenueDetailsListComponent } from './pages/venue-details-list/venue-details-list.component';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
             { path: 'project/list', component: ProjectListComponent },
             { path: 'app-pagination', component: PaginationComponent },
             { path: 'user/list', component: UserListComponent },
+            { path: 'venue/details/list', component: VenueDetailsListComponent },
             { path: '**', redirectTo: 'dashboard' },
 
         ]
