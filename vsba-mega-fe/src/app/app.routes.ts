@@ -5,6 +5,7 @@ import { ProjectFormPageComponent } from './pages/project-form-page/project-form
 import { ListComponent } from './components/list/list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ProjectListComponent } from './pages/project-list/project-list.component';
+import { UserListComponent } from './pages/user-list/user-list.component';
 
 export const routes: Routes = [
     // { path: 'sign-in', component: SignInPageComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
             { path: 'list', component: ListComponent },
             { path: 'project/list', component: ProjectListComponent },
             { path: 'app-pagination', component: PaginationComponent },
+            { path: 'user/list', component: UserListComponent },
             { path: '**', redirectTo: 'dashboard' },
 
         ]

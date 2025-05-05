@@ -4,9 +4,8 @@ import { ConfirmationPopupComponent } from '../../components/confirmation-popup/
 
 @Component({
     selector: 'app-dashboard-page',
-    imports: [HeaderComponent,ConfirmationPopupComponent],
+    imports: [HeaderComponent, ConfirmationPopupComponent],
     templateUrl: './dashboard-page.component.html',
-    styleUrl: './dashboard-page.component.css',
     standalone: true,
 })
 export class DashboardPageComponent {

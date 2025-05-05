@@ -26,7 +26,6 @@ import { TimeInputComponent } from '../../components/time-input/time-input.compo
   selector: 'app-project-form-page',
   imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe],
   templateUrl: './project-form-page.component.html',
-  styleUrl: './project-form-page.component.css',
   standalone: true,
 })
 export class ProjectFormPageComponent {
