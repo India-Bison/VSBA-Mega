@@ -66,7 +66,6 @@
                     <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
                   </div>
                 </td>
-
                 <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}" class="px-4 h-16 items-center">
 
                   <ng-container *ngIf="column.key == 'mobile_number_icon'; else main_value">
@@ -145,7 +144,7 @@
             <!-- Child Rows -->
             <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] group bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input class=" ml-1 mr-4" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)">
+              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input class=" ml-1 mr-3" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)">
                 {{ child.short_name }}
               </td>
               <td class="px-4 h-16 text-sm">
