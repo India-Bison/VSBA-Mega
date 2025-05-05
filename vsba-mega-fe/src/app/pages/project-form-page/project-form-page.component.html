@@ -105,7 +105,7 @@
             </form>
         </div>
         <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
-            <app-list [pagination]="false" [columns]="columns" [items]="parent_project?.children" [params]="params">
+            <app-list [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <span class="text-xl text-[#212121] font-medium">Sub Projects</span>
                     <app-button color="bg-[#3F41D1] text-[#FFFFFF]" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
