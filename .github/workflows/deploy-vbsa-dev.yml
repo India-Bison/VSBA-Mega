@@ -1,0 +1,40 @@
+name: Build and Deploy Angular to Firebase
+
+on:
+  push:
+    branches: ["dev"] # or the branch you want to deploy from
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: oven/bun:latest # Use a Docker image that has Bun
+
+    steps:
+      # 1) Check out the repo
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      # 2) Set up Node
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20" # Adjust if needed
+
+      # 3) Install Firebase CLI globally (so we can use it in 'firebase deploy')
+      - name: Install Firebase CLI
+        run: bun install -g firebase-tools && bun install -g @angular/cli
+
+      # 3.5) List all files and filders
+      - name: List files
+        run: ls -la
+
+      # 4) Build and deploy with simple commands
+      - name: Build & Deploy
+        # We'll combine everything in one script block
+        run: |
+          cd vsba-mega-fe
+          bun install
+          ng build --configuration=development
+          firebase use --add vbsa-mega-dev --token ${{ secrets.FIREBASE_TOKEN }}
+          firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
