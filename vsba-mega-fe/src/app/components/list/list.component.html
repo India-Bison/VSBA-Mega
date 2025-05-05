@@ -25,30 +25,31 @@
                 <ng-template #showTitle>
                   <div [ngClass]="{'justify-center items-center': column.title == 'Status'}" class="flex justify-between w-full text-base font-medium">
                     {{ column.title }}
-                    <img *ngIf="column.sort == true" src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" />
-
-                    <!-- Dropdown -->
-                    <div *ngIf="isDropdownOpen == i && (column.sort == true || column.filter == true)" class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
-                      <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
-                      <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
-                        <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
-                          <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
-                        </div>
-                        <div class="flex justify-start items-center gap-2">
-                          <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
-                        </div>
-
-                        <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
-
-                        <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
-                        <div>
-                          <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
-                            <input type="checkbox" class="w-4 h-4" />
-                            <label class="text-black">Item</label>
+                    <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
+                    <app-mini-modal  *ngIf="column.sort == true" image_class="inline-block cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
+                      <!-- Dropdown -->
+                      <div class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                        <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
+                        <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
+                          <div class="w-[180px] h-8 gap-2 flex items-center justify-start">
+                            <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
+                          </div>
+                          <div class="flex justify-start items-center gap-2">
+                            <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
+                          </div>
+  
+                          <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
+  
+                          <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
+                          <div>
+                            <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
+                              <input type="checkbox" class="w-4 h-4" />
+                              <label class="text-black">Item</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </app-mini-modal>
                   </div>
                 </ng-template>
               </div>
@@ -119,28 +120,17 @@
 
                 <td *ngIf="column.type == 'Action'" class="px-4 h-16 mt-4">
                   <div class="flex gap-2 items-center justify-center">
-                    <img class="h-6 min-w-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png" alt="Menu" (click)="toggleMenu(i) ; $event.stopPropagation()" />
-
-                    <div *ngIf="menuVisibleIndex == i" class="bg-[#E8E8F9] fixed w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-[275px] right-14 z-[9999] shadow-md" (click)="$event.stopPropagation()">
-                      <ng-container *ngFor="let action of column.actions">
-                        <div (click)="action.action(item,i); menuVisibleIndex = null" class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
-                          <img [src]="action.icon" alt="" />
-                          <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
+                    <!-- <img class="h-6 min-w-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png" alt="Menu" (click)="toggleMenu(i) ; $event.stopPropagation()" /> -->
+                      <app-mini-modal image_class="h-6 min-w-6 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
+                        <div class="bg-[#E8E8F9] w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 shadow-md" (click)="$event.stopPropagation()">
+                          <ng-container *ngFor="let action of column.actions">
+                            <div (click)="action.action(item,i); menuVisibleIndex = null" class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                              <img [src]="action.icon" alt="" />
+                              <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
+                            </div>
+                          </ng-container>
                         </div>
-                        <!-- <div class="flex justify-start items-center gap-3 p-3 cursor-pointer">
-                          <img src="../../../assets/edit_icon.svg" alt="" />
-                          <span>Edit</span>
-                        </div>
-                        <div class="flex justify-start items-center gap-3 p-3 cursor-pointer">
-                          <img src="../../../assets/toggle_icon.svg" alt="" />
-                          <span>Disabled</span>
-                        </div>
-                        <div class="flex justify-start items-center gap-3 p-3 cursor-pointer">
-                          <img src="../../../assets/delete_icon_red.svg" alt="" />
-                          <span class="text-[#FA2912]">Delete</span>
-                        </div> -->
-                      </ng-container>
-                    </div>
+                      </app-mini-modal>
                   </div>
                 </td>
               </ng-container>
