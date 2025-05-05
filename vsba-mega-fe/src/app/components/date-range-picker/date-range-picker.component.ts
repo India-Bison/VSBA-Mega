@@ -52,7 +52,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       } else {
         console.error('Component is missing form control binding');
       }
-      if (this.not_allowed_past_date) {
+      if (this.not_allowed_past_date == true) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         this.min = today;
