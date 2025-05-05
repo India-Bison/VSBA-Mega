@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -14,12 +15,24 @@ export class SearchInputComponent {
     @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   
     value: string = '';
-  
+    constructor(public route:Router, public ar:ActivatedRoute){}
+    ngOnInit() {
+      this.ar.queryParams.subscribe(params => {
+        this.value = params['search'] || '';
+      });
+    }
+    
     onInputChange(event: Event) {
       const inputElement = event.target as HTMLInputElement;
       this.value = inputElement.value;
       this.valueChange.emit(this.value);
+      this.route.navigate([], {
+        relativeTo: this.ar,
+        queryParams: { search: this.value || null },
+        queryParamsHandling: 'merge',
+      });
     }
+    
   
     @Input() disabled: boolean = false;
   
