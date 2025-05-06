@@ -74,6 +74,14 @@ export class ListComponent {
 
   isContentEmpty: boolean = true;
 
+  get uniqueItems() {
+    return this.items.filter((item: { key: string }, index: number, self: { key: string }[]) =>
+      index === self.findIndex((t: { key: string }) => t.key === item.key)
+    );
+  }
+  
+  
+
   ngAfterContentInit() {
     // Check if there are any content children
     this.isContentEmpty = this.projectedContent.length === 0;
