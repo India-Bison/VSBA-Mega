@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-image-uploder',
@@ -21,10 +22,20 @@ export class ImageUploderComponent implements ControlValueAccessor {
   @Input() accept: string = '.jpg,.jpeg,.webp,.png';
 
   images: string[] = [];
+  params:any;
+  paramValue: any = {}
 
   private onChange: any = () => {};
   private onTouched: any = () => {};
 
+  constructor(public ar: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.ar.queryParams.subscribe(params => {
+      this.paramValue = params;
+    });
+  }
+  
   writeValue(value: any): void {
     if (value) {
       this.images = this.multiple ? value : [value];
