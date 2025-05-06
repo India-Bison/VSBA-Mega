@@ -16,7 +16,7 @@
       <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
         <thead class="sticky top-[0px] z-10 bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
-            <th *ngFor="let column of columns;let i = index" [ngClass]="{'bg-[#3F41D11F] border': column.highlight==true}" [ngClass]="{'flex justify-center items-center': column.title == 'Status'}" class="px-4 h-12 text-center truncate">
+            <th *ngFor="let column of columns;let i = index" [ngClass]="{'flex justify-center items-center': column.title == 'Status','sticky right-0 left-0 bg-white mt-[1px]' : column.sticky == true}" class="px-4 h-12 text-center truncate">
               <div *ngIf="column.title != 'Action'" [class]="column?.class">
                 <ng-container *ngIf="column.key == 'index'; else showTitle">
                   <!-- <img src="../../../assets/container.svg" alt="Caret Up" /> -->
@@ -66,7 +66,7 @@
                     <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
                   </div>
                 </td>
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true}" class="px-4 h-16 items-center">
+                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true, 'sticky right-0 left-0 bg-white mt-[1px]' : column.sticky == true}" class="px-4 h-16 items-center">
 
                   <ng-container *ngIf="column.key == 'mobile_number_icon'; else main_value">
                     <div class="text-start items-center gap-4">
