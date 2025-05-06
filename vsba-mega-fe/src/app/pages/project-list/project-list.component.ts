@@ -70,9 +70,9 @@ export class ProjectListComponent {
         console.log('Approved tab clicked');
       }
     }, {
-      name: 'Reject',
+      name: 'Rejected',
       action: () => {
-        this.active_tab = 'Reject';
+        this.active_tab = 'Rejected';
         console.log('Reject tab clicked');
       }
     }, {

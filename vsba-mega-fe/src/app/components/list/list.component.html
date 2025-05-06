@@ -23,7 +23,7 @@
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <div [ngClass]="{'justify-center items-center': column.title == 'Status'}" class="flex gap-2 justify-between w-full text-base font-medium">
+                  <div [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center justify-between w-full text-base font-medium">
                     {{ column.title }}
                     <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
                     <app-mini-modal  *ngIf="column.sort == true" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
@@ -168,16 +168,17 @@
                 <div class="flex gap-2 -m-2 items-center justify-center">
                   <ng-container *ngFor="let column of columns">
               <td *ngIf="column.type == 'Action'" class="h-16 flex justify-center items-center">
-                <img class="h-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png" alt="Menu" (click)="toggleMenu('child-' + i + '-' + child.id); $event.stopPropagation()" />
-
-                <div *ngIf="menuVisibleIndex == ('child-' + i + '-' + child.id)" class="bg-[#E8E8F9] fixed w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 top-[350px] right-14 z-[9999] shadow-md" (click)="$event.stopPropagation()">
-                  <ng-container *ngFor="let action of column.actions">
-                    <div (click)="action.action(child, i)" class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
-                      <img [src]="action.icon" alt="" />
-                      <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
-                    </div>
-                  </ng-container>
-                </div>
+               
+                <app-mini-modal image_class="h-6 min-w-6 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
+                  <div class="bg-[#E8E8F9] w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 shadow-md" (click)="$event.stopPropagation()">
+                    <ng-container *ngFor="let action of column.actions">
+                      <div (click)="action.action(child, i)" class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                        <img [src]="action.icon" alt="" />
+                        <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </app-mini-modal>
               </td>
           </ng-container>
     </div>
@@ -226,7 +227,7 @@
   </div>
 </div>
 </div>
-<!-- <div class="fixed bottom-0 py-2 w-[92%] bg-white mt-5" *ngIf="pagination">
+<div class="fixed bottom-0 py-2 w-[92%] bg-white mt-5" *ngIf="pagination">
   <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"
     [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
-</div> -->
+</div>

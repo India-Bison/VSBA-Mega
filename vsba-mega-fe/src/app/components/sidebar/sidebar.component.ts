@@ -214,7 +214,7 @@ export class SidebarComponent {
     },
     {
       id: 2,
-      label: 'Project',
+      label: 'Project Management',
       icon: '../../../assets/document-text.svg',
       selected_icon: '../../../assets/document-text.svg',
       selected: false,

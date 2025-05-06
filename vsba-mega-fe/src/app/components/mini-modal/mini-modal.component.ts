@@ -1,9 +1,9 @@
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, ElementRef, Input, input, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-mini-modal',
-  imports: [NgIf],
+  imports: [NgIf,NgClass],
   templateUrl: './mini-modal.component.html',
   styleUrl: './mini-modal.component.css'
 })
@@ -19,7 +19,13 @@ export class MiniModalComponent {
 
   private static activePopup: MiniModalComponent | null = null;
 
-  constructor(private elRef: ElementRef, private renderer: Renderer2) {}
+  constructor(private elRef: ElementRef, private renderer: Renderer2) {
+    this.renderer.listen('document', 'click', (event: Event) => {
+      if (this.isPopupOpen && !this.elRef.nativeElement.contains(event.target)) {
+        this.closePopup();
+      }
+    });
+  }
 
   togglePopup(event: MouseEvent) {
     if (MiniModalComponent.activePopup && MiniModalComponent.activePopup !== this) {
@@ -27,8 +33,8 @@ export class MiniModalComponent {
     }
   
     const rect = (event.target as HTMLElement).getBoundingClientRect();
-    const offsetX = 180; // Adjust horizontal distance
-    const offsetY = 210; // Adjust vertical distance
+    const offsetX = 200; // Adjust horizontal distance
+    const offsetY = 250; // Adjust vertical distance
   
     if (!this.isPopupOpen) {
       if (this.position === 'bottom-left') {
