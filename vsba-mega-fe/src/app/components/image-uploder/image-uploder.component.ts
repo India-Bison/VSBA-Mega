@@ -58,25 +58,35 @@ export class ImageUploderComponent implements ControlValueAccessor {
 
   onImageSelected(event: any) {
     const files: FileList = event.target.files;
-    if (!files || files.length == 0) return;
+    if (!files || files.length === 0) return;
+  
     const fileArray = Array.from(files);
+    const acceptedTypes = this.accept.split(',').map(type => type.trim().toLowerCase());
+  
     for (let file of fileArray) {
+      const extension = '.' + file.name.split('.').pop()?.toLowerCase();
+      if (!acceptedTypes.includes(extension)) {
+        alert(`Invalid file type: ${extension}. Allowed: ${this.accept}`);
+        continue;
+      }
+  
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const get_iamges = e.target.result;
+        const imageData = e.target.result;
         if (this.multiple) {
-          this.images.push(get_iamges);
+          this.images.push(imageData);
           this.onChange(this.images);
         } else {
-          this.images = [get_iamges];
-          this.onChange(get_iamges);
+          this.images = [imageData];
+          this.onChange(imageData);
         }
       };
       reader.readAsDataURL(file);
     }
-
+  
     this.onTouched();
   }
+  
 
   removeImage(index: number) {
     this.images.splice(index, 1);
