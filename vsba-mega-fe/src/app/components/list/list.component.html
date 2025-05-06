@@ -1,4 +1,4 @@
-<div class="bg-white rounded-2xl border border-[#e4e7ec]">
+<div class="bg-white mb-10 rounded-2xl border border-[#e4e7ec]">
   <div class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
     <!-- Main container -->
     <ng-template #contentTemplate>
@@ -42,9 +42,9 @@
   
                           <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
                           <div>
-                            <div *ngFor="let item of [1, 2, 3]" class="w-[180px] h-8 flex items-center gap-2">
+                            <div *ngFor="let item of items" class="w-[180px] h-8 flex items-center gap-2">
                               <input type="checkbox" class="w-4 h-4" />
-                              <label class="text-black">Item</label>
+                              <label class="text-black">{{item}}</label>
                             </div>
                           </div>
                         </div>
@@ -227,7 +227,7 @@
   </div>
 </div>
 </div>
-<div class="fixed bottom-0 py-2 w-[92%] bg-white mt-5" *ngIf="pagination">
+<div class="fixed bottom-0 py-2 w-[92%] bg-[#f7f7f7] mt-5" *ngIf="pagination">
   <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems"
     [itemsPerPage]="itemsPerPage" (onPageChange)="handlePageChange($event)"></app-pagination>
 </div>
