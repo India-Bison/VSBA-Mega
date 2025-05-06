@@ -13,7 +13,7 @@ import { ListComponent } from '../../components/list/list.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { DateRangePickerComponent } from '../../components/date-range-picker/date-range-picker.component';
 import { GlobalService } from '../../services/global.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 import { ProjectService } from '../../services/project.service';
@@ -24,7 +24,7 @@ import { TimeInputComponent } from '../../components/time-input/time-input.compo
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe,RouterLink],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
