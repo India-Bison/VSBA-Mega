@@ -1,10 +1,10 @@
-<app-header #get_value label="Project" sub_label="{{ params.view ? 'View' : (params.id ? 'Update' : 'Add') }} {{ params.parent_id ? 'Sub' : '' }} Project"></app-header>
+<app-header #get_value label="Project" sub_label="{{ params.view ? 'View' : (params.id ? 'Update' : 'Add') }} {{ params.parent_id ? 'Sub' : '' }} {{ form.get('type')?.value == 'Sub-Project' ? 'Sub-Project' : 'Project'}}"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
     <div class="flex flex-col bg-white rounded-2xl shadow w-full gap-6">
         <div class="flex items-center justify-between px-6 pt-6">
             <ng-container *ngIf="!params.parent_id">
                 <span class="text-xl font-medium leading-[100%] tracking-2p">{{ params.view ? 'View' : (params.id ? 'Update' : 'Add') }}
-                    Project</span>
+                    {{ form.get('type')?.value == 'Sub-Project' ? 'Sub Project' : 'Project'}}</span>
             </ng-container>
             <ng-container *ngIf="params.parent_id">
                 <span class="text-xl font-medium leading-[100%] tracking-2%">{{parent_project?.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{parent_project?.project_start_date | date : 'dd-MM-yyyy'}} to
@@ -25,8 +25,8 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search *ngIf="!parent_project" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
-                    <app-multi-search *ngIf="parent_project" label="Resource Type" formControlName="resource_type" [options]="parent_project.resource_type| subResourceType"></app-multi-search>
+                    <app-multi-search *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
+                    <app-multi-search *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
                     <app-text-area [max_words_type]="100" label="Short Description" [is_required]="true" formControlName="description"></app-text-area>
                     <app-radio [is_required]="true" label="Audit Required" selected_value="Comprehensive Audit" formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
@@ -103,7 +103,8 @@
             </form>
         </div>
         <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
-            <app-list [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children" [params]="params">
+            <app-list label="No sub-projects found!" description="It looks like you haven't Added any sub-projects yet. To get started,
+            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <span class="text-xl text-[#212121] font-medium">Sub Projects</span>
                     <app-button color="bg-[#3F41D1] text-[#FFFFFF]" [disabled]="params.view" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
