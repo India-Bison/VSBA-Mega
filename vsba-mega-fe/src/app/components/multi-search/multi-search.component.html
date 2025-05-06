@@ -1,4 +1,4 @@
-<div class="relative w-full" (mouseleave)="dropdownOpen = false">
+<div class="relative w-full" [ngClass]="{'pointer-events-none': params.view}" (mouseleave)="dropdownOpen = false">
   <!-- Search Input -->
   <label *ngIf="label && (dropdownOpen || selectedOptions?.length)" [for]="label"
     class="pointer-events-none absolute text-base font-normal text-[#666666] duration-300 transform -translate-y-6 scale-75 top-2 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 max-w-[98%] truncate ">{{label}}</label>
@@ -15,7 +15,7 @@
       <ng-container *ngFor="let item of selectedOptions">
         <div class="flex items-center text-nowrap bg-[#CFD5F1] text-sm text-[#3F41D1] pl-[24px] pr-[18px] rounded-full">
           {{ item }}
-          <button class="ml-[10px] text-[#3F41D1] text-lg" (click)="removeItem(item)">×</button>
+          <button [ngClass]="{'pointer-events-none cursor-not-allowed': params.view}" class="ml-[10px] text-[#3F41D1] text-lg" (click)="removeItem(item)">×</button>
         </div>
       </ng-container>
       <input type="text" class="flex-1 p-1 text-[16px] focus:outline-none" [(ngModel)]="searchText" (keypress)="dropdownOpen = true" (keydown)="handleKeyDown($event)" (input)="filterOptions()" [placeholder]="selectedOptions.length || dropdownOpen ? '' : this.label" />

@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { format } from 'date-fns';
 import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-date-range-picker',
@@ -35,14 +36,22 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() min:any = '';
   @Input() max:any = '';
   @Input() not_allowed_past_date = false;
-
+  params: any = {}
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };
 
   onChange = (_: any) => { };
   onTouched = () => { };
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector, public ar : ActivatedRoute) { }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.ar.queryParams.subscribe(params => {
+      this.params = params
+    });
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
