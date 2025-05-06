@@ -23,7 +23,7 @@
                   <input type="checkbox" (change)="toggleAllSelection()" [checked]="allSelected">
                 </ng-container>
                 <ng-template #showTitle>
-                  <div [ngClass]="{'justify-center items-center': column.title == 'Status'}" class="flex gap-2 justify-between w-full text-base font-medium">
+                  <div [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center justify-between w-full text-base font-medium">
                     {{ column.title }}
                     <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
                     <app-mini-modal  *ngIf="column.sort == true" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
