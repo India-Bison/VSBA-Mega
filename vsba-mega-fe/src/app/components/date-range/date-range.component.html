@@ -1,4 +1,4 @@
-<div class="flex relative items-center gap-16 w-[413px] h-12 bg-[#FFFFFF] border border-[#BDBDBD] rounded-lg p-4"  [ngClass]="width">
+<div [ngClass]="{'pointer-events-none': params.view}" class="flex relative items-center gap-16 w-[413px] h-12 bg-[#FFFFFF] border border-[#BDBDBD] rounded-lg p-4"  [ngClass]="width">
     <label class="absolute text-xs flex items-center bg-white text-[#1E1E1E99] -top-[12px] p-[2px] font-normal left-4 text-nowrap">{{ label }}</label>
     <div class="flex items-center gap-2 w-full">
         <img  (click)="openDatePicker('start')" src="../../../assets/CalendarBlank.png" class="w-6 h-6 cursor-pointer" alt="calendar" />

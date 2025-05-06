@@ -1,6 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-week-days',
@@ -28,6 +29,17 @@ export class WeekDaysComponent implements ControlValueAccessor {
   ];
 
   selected: Set<string> = new Set();
+  params: any = {}
+
+  constructor(public ar : ActivatedRoute) {}
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.ar.queryParams.subscribe(params => {
+      this.params = params
+    });
+  }
 
   onChange = (_: any) => {};
   onTouched = () => {};
