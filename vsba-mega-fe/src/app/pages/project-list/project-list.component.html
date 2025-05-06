@@ -1,6 +1,6 @@
 <app-header label="Project"></app-header>
 
-<app-list label="No projects found!" description="It looks like you haven't Added any projects yet. To get started,
+<app-list [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" label="No projects found!" description="It looks like you haven't Added any projects yet. To get started,
 click the Create button to Add your first project" [columns]="columns" [items]="items" [params]="params">
   <app-search-input></app-search-input>
   <div class="flex gap-4 items-center">

@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MiniModalComponent } from '../mini-modal/mini-modal.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent],
   templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
@@ -22,10 +23,10 @@ export class ListComponent {
   @Input() label: any = ''
   @Input() description: any = ''
   @Input() status: 'Border' | 'Dotted' = 'Border';
-  currentPage = 1;
-  totalPages = 1;
-  totalItems = 3;
-  itemsPerPage = 10;
+  @Input()currentPage = 1;
+  @Input()totalPages = 1;
+  @Input()totalItems = 3;
+  @Input()itemsPerPage = 10;
   active_tab = 'Project';
   tabList = [
     {
