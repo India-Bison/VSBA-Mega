@@ -35,7 +35,7 @@ export class ProjectListComponent {
     { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', plus_icon: true },
     { title: 'Project Code', type: 'Value', key: 'short_name',  class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true },
-    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, sticky : true },
     { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left', sort: true },
     { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left', sort: true },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
