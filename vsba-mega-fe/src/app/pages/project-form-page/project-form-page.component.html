@@ -47,7 +47,7 @@
                 </div>
                 <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
                     <div class="flex justify-between items-center">
-                        <app-radio label="Slot Type" selected_value="Full Day" formControlName="slot_type" [options]="[
+                        <app-radio [is_required]="true" label="Slot Type" selected_value="Full Day" formControlName="slot_type" [options]="[
                         { label: 'Full Day', value: 'Full Day' },
                         { label: 'Time Slot', value: 'Time Slot' }
                         
