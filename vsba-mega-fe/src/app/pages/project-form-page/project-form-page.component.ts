@@ -24,21 +24,29 @@ import { TimeInputComponent } from '../../components/time-input/time-input.compo
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe,RouterLink],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
 export class ProjectFormPageComponent {
-  active_tab = 'Project';
   params: any = {};
   project_start_end_date: any = {};
   slot_start_end_date: any = {};
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
-  tabList: any[] = [{ name: 'Project', }, { name: 'Sub-Project', }];
+  @ViewChild('discard_popup') discard_popup: any;
+  tabList: any[] = [
+    {
+      name: 'Project',
+      action: this.project_toggle_action.bind(this, { value: 'Project' })
+    },
+    {
+      name: 'Sub-Project',
+      action: this.project_toggle_action.bind(this, { value: 'Sub-Project' })
+    }
+  ];
   form: FormGroup;
-
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps: ProjectService) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -62,7 +70,7 @@ export class ProjectFormPageComponent {
   parent_project: any
   ngOnInit() {
     console.log(this.form.get('type')?.value);
-    
+
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
@@ -72,12 +80,14 @@ export class ProjectFormPageComponent {
         this.parent_project = (await this.ps?.get(this.params.parent_id ? this.params.parent_id : this.params.id))?.data;
       }
     })
-
-
-    this.params.parent_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
   get slots(): FormArray {
     return this.form.get('slot_groups') as FormArray;
+  }
+  selected_toggle: any = {}
+  project_toggle_action(item: any) {
+    this.discard_popup.open();
+    this.selected_toggle = item
   }
   add_slot(): void {
     const slotGroup = this.fb.group({
@@ -185,12 +195,12 @@ export class ProjectFormPageComponent {
   add_sub_project() {
     this.form.reset({
       week_days: this.form.get('week_days')?.value,
-      type:'Sub-Project'
+      type: 'Sub-Project'
     });
-  console.log(this.parent_project,"ooooooooo");
-  
+    console.log(this.parent_project, "ooooooooo");
+
     console.log(this.form.value);
-  
+
     this.route.navigate([], { queryParams: { type: 'Project', parent_id: this.params.parent_id || this.params.id } });
   }
 
@@ -230,10 +240,19 @@ export class ProjectFormPageComponent {
     }
   }
   discard() {
-    window.history.back()
+    console.log(this.selected_toggle, "selected_toggle");
+
+    this.route.navigate([], {
+      relativeTo: this.ar,
+      queryParams: { type: this.selected_toggle.value },
+      queryParamsHandling: 'merge'
+    });
   }
 
-
+  cancel_discrad() {
+    window.location.reload()
+    this.discard_popup.close()
+  }
 
 
   // sub project list

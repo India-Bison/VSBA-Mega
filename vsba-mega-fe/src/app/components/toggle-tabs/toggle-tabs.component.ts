@@ -16,6 +16,7 @@ export class ToggleTabsComponent {
   @Input() params_name = '294px';
   @Input() params: any = {};
   @Input() disabled: any = false;
+  @Input() value_on_params: boolean = false;
 
 
   router = inject(Router);
@@ -29,17 +30,22 @@ export class ToggleTabsComponent {
   }
 
   selectTab(tab: { name: string, action: () => void }) {
+    if (!this.disabled && typeof tab.action === 'function') {
+      tab.action();
+    }    
     this.activeTab = tab.name;
-    if (this.params_name) {
+    if (!this.value_on_params && this.params_name) {
       this.params[this.params_name] = tab.name;
       this.router.navigate([], { queryParams: this.params });
     }
-    if(this.params.status == 'All') {
+    
+    if (this.params.status == 'All') {
       this.router.navigate([], {
         relativeTo: this.ar,
-        queryParams: { status: null },  
-        queryParamsHandling: 'merge'      
+        queryParams: { status: null },
+        queryParamsHandling: 'merge'
       });
     }
   }
+  
 }
