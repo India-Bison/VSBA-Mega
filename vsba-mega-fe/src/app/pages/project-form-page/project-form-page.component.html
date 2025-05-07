@@ -10,14 +10,14 @@
                 <span class="text-xl font-medium leading-[100%] tracking-2%">{{parent_project?.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{parent_project?.project_start_date | date : 'dd-MM-yyyy'}} to
                         {{parent_project?.project_end_date | date : 'dd-MM-yyyy'}})</span></span>
             </ng-container>
-            <app-toggle-tabs *ngIf="!params.parent_id" [params]="params" [value_on_params]="true"  params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
+            <app-toggle-tabs *ngIf="!params.parent_id" [params]="params" [value_on_params]="true" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
         </div>
         <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex justify-between w-full gap-4">
                 <div class="flex flex-col gap-6 w-full">
-                    <div class="flex items-center w-full gap-6">
-                        <app-text-input [is_required]="true" type="text" class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
-                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
+                    <div class="flex flex-col md:flex-row items-stretch w-full gap-4 md:gap-6">
+                        <app-text-input [is_required]="true" type="text" class="w-full" [label]="!params.parent_id ? 'Project Name' : 'Sub-Project Name'" formControlName="name"></app-text-input>
+                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-full md:w-80" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name">                        </app-text-input>
                     </div>
                     <app-image-uploder [accept]="'.jpg,.jpeg,.webp,.png'" [multiple]="false" formControlName="project_logo"></app-image-uploder>
                     <app-radio [is_required]="true" label="Full Venue Required" selected_value="yes" formControlName="full_venue_required" [options]="[
@@ -37,8 +37,8 @@
                     </app-radio>
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date *</label>
-                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date"
-                            (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')"
+                            [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                         <div *ngIf="form.get('project_start_date')?.errors?.['required'] && (form.get('project_start_date')?.touched || form.get('project_start_date')?.dirty)">
                             <p class="text-red-500">Project Date is required.</p>
                         </div>
@@ -112,16 +112,16 @@
             </app-list>
         </div>
         <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
-        <ng-container *ngIf="!params.view">
-            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="discard_popup.open()" label="DISCARD"></app-button>
-            <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
-            <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="params.type == 'Sub-Project' ? submit_popup_on_subproject_list.open()  :add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
-            <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
-            <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
-        </ng-container>
-        <ng-container *ngIf="params.view">
-            <app-button color="" routerLink="/project/list" label="Back To Page"></app-button>
-        </ng-container>
+            <ng-container *ngIf="!params.view">
+                <app-button color="border-[#FA2912] text-[#FA2912]" (click)="discard_popup.open()" label="DISCARD"></app-button>
+                <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
+                <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="params.type == 'Sub-Project' ? submit_popup_on_subproject_list.open()  :add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
+                <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+                <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+            </ng-container>
+            <ng-container *ngIf="params.view">
+                <app-button color="" routerLink="/project/list" label="Back To Page"></app-button>
+            </ng-container>
         </div>
     </div>
 </div>
@@ -133,11 +133,9 @@
     You're about to Submit a new project.
     Make sure all details are correct before submitting.
 </app-confirmation-popup>
-<app-confirmation-popup #delete_sub_project_row label="Delete Sub-Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()"
-    (close_modal_clicked)="delete_sub_project_row.close()">
+<app-confirmation-popup #delete_sub_project_row label="Delete Sub-Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_sub_project_row.close()">
     This action cannot be undone, and all associated data will be permanently removed.
 </app-confirmation-popup>
-<app-confirmation-popup #discard_popup label="Discard Project?" [discard_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISCARD IT" [is_mandatory]="true" (confirm_modal_clicked)="discard()"
-    (close_modal_clicked)="cancel_discrad()">
+<app-confirmation-popup #discard_popup label="Discard Project?" [discard_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISCARD IT" [is_mandatory]="true" (confirm_modal_clicked)="discard()" (close_modal_clicked)="cancel_discrad()">
     This project will be Discarded and Changes will not be saved.
 </app-confirmation-popup>
