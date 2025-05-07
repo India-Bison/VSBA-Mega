@@ -27,7 +27,7 @@ export class UserListComponent {
     { title: 'Role Name', type: 'Value', key: 'role_name', class: 'text-left' },
     { title: 'Contact', type: 'Value', key: 'contact', class: 'text-left', sort: true },
     { title: 'Email', type: 'Value', key: 'email', class: 'text-left', sort: true },
-    { title: 'Status', type: 'Value', key: 'status', class: 'text-left', sort: true },
+    { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action',
       type: 'Action',

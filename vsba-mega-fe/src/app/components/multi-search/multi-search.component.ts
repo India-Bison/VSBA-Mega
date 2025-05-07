@@ -1,11 +1,12 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, ViewChild, ElementRef, SimpleChanges, Injector } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-multi-search',
-  imports: [FormsModule, NgFor, NgIf,CapitalizStringPipe],
+  imports: [FormsModule, NgFor, NgIf,CapitalizStringPipe,NgClass],
   templateUrl: './multi-search.component.html',
   styleUrl: './multi-search.component.css',
   standalone: true,
@@ -21,6 +22,7 @@ export class MultiSearchComponent implements ControlValueAccessor {
   @Input() label = 'Search';
   @Input() options: string[] = [];
   @Input() isRequired: any = false 
+  params: any = {}
 
   
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
@@ -37,9 +39,12 @@ export class MultiSearchComponent implements ControlValueAccessor {
     if (changes['options'] && changes['options'].currentValue) {
       this.filteredOptions = [...this.options];
     }
+    this.ar.queryParams.subscribe(params => {
+      this.params = params;
+    });
   }
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector,public ar : ActivatedRoute) { }
 
   
   ngAfterViewInit(): void {

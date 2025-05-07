@@ -42,7 +42,7 @@ export class SelectInputComponent implements ControlValueAccessor {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.paramValue = params['view'];
+      this.paramValue = params;
     });
   }
 

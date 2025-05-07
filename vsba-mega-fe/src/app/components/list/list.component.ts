@@ -2,18 +2,14 @@ import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe }
 import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
-import { ButtonComponent } from '../button/button.component';
-import { TableRowComponent } from '../table-row/table-row.component';
-import { ToggleTabsComponent } from '../toggle-tabs/toggle-tabs.component';
-import { SearchInputComponent } from '../search-input/search-input.component';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MiniModalComponent } from '../mini-modal/mini-modal.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, PaginationComponent, SearchInputComponent, ToggleTabsComponent, FormsModule,ButtonComponent,CommonModule,TableRowComponent, MiniModalComponent, JsonPipe, DatePipe],
-  templateUrl: './list.component.html',
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent],
+  templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
 })
@@ -26,10 +22,11 @@ export class ListComponent {
   @Input() pagination: boolean = true
   @Input() label: any = ''
   @Input() description: any = ''
-  currentPage = 1;
-  totalPages = 1;
-  totalItems = 3;
-  itemsPerPage = 10;
+  @Input() status: 'Border' | 'Dotted' = 'Border';
+  @Input()currentPage = 1;
+  @Input()totalPages = 1;
+  @Input()totalItems = 3;
+  @Input()itemsPerPage = 10;
   active_tab = 'Project';
   tabList = [
     {
@@ -77,6 +74,14 @@ export class ListComponent {
 
   isContentEmpty: boolean = true;
 
+  get uniqueItems() {
+    return this.items.filter((item: { key: string }, index: number, self: { key: string }[]) =>
+      index === self.findIndex((t: { key: string }) => t.key === item.key)
+    );
+  }
+  
+  
+
   ngAfterContentInit() {
     // Check if there are any content children
     this.isContentEmpty = this.projectedContent.length === 0;
@@ -86,11 +91,21 @@ export class ListComponent {
   expandedState: { [rowIndex: number]: string | null } = {};
 
 
-  constructor(public gs: GlobalService, public router : Router) { }
+  constructor(public gs: GlobalService, public router : Router, public ar:ActivatedRoute) { }
   ngOnInit(): void {
     // this.items = this.gs.items
      this.loadDummyData();
     console.log(this.items, 'Items in List Component');
+  }
+  sortData(key: string, order: 'asc' | 'desc') {
+    this.router.navigate([], {
+      relativeTo: this.ar,
+      queryParams: {
+        sort_by: key,
+        sort_order: order
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
   // Dummy data with children

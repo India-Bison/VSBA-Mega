@@ -1,6 +1,12 @@
-<div class="relative cursor-pointer flex items-center gap-3 h-10 w-[266px] rounded-[100px]">
-    <img class="absolute left-2 bg-white px-1 no-scrollbar" src="../../../assets/u_search.svg" alt="">
-    <input  [(ngModel)]="value" (input)="onInputChange($event)" type="text"  type="text"
-        class="w-full md:w-[323px] cursor-pointer h-10 rounded-full block pl-4 pr-6 ps-12 text-sm font-normal placeholder-[#3F41D199] text-[#3F41D199] text-opacity-60 bg-white border border-[#3F41D1] appearance-none focus:outline-none peer"
-        placeholder="Search here..." />
-</div>
+<div class="relative flex items-center gap-3 h-10 w-[266px] rounded-[100px]">
+    <img class="absolute left-2 bg-white px-1" src="../../../assets/u_search.svg" alt="Search Icon" />
+    <input
+      [disabled]="disabled"
+      [(ngModel)]="value"
+      (input)="onInputChange($event)"
+      type="text"
+      class="w-full md:w-[323px] h-10 rounded-full pl-4 pr-6 ps-12 text-sm font-normal placeholder-[#3F41D199] text-[#3F41D199] bg-white border border-[#3F41D1] appearance-none focus:outline-none"
+      [placeholder]="placeholder || 'Search here...'"
+    />
+  </div>
+  

@@ -13,7 +13,7 @@ import { ListComponent } from '../../components/list/list.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { DateRangePickerComponent } from '../../components/date-range-picker/date-range-picker.component';
 import { GlobalService } from '../../services/global.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { MultiSearchComponent } from '../../components/multi-search/multi-search.component';
 import { ProjectService } from '../../services/project.service';
@@ -24,7 +24,7 @@ import { TimeInputComponent } from '../../components/time-input/time-input.compo
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe,RouterLink],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
@@ -61,6 +61,8 @@ export class ProjectFormPageComponent {
   }
   parent_project: any
   ngOnInit() {
+    console.log(this.form.get('type')?.value);
+    
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
@@ -181,7 +183,14 @@ export class ProjectFormPageComponent {
     }
   }
   add_sub_project() {
-    this.form.reset();
+    this.form.reset({
+      week_days: this.form.get('week_days')?.value,
+      type:'Sub-Project'
+    });
+  console.log(this.parent_project,"ooooooooo");
+  
+    console.log(this.form.value);
+  
     this.route.navigate([], { queryParams: { type: 'Project', parent_id: this.params.parent_id || this.params.id } });
   }
 
@@ -233,9 +242,9 @@ export class ProjectFormPageComponent {
   selected_delete_sub_project: any = {}
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Sub-Project Name', type: 'Value', key: 'name', sort: true, class: 'text-left' },
-    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left' },
-    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left' },
+    { title: 'Sub-Project Name', type: 'Value', key: 'name', class: 'text-left' },
+    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true },
     { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left' },
     { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left' },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },

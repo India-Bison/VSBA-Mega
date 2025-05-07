@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-image-uploder',
@@ -18,12 +19,23 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class ImageUploderComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() accept: string = '.jpg,.jpeg,.webp,.png';
 
   images: string[] = [];
+  params:any;
+  paramValue: any = {}
 
   private onChange: any = () => {};
   private onTouched: any = () => {};
 
+  constructor(public ar: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.ar.queryParams.subscribe(params => {
+      this.paramValue = params;
+    });
+  }
+  
   writeValue(value: any): void {
     if (value) {
       this.images = this.multiple ? value : [value];
@@ -46,25 +58,35 @@ export class ImageUploderComponent implements ControlValueAccessor {
 
   onImageSelected(event: any) {
     const files: FileList = event.target.files;
-    if (!files || files.length == 0) return;
+    if (!files || files.length === 0) return;
+  
     const fileArray = Array.from(files);
+    const acceptedTypes = this.accept.split(',').map(type => type.trim().toLowerCase());
+  
     for (let file of fileArray) {
+      const extension = '.' + file.name.split('.').pop()?.toLowerCase();
+      if (!acceptedTypes.includes(extension)) {
+        alert(`Invalid file type: ${extension}. Allowed: ${this.accept}`);
+        continue;
+      }
+  
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const get_iamges = e.target.result;
+        const imageData = e.target.result;
         if (this.multiple) {
-          this.images.push(get_iamges);
+          this.images.push(imageData);
           this.onChange(this.images);
         } else {
-          this.images = [get_iamges];
-          this.onChange(get_iamges);
+          this.images = [imageData];
+          this.onChange(imageData);
         }
       };
       reader.readAsDataURL(file);
     }
-
+  
     this.onTouched();
   }
+  
 
   removeImage(index: number) {
     this.images.splice(index, 1);

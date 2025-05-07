@@ -1,6 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, Injector, Input } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-radio',
@@ -22,11 +23,20 @@ export class RadioComponent implements ControlValueAccessor {
   @Input() is_required: boolean = false;
   @Input() selected_value: string = '';
   value: string = '';
+  params: any = {}
   onChange = (value: string) => {};
   onTouched = () => {};
 
   control: any;
-  constructor(public injector: Injector){}
+  constructor(public injector: Injector, public ar : ActivatedRoute){}
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.ar.queryParams.subscribe(params => {
+      this.params = params;
+    });
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {

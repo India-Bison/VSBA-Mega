@@ -1,0 +1,16 @@
+<app-header label="Venue Details"></app-header>
+
+<app-list [columns]="columns" [items]="items" [params]="params">
+  <app-search-input></app-search-input>
+
+  <div class="flex gap-4 items-center">
+    <app-toggle-tabs [disabled]="!items.length && !params.status" params_name="status" [tabs]="tabList"
+      [defaultActive]="params.status"></app-toggle-tabs>
+      <img src="../../../assets/filter-fram.svg" alt="">
+      <img src="../../../assets/logout-Fram.svg" alt="">
+  </div>
+</app-list>
+
+<app-confirmation-popup>
+  This action cannot be undone, and all associated data will be permanently removed.
+</app-confirmation-popup>

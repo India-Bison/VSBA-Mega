@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-2">
+<div [ngClass]="{'pointer-events-none': params.view}" class="flex flex-col gap-2">
   <label class="text-sm font-medium text-[#212121] text-opacity-60">
     {{ label }}
     <span *ngIf="is_required" class="text-[#212121] text-opacity-60">*</span>
