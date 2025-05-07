@@ -226,8 +226,8 @@ export class ProjectFormPageComponent {
           slot_time_group: this.fb.control(slot.slot_time_group || [])
         }));
         this.slot_start_end_date.push({
-          start: slot.slot_start_date,
-          end: slot.slot_end_date
+          start: slot.slot_start_date || null,
+          end: slot.slot_end_date || null
         });
       });
     } else {
