@@ -235,8 +235,8 @@ export class ProjectFormPageComponent {
       this.add_slot();
     }
     this.project_start_end_date = {
-      start: dataa.data.project_start_date,
-      end: dataa.data.project_end_date
+      start: dataa.data.project_start_date || null,
+      end: dataa.data.project_end_date || null
     }
   }
   discard() {
