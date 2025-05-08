@@ -36,7 +36,7 @@ export class ProjectFormPageComponent {
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
-  @ViewChild('discard_popup') discard_popup: any;
+  @ViewChild('discard_popup_toggle') discard_popup_toggle: any;
   tabList: any[] = [
     {
       name: 'Project',
@@ -87,7 +87,7 @@ export class ProjectFormPageComponent {
   }
   selected_toggle: any = {}
   project_toggle_action(item: any) {
-    this.discard_popup.open();
+    this.discard_popup_toggle.open();
     this.selected_toggle = item
   }
   add_slot(): void {
@@ -241,23 +241,22 @@ export class ProjectFormPageComponent {
       end: dataa.data.project_end_date || null
     }
   }
-  discard() {
-    console.log(this.selected_toggle, "selected_toggle");
-    if(this.params.id){
+  discard_toggle() {
       this.route.navigate([], {
         relativeTo: this.ar,
         queryParams: { type: this.selected_toggle.value },
         queryParamsHandling: 'merge'
       });
-    } else {
+      console.log("ooooooooo");
+  }
+  discard_button() {
       this.route.navigate(['/project/list']);
-
-    }
+      console.log("ppppppppp");
   }
 
   cancel_discrad() {
     window.location.reload()
-    this.discard_popup.close()
+    this.discard_popup_toggle.close()
   }
 
   async save_as_darft() {
