@@ -113,8 +113,8 @@
         </div>
         <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
             <ng-container *ngIf="!params.view">
-                <app-button color="border-[#FA2912] text-[#FA2912]" (click)="discard_popup_button.open()" label="DISCARD"></app-button>
-                <app-button color="border-[#3F41D1] text-[#3F41D1]" (click)="save_as_darft()" label="SAVE AS DRAFT"></app-button>
+                <app-button *ngIf="params.type != 'Sub-Project'" color="border-[#FA2912] text-[#FA2912]" (click)="discard_popup_button.open()" label="DISCARD"></app-button>
+                <app-button  color="border-[#3F41D1] text-[#3F41D1]" (click)="save_as_darft()" label="SAVE AS DRAFT"></app-button>
                 <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="params.type == 'Sub-Project' ? submit_popup_on_subproject_list.open()  :add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
                 <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
                 <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
