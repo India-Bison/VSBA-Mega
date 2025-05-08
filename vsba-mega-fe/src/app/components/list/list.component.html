@@ -1,5 +1,5 @@
 <div class="bg-white mb-10 rounded-2xl border border-[#e4e7ec]">
-  <div class="overflow-x-auto relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
+  <div class="overflow-x-auto no-scrollbar relative print-section flex flex-col overflow-y-auto bg-white rounded-2xl max-h-[calc(100%-200px)]">
     <!-- Main container -->
     <ng-template #contentTemplate>
       <ng-content></ng-content>
@@ -12,7 +12,7 @@
     <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0" class="w-full flex px-6 justify-between items-center">
       <!-- No height if no content -->
     </div>
-    <div class="overflow-y-auto h-full">
+    <div class="overflow-y-auto no-scrollbar h-full">
       <table class="table-auto text-text-color-600 w-full border-t border-b border-t-[#e4e7ec]  ">
         <thead class="sticky top-[0px] z-10 bg-white text-sm font-medium text-[#3F41D1] capitalize tracking-wider">
           <tr>
