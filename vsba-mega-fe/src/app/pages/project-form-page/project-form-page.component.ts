@@ -261,7 +261,7 @@ export class ProjectFormPageComponent {
 
   async save_as_darft() {
     let data = { ...this.form.value };
-    data.status = 'Draft'
+    data.status = 'Drafts'
     data.type = this.params.type
     let response: any = await this.ps.add(data)
     this.route.navigate(['/project/list'], {})
