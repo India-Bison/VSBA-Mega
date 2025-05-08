@@ -241,12 +241,7 @@ export class ProjectFormPageComponent {
   }
   discard() {
     console.log(this.selected_toggle, "selected_toggle");
-
-    this.route.navigate([], {
-      relativeTo: this.ar,
-      queryParams: { type: this.selected_toggle.value },
-      queryParamsHandling: 'merge'
-    });
+    this.route.navigate(['/project/list']);
   }
 
   cancel_discrad() {
