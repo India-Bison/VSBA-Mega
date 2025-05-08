@@ -85,12 +85,13 @@
                       <!-- Clickable Toggle Icon for Children -->
                       <img *ngIf="column.title== 'Project Name' && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
                       <!-- Status as Button -->
-                      <ng-container *ngIf="item[column.key] == 'Approved' || item[column.key] == 'Pending' || item[column.key] == 'Rejected'; else normalText">
+                      <ng-container *ngIf="item[column.key] == 'Approved' || item[column.key] == 'Pending' || item[column.key] == 'Rejected' || item[column.key] == 'Drafts'; else normalText">
                         <div *ngIf="status == 'Border'" class="flex justify-center items-center w-full">
                           <button class="px-[10px] py-1 rounded-md border text-sm font-medium" [ngClass]="{
                                      'text-[#03A600] border-[#03A600]': item[column.key] == 'Approved',
                                      'text-[#DF6E12] border-[#DF6E12]': item[column.key] == 'Pending',
-                                     'text-red-500 border-red-500': item[column.key] == 'Rejected'
+                                     'text-red-500 border-red-500': item[column.key] == 'Rejected',
+                                     'text-gray-600 border-gray-600': item[column.key] == 'Drafts',
                                    }">
                             {{ item[column.key] }}
                           </button>
