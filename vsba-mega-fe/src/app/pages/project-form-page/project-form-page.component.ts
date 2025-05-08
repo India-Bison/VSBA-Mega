@@ -24,21 +24,29 @@ import { TimeInputComponent } from '../../components/time-input/time-input.compo
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe,RouterLink],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
 export class ProjectFormPageComponent {
-  active_tab = 'Project';
   params: any = {};
   project_start_end_date: any = {};
   slot_start_end_date: any = {};
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
-  tabList: any[] = [{ name: 'Project', }, { name: 'Sub-Project', }];
+  @ViewChild('discard_popup') discard_popup: any;
+  tabList: any[] = [
+    {
+      name: 'Project',
+      action: this.project_toggle_action.bind(this, { value: 'Project' })
+    },
+    {
+      name: 'Sub-Project',
+      action: this.project_toggle_action.bind(this, { value: 'Sub-Project' })
+    }
+  ];
   form: FormGroup;
-
   constructor(private fb: FormBuilder, public gs: GlobalService, public ar: ActivatedRoute, public route: Router, public ps: ProjectService) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -62,7 +70,7 @@ export class ProjectFormPageComponent {
   parent_project: any
   ngOnInit() {
     console.log(this.form.get('type')?.value);
-    
+
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
@@ -72,17 +80,19 @@ export class ProjectFormPageComponent {
         this.parent_project = (await this.ps?.get(this.params.parent_id ? this.params.parent_id : this.params.id))?.data;
       }
     })
-
-
-    this.params.parent_id ? this.active_tab = 'Sub-Project' : this.active_tab = 'Project';
   }
   get slots(): FormArray {
     return this.form.get('slot_groups') as FormArray;
   }
+  selected_toggle: any = {}
+  project_toggle_action(item: any) {
+    this.discard_popup.open();
+    this.selected_toggle = item
+  }
   add_slot(): void {
     const slotGroup = this.fb.group({
-      slot_start_date: [''],
-      slot_end_date: [''],
+      slot_start_date: ['', Validators.required],
+      slot_end_date: ['', Validators.required],
       slot_time: [''],
       start_time: [''],
       end_time: [''],
@@ -142,7 +152,7 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
-    console.log(this.form.value, "form valu by maru");
+    this.apply_slot_validations();
     if (this.form.valid) {
       const formData = {
         ...this.form.value,
@@ -165,7 +175,7 @@ export class ProjectFormPageComponent {
         this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
       }
     } else {
-      this.form.markAllAsTouched()
+      this.form.markAllAsTouched();
     }
   }
   async update() {
@@ -185,12 +195,12 @@ export class ProjectFormPageComponent {
   add_sub_project() {
     this.form.reset({
       week_days: this.form.get('week_days')?.value,
-      type:'Sub-Project'
+      type: 'Sub-Project'
     });
-  console.log(this.parent_project,"ooooooooo");
-  
+    console.log(this.parent_project, "ooooooooo");
+
     console.log(this.form.value);
-  
+
     this.route.navigate([], { queryParams: { type: 'Project', parent_id: this.params.parent_id || this.params.id } });
   }
 
@@ -216,8 +226,8 @@ export class ProjectFormPageComponent {
           slot_time_group: this.fb.control(slot.slot_time_group || [])
         }));
         this.slot_start_end_date.push({
-          start: slot.slot_start_date,
-          end: slot.slot_end_date
+          start: slot.slot_start_date || null,
+          end: slot.slot_end_date || null
         });
       });
     } else {
@@ -225,16 +235,27 @@ export class ProjectFormPageComponent {
       this.add_slot();
     }
     this.project_start_end_date = {
-      start: dataa.data.project_start_date,
-      end: dataa.data.project_end_date
+      start: dataa.data.project_start_date || null,
+      end: dataa.data.project_end_date || null
     }
   }
   discard() {
-    window.history.back()
+    console.log(this.selected_toggle, "selected_toggle");
+    this.route.navigate(['/project/list']);
   }
 
+  cancel_discrad() {
+    window.location.reload()
+    this.discard_popup.close()
+  }
 
-
+  async save_as_darft() {
+    let data = { ...this.form.value };
+    data.status = 'Draft'
+    data.type = this.params.type
+    let response: any = await this.ps.add(data)
+    this.route.navigate(['/project/list'], {})
+  }
 
   // sub project list
 
@@ -277,4 +298,31 @@ export class ProjectFormPageComponent {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
+  apply_slot_validations(): void {
+    const slotType = this.form.get('slot_type')?.value;
+    this.slots.controls.forEach((slotGroup: any) => {
+      if (slotType == 'Full Day') {
+        slotGroup.get('start_time')?.setValidators([Validators.required]);
+        slotGroup.get('end_time')?.setValidators([Validators.required]);
+        slotGroup.get('slot_time')?.clearValidators();
+        slotGroup.get('hours')?.clearValidators();
+      } else if (slotType == 'Time Slot') {
+        slotGroup.get('slot_time')?.setValidators([Validators.required]);
+        slotGroup.get('hours')?.setValidators([Validators.required]);
+        slotGroup.get('start_time')?.clearValidators();
+        slotGroup.get('end_time')?.clearValidators();
+      } else {
+        slotGroup.get('start_time')?.clearValidators();
+        slotGroup.get('end_time')?.clearValidators();
+        slotGroup.get('slot_time')?.clearValidators();
+        slotGroup.get('hours')?.clearValidators();
+      }
+
+      ['start_time', 'end_time', 'slot_time', 'hours'].forEach(control => {
+        slotGroup.get(control)?.updateValueAndValidity();
+      });
+    });
+  }
+
+
 }
