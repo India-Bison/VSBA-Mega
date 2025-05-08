@@ -1,5 +1,6 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -18,5 +19,19 @@ export class HeaderComponent {
   params: any = {}
 
   check_in_modal = false;
+
+  showBackButton: boolean = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.showBackButton = this.router.url.includes('/form'); // Check if the current route contains "/form"
+    });
+  }
+
+  goBack() {
+    if (this.showBackButton) { // Only call goBack() if on the form page
+     window.history.back();
+    }
+  }
 
 }
