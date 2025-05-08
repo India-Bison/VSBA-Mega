@@ -25,8 +25,8 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
-                    <app-multi-search *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
+                    <app-multi-search [isRequired]="true" *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
+                    <app-multi-search [isRequired]="true" *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
                     <app-text-area [max_words_type]="100" label="Short Description" [is_required]="true" formControlName="description"></app-text-area>
                     <app-radio [is_required]="true" label="Audit Required" selected_value="Comprehensive Audit" formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
