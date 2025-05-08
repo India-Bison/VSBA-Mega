@@ -249,6 +249,13 @@ export class ProjectFormPageComponent {
     this.discard_popup.close()
   }
 
+  async save_as_darft() {
+    let data = { ...this.form.value };
+    data.status = 'Draft'
+    data.type = this.params.type
+    let response: any = await this.ps.add(data)
+    this.route.navigate(['/project/list'], {})
+  }
 
   // sub project list
 
@@ -310,12 +317,12 @@ export class ProjectFormPageComponent {
         slotGroup.get('slot_time')?.clearValidators();
         slotGroup.get('hours')?.clearValidators();
       }
-  
+
       ['start_time', 'end_time', 'slot_time', 'hours'].forEach(control => {
         slotGroup.get(control)?.updateValueAndValidity();
       });
     });
   }
-  
+
 
 }
