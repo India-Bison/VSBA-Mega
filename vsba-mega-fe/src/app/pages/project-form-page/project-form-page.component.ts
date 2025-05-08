@@ -183,6 +183,7 @@ export class ProjectFormPageComponent {
       let data = { ...this.form.value };
       if (this.params.sub_project_update == 'true') {
         data.type = 'Sub-Project'
+        data.parent_id = parseInt(this.params.parent_id)
       } else {
         data.type = 'Project'
       }
