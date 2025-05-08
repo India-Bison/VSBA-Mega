@@ -13,7 +13,7 @@ export interface create_project_function_params {
         slot_type?: string;
         type?: string;
         status?: string;
-        project_logo?: string;
+        project_logo?: Text;
         draft_json?: any;
         parent_id?: number;
         slot_groups?: {
