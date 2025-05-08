@@ -69,6 +69,9 @@
                             </div>
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
                                 <app-date-range-picker [min]="form.get('project_start_date')?.value" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                                <div *ngIf="slot.get('slot_start_date')?.errors?.['required'] && (slot.get('slot_start_date')?.touched || slot.get('slot_start_date')?.dirty)">
+                                    <p class="text-red-500">Slot Start Date & End Date is required.</p>
+                                  </div>                                  
                                 <div class="flex justify-between w-full gap-2 items-center">
                                     <app-time-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [ngClass]="params.view ? 'w-full' : 'w-52'" class="w-48" formControlName="slot_time"></app-time-input>
                                     <div class="flex w-full gap-4 items-center" *ngIf="form.get('slot_type')?.value == 'Full Day'">

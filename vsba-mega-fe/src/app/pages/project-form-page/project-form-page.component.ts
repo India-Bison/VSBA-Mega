@@ -91,8 +91,8 @@ export class ProjectFormPageComponent {
   }
   add_slot(): void {
     const slotGroup = this.fb.group({
-      slot_start_date: [''],
-      slot_end_date: [''],
+      slot_start_date: ['', Validators.required],
+      slot_end_date: ['', Validators.required],
       slot_time: [''],
       start_time: [''],
       end_time: [''],
@@ -152,7 +152,7 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
-    console.log(this.form.value, "form valu by maru");
+    this.apply_slot_validations();
     if (this.form.valid) {
       const formData = {
         ...this.form.value,
@@ -175,7 +175,7 @@ export class ProjectFormPageComponent {
         this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
       }
     } else {
-      this.form.markAllAsTouched()
+      this.form.markAllAsTouched();
     }
   }
   async update() {
@@ -296,4 +296,31 @@ export class ProjectFormPageComponent {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
+  apply_slot_validations(): void {
+    const slotType = this.form.get('slot_type')?.value;
+    this.slots.controls.forEach((slotGroup: any) => {
+      if (slotType == 'Full Day') {
+        slotGroup.get('start_time')?.setValidators([Validators.required]);
+        slotGroup.get('end_time')?.setValidators([Validators.required]);
+        slotGroup.get('slot_time')?.clearValidators();
+        slotGroup.get('hours')?.clearValidators();
+      } else if (slotType == 'Time Slot') {
+        slotGroup.get('slot_time')?.setValidators([Validators.required]);
+        slotGroup.get('hours')?.setValidators([Validators.required]);
+        slotGroup.get('start_time')?.clearValidators();
+        slotGroup.get('end_time')?.clearValidators();
+      } else {
+        slotGroup.get('start_time')?.clearValidators();
+        slotGroup.get('end_time')?.clearValidators();
+        slotGroup.get('slot_time')?.clearValidators();
+        slotGroup.get('hours')?.clearValidators();
+      }
+  
+      ['start_time', 'end_time', 'slot_time', 'hours'].forEach(control => {
+        slotGroup.get(control)?.updateValueAndValidity();
+      });
+    });
+  }
+  
+
 }
