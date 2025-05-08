@@ -181,7 +181,7 @@ export class ProjectFormPageComponent {
   async update() {
     try {
       let data = { ...this.form.value };
-      if (this.params.sub_project_update == 'true') {
+      if (this.params.sub_project_update == 'true' || this.params.parent_id) {
         data.type = 'Sub-Project'
         data.parent_id = parseInt(this.params.parent_id)
       } else {
