@@ -32,6 +32,7 @@ export class ProjectFormPageComponent {
   params: any = {};
   project_start_end_date: any = {};
   slot_start_end_date: any = {};
+  show_slot_dates_error: boolean = false;
   plus_minus_index: any = 0;
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
@@ -333,6 +334,14 @@ export class ProjectFormPageComponent {
       });
     });
   }
-
+  show_error_on_slot_dates() {
+    const start = this.form.get('project_start_date')?.value;
+    const end = this.form.get('project_end_date')?.value;
+    if (!start || !end) {
+      this.show_slot_dates_error = true;
+      setTimeout(() => this.show_slot_dates_error = false, 5000);
+    }
+  }
+  
 
 }

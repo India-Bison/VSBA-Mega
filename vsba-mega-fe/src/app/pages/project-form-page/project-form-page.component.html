@@ -17,7 +17,7 @@
                 <div class="flex flex-col gap-6 w-full">
                     <div class="flex flex-col md:flex-row items-stretch w-full gap-4 md:gap-6">
                         <app-text-input [is_required]="true" type="text" class="w-full" [label]="!params.parent_id ? 'Project Name' : 'Sub-Project Name'" formControlName="name"></app-text-input>
-                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-full md:w-80" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name">                        </app-text-input>
+                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-full md:w-80" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"> </app-text-input>
                     </div>
                     <app-image-uploder [accept]="'.jpg,.jpeg,.webp,.png'" [multiple]="false" formControlName="project_logo"></app-image-uploder>
                     <app-radio [is_required]="true" label="Full Venue Required" selected_value="yes" formControlName="full_venue_required" [options]="[
@@ -25,8 +25,8 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
-                    <app-multi-search *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
+                    <app-multi-search [isRequired]="true" *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
+                    <app-multi-search [isRequired]="true" *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
                     <app-text-area [max_words_type]="100" label="Short Description" [is_required]="true" formControlName="description"></app-text-area>
                     <app-radio [is_required]="true" label="Audit Required" selected_value="Comprehensive Audit" formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
@@ -68,15 +68,18 @@
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
-                                <app-date-range-picker [min]="form.get('project_start_date')?.value" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                                <app-date-range-picker (click)="show_error_on_slot_dates()" [disabled]="!form.get('project_start_date')?.value" [min]="form.get('project_start_date')?.value" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                                 <div *ngIf="slot.get('slot_start_date')?.errors?.['required'] && (slot.get('slot_start_date')?.touched || slot.get('slot_start_date')?.dirty)">
                                     <p class="text-red-500">Slot Start Date & End Date is required.</p>
-                                  </div>                                  
+                                </div>
+                                <div *ngIf="show_slot_dates_error">
+                                    <p class="text-red-500">Please select Project Start Date and End Date first.</p>
+                                </div>
                                 <div class="flex justify-between w-full gap-2 items-center">
                                     <app-time-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [ngClass]="params.view ? 'w-full' : 'w-52'" class="w-48" formControlName="slot_time"></app-time-input>
                                     <div class="flex flex-col md:flex-row w-full gap-4 items-stretch" *ngIf="form.get('slot_type')?.value == 'Full Day'">
-                                            <app-time-input label="Start Time" class="w-full" formControlName="start_time"></app-time-input>
-                                            <app-time-input label="End Time" class="w-full" formControlName="end_time"></app-time-input>
+                                        <app-time-input label="Start Time" class="w-full" formControlName="start_time"></app-time-input>
+                                        <app-time-input label="End Time" class="w-full" formControlName="end_time"></app-time-input>
                                     </div>
                                     <ng-container *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex items-center">
                                         <app-select-input label="Hours" formControlName="hours" [options]=" '' | halfHrsOptionsList : 30" [ngClass]="params.view ? 'w-full' : 'w-52'"></app-select-input>
