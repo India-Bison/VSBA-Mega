@@ -93,7 +93,7 @@ export class ProjectListComponent {
 
   async edit(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project',parent_id:item.parent_id } });
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
