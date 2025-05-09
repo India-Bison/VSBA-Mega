@@ -22,6 +22,9 @@ export class ProjectListComponent {
   ar = inject(ActivatedRoute)
   constructor(public gs: GlobalService, public route: Router, public ps: ProjectService) { }
   @ViewChild('delete_project_row') delete_project_row: any
+  @ViewChild('disabled_project') disabled_project: any
+  selected_disbaled_project: any = {}
+  selected_delete_project: any = {}
   params: any = {}
   list: any = {};
   items: any[] = []
@@ -99,7 +102,6 @@ export class ProjectListComponent {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
   }
-  selected_delete_project: any = {}
   async delete(item: any, index: any) {
     this.delete_project_row.open()
     this.selected_delete_project = item
@@ -109,6 +111,18 @@ export class ProjectListComponent {
       let data = await this.ps?.delete(this.selected_delete_project.id);
       await this.get_project(this.params)
     } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
+  }
+  disbale_project(item: any) {
+    this.disabled_project.open()
+    this.selected_disbaled_project = item
+  }
+ async disbale_project_open() {
+   try {
+      let response = this.ps.update(this.selected_disbaled_project.id, { status:'Disabled' })
+      await this.get_project(this.params)
+    } catch (error) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
@@ -135,10 +149,6 @@ export class ProjectListComponent {
       console.error(error?.message, '');
       this.items = [];
     }
-  }
-
-  disbale_project(item: any) {
-    let response = this.ps.update(item.id, { status:'Disabled' })
   }
 
 }
