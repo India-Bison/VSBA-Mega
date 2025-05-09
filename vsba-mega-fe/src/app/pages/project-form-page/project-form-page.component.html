@@ -68,7 +68,7 @@
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
-                                <app-date-range-picker (click)="show_error_on_slot_dates()" [disabled]="!form.get('project_start_date')?.value" [min]="form.get('project_start_date')?.value" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                                <app-date-range-picker (click)="show_error_on_slot_dates()" [disabled]="!form.get('project_start_date')?.value" [not_allowed_past_date]="true" [min]="form.get('project_start_date')?.value > today ? form.get('project_start_date')?.value : today" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                                 <div *ngIf="slot.get('slot_start_date')?.errors?.['required'] && (slot.get('slot_start_date')?.touched || slot.get('slot_start_date')?.dirty)">
                                     <p class="text-red-500">Slot Start Date & End Date is required.</p>
                                 </div>

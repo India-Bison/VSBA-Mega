@@ -34,6 +34,7 @@ export class ProjectFormPageComponent {
   slot_start_end_date: any = {};
   show_slot_dates_error: boolean = false;
   plus_minus_index: any = 0;
+  today = new Date().toISOString().split('T')[0]; // 'YYYY-MM-DD'
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
   @ViewChild('discard_popup_toggle') discard_popup_toggle: any;
