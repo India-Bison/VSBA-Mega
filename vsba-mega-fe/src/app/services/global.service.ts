@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class GlobalService {
+  sidebar:boolean = false
   constructor(public toastr: ToastrService) { }
   toastr_shows_function(message: string, title: string, type: 'success' | 'error' | 'info' | 'warning') {
     const toastr_config = {

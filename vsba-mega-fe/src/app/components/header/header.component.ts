@@ -1,6 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
     selector: 'app-header',
@@ -22,7 +23,7 @@ export class HeaderComponent {
 
   showBackButton: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,public gs : GlobalService) {
     this.router.events.subscribe(() => {
       this.showBackButton = this.router.url.includes('/form'); // Check if the current route contains "/form"
     });
