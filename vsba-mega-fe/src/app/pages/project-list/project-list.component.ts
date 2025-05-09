@@ -141,6 +141,7 @@ export class ProjectListComponent {
   async get_project(params: any) {
     try {
       // const queryParams = { ...params, page: this.currentPage, };
+      // params.type = 'Sub-Project'
       const response = await this.ps.get_list(params);
       this.totalItems = response?.count || 0;
       const apiData = response?.data || [];
