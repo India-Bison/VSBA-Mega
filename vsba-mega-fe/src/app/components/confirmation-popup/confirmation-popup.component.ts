@@ -17,6 +17,8 @@ export class ConfirmationPopupComponent {
   @Input() scroll: any;
   @Input() redirect = true;
   @Input() delete_icon = false;
+  @Input() enable_icon = false;
+  @Input() disabled_icon = false;
   @Input() edit_icon = false;
   @Input() discard_icon = false;
   @Input() icon: string = '';           // icon name ya URL

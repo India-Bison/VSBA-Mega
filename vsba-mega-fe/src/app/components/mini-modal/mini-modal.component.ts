@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, input, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-mini-modal',
-  imports: [NgIf,NgClass],
+  imports: [NgIf],
   templateUrl: './mini-modal.component.html',
   styleUrl: './mini-modal.component.css'
 })

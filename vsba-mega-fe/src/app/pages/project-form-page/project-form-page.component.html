@@ -104,7 +104,7 @@
         </div>
         <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
             <app-list label="No sub-projects found!" description="It looks like you haven't Added any sub-projects yet. To get started,
-            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children" [params]="params">
+            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children | sortList: params.sort_by : params.sort_order" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <span class="text-xl text-[#212121] font-medium">Sub Projects</span>
                     <app-button color="bg-[#3F41D1] text-[#FFFFFF]" [disabled]="params.view" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
@@ -142,3 +142,7 @@
 <app-confirmation-popup #discard_popup_button label="Discard Project?" [discard_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISCARD IT" [is_mandatory]="true" (confirm_modal_clicked)="discard_button()" (close_modal_clicked)="discard_popup_button.close()">
     This project will be Discarded and Changes will not be saved.
 </app-confirmation-popup>
+<app-confirmation-popup #disabled_project [label]="selected_disbaled_sub_project.status == 'Disabled' ?'Enable Sub-Project?' :'Disable Sub-Project'" [disabled_icon]="selected_disbaled_sub_project.status != 'Disabled' ? true : false" [enable_icon]="selected_disbaled_sub_project.status == 'Disabled' ? true : false" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" [confirmText]="selected_disbaled_sub_project.status != 'Disabled' ? 'YES, DISABLE IT' : 'YES, ENABLE IT'" [is_mandatory]="true" (confirm_modal_clicked)="disbale_project_open()" (close_modal_clicked)="disabled_project.close()">
+    This project will be {{ selected_disbaled_sub_project.status != 'Disabled' ? 'disabled' : 'enable'}} and become {{ selected_disbaled_sub_project.status != 'Disabled' ? 'inactive' : 'active'}} .
+  {{ selected_disbaled_sub_project.status != 'Disabled' ? 'You can re-enable it anytime.' : ''}}
+  </app-confirmation-popup>

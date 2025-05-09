@@ -2,11 +2,10 @@ import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 
 @Component({
   selector: 'app-time-input',
-  imports: [FormsModule, NgIf, CapitalizStringPipe],
+  imports: [FormsModule, NgIf],
   templateUrl: './time-input.component.html',
   // styleUrl: './time-input.component.css',
   providers: [
