@@ -43,7 +43,7 @@ export class ProjectListComponent {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
         { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
-        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.edit.bind(this) },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this) },
         { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
@@ -135,6 +135,10 @@ export class ProjectListComponent {
       console.error(error?.message, '');
       this.items = [];
     }
+  }
+
+  disbale_project(item: any) {
+    let response = this.ps.update(item.id, { status:'Disabled' })
   }
 
 }
