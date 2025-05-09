@@ -104,7 +104,7 @@
         </div>
         <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
             <app-list label="No sub-projects found!" description="It looks like you haven't Added any sub-projects yet. To get started,
-            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children" [params]="params">
+            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children | sortList: params.sort_by : params.sort_order" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <span class="text-xl text-[#212121] font-medium">Sub Projects</span>
                     <app-button color="bg-[#3F41D1] text-[#FFFFFF]" [disabled]="params.view" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>

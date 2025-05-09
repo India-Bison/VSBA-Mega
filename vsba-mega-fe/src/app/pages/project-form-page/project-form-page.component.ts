@@ -4,7 +4,6 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { TextInputComponent } from '../../components/text-input/text-input.component';
 import { SelectInputComponent } from '../../components/select-input/select-input.component';
 import { TextAreaComponent } from "../../components/text-area/text-area.component";
-import { DateInputComponent } from "../../components/date-input/date-input.component";
 import { WeekDaysComponent } from '../../components/week-days/week-days.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -21,10 +20,11 @@ import { ImageUploderComponent } from '../../components/image-uploder/image-uplo
 import { HalfHrsOptionsListPipe } from '../../pipes/half-hrs-options-list.pipe';
 import { SubResourceTypePipe } from '../../pipes/sub-resource-type.pipe';
 import { TimeInputComponent } from '../../components/time-input/time-input.component';
+import { SortListPipe } from '../../pipes/sort-list.pipe';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, DateInputComponent, DateInputComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink,SortListPipe],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })

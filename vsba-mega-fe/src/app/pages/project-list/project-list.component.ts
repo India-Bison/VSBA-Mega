@@ -9,7 +9,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
-import { title } from 'process';
 
 @Component({
   selector: 'app-project-list',
