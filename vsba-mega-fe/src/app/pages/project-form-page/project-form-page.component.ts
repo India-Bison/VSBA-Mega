@@ -24,7 +24,7 @@ import { SortListPipe } from '../../pipes/sort-list.pipe';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink,SortListPipe],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink, SortListPipe],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
@@ -32,12 +32,14 @@ export class ProjectFormPageComponent {
   params: any = {};
   project_start_end_date: any = {};
   slot_start_end_date: any = {};
+  selected_disbaled_sub_project: any = {}
   show_slot_dates_error: boolean = false;
   plus_minus_index: any = 0;
   today = new Date().toISOString().split('T')[0]; // 'YYYY-MM-DD'
   @ViewChild('confirmation_popup') confirmation_popup: any;
   @ViewChild('submit_Form_page') submit_Form_page: any;
   @ViewChild('discard_popup_toggle') discard_popup_toggle: any;
+  @ViewChild('disabled_sub_project') disabled_sub_project: any;
   tabList: any[] = [
     {
       name: 'Project',
@@ -243,16 +245,16 @@ export class ProjectFormPageComponent {
     }
   }
   discard_toggle() {
-      this.route.navigate([], {
-        relativeTo: this.ar,
-        queryParams: { type: this.selected_toggle.value },
-        queryParamsHandling: 'merge'
-      });
-      console.log("ooooooooo");
+    this.route.navigate([], {
+      relativeTo: this.ar,
+      queryParams: { type: this.selected_toggle.value },
+      queryParamsHandling: 'merge'
+    });
+    console.log("ooooooooo");
   }
   discard_button() {
-      this.route.navigate(['/project/list']);
-      console.log("ppppppppp");
+    this.route.navigate(['/project/list']);
+    console.log("ppppppppp");
   }
 
   cancel_discrad() {
@@ -284,7 +286,7 @@ export class ProjectFormPageComponent {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
         { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
-        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.edit.bind(this) },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this) },
         { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
@@ -306,6 +308,20 @@ export class ProjectFormPageComponent {
       this.parent_project
       window.location.reload()
     } catch (error: any) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
+  }
+  disbale_project(item: any) {
+    this.disabled_sub_project.open()
+    this.selected_disbaled_sub_project = item
+  }
+  async disbale_project_open() {
+    try {
+      let response:any = this.ps.update(this.selected_disbaled_sub_project.id, { status: 'Disabled', parent_id: parseInt(this.params.id) })
+      if (response) {
+        window.location.reload()
+      }
+    } catch (error) {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
@@ -342,6 +358,6 @@ export class ProjectFormPageComponent {
       setTimeout(() => this.show_slot_dates_error = false, 5000);
     }
   }
-  
+
 
 }

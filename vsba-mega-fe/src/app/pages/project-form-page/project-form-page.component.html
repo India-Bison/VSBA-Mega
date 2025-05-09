@@ -142,3 +142,11 @@
 <app-confirmation-popup #discard_popup_button label="Discard Project?" [discard_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISCARD IT" [is_mandatory]="true" (confirm_modal_clicked)="discard_button()" (close_modal_clicked)="discard_popup_button.close()">
     This project will be Discarded and Changes will not be saved.
 </app-confirmation-popup>
+
+
+
+
+<app-confirmation-popup #disabled_sub_project label="Disable Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISABLE IT" [is_mandatory]="true" (confirm_modal_clicked)="disbale_project_open()" (close_modal_clicked)="disabled_sub_project.close()">
+    This project will be disabled and become inactive.
+  You can re-enable it anytime.
+  </app-confirmation-popup>
