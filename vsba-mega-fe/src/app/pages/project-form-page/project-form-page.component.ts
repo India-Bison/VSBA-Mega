@@ -286,7 +286,8 @@ export class ProjectFormPageComponent {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
         { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
-        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this) },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this),show: (item:any) => item.status != 'Disabled'  },
+        { title: 'Enable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this),show: (item:any) => item.status == 'Disabled'  },
         { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
@@ -314,10 +315,12 @@ export class ProjectFormPageComponent {
   disbale_project(item: any) {
     this.disabled_sub_project.open()
     this.selected_disbaled_sub_project = item
+    console.log(this.selected_disbaled_sub_project, "selected_disbaled_sub_project");
   }
   async disbale_project_open() {
     try {
-      let response:any = this.ps.update(this.selected_disbaled_sub_project.id, { status: 'Disabled', parent_id: parseInt(this.params.id) })
+     let status_type = this.selected_disbaled_sub_project.status == 'Disabled' ? 'Pending' : 'Disabled'
+      let response:any = this.ps.update(this.selected_disbaled_sub_project.id, { status: status_type, parent_id: parseInt(this.params.id) })
       if (response) {
         window.location.reload()
       }
