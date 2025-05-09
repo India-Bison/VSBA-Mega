@@ -1,10 +1,11 @@
-<div class="flex justify-between items-center w-full mb-4 max-h-14 h-full bg-transparent">
+<div class="flex justify-between items-center w-full mb-4 max-h-14 h-full bg-transparent gap-2">
     <!-- <div class="flex justify-start items-center gap-2 text-xl font-normal h-full">
         <div class="cursor-pointer" *ngIf="label!=''">
             <span [ngClass]="{'text-[#000000] text-opacity-[37%]': sub_label=='text-[#212121]', '' : sub_label!='' }" class="cursor-pointer text-xl hover:text-indigo-600">{{label}} </span><span *ngIf="sub_label != ''" class="cursor-pointer"> / {{sub_label}}</span>
         </div>
     </div> -->
-    <div class="cursor-pointer" *ngIf="label != ''">
+    <div class="cursor-pointer flex items-center text-nowrap gap-1 truncate w-auto" *ngIf="label != ''">
+       <i (click)="gs.sidebar = !gs.sidebar" class='bx bx-menu text-xl sm:w-0 sm:text-transparent'></i>
         <!-- Label -->
         <span [ngClass]="{'text-opacity-[37%]': sub_label != ''}" (click)="goBack()" class="text-[#000000] transition-all duration-300 cursor-pointer text-xl font-normal leading-[100%] tracking-2p hover:text-indigo-600">{{label}} </span> 
         <!-- Sub Label -->

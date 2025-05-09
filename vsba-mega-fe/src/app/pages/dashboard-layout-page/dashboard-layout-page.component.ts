@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
     selector: 'app-dashboard-layout-page',
@@ -10,4 +11,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class DashboardLayoutPageComponent {
 
+    constructor(public gs : GlobalService){}
 }

@@ -2,6 +2,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { EventEmitter } from '@angular/core';
+import { GlobalService } from '../../services/global.service';
 
 
 @Component({
@@ -31,7 +32,9 @@ export class SidebarComponent {
   submenuCloseTimeout: any;
   scrollPosition = 0;
 
-  constructor(public router: Router, public ar: ActivatedRoute) { }
+  constructor(public router: Router, public ar: ActivatedRoute, public gs : GlobalService) {
+    
+  }
 
   ngOnInit() {
     this.checkCurrentUrl();
