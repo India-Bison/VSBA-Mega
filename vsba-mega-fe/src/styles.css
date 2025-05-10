@@ -6,17 +6,26 @@
 
 @layer utilities {
 
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 /* Toast Container */
 #toast-container {
   position: fixed !important;
@@ -28,7 +37,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 /* Each toast item */
-#toast-container > div {
+#toast-container>div {
   pointer-events: auto;
   padding: 10px;
   /* margin-top: 10px; */
@@ -38,7 +47,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .toast-base {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Key to align close icon to right */
+  justify-content: space-between;
+  /* Key to align close icon to right */
   background: #fff;
   border-radius: 8px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
@@ -49,6 +59,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 16px;
   color: inherit;
   gap: 10px;
+
 }
 
 /* Message with icon wrapper */
@@ -61,14 +72,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Close button */
 .toast-close-button {
-  order: 1; 
+  order: 1;
   font-size: 18px;
-  font-weight:500;
-  border: none;
+  font-weight: 500;
   color: #000;
-  cursor: pointer;
   padding: 0;
   margin-top: 10px;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: static !important;
+  margin: 0 !important;
+  color: #000 !important;
+  font-size: 18px !important;
 }
 
 /* Icon styles (before pseudo-element) */
@@ -82,6 +98,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-left: 4px solid #22c55e;
   color: #22c55e;
 }
+
 .custom-success-toast::before {
   content: '✔️';
 }
@@ -90,14 +107,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-left: 4px solid #f97316;
   color: #f97316;
 }
+
 .custom-error-toast::before {
   content: '⚠️';
+  font-size: medium;
 }
 
 .custom-warning-toast {
   border-left: 4px solid #facc15;
   color: #facc15;
 }
+
 .custom-warning-toast::before {
   content: '⚠️';
 }
@@ -106,6 +126,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-left: 4px solid #3b82f6;
   color: #3b82f6;
 }
+
 .custom-info-toast::before {
   content: 'ℹ️';
 }
@@ -114,6 +135,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-left: 4px solid #ef4444;
   color: #ef4444;
 }
+
 .custom-delete-toast::before {
   content: '❌';
 }

@@ -131,6 +131,7 @@ export class ProjectListComponent {
     }
   }
   async ngOnInit() {
+    this.gs.toastr_shows_function('error?.error?.message', '', 'error')
     this.params.page = this.currentPage;
     this.params.page_size = this.itemsPerPage;
     this.ar.queryParams.subscribe(async (params) => {
