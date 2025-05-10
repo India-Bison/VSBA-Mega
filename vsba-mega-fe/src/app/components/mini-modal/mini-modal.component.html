@@ -1,7 +1,7 @@
 <div class="relative">
     <img (click)="togglePopup($event)" [class]="image_class" [src]="image" alt="">
     <div *ngIf="isPopupOpen" [style.left.px]="buttonX" [style.top.px]="buttonY"
-        class="fixed bg-white z-[10] shadow-lg rounded">
+        class="fixed z-[10]">
         <ng-content></ng-content>
     </div>
 </div>
