@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-search-input',
-    imports: [FormsModule, ReactiveFormsModule],
+    imports: [FormsModule, ReactiveFormsModule,NgIf],
     templateUrl: './search-input.component.html',
     styleUrl: './search-input.component.css',
     standalone: true,
@@ -43,6 +44,10 @@ export class SearchInputComponent {
     this.value = inputElement.value;
     this.searchSubject.next(this.value);
   }
+  clearInput() {
+  this.value = '';
+  this.searchSubject.next(this.value);
+}
 
   // Optional ControlValueAccessor support
   control: any;
