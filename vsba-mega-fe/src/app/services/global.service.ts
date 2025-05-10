@@ -8,30 +8,41 @@ import { ToastrService } from 'ngx-toastr';
 export class GlobalService {
   sidebar:boolean = false
   constructor(public toastr: ToastrService) { }
-  toastr_shows_function(message: string, title: string, type: 'success' | 'error' | 'info' | 'warning') {
-    const toastr_config = {
-      timeOut: 20000,
-      progressBar: true,
-      closeButton: true
-    };
-    switch (type.toLowerCase()) {
-      case 'success':
-        this.toastr.success(message, title, toastr_config);
-        break;
-      case 'error':
-        this.toastr.error(message, title, toastr_config);
-        break;
-      case 'info':
-        this.toastr.info(message, title, toastr_config);
-        break;
-      case 'warning':
-        this.toastr.warning(message, title, toastr_config);
-        break;
-      default:
-        console.error(`Unknown toastr type: ${type}`);
-        break;
-    }
+  toastr_shows_function(
+  message: string,
+  title: string,
+  type: 'success' | 'error' | 'info' | 'warning' | 'delete'
+) {
+  const toastr_config = {
+  timeOut: 5000,
+  progressBar: false,
+  closeButton: true,
+  toastClass: `toast-base custom-${type}-toast`,
+  positionClass: 'toast-top-right',
+  enableHtml: true,
+};
+  switch (type.toLowerCase()) {
+    case 'success':
+      this.toastr.success(message, title, toastr_config);
+      break;
+    case 'error':
+      this.toastr.error(message, title, toastr_config);
+      break;
+    case 'info':
+      this.toastr.info(message, title, toastr_config);
+      break;
+    case 'warning':
+      this.toastr.warning(message, title, toastr_config);
+      break;
+    case 'delete':
+      this.toastr.error(message, title, toastr_config);
+      break;
+    default:
+      console.error(`Unknown toastr type: ${type}`);
+      break;
   }
+}
+
   start_end_date_formate_return(form: any,date_range: any,start_control_name: string,end_control_name: string,isRequired: boolean = false,) {
     const startControl = form.get(start_control_name);
     const endControl = form.get(end_control_name);

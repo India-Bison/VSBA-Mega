@@ -17,74 +17,103 @@
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Toast Container */
 #toast-container {
   position: fixed !important;
   top: 1.5rem !important;
   right: 1.5rem !important;
   z-index: 9999 !important;
   pointer-events: none;
-  width: 270px;
+  width: auto;
 }
 
+/* Each toast item */
 #toast-container > div {
   pointer-events: auto;
-  margin-top: 10px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  /* margin-top: 10px; */
 }
 
-
+/* Base toast style */
 .toast-base {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 270px;
-    height: 60px;
-    border-radius: 8px;
-    background: #fff;
-    padding: 10px 14px;
-    box-shadow: 2px 2px 4px 0px #00000030;
-    font-weight: 500;
-    font-size: 16px;
-    position: relative;
-  }
-  
-  .toast-base .toast-close-button {
-    color: inherit;
-    font-size: 18px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-  
-  .toast-icon {
-    margin-right: 10px;
-    font-size: 20px;
-  }
-  
-  .custom-success-toast {
-    border-left: 4px solid #38AC4A;
-    color: #38AC4A;
-  }
-  
-  .custom-success-toast .toast-icon::before {
-    content: '✔️';
-  }
-  
-  .custom-error-toast {
-    border-left: 4px solid #F97316;
-    color: #F97316;
-  }
-  
-  .custom-error-toast .toast-icon::before {
-    content: '⚠️';
-  }
-  
-  .custom-delete-toast {
-    border-left: 4px solid #EF4444;
-    color: #EF4444;
-  }
-  
-  .custom-delete-toast .toast-icon::before {
-    content: '❌';
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Key to align close icon to right */
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 16px 20px;
+  min-width: 263px;
+  max-width: 400px;
+  font-weight: 500;
+  font-size: 16px;
+  color: inherit;
+  gap: 10px;
+}
+
+/* Message with icon wrapper */
+.toast-base .toast-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+/* Close button */
+.toast-close-button {
+  order: 1; 
+  font-size: 18px;
+  font-weight:500;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 10px;
+}
+
+/* Icon styles (before pseudo-element) */
+.toast-base::before {
+  font-size: 22px;
+  content: '';
+}
+
+/* Type-specific styles */
+.custom-success-toast {
+  border-left: 4px solid #22c55e;
+  color: #22c55e;
+}
+.custom-success-toast::before {
+  content: '✔️';
+}
+
+.custom-error-toast {
+  border-left: 4px solid #f97316;
+  color: #f97316;
+}
+.custom-error-toast::before {
+  content: '⚠️';
+}
+
+.custom-warning-toast {
+  border-left: 4px solid #facc15;
+  color: #facc15;
+}
+.custom-warning-toast::before {
+  content: '⚠️';
+}
+
+.custom-info-toast {
+  border-left: 4px solid #3b82f6;
+  color: #3b82f6;
+}
+.custom-info-toast::before {
+  content: 'ℹ️';
+}
+
+.custom-delete-toast {
+  border-left: 4px solid #ef4444;
+  color: #ef4444;
+}
+.custom-delete-toast::before {
+  content: '❌';
+}
