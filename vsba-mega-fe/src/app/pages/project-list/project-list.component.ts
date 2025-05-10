@@ -35,12 +35,12 @@ export class ProjectListComponent {
   filter = false;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', plus_icon: true },
+    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true },
     { title: 'Project Code', type: 'Value', key: 'short_name', class: 'text-left' },
-    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true },
-    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true },
-    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left', sort: true },
-    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left', sort: true },
+    { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Classroom'},{id:2,name:'Computer Labs'}], },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Slot Time'},{id:2,name:'Full Day'}], },
+    { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left', filter : 'Date',  },
+    { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left', filter : 'Date',  },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
     {
       title: 'Action', type: 'Action', actions: [

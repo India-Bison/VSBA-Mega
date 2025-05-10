@@ -26,26 +26,32 @@
                   <div [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center justify-between w-full text-base font-medium">
                     {{ column.title }}
                     <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
-                    <app-mini-modal  *ngIf="column.sort == true" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
+                    <app-mini-modal  *ngIf="column?.filter" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
                       <!-- Dropdown -->
-                      <div class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
-                        <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
+                      <div class="w-auto fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                        <span *ngIf="column?.sort" class="text-[#3F41D1] text-sm font-medium">Sort</span>
                         <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
-                          <div class="w-[180px] h-8 gap-2 flex items-center justify-start" (click)="sortData(column.key, 'asc')">
-                            <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
-                          </div>
-                          <div class="flex justify-start items-center gap-2"  (click)="sortData(column.key, 'desc')">
-                            <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
-                          </div>
-  
-                          <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
-  
-                          <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
-                          <div>
-                            <div *ngFor="let item of items" class="w-[180px] h-8 flex items-center gap-2">
-                              <input type="checkbox" class="w-4 h-4" />
-                              <label class="text-black">{{item[column.key]}}</label>
+                          <ng-container *ngIf="column?.sort">
+                            <div class="w-[180px] cursor-pointer h-8 gap-2 flex items-center justify-start" (click)="sortData(column.key, 'asc')">
+                              <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
                             </div>
+                            <div class="flex justify-start cursor-pointer items-center gap-2"  (click)="sortData(column.key, 'desc')">
+                              <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
+                            </div>
+                          </ng-container>
+                          <div *ngIf="column?.filter_options" class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
+                          <span *ngIf="column?.filter_options" class="text-[#3F41D1] text-sm font-medium">Filter</span>
+                          <div>
+                            <ul class="text-gray-700">
+                              <li *ngFor="let filter of column.filter_options" class="cursor-pointer py-2 flex items-center" (click)="filter.checked = !filter.checked ;updateFilters(column)">
+                                <input type="checkbox" class="mr-2" [checked]="filter.checked" (click)="$event.stopPropagation()"/>
+                                {{ filter.name }}
+                              </li>
+                            </ul>
+                          </div>
+                          <div *ngIf="column.filter == 'Date' || column.filter == 'date'">
+                          <p class="text-[#3F41D1] text-sm font-medium mb-2">Select {{column.title}}</p>
+                             <app-date-range-picker [(ngModel)]="date" (ngModelChange)="pass_queryparams(column.title, date?.start)" label="Start Date" ></app-date-range-picker>
                           </div>
                         </div>
                       </div>
@@ -83,7 +89,7 @@
                     <div [class]="column?.class" [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center">
 
                       <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="column.title== 'Project Name' && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
+                      <img *ngIf="column.children== true && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
                       <!-- Status as Button -->
                       <ng-container *ngIf="item[column.key] == 'Approved' || item[column.key] == 'Pending' || item[column.key] == 'Rejected' || item[column.key] == 'Drafts' || item[column.key] == 'Disabled'; else normalText">
                         <div *ngIf="status == 'Border'" class="flex justify-center items-center w-full">

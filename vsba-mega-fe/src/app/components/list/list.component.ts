@@ -5,10 +5,11 @@ import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent,DateRangePickerComponent],
   templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
@@ -28,6 +29,7 @@ export class ListComponent {
   @Input()totalItems = 3;
   @Input()itemsPerPage = 10;
   active_tab = 'Project';
+  date:any = '';
   tabList = [
     {
       name: 'All',
@@ -284,5 +286,25 @@ isDropdownOpen: number | null = null;
 toggleDropdown(index: number) {
   this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
 }
+
+pass_queryparams(key: string, value: any) {
+  const queryParams: any = {};
+  queryParams[key] = {value};
+  this.router.navigate([], {
+    relativeTo: this.ar,
+    queryParams: queryParams,
+    queryParamsHandling: 'merge', // optional: merges with existing params
+  });
+}
+
+updateFilters(column: any) {
+  const selectedFilters = column.filter_options
+    .filter((opt:any) => opt.checked)
+    .map((opt:any) => opt.name)
+    .join(','); // Convert array to comma-separated string
+
+  this.pass_queryparams(column.key, selectedFilters);
+}
+
 
 }
