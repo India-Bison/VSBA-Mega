@@ -41,7 +41,7 @@ export class ProjectListComponent {
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Slot Time'},{id:2,name:'Full Day'}], },
     { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left', filter : 'Date',  },
     { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left', filter : 'Date',  },
-    { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
+    { title: 'Status', type: 'Pills', key: 'status', class: 'text-left', pill_colors: [{value : 'Approved', color: '#099956'},{value : 'Pending', color: '#DC6803'},{value : 'Rejected', color: '#F04438'},{value : 'Drafts', color: '#0118D8'},{value : 'Disabled', color: '#5E686D'},] },
     {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
