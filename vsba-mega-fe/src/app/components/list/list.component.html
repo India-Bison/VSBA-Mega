@@ -129,9 +129,9 @@
                   <div class="flex gap-2 items-center justify-center">
                     <!-- <img class="h-6 min-w-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png" alt="Menu" (click)="toggleMenu(i) ; $event.stopPropagation()" /> -->
                       <app-mini-modal image_class="h-6 min-w-6 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
-                        <div class="bg-[#E8E8F9] w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 shadow-md" (click)="$event.stopPropagation()">
+                        <div class="bg-[#E8E8F9] h-auto rounded-[4px] shadow-md" (click)="$event.stopPropagation()">
                           <ng-container *ngFor="let action of column.actions">
-                            <div *ngIf="!action.show || action.show(item)" (click)="action.action(item,i); menuVisibleIndex = null" class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                            <div *ngIf="!action.show || action.show(item)" (click)="action.action(item,i); menuVisibleIndex = null" class="flex px-3 min-w-[175px] justify-start items-center text-sm font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
                               <img [src]="action.icon" alt="" />
                               <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
                             </div>
@@ -172,9 +172,9 @@
               <td *ngIf="column.type == 'Action'" class="h-16 flex justify-center items-center">
                
                 <app-mini-modal image_class="h-6 min-w-6 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
-                  <div class="bg-[#E8E8F9] w-[200px] min-w-[112px] max-w-[280px] h-[208px] rounded-[4px] py-2 px-3 shadow-md" (click)="$event.stopPropagation()">
+                  <div class="bg-[#E8E8F9] w-[200px] min-w-[112px] max-w-[280px] h-auto rounded-[4px] py-2 shadow-md" (click)="$event.stopPropagation()">
                     <ng-container *ngFor="let action of column.actions">
-                      <div (click)="action.action(child, i)" class="flex justify-start items-center text-lg font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                      <div (click)="action.action(child, i)" class="flex justify-start items-center text-sm font-normal leading-5 tracking-wide gap-3 py-2 px-3 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
                         <img [src]="action.icon" alt="" />
                         <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
                       </div>
