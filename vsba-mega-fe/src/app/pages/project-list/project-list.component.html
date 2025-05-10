@@ -11,3 +11,7 @@ click the Create button to Add your first project" [columns]="columns" [items]="
 <app-confirmation-popup #delete_project_row label="Delete Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_project_row.close()">
   This action cannot be undone, and all associated data will be permanently removed.
 </app-confirmation-popup>
+<app-confirmation-popup #disabled_project [label]="selected_disbaled_project.status == 'Disabled' ?'Enable Project?' :'Disable Project'" [disabled_icon]="selected_disbaled_project.status != 'Disabled' ? true : false" [enable_icon]="selected_disbaled_project.status == 'Disabled' ? true : false" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" [confirmText]="selected_disbaled_project.status != 'Disabled' ? 'YES, DISABLE IT' : 'YES, ENABLE IT'" [is_mandatory]="true" (confirm_modal_clicked)="disbale_project_open()" (close_modal_clicked)="disabled_project.close()">
+  This project will be {{ selected_disbaled_project.status != 'Disabled' ? 'disabled' : 'enable'}} and become {{ selected_disbaled_project.status != 'Disabled' ? 'inactive' : 'active'}} .
+{{ selected_disbaled_project.status != 'Disabled' ? 'You can re-enable it anytime.' : ''}}
+</app-confirmation-popup>

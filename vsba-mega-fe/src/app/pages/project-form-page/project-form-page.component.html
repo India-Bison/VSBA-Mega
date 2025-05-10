@@ -1,6 +1,6 @@
 <app-header #get_value label="Project" sub_label="{{ params.view ? 'View' : (params.id ? 'Update' : 'Add') }} {{ params.parent_id ? 'Sub' : '' }} Project"></app-header>
 <div class="rounded-2xl border border-[#E4E7EC] flex flex-col w-full">
-    <div class="flex flex-col bg-white rounded-2xl shadow w-full gap-6">
+    <div class="flex h-[84vh] overflow-y-auto no-scrollbar flex-col bg-white rounded-2xl shadow w-full gap-6">
         <div class="flex items-center justify-between px-6 pt-6">
             <ng-container *ngIf="!params.parent_id">
                 <span class="text-xl font-medium leading-[100%] tracking-2p">{{ params.view ? 'View' : (params.id ? 'Update' : 'Add') }}
@@ -10,14 +10,14 @@
                 <span class="text-xl font-medium leading-[100%] tracking-2%">{{parent_project?.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{parent_project?.project_start_date | date : 'dd-MM-yyyy'}} to
                         {{parent_project?.project_end_date | date : 'dd-MM-yyyy'}})</span></span>
             </ng-container>
-            <app-toggle-tabs *ngIf="!params.parent_id" [params]="params" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
+            <app-toggle-tabs *ngIf="params.id" [params]="params" [value_on_params]="true" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
         </div>
         <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
-            <form [formGroup]="form" class="flex justify-between w-full gap-4">
-                <div class="flex flex-col gap-6 w-full">
-                    <div class="flex items-center w-full gap-6">
-                        <app-text-input [is_required]="true" class="w-full" [label]="!params.parent_id ? 'Project Name': 'Sub-Project Name'" formControlName="name"></app-text-input>
-                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-72" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"></app-text-input>
+            <form [formGroup]="form" class="flex flex-col md:flex-row w-full gap-4">
+                <div class="flex flex-col gap-6 w-full md:w-3/5">
+                    <div class="flex flex-col md:flex-row items-stretch w-full gap-4 md:gap-6">
+                        <app-text-input [is_required]="true" type="text" class="w-full" [label]="!params.parent_id ? 'Project Name' : 'Sub-Project Name'" formControlName="name"></app-text-input>
+                        <app-text-input [is_required]="true" [type_total_latter]="10" class="w-full md:w-80" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"> </app-text-input>
                     </div>
                     <app-image-uploder [accept]="'.jpg,.jpeg,.webp,.png'" [multiple]="false" formControlName="project_logo"></app-image-uploder>
                     <app-radio [is_required]="true" label="Full Venue Required" selected_value="yes" formControlName="full_venue_required" [options]="[
@@ -25,8 +25,8 @@
                       { label: 'No', value: 'no' }
                     ]">
                     </app-radio>
-                    <app-multi-search *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
-                    <app-multi-search *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
+                    <app-multi-search [isRequired]="true" *ngIf="form.get('type')?.value != 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="['Computer Labs','Classroom']"></app-multi-search>
+                    <app-multi-search [isRequired]="true" *ngIf="form.get('type')?.value == 'Sub-Project'" label="Resource Type" formControlName="resource_type" [options]="parent_project?.resource_type| subResourceType"></app-multi-search>
                     <app-text-area [max_words_type]="100" label="Short Description" [is_required]="true" formControlName="description"></app-text-area>
                     <app-radio [is_required]="true" label="Audit Required" selected_value="Comprehensive Audit" formControlName="audit_required" [options]="[
                       { label: 'Comprehensive Audit', value: 'Comprehensive Audit' },
@@ -37,17 +37,17 @@
                     </app-radio>
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date *</label>
-                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date"
-                            (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')"
+                            [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                         <div *ngIf="form.get('project_start_date')?.errors?.['required'] && (form.get('project_start_date')?.touched || form.get('project_start_date')?.dirty)">
                             <p class="text-red-500">Project Date is required.</p>
                         </div>
                     </div>
                     <app-week-days formControlName="week_days"></app-week-days>
                 </div>
-                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
+                <div class="space-y-6 bg-[#E8E8F9] p-6 rounded-2xl border-[1px] w-full md:w-2/5  max-w-xl mx-auto overflow-y-auto max-h-[600px] no-scrollbar">
                     <div class="flex justify-between items-center">
-                        <app-radio label="Slot Type" selected_value="Time Slot" formControlName="slot_type" [options]="[
+                        <app-radio [is_required]="true" label="Slot Type" selected_value="Full Day" formControlName="slot_type" [options]="[
                         { label: 'Full Day', value: 'Full Day' },
                         { label: 'Time Slot', value: 'Time Slot' }
                         
@@ -68,18 +68,18 @@
                                 </i>
                             </div>
                             <div *ngIf="plus_minus_index == i" class="flex flex-col gap-4">
-                                <app-date-range-picker [min]="form.get('project_start_date')?.value" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                                <app-date-range-picker (click)="show_error_on_slot_dates()" [disabled]="!form.get('project_start_date')?.value" [not_allowed_past_date]="true" [min]="form.get('project_start_date')?.value > today ? form.get('project_start_date')?.value : today" [max]="form.get('project_end_date')?.value" class="w-full" [(ngModel)]="slot_start_end_date[i]" (ngModelChange)="gs.start_end_date_formate_return(slot, slot_start_end_date[i], 'slot_start_date', 'slot_end_date')" [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                                <div *ngIf="slot.get('slot_start_date')?.errors?.['required'] && (slot.get('slot_start_date')?.touched || slot.get('slot_start_date')?.dirty)">
+                                    <p class="text-red-500">Slot Start Date & End Date is required.</p>
+                                </div>
+                                <div *ngIf="show_slot_dates_error">
+                                    <p class="text-red-500">Please select Project Start Date and End Date first.</p>
+                                </div>
                                 <div class="flex justify-between w-full gap-2 items-center">
                                     <app-time-input *ngIf="form.get('slot_type')?.value != 'Full Day'" [ngClass]="params.view ? 'w-full' : 'w-52'" class="w-48" formControlName="slot_time"></app-time-input>
-                                    <div class="flex w-full gap-4 items-center" *ngIf="form.get('slot_type')?.value == 'Full Day'">
-                                        <div class="flex flex-col gap-2 w-full">
-                                            <label class="text-gray-500  w-full font-medium text-sm">Start Time</label>
-                                            <app-time-input class="w-full" formControlName="start_time"></app-time-input>
-                                        </div>
-                                        <div class="flex flex-col gap-2 w-full">
-                                            <label class="text-gray-500 w-full font-medium text-sm">End Time</label>
-                                            <app-time-input class="w-full" formControlName="end_time"></app-time-input>
-                                        </div>
+                                    <div class="flex flex-col md:flex-row w-full gap-4 items-stretch" *ngIf="form.get('slot_type')?.value == 'Full Day'">
+                                        <app-time-input label="Start Time" class="w-full" formControlName="start_time"></app-time-input>
+                                        <app-time-input label="End Time" class="w-full" formControlName="end_time"></app-time-input>
                                     </div>
                                     <ng-container *ngIf="form.get('slot_type')?.value != 'Full Day'" class="flex items-center">
                                         <app-select-input label="Hours" formControlName="hours" [options]=" '' | halfHrsOptionsList : 30" [ngClass]="params.view ? 'w-full' : 'w-52'"></app-select-input>
@@ -104,36 +104,45 @@
         </div>
         <div *ngIf="params.type == 'Sub-Project'" class="w-full flex flex-col gap-6 px-6">
             <app-list label="No sub-projects found!" description="It looks like you haven't Added any sub-projects yet. To get started,
-            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children" [params]="params">
+            click the Create button to Add your first sub-project" [pagination]="false" [status]="'Dotted'" [columns]="columns" [items]="parent_project?.children | sortList: params.sort_by : params.sort_order" [params]="params">
                 <div class="flex items-center w-full justify-between">
                     <span class="text-xl text-[#212121] font-medium">Sub Projects</span>
                     <app-button color="bg-[#3F41D1] text-[#FFFFFF]" [disabled]="params.view" (click)="add_sub_project()" label="ADD SUB PROJECT"></app-button>
                 </div>
             </app-list>
         </div>
-        <div class="flex rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
-        <ng-container *ngIf="!params.view">
-            <app-button color="border-[#FA2912] text-[#FA2912]" (click)="discard()" label="DISCARD"></app-button>
-            <app-button color="border-[#3F41D1] text-[#3F41D1]" label="SAVE AS DRAFT"></app-button>
-            <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="params.type == 'Sub-Project' ? submit_popup_on_subproject_list.open()  :add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
-            <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
-            <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
-        </ng-container>
-        <ng-container *ngIf="params.view">
-            <app-button color="" routerLink="/project/list" label="Back To Page"></app-button>
-        </ng-container>
+        <div class="flex sticky rounded-b-2xl px-6 py-4 items-center justify-end gap-6 w-full bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] bg-white">
+            <ng-container *ngIf="!params.view">
+                <app-button  color="border-[#FA2912] text-[#FA2912]" (click)="discard_popup_button.open()" label="DISCARD"></app-button>
+                <app-button  color="border-[#3F41D1] text-[#3F41D1]" (click)="save_as_darft()" label="SAVE AS DRAFT"></app-button>
+                <app-button *ngIf="!params.id" color="bg-[#E697AB] text-[#310000]" (click)="params.type == 'Sub-Project' ? submit_popup_on_subproject_list.open()  :add_sub_project_confirmation.open()" label="SUBMIT"></app-button>
+                <app-button *ngIf="params.id && !params.parent_id" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+                <app-button *ngIf="get_value.sub_label == 'Update Sub Project'" color="bg-[#E697AB] text-[#310000]" (click)="update()" label="UPDATE"></app-button>
+            </ng-container>
+            <ng-container *ngIf="params.view">
+                <app-button color="" routerLink="/project/list" label="Back To Page"></app-button>
+            </ng-container>
         </div>
     </div>
 </div>
 
-<app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation label="Continue without sub-project?" cancelText="SUBMIT" confirmText="ADD SUB-PROJECT" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
-    {{params.parent_id? 'Add more Sub Projects?' : 'Proceed without adding subprojects? You can add them later if needed.'}}
+<app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation [label]="params.parent_id ? 'Submit Sub-Project?':'Continue without sub-project?'" cancelText="SUBMIT" confirmText="ADD SUB-PROJECT" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+    {{params.parent_id? "You're about to Submit a new sub-project Make sure all details are correct before submitting." : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
 <app-confirmation-popup [edit_icon]="true" #submit_popup_on_subproject_list label="Submit Project?" cancelText="CANCEL" confirmText="SUBMIT" [is_mandatory]="true" (confirm_modal_clicked)="back_to_page()" (close_modal_clicked)="back_to_page()">
     You're about to Submit a new project.
     Make sure all details are correct before submitting.
 </app-confirmation-popup>
-<app-confirmation-popup #delete_sub_project_row label="Delete Sub-Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()"
-    (close_modal_clicked)="delete_sub_project_row.close()">
+<app-confirmation-popup #delete_sub_project_row label="Delete Sub-Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_sub_project_row.close()">
     This action cannot be undone, and all associated data will be permanently removed.
 </app-confirmation-popup>
+<app-confirmation-popup #discard_popup_toggle label="Discard Project?" [discard_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISCARD IT" [is_mandatory]="true" (confirm_modal_clicked)="discard_toggle()" (close_modal_clicked)="cancel_discrad()">
+    This project will be Discarded and Changes will not be saved.
+</app-confirmation-popup>
+<app-confirmation-popup #discard_popup_button label="Discard Project?" [discard_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DISCARD IT" [is_mandatory]="true" (confirm_modal_clicked)="discard_button()" (close_modal_clicked)="discard_popup_button.close()">
+    This project will be Discarded and Changes will not be saved.
+</app-confirmation-popup>
+<app-confirmation-popup #disabled_project [label]="selected_disbaled_sub_project.status == 'Disabled' ?'Enable Sub-Project?' :'Disable Sub-Project'" [disabled_icon]="selected_disbaled_sub_project.status != 'Disabled' ? true : false" [enable_icon]="selected_disbaled_sub_project.status == 'Disabled' ? true : false" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" [confirmText]="selected_disbaled_sub_project.status != 'Disabled' ? 'YES, DISABLE IT' : 'YES, ENABLE IT'" [is_mandatory]="true" (confirm_modal_clicked)="disbale_project_open()" (close_modal_clicked)="disabled_project.close()">
+    This project will be {{ selected_disbaled_sub_project.status != 'Disabled' ? 'disabled' : 'enable'}} and become {{ selected_disbaled_sub_project.status != 'Disabled' ? 'inactive' : 'active'}} .
+  {{ selected_disbaled_sub_project.status != 'Disabled' ? 'You can re-enable it anytime.' : ''}}
+  </app-confirmation-popup>

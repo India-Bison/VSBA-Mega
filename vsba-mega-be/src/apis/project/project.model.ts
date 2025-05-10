@@ -58,7 +58,7 @@ let project_model = {
     allowNull: true,
   },
   project_logo: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true,
   },
   parent_id: {

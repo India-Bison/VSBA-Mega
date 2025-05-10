@@ -9,7 +9,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
-import { title } from 'process';
+import { set } from 'date-fns';
 
 @Component({
   selector: 'app-project-list',
@@ -22,6 +22,9 @@ export class ProjectListComponent {
   ar = inject(ActivatedRoute)
   constructor(public gs: GlobalService, public route: Router, public ps: ProjectService) { }
   @ViewChild('delete_project_row') delete_project_row: any
+  @ViewChild('disabled_project') disabled_project: any
+  selected_disbaled_project: any = {}
+  selected_delete_project: any = {}
   params: any = {}
   list: any = {};
   items: any[] = []
@@ -29,13 +32,13 @@ export class ProjectListComponent {
   itemsPerPage = 10;
   totalItems = 0;
   totalPages = 50;
-  filter= false;
+  filter = false;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', plus_icon: true },
-    { title: 'Project Code', type: 'Value', key: 'short_name',  class: 'text-left' },
+    { title: 'Project Code', type: 'Value', key: 'short_name', class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true },
-    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, },
+    { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true },
     { title: 'Start Date', type: 'Value', key: 'project_start_date', class: 'text-left', sort: true },
     { title: 'End Date', type: 'Value', key: 'project_end_date', class: 'text-left', sort: true },
     { title: 'Status', type: 'Value', key: 'status', class: 'text-left' },
@@ -43,7 +46,8 @@ export class ProjectListComponent {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
         { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
-        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.edit.bind(this) },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this), show: (item: any) => item.status != 'Disabled' },
+        { title: 'Enable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this), show: (item: any) => item.status == 'Disabled' },
         { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
@@ -93,13 +97,12 @@ export class ProjectListComponent {
 
   async edit(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', parent_id: item.parent_id } });
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
   }
-  selected_delete_project: any = {}
   async delete(item: any, index: any) {
     this.delete_project_row.open()
     this.selected_delete_project = item
@@ -112,7 +115,24 @@ export class ProjectListComponent {
       // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
     }
   }
+  disbale_project(item: any) {
+    this.disabled_project.open()
+    this.selected_disbaled_project = item
+  }
+  async disbale_project_open() {
+    try {
+      let status_type = this.selected_disbaled_project.status == 'Disabled' ? 'Pending' : 'Disabled'
+      let response = this.ps.update(this.selected_disbaled_project.id, { status: status_type })
+      setTimeout(async () => {
+        await this.get_project(this.params)
+      }, 2000)
+    } catch (error) {
+      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    }
+  }
   async ngOnInit() {
+    this.params.page = this.currentPage;
+    this.params.page_size = this.itemsPerPage;
     this.ar.queryParams.subscribe(async (params) => {
       this.params = params;
       await this.get_project(this.params);
@@ -124,8 +144,9 @@ export class ProjectListComponent {
   }
   async get_project(params: any) {
     try {
-      const queryParams = { ...params, page: this.currentPage, };
-      const response = await this.ps.get_list(queryParams);
+      // const queryParams = { ...params, page: this.currentPage, };
+      // params.type = 'Sub-Project'
+      const response = await this.ps.get_list(params);
       this.totalItems = response?.count || 0;
       const apiData = response?.data || [];
       this.items = apiData;

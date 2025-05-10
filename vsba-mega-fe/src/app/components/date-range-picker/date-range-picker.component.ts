@@ -36,6 +36,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() min:any = '';
   @Input() max:any = '';
   @Input() not_allowed_past_date = false;
+  @Input() disabled = false;
   params: any = {}
 
   value: { start: Date | null; end: Date | null } = { start: null, end: null };

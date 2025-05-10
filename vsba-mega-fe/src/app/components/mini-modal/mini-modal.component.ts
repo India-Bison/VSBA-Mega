@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, input, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-mini-modal',
-  imports: [NgIf,NgClass],
+  imports: [NgIf],
   templateUrl: './mini-modal.component.html',
   styleUrl: './mini-modal.component.css'
 })
@@ -25,7 +25,41 @@ export class MiniModalComponent {
         this.closePopup();
       }
     });
+  
+    this.renderer.listen('window', 'scroll', () => {
+      if (this.isPopupOpen) {
+        this.updatePopupPosition();
+      }
+    });
   }
+
+  updatePopupPosition() {
+    if (!this.isPopupOpen) return;
+  
+    const imageElement = this.elRef.nativeElement.querySelector('img');
+    if (!imageElement) return;
+  
+    const rect = imageElement.getBoundingClientRect();
+    const parentRect = this.elRef.nativeElement.getBoundingClientRect();
+    const offsetX = 200;
+    const offsetY = 250;
+  
+    if (this.position === 'bottom-left') {
+      this.buttonX = rect.left - parentRect.left - offsetX;
+      this.buttonY = rect.bottom - parentRect.top;
+    } else if (this.position === 'bottom-right') {
+      this.buttonX = rect.right - parentRect.left;
+      this.buttonY = rect.bottom - parentRect.top;
+    } else if (this.position === 'top-left') {
+      this.buttonX = rect.left - parentRect.left - offsetX;
+      this.buttonY = Math.max(rect.top - parentRect.top - offsetY, 10);
+    } else if (this.position === 'top-right') {
+      this.buttonX = rect.right - parentRect.left;
+      this.buttonY = Math.max(rect.top - parentRect.top - offsetY, 10);
+    }
+  }
+  
+  
 
   togglePopup(event: MouseEvent) {
     if (MiniModalComponent.activePopup && MiniModalComponent.activePopup !== this) {

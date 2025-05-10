@@ -1,36 +1,39 @@
-<div *ngIf="is_popup_visible"
-    class="fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full bg-black bg-opacity-70 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-lg w-[461px] p-6">
+<div *ngIf="is_popup_visible" class="fixed top-0 left-0 z-40 flex items-center justify-center w-full h-full bg-black bg-opacity-70 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-lg w-full max-w-md p-6 sm:p-8">
         <div class="flex justify-end">
-            <button (click)="close()" type="button" *ngIf="show_cancel_icon"
-                class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-full text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+            <button (click)="close()" type="button" *ngIf="show_cancel_icon" class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-full text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                 <i class="bx bx-x text-xl"></i>
                 <span class="sr-only">Close modal</span>
             </button>
         </div>
         <div class="flex flex-col items-center justify-center gap-5">
             <div class="rounded-full flex">
-                <div *ngIf="delete_icon == true" class="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center">
-                    <img src="../../../assets/delete_icon_red.svg" class="w-10 h-10" alt=""/>
+                <div *ngIf="delete_icon" class="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center">
+                    <img src="../../../assets/delete_icon_red.svg" class="w-10 h-10" alt="" />
                 </div>
-                <div *ngIf="edit_icon == true" class="w-20 h-20 bg-[#E1E8F5] rounded-full flex items-center justify-center">
-                    <img src="../../../assets/Vector.svg" class="w-10 h-10" alt=""/>
+                <div *ngIf="edit_icon" class="w-20 h-20 bg-[#E1E8F5] rounded-full flex items-center justify-center">
+                    <img src="../../../assets/Vector.svg" class="w-10 h-10" alt="" />
                 </div>
-                <!-- <i [ngClass]="icon" class="text-3xl text-red-300 bx bx-x"></i> -->
+                <div *ngIf="discard_icon" class="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center">
+                    <i class='bx bx-x text-5xl text-[#FA2912]'></i>
+                </div>
+                <div *ngIf="enable_icon" class="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center">
+                    <i class='bx bx-toggle-right text-5xl text-[#FA2912]'></i>
+                </div>
+                <div *ngIf="disabled_icon" class="w-20 h-20 bg-[#FFF0F0] rounded-full flex items-center justify-center">
+                    <i class='bx bx-toggle-left text-5xl text-[#FA2912]'></i>
+                </div>
             </div>
-            <span class="text-xl font-medium leading-[100%] text-[#212121] text-center tracking-1p">{{ label }}</span>
-            <span class="text-center text-[#666666] text-base tracking-1p">
+            <span class="text-xl font-medium leading-snug text-[#212121] text-center tracking-wide">{{ label }}</span>
+            <span class="text-center text-[#666666] text-base tracking-wide">
                 <ng-content></ng-content>
             </span>
         </div>
-        <div class="flex justify-center items-center gap-6 mt-5">
-            <button (click)="close()"
-                class="w-48 h-10 capitalize bg-[#E1E8F5] text-blue-600 font-medium text-sm leading-[100%] tracking-1p text-center p-3 rounded-full">
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+            <button (click)="close()" class="w-full sm:w-48 h-10 capitalize bg-[#E1E8F5] text-blue-600 font-medium text-sm p-3 rounded-full">
                 {{ cancelText }}
             </button>
-            <button (click)="confirm()"
-                class="w-48 h-10 capitalize text-white bg-[#3F41D1] font-medium text-sm leading-100%[] tracking-1p text-center p-3 rounded-full"
-                [ngClass]="confirmColor">
+            <button (click)="confirm()" class="w-full sm:w-48 h-10 capitalize text-white bg-[#3F41D1] font-medium text-sm p-3 rounded-full" [ngClass]="confirmColor">
                 {{ confirmText }}
             </button>
         </div>
