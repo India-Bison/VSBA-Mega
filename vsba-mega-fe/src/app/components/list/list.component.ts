@@ -307,5 +307,9 @@ updateFilters(column: any) {
   this.pass_queryparams(column.key, selectedFilters);
 }
 
+get_seleted_ids(event:any){
+  console.log(event);
+  
+}
 
 }

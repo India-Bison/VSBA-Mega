@@ -62,9 +62,9 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-sm relative font-normal text-[#1E1E1E] tracking-[0.32px] ">
+        <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
             <!-- Main Row -->
-           <app-table-row [items]="items" [columns]="columns"></app-table-row>
+           <app-table-row [items]="items" [columns]="columns" (selectedIdsChange)="get_seleted_ids($event)" ></app-table-row>
 
             <!-- Child Rows -->
             

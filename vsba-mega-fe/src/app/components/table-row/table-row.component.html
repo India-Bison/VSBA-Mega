@@ -1,25 +1,24 @@
  <ng-container *ngFor="let item of items; let i = index">
-<tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
-              <ng-container *ngFor="let column of columns">
+<tr [ngClass]="{'bg-[#F7F7F7]': item.expanded,'border-l-[#DEB900]': isChild}" class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
+              <ng-container *ngFor="let column of columns; let colIndex = index">
                 <td *ngIf="column.type == 'Index'" class="px-4 h-16">
                   <div class="flex justify-center items-center">
-                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
+                    <input *ngIf="!isChild" class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
                   </div>
                 </td>
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true, 'sticky right-0 left-0 bg-white mt-[1px]' : column.sticky == true}" class="px-4 h-16 items-center">
+                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true, 'sticky right-0 left-0 bg-white mt-[1px]' : column.sticky == true,'text-[#666666]': isChild}" class="px-4 h-16 items-center">
                   <div class="flex items-center gap-2">
                     <img *ngIf="column.children== true && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />  
                     <ng-container>
                       <div [class]="column?.class" class="flex flex-row gap-2 items-center">
-  
-                        <!-- Clickable Toggle Icon for Children -->
+                        <input *ngIf="isChild && colIndex == 1" class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected"  (click)="onCheckboxClick($event, item)">
                          <!-- Default Text Value -->
                          <ng-container>
                              <span class="truncate">
                                {{ column.uppercase ? (item[column.key] | uppercase) : (item[column.key] || '-') }}
                              </span>
                          </ng-container>
-                        <img *ngIf="column.children == true" class="cursor-pointer min-w-5 max-w-5 opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
+                        <img *ngIf="column.children == true && !isChild" class="cursor-pointer min-w-5 max-w-5 opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
                       </div>
                     </ng-container>
                   </div>
@@ -75,7 +74,7 @@
             <td class="contents">
               <table class="contents">
                 <tbody class="contents">
-                  <app-table-row [items]="item.children" [columns]="columns"></app-table-row>
+                  <app-table-row [items]="item.children" [columns]="columns" [isChild]="true"></app-table-row>
                 </tbody>
               </table>
             </td>

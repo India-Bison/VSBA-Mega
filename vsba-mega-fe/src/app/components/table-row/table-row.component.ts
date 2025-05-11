@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, NgSwitch, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,15 +15,16 @@ export class TableRowComponent {
 
   @Input() items: any[] = []; 
   @Input() columns: any;
+  @Output() selectedIdsChange = new EventEmitter<any>();
 
   toggleExpand(item: any) {
     item.expanded = !item.expanded;
   }
 
-  toggleParentSelection(item: any) {
-    item.selected = !item.selected;
-    // you can emit event if needed
-  }
+  // toggleParentSelection(item: any) {
+  //   item.selected = !item.selected;
+  //   // you can emit event if needed
+  // }
 
 
 
@@ -36,6 +37,8 @@ export class TableRowComponent {
   @Input()totalPages = 1;
   @Input()totalItems = 3;
   @Input()itemsPerPage = 10;
+  @Input() isChild: boolean = false;
+
   active_tab = 'Project';
   tabList = [
     {
@@ -189,6 +192,39 @@ isDropdownOpen: number | null = null;
 toggleDropdown(index: number) {
   this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
 }
+onCheckboxClick(event: MouseEvent, item: any): void {
+  event.stopPropagation(); // Prevent the click event from bubbling up
+  this.toggleParentSelection(item); // Optional: still call your selection method
+}
+
+toggleParentSelection(item: any): void {
+  item.selected = !item.selected; // This toggles the selection
+
+  // If item has children, update their selection as well
+  if (item.children && item.children.length) {
+    item.children.forEach((child: any) => child.selected = item.selected);
+  }
+
+  this.emitSelectedIds(); // Emit the selected IDs
+}
+
+emitSelectedIds(): void {
+  const selectedIds: any[] = [];
+
+  this.items.forEach(item => {
+    if (item.selected) selectedIds.push(item.id);
+
+    if (item.children && item.children.length) {
+      item.children.forEach((child:any) => {
+        if (child.selected) selectedIds.push(child.id);
+      });
+    }
+  });
+
+  this.selectedIdsChange.emit(selectedIds); // Emit to parent
+}
+
+
 
 
 }
