@@ -6,10 +6,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component';
+import { TableRowComponent } from '../table-row/table-row.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent,DateRangePickerComponent],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent,DateRangePickerComponent,TableRowComponent],
   templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,

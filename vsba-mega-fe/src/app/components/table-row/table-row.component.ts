@@ -3,16 +3,17 @@ import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList 
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 
 @Component({
   selector: 'app-table-row',
-  imports: [NgFor,NgIf, UpperCasePipe, NgClass,FormsModule,JsonPipe,NgSwitch,CommonModule],
+  imports: [NgFor,NgIf, UpperCasePipe, NgClass,FormsModule,JsonPipe,NgSwitch,CommonModule,TableRowComponent,MiniModalComponent,],
   templateUrl: './table-row.component.html',
   styleUrl: './table-row.component.css'
 })
 export class TableRowComponent {
 
-  @Input() items: any;
+  @Input() items: any[] = []; 
   @Input() columns: any;
 
   toggleExpand(item: any) {
@@ -102,7 +103,6 @@ export class TableRowComponent {
   constructor(public gs: GlobalService, public router : Router, public ar:ActivatedRoute) { }
   ngOnInit(): void {
     // this.items = this.gs.items
-     this.loadDummyData();
     console.log(this.items, 'Items in List Component');
   }
   sortData(key: string, order: 'asc' | 'desc') {
@@ -117,98 +117,7 @@ export class TableRowComponent {
   }
 
   // Dummy data with children
-  loadDummyData() {
-    this.items = [
-      {
-        id: 1,
-        type: 'Project',
-        name: 'Rudra',
-        resource_type: 'Computer Labs, Classrooms, swimming pool',
-        slot_type: 'Full Day',
-        startdate_enddate: '12/03/2025 - 25/03/2025',
-        status: 'Rejected',
-        children: [
-          {
-            id: 4,
-            type: 'Project',
-            name: 'Bhavesh',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Pending',
-             children: [
-          {
-            id: 4,
-            type: 'Project',
-            name: 'Bhavesh',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Pending',
-          },
-          {
-            id: 5,
-            type: 'Project',
-            name: 'Arun',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Pending'
-          },
-        ]
-          },
-          {
-            id: 5,
-            type: 'Project',
-            name: 'Arun',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Pending'
-          },
-        ]
-      },
-      {
-        id: 2,
-        type: 'Project',
-        name: 'Bhavesh',
-        resource_type: 'Computer Labs, Classrooms, swimming pool',
-        slot_type: 'Full Day',
-        startdate_enddate: '12/03/2025 - 25/03/2025',
-        status: 'Pending',
-        children: [
-          {
-            id: 4,
-            type: 'Project',
-            name: 'Bhavesh',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Pending'
-          },
-        ]
-      },
-      {
-        id: 3,
-        type: 'Project',
-        name: 'Mayur',
-        resource_type: 'Computer Labs, Classrooms, swimming pool',
-        slot_type: 'Full Day',
-        startdate_enddate: '12/03/2025 - 25/03/2025',
-        status: 'Approved',
-        children: [
-          {
-            type: 'Project',
-            name: 'Shreeram',
-            resource_type: 'Computer Labs, Classrooms, swimming pool',
-            slot_type: 'Full Day',
-            startdate_enddate: '12/03/2025 - 25/03/2025',
-            status: 'Approved',
-          }
-        ]
-      }
-    ];
-  }
+  
 
   // Toggle sub-column expansion per row and column
   toggleSubColumn(rowIndex: number, columnKey: string): void {
