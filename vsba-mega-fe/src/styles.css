@@ -36,30 +36,34 @@ body {
   width: auto;
 }
 
-/* Each toast item */
-#toast-container>div {
-  pointer-events: auto;
-  padding: 10px;
-  /* margin-top: 10px; */
+#toast-container > div {
+  max-width: 400px !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
-/* Base toast style */
+
 .toast-base {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* Key to align close icon to right */
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* icon | message | close */
+  align-items: start;
   background: #fff;
   border-radius: 8px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
   padding: 16px 20px;
-  min-width: 263px;
   max-width: 400px;
+  width: 100%;
   font-weight: 500;
   font-size: 16px;
   color: inherit;
   gap: 10px;
-
+  word-break: break-word;
+  white-space: normal;
+  position: relative;
+  box-sizing: border-box;
 }
 
 /* Message with icon wrapper */
