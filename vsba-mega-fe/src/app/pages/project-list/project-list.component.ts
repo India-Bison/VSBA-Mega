@@ -158,4 +158,9 @@ export class ProjectListComponent {
     }
   }
 
+  get_seleted_ids(event:any){
+  console.log(event,'project-list component');
+  
+}
+
 }

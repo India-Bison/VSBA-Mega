@@ -310,8 +310,8 @@ updateFilters(column: any) {
 }
 
 get_seleted_ids(event:any){
-  console.log(event);
-  
+  // console.log(event);
+  this.selectedIdsChange.emit(event); 
 }
 
 }
