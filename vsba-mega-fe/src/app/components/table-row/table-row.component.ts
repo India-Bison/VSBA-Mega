@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, NgSwitch, UpperCasePipe } from '@angular/common';
+import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, NgStyle, NgSwitch, UpperCasePipe } from '@angular/common';
 import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
@@ -7,7 +7,7 @@ import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 
 @Component({
   selector: 'app-table-row',
-  imports: [NgFor,NgIf, UpperCasePipe, NgClass,FormsModule,JsonPipe,NgSwitch,CommonModule,TableRowComponent,MiniModalComponent,],
+  imports: [NgFor,NgIf, UpperCasePipe, NgClass,FormsModule,JsonPipe,NgSwitch,CommonModule,TableRowComponent,MiniModalComponent,NgStyle],
   templateUrl: './table-row.component.html',
   styleUrl: './table-row.component.css'
 })
@@ -20,6 +20,12 @@ export class TableRowComponent {
   toggleExpand(item: any) {
     item.expanded = !item.expanded;
   }
+  getPillColor(column: any, item: any): string {
+  const status = item[column.key];
+  const pill = column.pill_colors?.find((p: any) => p.value === status);
+  return pill?.color || '#000'; // Default to black if no match
+}
+
 
   // toggleParentSelection(item: any) {
   //   item.selected = !item.selected;

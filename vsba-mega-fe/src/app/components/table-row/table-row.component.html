@@ -31,25 +31,23 @@
                 </td>
 
                 <td *ngIf="column.type == 'Pills'">
-                   <ng-container >
+                   <ng-container *ngIf="!isChild">
                         <div class="flex justify-center items-center w-full">
-                          <button class="px-[10px] py-1 rounded-md border text-sm font-medium" [ngClass]="{
-                                     'text-[#03A600] border-[#03A600]': item[column.key] == 'Approved',
-                                     'text-[#DF6E12] border-[#DF6E12]': item[column.key] == 'Pending',
-                                     'text-red-500 border-red-500': item[column.key] == 'Rejected',
-                                     'text-blue-500 border-blue-500': item[column.key] == 'Drafts',
-                                     'text-gray-500 border-gray-500': item[column.key] == 'Disabled',
-                                   }">
+                          <button class="px-[10px] py-1 rounded-md border text-sm font-medium" 
+                           [ngStyle]="{
+                             'color': getPillColor(column, item),
+                             'border-color': getPillColor(column, item)
+                           }">
                             {{ item[column.key] }}
                           </button>
                         </div>
-                        <!-- <div *ngIf="status == 'Dotted'" class="flex justify-center items-center">
-                          <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{ 'text-[#03A600]': item[column.key] == 'Approved', 'text-[#DF6E12]': item[column.key] == 'Pending', 'text-red-500 ': item[column.key] == 'Rejected'}">
-                            <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{'bg-[#03A600]': item[column.key] == 'Approved','bg-[#DF6E12]': item[column.key] == 'Pending','bg-red-500 ': item[column.key] == 'Rejected' }"></div>
-                            {{ item[column.key] }}
-                          </button>
-                        </div> -->
                       </ng-container>
+                      <div *ngIf="isChild" class="flex justify-center items-center">
+                        <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngStyle]="{'color': getPillColor(column, item),'border-color': getPillColor(column, item),}">
+                          <div class="h-2 w-2 rounded-full mr-[6px]" [ngStyle]="{'color': getPillColor(column, item),'border-color': getPillColor(column, item),'background-color': getPillColor(column, item)}"></div>
+                          {{ item[column.key] }}
+                        </button>
+                      </div>
                 </td>
 
                 <td *ngIf="column.type == 'Action'" class="px-4 h-16 mt-4">
