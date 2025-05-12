@@ -166,6 +166,8 @@ export class ProjectFormPageComponent {
       if (!this.params.parent_id && this.params.type == 'Project') {
         formData.type = 'Project'
         let response: any = await this.ps.add(formData)
+        this.gs.toastr_shows_function(response.message, '', 'success')
+
         if (route == 'Sub-Project') {
           console.log(response);
           this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: response.data.id }, queryParamsHandling: 'merge', })
@@ -176,9 +178,12 @@ export class ProjectFormPageComponent {
         formData.parent_id = parseInt(this.params.parent_id)
         formData.type = 'Sub-Project'
         let response = await this.ps.add(formData)
+        this.gs.toastr_shows_function(response.message, '', 'success')
+
         this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
       }
     } else {
+      this.gs.toastr_shows_function('Please fill all required fields', '', 'error')
       this.form.markAllAsTouched();
     }
   }
@@ -192,9 +197,11 @@ export class ProjectFormPageComponent {
         data.type = 'Project'
       }
       let response: any = await this.ps.update(this.params.id, data);
+      this.gs.toastr_shows_function(response.message, '', 'success')
+
       window.history.back()
     } catch (error: any) {
-      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+      this.gs.toastr_shows_function(error?.error?.message, '', 'error')
     }
   }
   add_sub_project() {
@@ -286,8 +293,8 @@ export class ProjectFormPageComponent {
       title: 'Action', type: 'Action', actions: [
         { title: 'View', icon: '../../../assets/view_icon.svg', action: this.view.bind(this) },
         { title: 'Edit', icon: '../../../assets/edit_icon.svg', action: this.edit.bind(this) },
-        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this),show: (item:any) => item.status != 'Disabled'  },
-        { title: 'Enable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this),show: (item:any) => item.status == 'Disabled'  },
+        { title: 'Disable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this), show: (item: any) => item.status != 'Disabled' },
+        { title: 'Enable', icon: '../../../assets/Disable.svg', action: this.disbale_project.bind(this), show: (item: any) => item.status == 'Disabled' },
         { title: 'Delete', icon: '../../../assets/delete_icon_red.svg', action: this.delete.bind(this) },
       ]
     },
@@ -309,7 +316,7 @@ export class ProjectFormPageComponent {
       this.parent_project
       window.location.reload()
     } catch (error: any) {
-      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+      this.gs.toastr_shows_function(error?.error?.message, '', 'error')
     }
   }
   disbale_project(item: any) {
@@ -319,13 +326,13 @@ export class ProjectFormPageComponent {
   }
   async disbale_project_open() {
     try {
-     let status_type = this.selected_disbaled_sub_project.status == 'Disabled' ? 'Pending' : 'Disabled'
-      let response:any = this.ps.update(this.selected_disbaled_sub_project.id, { status: status_type, parent_id: parseInt(this.params.id) })
+      let status_type = this.selected_disbaled_sub_project.status == 'Disabled' ? 'Pending' : 'Disabled'
+      let response: any = this.ps.update(this.selected_disbaled_sub_project.id, { status: status_type, parent_id: parseInt(this.params.id) })
       if (response) {
         window.location.reload()
       }
-    } catch (error) {
-      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    } catch (error: any) {
+      this.gs.toastr_shows_function(error?.error?.message, '', 'error')
     }
   }
   apply_slot_validations(): void {

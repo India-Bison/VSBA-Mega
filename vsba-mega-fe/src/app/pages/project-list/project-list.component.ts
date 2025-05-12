@@ -110,9 +110,10 @@ export class ProjectListComponent {
   async delet_project() {
     try {
       let data = await this.ps?.delete(this.selected_delete_project.id);
+      this.gs.toastr_shows_function('Project Deleted Successfully', '', 'success')
       await this.get_project(this.params)
     } catch (error: any) {
-      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+      this.gs.toastr_shows_function(error?.error?.message, '', 'error')
     }
   }
   disbale_project(item: any) {
@@ -126,12 +127,11 @@ export class ProjectListComponent {
       setTimeout(async () => {
         await this.get_project(this.params)
       }, 2000)
-    } catch (error) {
-      // this.gs.toastr_shows_function(error?.error?.message, 'Error', 'error')
+    } catch (error:any) {
+      this.gs.toastr_shows_function(error?.error?.message, '', 'error')
     }
   }
   async ngOnInit() {
-    // this.gs.toastr_shows_function('error?.error?.message', '', 'error')
     this.params.page = this.currentPage;
     this.params.page_size = this.itemsPerPage;
     this.ar.queryParams.subscribe(async (params) => {
@@ -151,6 +151,7 @@ export class ProjectListComponent {
       this.totalItems = response?.count || 0;
       const apiData = response?.data || [];
       this.items = apiData;
+      this.gs.toastr_shows_function('Project List Featured Successfully', '', 'success')
     } catch (error: any) {
       console.error(error?.message, '');
       this.items = [];

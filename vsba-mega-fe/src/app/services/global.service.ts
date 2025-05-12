@@ -14,7 +14,7 @@ export class GlobalService {
     type: 'success' | 'error' | 'info' | 'warning' | 'delete'
   ) {
     const toastr_config = {
-      timeOut: 5000,
+      timeOut: 3000,
       progressBar: false,
       closeButton: true,
       toastClass: `toast-base custom-${type}-toast`,
