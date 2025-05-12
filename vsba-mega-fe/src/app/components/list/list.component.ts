@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,8 @@ export class ListComponent {
   @Input()totalPages = 1;
   @Input()totalItems = 3;
   @Input()itemsPerPage = 10;
+  @Output() selectedIdsChange = new EventEmitter<any>();
+
   active_tab = 'Project';
   date:any = '';
   tabList = [
