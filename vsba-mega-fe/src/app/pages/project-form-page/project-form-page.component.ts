@@ -271,8 +271,14 @@ export class ProjectFormPageComponent {
 
   async save_as_darft() {
     let data = { ...this.form.value };
-    data.status = 'Drafts'
-    data.type = this.params.type
+    if (!this.params.parent_id && this.params.type == 'Project') {
+      data.type = 'Project'
+      data.status = 'Drafts'
+    } else if (this.params.parent_id) {
+      data.parent_id = parseInt(this.params.parent_id)
+      data.type = 'Sub-Project'
+      data.status = 'Drafts'
+    }
     let response: any = await this.ps.add(data)
     this.route.navigate(['/project/list'], {})
   }

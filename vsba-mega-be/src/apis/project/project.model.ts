@@ -13,6 +13,10 @@ let project_model = {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  project_code: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   short_name: {
     type: DataTypes.STRING,
     allowNull: true,

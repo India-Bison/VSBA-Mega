@@ -1,6 +1,6 @@
 export interface delete_project_function_params {
     query: {
-        id: number
+        id: any
     }
 }
 
