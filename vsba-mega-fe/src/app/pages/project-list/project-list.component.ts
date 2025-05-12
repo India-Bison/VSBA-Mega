@@ -151,7 +151,7 @@ export class ProjectListComponent {
       this.totalItems = response?.count || 0;
       const apiData = response?.data || [];
       this.items = apiData;
-      this.gs.toastr_shows_function('Project List Featured Successfully', '', 'success')
+      // this.gs.toastr_shows_function('Project List Featured Successfully', '', 'success')
     } catch (error: any) {
       console.error(error?.message, '');
       this.items = [];
