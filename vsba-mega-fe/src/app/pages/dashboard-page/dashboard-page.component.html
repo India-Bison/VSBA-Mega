@@ -2,6 +2,37 @@
 
 <p class="text-3xl font-bold">dashbaord page </p>
 
-<button (click)="modal.open()">Hello</button>
+<!-- <div class="bg-[#3F41D114] w-full h-14 p-4 gap-3 rounded-2xl flex justify-between items-center">
+    <div *ngFor="let i of steps" class="flex gap-2 items-center rounded-xl p-2 cursor-pointer" (click)="step_to_step(i.step)">
+        <span [ngClass]="{'text-[#3F41D1]': current_step == i.step,'text-black': current_step != i.step}" class="text-sm font-medium flex items-center justify-center w-5 h-5 rounded-[46px] border border-[#3F41D1]">
+            {{i.step}}
+        </span>
+        <span [ngClass]="{'text-[#3F41D1]': current_step == i.step,'text-black ': current_step != i.step}" class="text-sm font-medium text-[#3F41D1]">
+            {{i.name}}
+        </span>
+    </div>
+</div>
+<div class="mt-4">
+    <ng-container >
+        <div *ngIf="params.step == 1">
+            <p>Step 1: M1</p>
+        </div>
+        <div *ngIf="params.step == 2">
+            <p>Step 2: M2</p>
+        </div>
+        <div *ngIf="params.step == 3">
+            <p>Step 3: M3</p>
+        </div>
+        <div *ngIf="params.step == 4">
+            <p>Step 4: M4</p>
+        </div>
+        <div *ngIf="params.step == 5">
+            <p>Step 5: M5</p>
+        </div>
+    </ng-container>
+</div>
 
-<app-confirmation-popup #modal></app-confirmation-popup>
+<div class="mt-4 flex justify-between">
+    <app-button label="Previous" [disabled]="current_step == 1" (click)="step_to_step(current_step - 1)"></app-button>
+    <app-button label="Next" [disabled]="current_step == steps.length" (click)="step_to_step(current_step + 1)"></app-button>
+</div> -->
