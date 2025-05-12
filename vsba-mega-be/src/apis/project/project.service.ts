@@ -2,12 +2,17 @@ import { Op, Transaction } from "sequelize";
 import { Project } from "./project.model";
 import { delete_from_cache, get_from_cache, set_cache } from "@config/cache.service";
 import { SlotGroup } from "@src/models/slot-group.model";
+const { v4: uuidv4 } = require('uuid');
 
 let has_cache = false;
 let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
+    const random_suffix = uuidv4().split('-')[0];
+    const date_part = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    body.project_code = `PRJ-${date_part}-${random_suffix}`;
+
     if (body.status === "Draft") {
         body.draft_json = structuredClone(body);
         body.status = "Draft";
@@ -50,9 +55,10 @@ let update_project = async (id: any, body: any, transaction: Transaction) => {
     }
 };
 
-let delete_project = async (id: any, transaction: Transaction) => {
-    let response = await Project.destroy({ where: { id: id, test_data: { [Op.not]: true } }, transaction });
-    delete_from_cache(has_cache, project_cache, id);
+let delete_project = async (ids: any, transaction: Transaction) => {
+    let response = await Project.destroy({ where: { id: { [Op.in]: ids }, test_data: { [Op.not]: true } }, transaction });
+
+    ids.forEach((id: any) => delete_from_cache(has_cache, project_cache, id));
     list_cache = {}
     return response
 }
