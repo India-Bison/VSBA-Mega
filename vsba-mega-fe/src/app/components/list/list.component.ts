@@ -1,14 +1,16 @@
 import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, HostListener, Input, QueryList, ViewChildren } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MiniModalComponent } from '../mini-modal/mini-modal.component';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component';
+import { TableRowComponent } from '../table-row/table-row.component';
 
 @Component({
   selector: 'app-list',
-  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent],
+  imports: [NgFor, NgIf, NgClass, UpperCasePipe, FormsModule,CommonModule,DatePipe,MiniModalComponent,PaginationComponent,DateRangePickerComponent,TableRowComponent],
   templateUrl:'./list.component.html',
   styleUrl: './list.component.css',
   standalone: true,
@@ -27,7 +29,10 @@ export class ListComponent {
   @Input()totalPages = 1;
   @Input()totalItems = 3;
   @Input()itemsPerPage = 10;
+  @Output() selectedIdsChange = new EventEmitter<any>();
+
   active_tab = 'Project';
+  date:any = '';
   tabList = [
     {
       name: 'All',
@@ -94,7 +99,7 @@ export class ListComponent {
   constructor(public gs: GlobalService, public router : Router, public ar:ActivatedRoute) { }
   ngOnInit(): void {
     // this.items = this.gs.items
-    //  this.loadDummyData();
+     this.loadDummyData();
     console.log(this.items, 'Items in List Component');
   }
   sortData(key: string, order: 'asc' | 'desc') {
@@ -127,7 +132,27 @@ export class ListComponent {
             resource_type: 'Computer Labs, Classrooms, swimming pool',
             slot_type: 'Full Day',
             startdate_enddate: '12/03/2025 - 25/03/2025',
+            status: 'Pending',
+             children: [
+          {
+            id: 4,
+            type: 'Project',
+            name: 'Bhavesh',
+            resource_type: 'Computer Labs, Classrooms, swimming pool',
+            slot_type: 'Full Day',
+            startdate_enddate: '12/03/2025 - 25/03/2025',
+            status: 'Pending',
+          },
+          {
+            id: 5,
+            type: 'Project',
+            name: 'Arun',
+            resource_type: 'Computer Labs, Classrooms, swimming pool',
+            slot_type: 'Full Day',
+            startdate_enddate: '12/03/2025 - 25/03/2025',
             status: 'Pending'
+          },
+        ]
           },
           {
             id: 5,
@@ -263,6 +288,30 @@ isDropdownOpen: number | null = null;
 
 toggleDropdown(index: number) {
   this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
+}
+
+pass_queryparams(key: string, value: any) {
+  const queryParams: any = {};
+  queryParams[key] = {value};
+  this.router.navigate([], {
+    relativeTo: this.ar,
+    queryParams: queryParams,
+    queryParamsHandling: 'merge', // optional: merges with existing params
+  });
+}
+
+updateFilters(column: any) {
+  const selectedFilters = column.filter_options
+    .filter((opt:any) => opt.checked)
+    .map((opt:any) => opt.name)
+    .join(','); // Convert array to comma-separated string
+
+  this.pass_queryparams(column.key, selectedFilters);
+}
+
+get_seleted_ids(event:any){
+  // console.log(event);
+  this.selectedIdsChange.emit(event); 
 }
 
 }

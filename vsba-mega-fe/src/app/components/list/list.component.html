@@ -26,26 +26,32 @@
                   <div [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center justify-between w-full text-base font-medium">
                     {{ column.title }}
                     <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
-                    <app-mini-modal  *ngIf="column.sort == true" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
+                    <app-mini-modal  *ngIf="column?.filter" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
                       <!-- Dropdown -->
-                      <div class="w-[228px] fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
-                        <span class="text-[#3F41D1] text-sm font-medium">Sort</span>
+                      <div class="w-auto fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                        <span *ngIf="column?.sort" class="text-[#3F41D1] text-sm font-medium">Sort</span>
                         <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
-                          <div class="w-[180px] h-8 gap-2 flex items-center justify-start" (click)="sortData(column.key, 'asc')">
-                            <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
-                          </div>
-                          <div class="flex justify-start items-center gap-2"  (click)="sortData(column.key, 'desc')">
-                            <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
-                          </div>
-  
-                          <div class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
-  
-                          <span class="text-[#3F41D1] text-sm font-medium">Filter</span>
-                          <div>
-                            <div *ngFor="let item of items" class="w-[180px] h-8 flex items-center gap-2">
-                              <input type="checkbox" class="w-4 h-4" />
-                              <label class="text-black">{{item[column.key]}}</label>
+                          <ng-container *ngIf="column?.sort">
+                            <div class="w-[180px] cursor-pointer h-8 gap-2 flex items-center justify-start" (click)="sortData(column.key, 'asc')">
+                              <img src="../../../assets/ascending_icon.svg" alt=""><span>Ascending</span>
                             </div>
+                            <div class="flex justify-start cursor-pointer items-center gap-2"  (click)="sortData(column.key, 'desc')">
+                              <img src="../../../assets/descending_icon.svg" alt=""><span>Descending</span>
+                            </div>
+                          </ng-container>
+                          <div *ngIf="column?.filter_options" class="w-[180px] rounded-full h-[1px] bg-[#1E1E1E1F]"></div>
+                          <span *ngIf="column?.filter_options" class="text-[#3F41D1] text-sm font-medium">Filter</span>
+                          <div>
+                            <ul class="text-gray-700">
+                              <li *ngFor="let filter of column.filter_options" class="cursor-pointer py-2 flex items-center" (click)="filter.checked = !filter.checked ;updateFilters(column)">
+                                <input type="checkbox" class="mr-2" [checked]="filter.checked" (click)="$event.stopPropagation()"/>
+                                {{ filter.name }}
+                              </li>
+                            </ul>
+                          </div>
+                          <div *ngIf="column.filter == 'Date' || column.filter == 'date'">
+                          <p class="text-[#3F41D1] text-sm font-medium mb-2">Select {{column.title}}</p>
+                             <app-date-range-picker [(ngModel)]="date" (ngModelChange)="pass_queryparams(column.title, date?.start)" label="Start Date" ></app-date-range-picker>
                           </div>
                         </div>
                       </div>
@@ -56,136 +62,12 @@
             </th>
           </tr>
         </thead>
-        <tbody class="text-sm relative font-normal text-[#1E1E1E] tracking-[0.32px] ">
-          <ng-container *ngFor="let item of items; let i = index">
+        <tbody class="text-sm font-normal text-[#1E1E1E] tracking-[0.32px] ">
             <!-- Main Row -->
-            <tr [ngClass]="{'bg-[#F7F7F7]': item.expanded}" class="border group border-t-[#e4e7ec] border-l-2 border-r-transparent border-b-0 border-l-[#9747FF]">
-              <ng-container *ngFor="let column of columns">
-                <td *ngIf="column.type == 'Index'" class="px-4 h-16">
-                  <div class="flex justify-center items-center">
-                    <input class="cursor-pointer" type="checkbox" [(ngModel)]="item.selected" (click)="toggleParentSelection(item)">
-                  </div>
-                </td>
-                <td *ngIf="column.type == 'Value'" [ngClass]="{'bg-[#3F41D11F] ': column.highlight==true, 'sticky right-0 left-0 bg-white mt-[1px]' : column.sticky == true}" class="px-4 h-16 items-center">
-
-                  <ng-container *ngIf="column.key == 'mobile_number_icon'; else main_value">
-                    <div class="text-start items-center gap-4">
-                      <i class="{{ item?.mobile_number_icon?.contact_number_icon }}"></i>
-                      {{
-                      item?.mobile_number_icon?.mobile_number &&
-                      item?.mobile_number_icon?.mobile_number ?
-                      item?.mobile_number_icon?.mobile_number : '-'
-                      }}
-                    </div>
-                  </ng-container>
-
-                  <ng-template #main_value>
-                    <div [class]="column?.class" [ngClass]="{'justify-center': column.title == 'Status'}" class="flex gap-2 items-center">
-
-                      <!-- Clickable Toggle Icon for Children -->
-                      <img *ngIf="column.title== 'Project Name' && item.children?.length" src="../../../assets/CaretUp.svg" alt="Caret Up" class="cursor-pointer transition-transform duration-200" [class.rotate-180]="!item.expanded" [class.rotate-360]="item.expanded" (click)="toggleExpand(item)" />
-                      <!-- Status as Button -->
-                      <ng-container *ngIf="item[column.key] == 'Approved' || item[column.key] == 'Pending' || item[column.key] == 'Rejected' || item[column.key] == 'Drafts' || item[column.key] == 'Disabled'; else normalText">
-                        <div *ngIf="status == 'Border'" class="flex justify-center items-center w-full">
-                          <button class="px-[10px] py-1 rounded-md border text-sm font-medium" [ngClass]="{
-                                     'text-[#03A600] border-[#03A600]': item[column.key] == 'Approved',
-                                     'text-[#DF6E12] border-[#DF6E12]': item[column.key] == 'Pending',
-                                     'text-red-500 border-red-500': item[column.key] == 'Rejected',
-                                     'text-blue-500 border-blue-500': item[column.key] == 'Drafts',
-                                     'text-gray-500 border-gray-500': item[column.key] == 'Disabled',
-                                   }">
-                            {{ item[column.key] }}
-                          </button>
-                        </div>
-                        <div *ngIf="status == 'Dotted'" class="flex justify-center items-center">
-                          <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{ 'text-[#03A600]': item[column.key] == 'Approved', 'text-[#DF6E12]': item[column.key] == 'Pending', 'text-red-500 ': item[column.key] == 'Rejected'}">
-                            <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{'bg-[#03A600]': item[column.key] == 'Approved','bg-[#DF6E12]': item[column.key] == 'Pending','bg-red-500 ': item[column.key] == 'Rejected' }"></div>
-                            {{ item[column.key] }}
-                          </button>
-                        </div>
-                      </ng-container>
-
-                      <img *ngIf="column.plus_icon == true" class="cursor-pointer opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100" (click)="redirect_to_project_form(item?.id)" src="../../../assets/add_icon_with_border.svg" alt="">
-
-                      <!-- Default Text Value -->
-                      <ng-template #normalText>
-                        <span [ngClass]="{
-                                  'text-[#03A600]': item[column.key] == 'Active',
-                                  'text-[#DF6E12]': item[column.key] == 'Inactive'
-                                }">
-                          <ng-container *ngIf="column.key === 'project_start_date' || column.key === 'project_end_date'; else normalValue">
-                            {{ item[column.key] | date: 'dd-MM-yyyy' }}
-                          </ng-container>
-                          <ng-template #normalValue>
-                            {{ column.uppercase ? (item[column.key] | uppercase) : (item[column.key] || '-') }}
-                          </ng-template>
-                        </span>
-                      </ng-template>
-                    </div>
-                  </ng-template>
-                </td>
-
-                <td *ngIf="column.type == 'Action'" class="px-4 h-16 mt-4">
-                  <div class="flex gap-2 items-center justify-center">
-                    <!-- <img class="h-6 min-w-6 cursor-pointer" src="https://static.thenounproject.com/png/2854151-200.png" alt="Menu" (click)="toggleMenu(i) ; $event.stopPropagation()" /> -->
-                      <app-mini-modal image_class="h-6 min-w-6 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
-                        <div class="bg-[#E8E8F9] h-auto rounded-[4px] shadow-md" (click)="$event.stopPropagation()">
-                          <ng-container *ngFor="let action of column.actions">
-                            <div *ngIf="!action.show || action.show(item)" (click)="action.action(item,i); menuVisibleIndex = null" class="flex px-3 min-w-[175px] justify-start items-center text-sm font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
-                              <img [src]="action.icon" alt="" />
-                              <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
-                            </div>
-                          </ng-container>
-                        </div>
-                      </app-mini-modal>
-                  </div>
-                </td>
-              </ng-container>
-            </tr>
+           <app-table-row [items]="items" [columns]="columns" (selectedIdsChange)="get_seleted_ids($event)" ></app-table-row>
 
             <!-- Child Rows -->
-            <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] group bg-white border border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
-              <td class="px-4 h-16"></td>
-              <td class="px-4 h-16 pl-4 text-sm text-gray-700 flex justify-start items-center"> <input class=" ml-1 mr-3" type="checkbox" [(ngModel)]="child.selected" (change)="toggleChildSelection(item)">
-                {{ child.name }}
-              </td>
-              <td class="px-4 h-16 text-sm">
-                <div class="flex gap-2 items-center">
-                  <span>{{ child?.short_name }}</span>
-                </div>
-              </td>
-              <td class="px-4 h-16 text-sm">{{ child?.resource_type }}</td>
-              <td class="px-4 h-16 text-sm">{{ child?.slot_type }}</td>
-              <td class="px-4 h-16 text-sm">{{ child?.project_start_date | date: 'dd-MM-yyyy' }}</td>
-              <td class="px-4 h-16 text-sm">{{ child.project_end_date | date: 'dd-MM-yyyy' }}</td>
-              <td class="px-4 h-16 text-sm">
-                <div class="flex justify-center items-center">
-                  <button class="px-2 py-1 rounded-full border-none text-sm font-medium flex justify-center items-center" [ngClass]="{ 'text-[#03A600]': child.status == 'Approved', 'text-[#DF6E12]': child.status == 'Pending', 'text-red-500 ': child.status == 'Rejected'}">
-                    <div class="h-2 w-2 rounded-full mr-[6px]" [ngClass]="{'bg-[#03A600]': child.status == 'Approved','bg-[#DF6E12]': child.status == 'Pending','bg-red-500 ': child.status == 'Rejected' }"></div>
-                    {{ child.status }}
-                  </button>
-                </div>
-              </td>
-              <td class="px-4 h-16 flex justify-center items-center ">
-                <div class="flex gap-2 -m-2 items-center justify-center">
-                  <ng-container *ngFor="let column of columns">
-              <td *ngIf="column.type == 'Action'" class="h-16 flex justify-center items-center">
-               
-                <app-mini-modal image_class="h-6 min-w-6 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
-                  <div class="bg-[#E8E8F9] w-[200px] min-w-[112px] max-w-[280px] h-auto rounded-[4px] py-2 shadow-md" (click)="$event.stopPropagation()">
-                    <ng-container *ngFor="let action of column.actions">
-                      <div (click)="action.action(child, i)" class="flex justify-start items-center text-sm font-normal leading-5 tracking-wide gap-3 py-2 px-3 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
-                        <img [src]="action.icon" alt="" />
-                        <span [ngClass]="{ 'text-red-500': action.title == 'Delete' }">{{ action.title }}</span>
-                      </div>
-                    </ng-container>
-                  </div>
-                </app-mini-modal>
-              </td>
-          </ng-container>
-    </div>
-    </td>
-    </tr>
+            
     <!-- <tr *ngFor="let child of item.children" [ngClass]="{ 'hidden': !item.expanded }" class="border-b border-[#e4e7ec] bg-white border-t-[#e4e7ec] border-l-2 text-[#666666] border-r-transparent border-l-[#DEB900]">
               <ng-container *ngFor="let column of columns">
                 <td *ngIf="column.forChild" class="px-4 h-16 text-sm">
@@ -212,7 +94,6 @@
               </ng-container>
             </tr> -->
 
-    </ng-container>
     </tbody>
     </table>
   </div>
