@@ -8,7 +8,7 @@ let get_user_function = async (data: get_user_function_params, transaction: Tran
     let user = await User.findOne({
         where: { email_id: data.email_id },
         attributes: ['keyclock_user_id', 'keycloak_user_name', 'role'],
-        include: [], transaction
+        transaction
     })
     if (!user) {
         return {
