@@ -6,7 +6,7 @@
     </ng-template>
 
     <!-- Check if ng-content has anything -->
-    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0" class="h-[76px] w-full flex px-6 justify-between items-center">
+    <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length > 0" class="py-4 w-full flex flex-wrap px-6 justify-between items-center">
       <ng-container [ngTemplateOutlet]="contentTemplate"></ng-container>
     </div>
     <div *ngIf="contentTemplate.createEmbeddedView(null).rootNodes.length == 0" class="w-full flex px-6 justify-between items-center">
