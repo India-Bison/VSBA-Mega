@@ -51,7 +51,7 @@
                           </div>
                           <div *ngIf="column.filter == 'Date' || column.filter == 'date'">
                           <p class="text-[#3F41D1] text-sm font-medium mb-2">Select {{column.title}}</p>
-                             <app-date-range-picker [(ngModel)]="date" (ngModelChange)="pass_queryparams(column.title, date?.start)" label="Start Date" ></app-date-range-picker>
+                             <app-date-range-picker [(ngModel)]="date"  (ngModelChange)="onDateRangeChange($event, column.title)" label="Start Date" ></app-date-range-picker>
                           </div>
                         </div>
                       </div>

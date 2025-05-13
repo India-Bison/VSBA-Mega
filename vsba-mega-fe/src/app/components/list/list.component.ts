@@ -325,5 +325,10 @@ get_seleted_ids(event: any) {
   this.selectedIdsChange.emit(event); 
 }
 
+onDateRangeChange(event: any, key: string) {
+  const stringified = JSON.stringify(event); // Convert {start, end} to string
+  this.pass_queryparams(key, stringified);
+}
+
 
 }
