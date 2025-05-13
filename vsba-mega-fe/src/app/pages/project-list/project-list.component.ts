@@ -35,7 +35,7 @@ export class ProjectListComponent {
   filter = false;
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true },
+    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true, optional_button : this.optional_button.bind(this) },
     { title: 'Project Code', type: 'Value', key: 'short_name', class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Classroom'},{id:2,name:'Computer Labs'}], },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Slot Time'},{id:2,name:'Full Day'}], },
@@ -95,6 +95,10 @@ export class ProjectListComponent {
     },
   ];
 
+  async optional_button(item: any, index: any) {
+    console.log(item, index, "item");
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', parent_id: item.parent_id, view : true } });
+  }
   async edit(item: any, index: any) {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', parent_id: item.parent_id } });
