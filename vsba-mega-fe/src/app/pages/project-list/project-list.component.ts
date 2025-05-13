@@ -6,14 +6,14 @@ import { SearchInputComponent } from '../../components/search-input/search-input
 import { ToggleTabsComponent } from '../../components/toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { set } from 'date-fns';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, ConfirmationPopupComponent],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, ConfirmationPopupComponent,JsonPipe],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
@@ -33,6 +33,7 @@ export class ProjectListComponent {
   totalItems = 0;
   totalPages = 50;
   filter = false;
+  selected_ids:any=[]
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true, optional_button : this.optional_button.bind(this) },
@@ -163,8 +164,8 @@ export class ProjectListComponent {
   }
 
   get_seleted_ids(event:any){
-  console.log(event,'project-list component');
-  
+    this.selected_ids = event
+    console.log(event,'project-list component');
 }
 
 }

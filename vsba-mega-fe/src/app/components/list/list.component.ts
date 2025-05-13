@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +30,8 @@ export class ListComponent {
   @Input()totalItems = 3;
   @Input()itemsPerPage = 10;
   @Output() selectedIdsChange = new EventEmitter<any>();
+
+  @ViewChild('table_row') table_row: any;
 
   active_tab = 'Project';
   date:any = '';
@@ -238,6 +240,22 @@ export class ListComponent {
         });
       }
     });
+
+    this.table_row.emitSelectedIds()
+  }
+
+  clear_all_checkbox(){
+    this.allSelected = false;
+     this.items.forEach((item: any) => {
+      item.selected = this.allSelected;
+
+      if (item.children && item.children.length) {
+        item.children.forEach((child: any) => {
+          child.selected = this.allSelected;
+        });
+      }
+    });
+    this.get_seleted_ids([])
   }
 
   toggleParentSelection(item: any): void {
@@ -265,11 +283,6 @@ export class ListComponent {
       const childrenSelected = item.children?.every((child: any) => child.selected) ?? true;
       return item.selected && childrenSelected;
     });
-  }
-
-
-  redirect_to_project_form(id: any) {
-    this.router.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: id, } });
   }
 
   menuVisibleIndex: number | string | null = null;
