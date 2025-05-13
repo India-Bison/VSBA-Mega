@@ -289,29 +289,41 @@ isDropdownOpen: number | null = null;
 toggleDropdown(index: number) {
   this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
 }
+// ✅ This method updates filters and passes them as a JSON string in queryParams
+updateFilters(column: any) {
+  const selectedFilters = column.filter_options
+    .filter((opt: any) => opt.checked)
+    .map((opt: any) => opt.name); // Keep as array
+
+  const stringified = JSON.stringify(selectedFilters); // Convert array to JSON string
+
+  console.log(column.key, selectedFilters); // You can see actual array here
+
+  this.pass_queryparams(column.key, stringified); // Pass JSON string in query param
+}
+
+splitCommaSeparated(value: string): string[] {
+  if (!value) return [];
+
+  return value
+    .split(',')
+    .map(item => item.trim())
+    .filter(item => item);
+}
 
 pass_queryparams(key: string, value: any) {
   const queryParams: any = {};
-  queryParams[key] = {value};
+  queryParams[key] = value;
   this.router.navigate([], {
     relativeTo: this.ar,
     queryParams: queryParams,
-    queryParamsHandling: 'merge', // optional: merges with existing params
+    queryParamsHandling: 'merge', // Merges with existing params
   });
 }
 
-updateFilters(column: any) {
-  const selectedFilters = column.filter_options
-    .filter((opt:any) => opt.checked)
-    .map((opt:any) => opt.name)
-    .join(','); // Convert array to comma-separated string
-
-  this.pass_queryparams(column.key, selectedFilters);
-}
-
-get_seleted_ids(event:any){
-  // console.log(event);
+get_seleted_ids(event: any) {
   this.selectedIdsChange.emit(event); 
 }
+
 
 }
