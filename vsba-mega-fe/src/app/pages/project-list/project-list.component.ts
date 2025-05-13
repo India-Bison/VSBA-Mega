@@ -6,14 +6,14 @@ import { SearchInputComponent } from '../../components/search-input/search-input
 import { ToggleTabsComponent } from '../../components/toggle-tabs/toggle-tabs.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 import { ProjectService } from '../../services/project.service';
 import { ConfirmationPopupComponent } from '../../components/confirmation-popup/confirmation-popup.component';
 import { set } from 'date-fns';
 
 @Component({
   selector: 'app-project-list',
-  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, ConfirmationPopupComponent],
+  imports: [ListComponent, HeaderComponent, SearchInputComponent, ToggleTabsComponent, ButtonComponent, RouterLink, CommonModule, ConfirmationPopupComponent,JsonPipe],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css',
   standalone: true,
@@ -33,9 +33,10 @@ export class ProjectListComponent {
   totalItems = 0;
   totalPages = 50;
   filter = false;
+  selected_ids:any=[]
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
-    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true },
+    { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true, optional_button : this.optional_button.bind(this) },
     { title: 'Project Code', type: 'Value', key: 'short_name', class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Classroom'},{id:2,name:'Computer Labs'}], },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Slot Time'},{id:2,name:'Full Day'}], },
@@ -95,6 +96,10 @@ export class ProjectListComponent {
     },
   ];
 
+  async optional_button(item: any, index: any) {
+    console.log(item, index, "item");
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', parent_id: item.parent_id, view : true } });
+  }
   async edit(item: any, index: any) {
     console.log(item, index, "item");
     this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', parent_id: item.parent_id } });
@@ -159,8 +164,8 @@ export class ProjectListComponent {
   }
 
   get_seleted_ids(event:any){
-  console.log(event,'project-list component');
-  
+    this.selected_ids = event
+    console.log(event,'project-list component');
 }
 
 }

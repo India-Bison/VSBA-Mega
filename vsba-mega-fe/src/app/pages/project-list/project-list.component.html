@@ -1,11 +1,15 @@
 <app-header label="Project"></app-header>
 
-<app-list [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" label="No projects found!" description="It looks like you haven't Added any projects yet. To get started,
+<app-list #list [currentPage]="currentPage" [totalPages]="totalPages" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" label="No projects found!" description="It looks like you haven't Added any projects yet. To get started,
 click the Create button to Add your first project" [columns]="columns" [items]="items" [params]="params" (selectedIdsChange)="get_seleted_ids($event)">
   <app-search-input></app-search-input>
-  <div class="flex gap-4 items-center">
+  <div *ngIf="!selected_ids?.length" class="flex gap-4 items-center">
     <app-toggle-tabs [disabled]="!items.length && !params.status" params_name="status" [tabs]="tabList" [defaultActive]="params.status"></app-toggle-tabs>
     <app-button color="bg-[#E697AB] text-[#310000]" label="Project" icon="bx bx-plus" routerLink="/project/form" [queryParams]="{type:'Project'}"></app-button>
+  </div>
+  <div *ngIf="selected_ids?.length" class="flex gap-4 items-center">
+    <app-button color="text-[#FA2912] border-[#FA2912]" label="Delete" icon="bx bx-trash"></app-button>
+    <i (click)="list.clear_all_checkbox()" class="bx bx-x text-3xl cursor-pointer p-1 hover:bg-gray-50 active:bg-gray-100 rounded-full"></i>
   </div>
 </app-list>
 <app-confirmation-popup #delete_project_row label="Delete Project?" [delete_icon]="true" cancelText="CANCEL" confirmColor="bg-[#FA2912] text-[#FFFFFF]" confirmText="YES, DELETE IT" [is_mandatory]="true" (confirm_modal_clicked)="delet_project()" (close_modal_clicked)="delete_project_row.close()">
