@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, JsonPipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +30,8 @@ export class ListComponent {
   @Input()totalItems = 3;
   @Input()itemsPerPage = 10;
   @Output() selectedIdsChange = new EventEmitter<any>();
+
+  @ViewChild('table_row') table_row: any;
 
   active_tab = 'Project';
   date:any = '';
@@ -238,6 +240,22 @@ export class ListComponent {
         });
       }
     });
+
+    this.table_row.emitSelectedIds()
+  }
+
+  clear_all_checkbox(){
+    this.allSelected = false;
+     this.items.forEach((item: any) => {
+      item.selected = this.allSelected;
+
+      if (item.children && item.children.length) {
+        item.children.forEach((child: any) => {
+          child.selected = this.allSelected;
+        });
+      }
+    });
+    this.get_seleted_ids([])
   }
 
   toggleParentSelection(item: any): void {
@@ -267,11 +285,6 @@ export class ListComponent {
     });
   }
 
-
-  redirect_to_project_form(id: any) {
-    this.router.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: id, } });
-  }
-
   menuVisibleIndex: number | string | null = null;
 
   toggleMenu(index: number | string): void {
@@ -289,29 +302,46 @@ isDropdownOpen: number | null = null;
 toggleDropdown(index: number) {
   this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
 }
+// ✅ This method updates filters and passes them as a JSON string in queryParams
+updateFilters(column: any) {
+  const selectedFilters = column.filter_options
+    .filter((opt: any) => opt.checked)
+    .map((opt: any) => opt.name); // Keep as array
+
+  const stringified = JSON.stringify(selectedFilters); // Convert array to JSON string
+
+  console.log(column.key, selectedFilters); // You can see actual array here
+
+  this.pass_queryparams(column.key, stringified); // Pass JSON string in query param
+}
+
+splitCommaSeparated(value: string): string[] {
+  if (!value) return [];
+
+  return value
+    .split(',')
+    .map(item => item.trim())
+    .filter(item => item);
+}
 
 pass_queryparams(key: string, value: any) {
   const queryParams: any = {};
-  queryParams[key] = {value};
+  queryParams[key] = value;
   this.router.navigate([], {
     relativeTo: this.ar,
     queryParams: queryParams,
-    queryParamsHandling: 'merge', // optional: merges with existing params
+    queryParamsHandling: 'merge', // Merges with existing params
   });
 }
 
-updateFilters(column: any) {
-  const selectedFilters = column.filter_options
-    .filter((opt:any) => opt.checked)
-    .map((opt:any) => opt.name)
-    .join(','); // Convert array to comma-separated string
-
-  this.pass_queryparams(column.key, selectedFilters);
-}
-
-get_seleted_ids(event:any){
-  // console.log(event);
+get_seleted_ids(event: any) {
   this.selectedIdsChange.emit(event); 
 }
+
+onDateRangeChange(event: any, key: string) {
+  const stringified = JSON.stringify(event); // Convert {start, end} to string
+  this.pass_queryparams(key, stringified);
+}
+
 
 }

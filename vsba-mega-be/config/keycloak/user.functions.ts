@@ -2,7 +2,7 @@ import { User } from "@config/models/user.model"
 
 export const create_db_user = async (user_data: any, keycloak_user_data: any, role: string, transaction: any) => {
     let new_user = await User.create({
-        keyclock_user_id: keycloak_user_data.id,
+        keycloak_user_id: keycloak_user_data.id,
         keycloak_user_name: keycloak_user_data.username,
         first_name: user_data.first_name || user_data.name,
         middle_name: user_data.middle_name || user_data.name,
@@ -40,6 +40,6 @@ export const delete_db_user = async (user_id: any, transaction: any) => {
 }
 
 export const get_user_by_keycloak_id = async (id: any, transaction?: any) => {
-    let user: any = await User.findOne({ where: { keyclock_user_id: id }, raw: true, transaction })
+    let user: any = await User.findOne({ where: { keycloak_user_id: id }, raw: true, transaction })
     return user
 }

@@ -26,5 +26,5 @@ app.doc('/doc', {
 })
 
 app.use('*', cors());
-// app.use('*', keycloak_auth);
-// app.use('*', check_role_middleware);
+app.use('*', keycloak_auth);
+app.use('*', check_role_middleware);
