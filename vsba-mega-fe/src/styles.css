@@ -143,3 +143,7 @@ body {
 .custom-delete-toast::before {
   content: '❌';
 }
+.custom-time-input::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}

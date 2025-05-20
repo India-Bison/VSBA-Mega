@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -101,26 +101,39 @@ export class TimeInputComponent implements ControlValueAccessor {
   }
 
   inputType = 'text';
-  hasSelected = false;
-  onMouseOver() {
-    console.log('onMouseOver');
-    this.hasSelected = true;
-    if (!this.hasSelected || true) {
-      this.inputType = 'time';
-    }
-  }
-
-  onMouseLeave() {
-    if (!this.is_focused) {
-      this.inputType = 'text';
-    }
-  }
-
   is_focused = false;
-  focus(value: any) {
-    this.is_focused = value;
-    if (!value) {
-      this.inputType = 'text';
-    }
+  hasSelected = false;
+showIcon = false; // <-- icon visibility state
+
+onMouseOver() {
+  this.inputType = 'time';
+  this.showIcon = true; // Show icon on hover
+}
+
+onMouseLeave() {
+  if (!this.is_focused) {
+    this.inputType = 'text';
+    this.showIcon = false; // Hide icon if not focused
+  }
+}
+
+focus(value: boolean) {
+  this.is_focused = value;
+  if (!value) {
+    this.inputType = 'text';
+    this.showIcon = false; // Hide icon on blur
+  } else {
+    this.showIcon = true; // Keep icon visible on focus
+  }
+}
+
+
+@ViewChild('time_input') time_input:any;
+
+  openPicker() {
+    this.time_input.nativeElement.showPicker?.(); // Most modern browsers
+    // fallback:
+    this.time_input.nativeElement.focus();
+    this.time_input.nativeElement.click();
   }
 }
