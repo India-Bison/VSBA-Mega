@@ -64,7 +64,7 @@ export class ProjectFormPageComponent {
       week_days: [['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']],
       slot_type: [''],
       type: [''],
-      project_logo: [''],
+      project_logo: ['', Validators.required],
       slot_groups: this.fb.array([])
     });
     if (!this.params.id) {
