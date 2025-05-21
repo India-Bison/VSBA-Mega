@@ -30,7 +30,10 @@
             </span>
         </div>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
-            <button (click)="close()" class="w-full sm:w-48 h-10 capitalize bg-[#E1E8F5] text-blue-600 font-medium text-sm p-3 rounded-full">
+            <button *ngIf="is_confirm_to_text" (click)="confirm2()" class="w-full sm:w-48 h-10 capitalize bg-[#E1E8F5] text-blue-600 font-medium text-sm p-3 rounded-full">
+                {{ confirm_text_2 }}
+            </button>
+             <button *ngIf="!is_confirm_to_text" (click)="close()" class="w-full sm:w-48 h-10 capitalize bg-[#E1E8F5] text-blue-600 font-medium text-sm p-3 rounded-full">
                 {{ cancelText }}
             </button>
             <button (click)="confirm()" class="w-full sm:w-48 h-10 capitalize text-white bg-[#3F41D1] font-medium text-sm p-3 rounded-full" [ngClass]="confirmColor">

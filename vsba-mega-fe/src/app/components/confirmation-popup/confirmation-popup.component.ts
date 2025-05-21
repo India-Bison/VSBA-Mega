@@ -26,10 +26,13 @@ export class ConfirmationPopupComponent {
   @Input() confirmText: string = 'Yes'; // Confirm button text
   @Input() confirmColor: string = 'bg-blue-600'; // Tailwind button bg class
   @Input() cancelText: string = 'Cancel';        // Cancel button text
+  @Input() confirm_text_2: string = 'Submit';   
   @Input() is_mandatory:boolean = false;
+  @Input() is_confirm_to_text:boolean = false;
   @Input() show_cancel_icon:boolean = false;
   @Output() close_modal_clicked = new EventEmitter();
   @Output() confirm_modal_clicked = new EventEmitter<void>();
+  @Output() confirm_modal_clicked2 = new EventEmitter<void>();
 
   @HostListener('document:keydown.escape', ['$event'])
 
@@ -48,6 +51,11 @@ export class ConfirmationPopupComponent {
   }
   confirm() {
     this.confirm_modal_clicked.emit();
+    this.is_popup_visible = false;
+  }
+
+    confirm2() {
+    this.confirm_modal_clicked2.emit();
     this.is_popup_visible = false;
   }
 
