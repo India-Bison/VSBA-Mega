@@ -120,34 +120,57 @@ export class ProjectFormPageComponent {
     }
   }
   add_pill(index: number): void {
-    const slot_group = this.slots.at(index) as FormGroup;
-    const slot_time = slot_group.get('slot_time')?.value;
-    const hours_value = slot_group.get('hours')?.value;
-    if (slot_time && hours_value) {
-      const [slotHour, slotMinute] = slot_time.split(':').map(Number);
-      const [durHour, durMinute] = hours_value.split(':').map(Number);
-      const now = new Date();
-      const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), slotHour, slotMinute);
-      const end = new Date(start);
-      end.setHours(end.getHours() + durHour);
-      end.setMinutes(end.getMinutes() + durMinute);
-      const formatTime = (date: Date): string => {
-        let hrs = date.getHours();
-        const mins = String(date.getMinutes()).padStart(2, '0');
-        const ampm = hrs >= 12 ? 'PM' : 'AM';
-        hrs = hrs % 12 || 12;
-        return `${String(hrs).padStart(2, '0')}:${mins} ${ampm}`;
+  const slot_group = this.slots.at(index) as FormGroup;
+  const slot_time = slot_group.get('slot_time')?.value;
+  const hours_value = slot_group.get('hours')?.value;
+
+  if (slot_time && hours_value) {
+    const [slotHour, slotMinute] = slot_time.split(':').map(Number);
+    const [durHour, durMinute] = hours_value.split(':').map(Number);
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), slotHour, slotMinute);
+    const end = new Date(start);
+    end.setHours(end.getHours() + durHour);
+    end.setMinutes(end.getMinutes() + durMinute);
+
+    const formatTime = (date: Date): string => {
+      let hrs = date.getHours();
+      const mins = String(date.getMinutes()).padStart(2, '0');
+      const ampm = hrs >= 12 ? 'PM' : 'AM';
+      hrs = hrs % 12 || 12;
+      return `${String(hrs).padStart(2, '0')}:${mins} ${ampm}`;
+    };
+    const newStart = start.getTime();
+    const newEnd = end.getTime();
+    const newPillText = `${formatTime(start)} - ${formatTime(end)}`;
+    const currentPills: string[] = slot_group.get('slot_time_group')?.value || [];
+    const isOverlap = currentPills.some(pill => {
+      const [fromStr, toStr] = pill.split(' - ');
+      const parseTime = (timeStr: string): Date => {
+        const [t, ampm] = timeStr.split(' ');
+        let [h, m] = t.split(':').map(Number);
+        if (ampm === 'PM' && h !== 12) h += 12;
+        if (ampm === 'AM' && h === 12) h = 0;
+        const d = new Date();
+        d.setHours(h, m, 0, 0);
+        return d;
       };
-      const pillText = `${formatTime(start)} - ${formatTime(end)}`;
-      const currentPills: string[] = slot_group.get('slot_time_group')?.value || [];
-      if (!currentPills.includes(pillText)) {
-        currentPills.push(pillText);
-        slot_group.get('slot_time_group')?.setValue(currentPills);
-        slot_group.get('slot_time_group')?.markAsDirty();
-        slot_group.get('slot_time_group')?.updateValueAndValidity();
-      }
+      const existingStart = parseTime(fromStr).getTime();
+      const existingEnd = parseTime(toStr).getTime();
+      return !(newEnd <= existingStart || newStart >= existingEnd);
+    });
+    if (isOverlap) {
+      this.gs.toastr_shows_function('This time slot overlaps with an existing one.', '', 'error')
+      return;
     }
+
+    currentPills.push(newPillText);
+    slot_group.get('slot_time_group')?.setValue(currentPills);
+    slot_group.get('slot_time_group')?.markAsDirty();
+    slot_group.get('slot_time_group')?.updateValueAndValidity();
   }
+}
+
   remove_pill(slot_index: number, pill_index: number): void {
     const slotGroup = this.slots.at(slot_index) as FormGroup;
     const currentPills = slotGroup.get('slot_time_group')?.value || [];
