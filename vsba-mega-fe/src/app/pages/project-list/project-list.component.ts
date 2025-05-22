@@ -37,7 +37,7 @@ export class ProjectListComponent {
   columns: any = [
     { title: 'Sr. No.', type: 'Index', key: 'index' },
     { title: 'Project Name', type: 'Value', key: 'name', class: 'text-left', children: true, optional_button : this.optional_button.bind(this) },
-    { title: 'Project Code', type: 'Value', key: 'short_name', class: 'text-left' },
+    { title: 'Project Code', type: 'Value', key: 'project_code', class: 'text-left' },
     { title: 'Resource Type', type: 'Value', key: 'resource_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Classroom'},{id:2,name:'Computer Labs'}], },
     { title: 'Slot Type', type: 'Value', key: 'slot_type', class: 'text-left', sort: true, filter : 'multi-select', filter_options : [{id:1,name:'Slot Time'},{id:2,name:'Full Day'}], },
     { title: 'Start Date', type: 'Date', key: 'project_start_date', class: 'text-left', filter : 'Date',  },
