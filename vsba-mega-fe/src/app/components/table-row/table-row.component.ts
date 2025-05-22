@@ -112,7 +112,12 @@ export class TableRowComponent {
   constructor(public gs: GlobalService, public router : Router, public ar:ActivatedRoute) { }
   ngOnInit(): void {
     // this.items = this.gs.items
-    console.log(this.items, 'Items in List Component');
+   setTimeout(() => {
+     const firstItemWithChildren = this.items.find(item => item.children?.length);
+  if (firstItemWithChildren) {
+    firstItemWithChildren.expanded = true;
+  }
+   }, 1000);
   }
   sortData(key: string, order: 'asc' | 'desc') {
     this.router.navigate([], {
