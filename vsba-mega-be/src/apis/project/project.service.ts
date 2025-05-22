@@ -9,6 +9,11 @@ let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
+    const existing_project = await Project.findOne({ where: { name: body.name, start_date: body.start_date, end_date: body.end_date }, transaction });
+    if (existing_project) {
+        throw new Error("A project with the same name and duration already exists.");
+    }
+
     const random_suffix = uuidv4().split('-')[0];
     const date_part = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     body.project_code = `PRJ-${date_part}-${random_suffix}`;
@@ -19,11 +24,9 @@ let create_project = async (body: any, transaction: Transaction) => {
     }
 
     let project: any = await Project.create(body, { transaction, returning: true });
-
     if (project) project = project.toJSON ? project.toJSON() : project;
 
     body.slot_groups.forEach((slot: any) => { slot.project_id = project.id })
-
     await SlotGroup.bulkCreate(body.slot_groups, { transaction, returning: true });
 
     set_cache(has_cache, project_cache, project.id, project);
