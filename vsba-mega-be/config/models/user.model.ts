@@ -8,7 +8,7 @@ let user_model = {
     autoIncrement: true,
     unique: true
   },
-  keyclock_user_id: {
+  keycloak_user_id: {
     type: DataTypes.STRING,
   },
   keycloak_user_name: {

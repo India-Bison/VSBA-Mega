@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Injector, Input } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,6 +18,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ImageUploderComponent implements ControlValueAccessor {
   @Input() multiple: boolean = false;
+  @Input() is_required: boolean = false;
+  @Input() lebal: any = '';
   @Input() disabled: boolean = false;
   @Input() accept: string = '.jpg,.jpeg,.webp,.png';
 
@@ -28,14 +30,24 @@ export class ImageUploderComponent implements ControlValueAccessor {
   private onChange: any = () => {};
   private onTouched: any = () => {};
 
-  constructor(public ar: ActivatedRoute) {}
+  constructor(public ar: ActivatedRoute,private injector: Injector) {}
 
   ngOnInit(): void {
     this.ar.queryParams.subscribe(params => {
       this.paramValue = params;
     });
   }
-  
+  control: any;
+   ngAfterViewInit(): void {
+      setTimeout(() => {
+        const ngControl: NgControl | null = this.injector.get(NgControl, null);
+        if (ngControl) {
+          this.control = ngControl.control as FormControl;
+        } else {
+          // Component is missing form control binding
+        }
+      }, 100);
+    }
   writeValue(value: any): void {
     if (value) {
       this.images = this.multiple ? value : [value];

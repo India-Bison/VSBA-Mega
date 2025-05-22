@@ -1,6 +1,7 @@
 <div class="flex flex-col gap-2">
     <label class="text-sm font-medium text-[#3F41D1]">
-        Project Logo
+        {{lebal}}<span *ngIf="is_required"
+            class="col-span-2 text-[#212121] text-opacity-60">*</span>
         <span class="ml-4 font-normal italic text-[#00000099] text-xs">
             (Supported Only {{accept}})
         </span>
@@ -20,4 +21,7 @@
             <img src="../../../assets/Vector (1).svg" class="w-11 h-11" alt="Upload Icon" />
         </label>
     </div>
+</div>
+<div *ngIf="control && control.errors && (control.dirty || control.touched)" class="error-messages">
+    <p class="text-red-500" *ngIf="control.errors.required">{{lebal}} is required.</p>
 </div>

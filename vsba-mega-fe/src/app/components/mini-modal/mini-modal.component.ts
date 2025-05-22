@@ -1,14 +1,41 @@
-import { NgClass, NgIf } from '@angular/common';
-import { Component, ElementRef, Input, input, Renderer2 } from '@angular/core';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { Component, ElementRef, HostListener, Input, input, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-mini-modal',
-  imports: [NgIf],
+  imports: [NgIf,CommonModule],
   templateUrl: './mini-modal.component.html',
   styleUrl: './mini-modal.component.css'
 })
 export class MiniModalComponent {
+ isOpen = false;
+  openUpward = false;
 
+  @ViewChild('menuBtn') menuBtn!: ElementRef;
+  @ViewChild('menuDropdown') menuDropdown!: ElementRef;
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+
+    if (this.isOpen) {
+      setTimeout(() => this.adjustDirection(), 0);
+    }
+  }
+
+  adjustDirection() {
+    const btnRect = this.menuBtn.nativeElement.getBoundingClientRect();
+    const dropdownHeight = this.menuDropdown.nativeElement.offsetHeight;
+    const spaceBelow = window.innerHeight - btnRect.bottom;
+
+    this.openUpward = spaceBelow < dropdownHeight;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeOnOutsideClick(event: MouseEvent) {
+    if (!(event.target as HTMLElement).closest('.relative')) {
+      this.isOpen = false;
+    }
+  }
   @Input() image: string = '';
   @Input() image_class: string = '';
   @Input() position: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right' = 'bottom-left';

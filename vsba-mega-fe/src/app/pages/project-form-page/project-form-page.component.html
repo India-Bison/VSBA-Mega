@@ -10,7 +10,7 @@
                 <span class="text-xl font-medium leading-[100%] tracking-2%">{{parent_project?.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{parent_project?.project_start_date | date : 'dd-MM-yyyy'}} to
                         {{parent_project?.project_end_date | date : 'dd-MM-yyyy'}})</span></span>
             </ng-container>
-            <app-toggle-tabs *ngIf="params.id" [params]="params" [value_on_params]="true" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
+            <app-toggle-tabs [disabled]="!params.id" [params]="params" [value_on_params]="true" params_name="type" [tabs]="tabList" [defaultActive]="params.type"></app-toggle-tabs>
         </div>
         <div *ngIf="params.type == 'Project'" class="flex flex-col w-full gap-6 px-6 pb-6">
             <form [formGroup]="form" class="flex flex-col md:flex-row w-full gap-4">
@@ -19,7 +19,7 @@
                         <app-text-input [is_required]="true" type="text" class="w-full" [label]="!params.parent_id ? 'Project Name' : 'Sub-Project Name'" formControlName="name"></app-text-input>
                         <app-text-input [is_required]="true" [type_total_latter]="10" class="w-full md:w-80" [label]="!params.parent_id ? 'Project Short Name' : 'Sub-Project Short Name'" formControlName="short_name"> </app-text-input>
                     </div>
-                    <app-image-uploder [accept]="'.jpg,.jpeg,.webp,.png'" [multiple]="false" formControlName="project_logo"></app-image-uploder>
+                    <app-image-uploder  lebal="Project Logo" [is_required]="true" [accept]="'.jpg,.jpeg,.webp,.png'" [multiple]="false" formControlName="project_logo"></app-image-uploder>
                     <app-radio [is_required]="true" label="Full Venue Required" selected_value="yes" formControlName="full_venue_required" [options]="[
                       { label: 'Yes', value: 'yes' },
                       { label: 'No', value: 'no' }
@@ -126,7 +126,7 @@
     </div>
 </div>
 
-<app-confirmation-popup [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation [label]="params.parent_id ? 'Submit Sub-Project?':'Continue without sub-project?'" cancelText="SUBMIT" confirmText="ADD SUB-PROJECT" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (close_modal_clicked)="submit_form()">
+<app-confirmation-popup [is_confirm_to_text]="true" [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation [label]="params.parent_id ? 'Submit Sub-Project?':'Continue without sub-project?'" confirm_text_2="SUBMIT" confirmText="ADD SUB-PROJECT" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (confirm_modal_clicked2)="submit_form()" (close_modal_clicked)="add_sub_project_confirmation.close()">
     {{params.parent_id? "You're about to Submit a new sub-project Make sure all details are correct before submitting." : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
 <app-confirmation-popup [edit_icon]="true" #submit_popup_on_subproject_list label="Submit Project?" cancelText="CANCEL" confirmText="SUBMIT" [is_mandatory]="true" (confirm_modal_clicked)="back_to_page()" (close_modal_clicked)="back_to_page()">
