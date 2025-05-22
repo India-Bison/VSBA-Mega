@@ -9,7 +9,7 @@ let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
-    const existing_project = await Project.findOne({ where: { name: body.name, start_date: body.start_date, end_date: body.end_date }, transaction });
+    const existing_project = await Project.findOne({ where: { name: body.name, project_start_date: body.project_start_date, project_end_date: body.project_end_date }, transaction });
     if (existing_project) {
         throw new Error("A project with the same name and duration already exists.");
     }
