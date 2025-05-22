@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe, NgClass, NgFor, NgIf, NgStyle, NgSwitch, UpperCasePipe } from '@angular/common';
-import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, SimpleChanges  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -112,13 +112,20 @@ export class TableRowComponent {
   constructor(public gs: GlobalService, public router : Router, public ar:ActivatedRoute) { }
   ngOnInit(): void {
     // this.items = this.gs.items
-   setTimeout(() => {
-     const firstItemWithChildren = this.items.find(item => item.children?.length);
+   
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['items'] && this.items?.length) {
+      setTimeout(() => {
+        const firstItemWithChildren = this.items.find(item => item.children?.length);
   if (firstItemWithChildren) {
     firstItemWithChildren.expanded = true;
   }
-   }, 1000);
+      }, 300);
+    }
   }
+
   sortData(key: string, order: 'asc' | 'desc') {
     this.router.navigate([], {
       relativeTo: this.ar,
