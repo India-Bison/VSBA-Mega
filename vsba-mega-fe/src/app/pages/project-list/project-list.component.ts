@@ -98,7 +98,7 @@ export class ProjectListComponent {
 
   async optional_button(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', parent_id: item.parent_id, view : true } });
+    this.route.navigate(['/project/form'], { queryParams: { type: 'Project', parent_id: item?.id } });
   }
   async edit(item: any, index: any) {
     console.log(item, index, "item");
