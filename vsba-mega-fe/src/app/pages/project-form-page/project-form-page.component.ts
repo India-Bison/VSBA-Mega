@@ -90,6 +90,13 @@ export class ProjectFormPageComponent {
   }
   selected_toggle: any = {}
   project_toggle_action(item: any) {
+    if (this.params.view == 'true') {
+       this.route.navigate([], {
+    queryParams: { type: item.value },
+    queryParamsHandling: 'merge'
+  });
+  return;
+    }
     this.discard_popup_toggle.open();
     this.selected_toggle = item
   }
@@ -355,7 +362,7 @@ export class ProjectFormPageComponent {
   }
   async disbale_project_open() {
     try {
-      let status_type = this.selected_disbaled_sub_project.status == 'Disabled' ? 'Pending' : 'Disabled'
+      let status_type = this.selected_disbaled_sub_project.status == 'Disabled' ? 'Enable' : 'Disabled'
       let response: any = this.ps.update(this.selected_disbaled_sub_project.id, { status: status_type, parent_id: parseInt(this.params.id) })
       if (response) {
         window.location.reload()
