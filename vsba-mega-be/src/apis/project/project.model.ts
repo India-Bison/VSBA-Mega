@@ -77,6 +77,10 @@ let project_model = {
     type: DataTypes.JSONB,
     allowNull: true,
   },
+  is_enable: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  },
   created_by_id: {
     type: DataTypes.INTEGER,
     references: {

@@ -18,6 +18,7 @@ export let update_project_body_schema = z.object({
     status: z.string().optional().nullable(),
     project_logo: z.string().optional().nullable(),
     parent_id: z.number().optional().nullable(),
+    is_enable: z.boolean().optional().nullable(),
     slot_groups: z.array(
         z.object({
             slot_start_date: z.string().optional().nullable(),
