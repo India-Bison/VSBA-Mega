@@ -28,7 +28,7 @@
                     <!-- <img src="../../../assets/Frame 1410266058.png" alt="Icon" class="inline-block cursor-pointer" (click)="toggleDropdown(i)" /> -->
                     <app-mini-modal  *ngIf="column?.filter" image_class="inline-block min-w-6 min-h-6 cursor-pointer" image="../../../assets/Frame 1410266058.png" >   
                       <!-- Dropdown -->
-                      <div class="w-auto fixed overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
+                      <div class="w-auto absolute overflow-y-auto top-52 px-6 bg-[#F9F9FA] rounded-lg border p-4 pt-4 pb-4 pr-6 pl-6 gap-2">
                         <span *ngIf="column?.sort" class="text-[#3F41D1] text-sm font-medium">Sort</span>
                         <div class="text-[#1E1E1E] capitalize font-medium text-sm flex flex-col gap-2">
                           <ng-container *ngIf="column?.sort">
