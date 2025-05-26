@@ -4,7 +4,9 @@
         <div class="flex items-center justify-between px-6 pt-6">
             <ng-container *ngIf="!params.parent_id">
                 <span class="text-xl font-medium leading-[100%] tracking-2p">{{ params.view ? 'View' : (params.id ? 'Update' : 'Add') }}
-                    {{ form.get('type')?.value == 'Sub-Project' ? 'Sub Project' : 'Project'}}</span>
+                    <span *ngIf="!params.id">{{ form.get('type')?.value == 'Sub-Project' ? 'Sub Project' : 'Project'}}</span>
+                    <span *ngIf="params.id">{{ form.get('type')?.value == 'Sub-Project' ? form.get('name')?.value : form.get('name')?.value}}</span>
+                </span>
             </ng-container>
             <ng-container *ngIf="params.parent_id">
                 <span class="text-xl font-medium leading-[100%] tracking-2%">{{parent_project?.name}} <span class="text-base font-normal leading-[100%] tracking-2% text-[#666666]">({{parent_project?.project_start_date | date : 'dd-MM-yyyy'}} to
@@ -37,7 +39,7 @@
                     </app-radio>
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date *</label>
-                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date')"
+                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date');slot_start_end_date[0] = project_start_end_date"
                             [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                         <div *ngIf="form.get('project_start_date')?.errors?.['required'] && (form.get('project_start_date')?.touched || form.get('project_start_date')?.dirty)">
                             <p class="text-red-500">Project Date is required.</p>
