@@ -10,9 +10,9 @@ let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
     body.is_active = true;
-    const existing_project = await Project.findOne({ where: { name: { [Op.iLike]: body.name }, project_start_date: body.project_start_date, project_end_date: body.project_end_date }, transaction });
+    const existing_project = await Project.findOne({ where: { name: { [Op.iLike]: body.name }, short_name: { [Op.iLike]: body.short_name } }, transaction });
     if (existing_project) {
-        throw new Error(`A project with the same Name or Duration already exists.`);
+        throw new Error(`A project with the same Name or Short Name already exists.`);
     }
 
     const random_suffix = uuidv4().split('-')[0];
