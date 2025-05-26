@@ -39,13 +39,13 @@ export class ToggleTabsComponent {
       this.router.navigate([], { queryParams: this.params });
     }
     
-    if (this.params.status == 'All') {
-      this.router.navigate([], {
-        relativeTo: this.ar,
-        queryParams: { status: null },
-        queryParamsHandling: 'merge'
-      });
-    }
+    // if (this.params.status == 'All') {
+    //   this.router.navigate([], {
+    //     relativeTo: this.ar,
+    //     queryParams: { status: null },
+    //     queryParamsHandling: 'merge'
+    //   });
+    // }
   }
   
 }
