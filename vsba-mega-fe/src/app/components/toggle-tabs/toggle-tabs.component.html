@@ -4,8 +4,8 @@
         class="px-4 py-[6px] rounded-[100px] h-[27px] w-[119px] text-sm font-medium transition-all duration-200 flex items-center justify-center"
         [ngClass]="{
           'bg-indigo-600 text-white': activeTab == tab.name,
-          'text-black': activeTab != tab.name,
-          'pointer-events-none select-none' : disabled,
+          'pointer-events-none select-none text-[#A3A3A3]' : disabled,
+          '': activeTab != tab.name,
         }"
         (click)="selectTab(tab)">
         {{ tab.name }}
