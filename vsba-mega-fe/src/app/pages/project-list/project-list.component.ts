@@ -127,8 +127,8 @@ export class ProjectListComponent {
   }
   async disbale_project_open() {
     try {
-      let status_type = this.selected_disbaled_project.status == 'Disabled' ? 'Pending' : 'Disabled'
-      let response = this.ps.update(this.selected_disbaled_project.id, { status: status_type })
+      let status_type = this.selected_disbaled_project.status == 'Disabled' ? true : false
+      let response = this.ps.update(this.selected_disbaled_project.id, { is_active: status_type })
       setTimeout(async () => {
         await this.get_project(this.params)
       }, 2000)
