@@ -5,7 +5,7 @@ click the Create button to Add your first project" [columns]="columns" [items]="
 <div class="flex justify-between items-center gap-2 w-full">
     <app-search-input></app-search-input>
     <div *ngIf="!selected_ids?.length" class="flex gap-4 items-center">
-      <app-toggle-tabs [disabled]="!items.length && !params.status" params_name="status" [tabs]="tabList" [defaultActive]="params.status"></app-toggle-tabs>
+      <app-toggle-tabs params_name="status" [tabs]="tabList" [defaultActive]="params.status"></app-toggle-tabs>
       <app-button color="bg-[#E697AB] text-[#310000]" label="Project" icon="bx bx-plus" routerLink="/project/form" [queryParams]="{type:'Project'}"></app-button>
     </div>
     <div *ngIf="selected_ids?.length" class="flex gap-4 items-center w-full justify-end">
