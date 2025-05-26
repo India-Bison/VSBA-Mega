@@ -9,6 +9,7 @@ let project_cache = {};
 let list_cache = {};
 
 let create_project = async (body: any, transaction: Transaction) => {
+    body.is_active = true;
     const existing_project = await Project.findOne({ where: { name: body.name, project_start_date: body.project_start_date, project_end_date: body.project_end_date }, transaction });
     if (existing_project) {
         throw new Error("A project with the same name and duration already exists.");
@@ -114,15 +115,29 @@ let get_all_project = async (data: any, transaction: Transaction) => {
         order.push(['id', 'DESC']);
     }
 
-    if (status && status.toLowerCase() !== "all") {
-        if (status.toLowerCase() === "Disabled") {
-            filter.is_enable = false;
+    let status_as_disabled = false;
+    if (status) {
+        const lowered_status = status.toLowerCase();
+
+        if (lowered_status === "disabled") {
+            filter.is_active = false;
+            status_as_disabled = true;
+
+        } else if (lowered_status === "all") {
+            filter.is_active = true;
         } else {
             filter.status = status;
+            filter.is_active = true;
         }
     }
 
-    const all_projects: any = await Project.findAll({ where: filter, include: [{ model: SlotGroup }], order, transaction });
+    const all_projects: any = await Project.findAll({ where: filter, include: [{ model: SlotGroup }], order });
+
+    if (status_as_disabled) {
+        for (const proj of all_projects) {
+            proj.status = "Disabled";
+        }
+    }
 
     const parents: any[] = [];
     const children: Record<number, any[]> = {};

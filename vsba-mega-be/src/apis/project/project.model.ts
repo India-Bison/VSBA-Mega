@@ -77,7 +77,7 @@ let project_model = {
     type: DataTypes.JSONB,
     allowNull: true,
   },
-  is_enable: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
   },

@@ -19,7 +19,7 @@ export interface update_project_function_params {
         parent_id?: number;
         draft_json?: any;
         updated_by_id?: number;
-        is_enable?: boolean;
+        is_active?: boolean;
         slot_groups?: {
             slot_start_date?: string;
             slot_end_date?: string;
