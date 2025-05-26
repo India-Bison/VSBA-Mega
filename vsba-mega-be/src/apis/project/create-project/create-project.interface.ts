@@ -16,6 +16,7 @@ export interface create_project_function_params {
         project_logo?: Text;
         draft_json?: any;
         parent_id?: number;
+        is_active?: boolean;
         slot_groups?: {
             slot_start_date?: string;
             slot_end_date?: string;

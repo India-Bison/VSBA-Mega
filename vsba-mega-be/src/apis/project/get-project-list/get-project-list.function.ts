@@ -15,6 +15,8 @@ let get_project_list_function = async (data: get_project_list_function_params, t
             data: project_data.rows,
         };
     } catch (error: any) {
+        console.log(error);
+        
         return {
             code: 500,
             message: "Failed to fetch project list",
