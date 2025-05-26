@@ -9,12 +9,7 @@ let create_project_function = async (data: create_project_function_params, trans
         body.created_by_id = data.user.id;
         let response = await project_service.create_project(body, transaction);
 
-        let message =
-            body.type === 'Sub-Project'
-                ? 'Sub Project Successfully Submitted for Approval!'
-                : 'Project Successfully Submitted for Approval!';
-
-
+        let message = body.type === 'Sub-Project' ? 'Sub Project Successfully Submitted for Approval!' : 'Project Successfully Submitted for Approval!';
         return { code: 200, message: message, data: response }
     } catch (error: any) {
         console.log(error.message);
