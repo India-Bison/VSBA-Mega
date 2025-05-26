@@ -114,7 +114,13 @@ let get_all_project = async (data: any, transaction: Transaction) => {
         order.push(['id', 'DESC']);
     }
 
-    if (status && status.toLowerCase() !== "all") filter.status = status;
+    if (status && status.toLowerCase() !== "all") {
+        if (status.toLowerCase() === "Disabled") {
+            filter.is_enable = false;
+        } else {
+            filter.status = status;
+        }
+    }
 
     const all_projects: any = await Project.findAll({ where: filter, include: [{ model: SlotGroup }], order, transaction });
 
