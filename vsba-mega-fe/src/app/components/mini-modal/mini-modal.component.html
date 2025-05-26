@@ -1,20 +1,18 @@
-<div class="relative">
+<!-- <div class="relative">
     <img (click)="togglePopup($event)" [class]="image_class" [src]="image" alt="">
     <div *ngIf="isPopupOpen" [style.left.px]="buttonX" [style.top.px]="buttonY"
         class="fixed z-[10]">
         <ng-content></ng-content>
     </div>
-</div>
-<!-- <div class="relative inline-block text-left">
-  <button #menuBtn (click)="toggleDropdown()" class="bg-indigo-600 text-white px-4 py-1 rounded-md">
-    Menu
-  </button>
-
-  <div *ngIf="isOpen"
-       #menuDropdown
-       [ngClass]="openUpward ? 'bottom-full mb-2' : 'top-full mt-2'"
-       class="absolute right-0 w-40 bg-white border border-gray-300 rounded-md shadow-lg z-50 transition-all duration-200">
-    <button class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Item 1</button>
-    <button class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Item 2</button>
-  </div>
 </div> -->
+<div class="relative inline-block text-left">
+  <div #menuBtn (click)="toggleDropdown()">
+     <img (click)="togglePopup($event)" [class]="image_class" [src]="image" alt="">
+  </div>
+
+  <div *ngIf="isPopupOpen"
+       #menuDropdown
+       class="absolute right-0 z-[11] transition-all duration-200">
+     <ng-content></ng-content>
+  </div>
+</div>
