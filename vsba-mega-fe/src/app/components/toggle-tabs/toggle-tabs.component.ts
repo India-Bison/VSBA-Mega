@@ -30,13 +30,15 @@ export class ToggleTabsComponent {
   }
 
   selectTab(tab: { name: string, action: () => void }) {
-    if (!this.disabled && typeof tab.action === 'function') {
-      tab.action();
-    }    
-    this.activeTab = tab.name;
-    if (!this.value_on_params && this.params_name) {
-      this.params[this.params_name] = tab.name;
-      this.router.navigate([], { queryParams: this.params });
+    if(!this.disabled){
+      if (!this.disabled && typeof tab.action === 'function') {
+        tab.action();
+      }    
+      this.activeTab = tab.name;
+      if (!this.value_on_params && this.params_name) {
+        this.params[this.params_name] = tab.name;
+        this.router.navigate([], { queryParams: this.params });
+      }
     }
     
     // if (this.params.status == 'All') {

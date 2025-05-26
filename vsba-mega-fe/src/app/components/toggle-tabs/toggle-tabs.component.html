@@ -1,11 +1,11 @@
-<div [ngClass]="{'opacity-70 cursor-not-allowed': disabled}" class="flex bg-[#F7F7F7] rounded-[112px] py-2 px-4 w-{{ width }} h-11 border-[1px] border-[#E0E0E0]  justify-between items-center">
+<div [ngClass]="{'pointer-events-none select-none': disabled}" class="flex bg-[#F7F7F7] rounded-[112px] py-2 px-4 w-{{ width }} h-11 border-[1px] border-[#E0E0E0]  justify-between items-center">
     <ng-container *ngFor="let tab of tabs">
       <button [disabled]="disabled"
         class="px-4 py-[6px] rounded-[100px] h-[27px] w-[119px] text-sm font-medium transition-all duration-200 flex items-center justify-center"
         [ngClass]="{
           'bg-indigo-600 text-white': activeTab == tab.name,
           'text-black': activeTab != tab.name,
-          'cursor-not-allowed' : disabled,
+          'pointer-events-none select-none' : disabled,
         }"
         (click)="selectTab(tab)">
         {{ tab.name }}
