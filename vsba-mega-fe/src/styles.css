@@ -99,13 +99,26 @@ body {
 
 /* Type-specific styles */
 .custom-success-toast {
+  display: flex;
+  align-items: center;
+  text-align: center;
   border-left: 4px solid #22c55e;
   color: #22c55e;
 }
 
 .custom-success-toast::before {
-  content: '✔️';
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Eo_circle_green_white_checkmark.svg/1200px-Eo_circle_green_white_checkmark.svg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 8px; /* optional spacing */
+  vertical-align: middle; /* optional alignment */
 }
+
 
 .custom-error-toast {
   border-left: 4px solid #f97316;
