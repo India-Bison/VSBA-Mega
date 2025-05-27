@@ -18,7 +18,8 @@
           <button [ngClass]="{'pointer-events-none cursor-not-allowed': params.view}" class="ml-[10px] text-[#3F41D1] text-lg" (click)="removeItem(item)">×</button>
         </div>
       </ng-container>
-      <span class="text-gray-600">{{selectedOptions.length || dropdownOpen ? '' : this.label + '*'}}</span>
+      <span *ngIf="!control" class="text-gray-600">{{selectedOptions.length || dropdownOpen ? '' : this.label + '*'}}</span>
+      <span *ngIf="control" class="text-gray-600">{{selectedOptions.length || dropdownOpen ? '' : this.label }}</span>
       <!-- <input type="text" class="flex-1 p-1 text-[16px] focus:outline-none" [(ngModel)]="searchText" (keypress)="dropdownOpen = true" (keydown)="handleKeyDown($event)" (input)="filterOptions()" [placeholder]="selectedOptions.length || dropdownOpen ? '' : this.label + '*'" /> -->
     </div>
   </div>
