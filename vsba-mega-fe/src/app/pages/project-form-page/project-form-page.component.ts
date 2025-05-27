@@ -409,6 +409,7 @@ export class ProjectFormPageComponent {
 
   add_sub_project_confirmation_modal(){
     this.form.markAllAsTouched();
+    this.apply_slot_validations();
     if(this.form.valid){
       this.add_sub_project_confirmation.open()
     }
