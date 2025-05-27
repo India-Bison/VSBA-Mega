@@ -248,6 +248,9 @@ export class ProjectFormPageComponent {
   back_to_page() {
     this.route.navigate(['/project/list'], {})
   }
+  back_to_page_reload(){
+    window.history.back();
+  }
 
   async patch_project_form(data: any) {
     let dataa = await this.ps?.get(data);
