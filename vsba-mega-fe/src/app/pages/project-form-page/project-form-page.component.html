@@ -128,7 +128,7 @@
     </div>
 </div>
 
-<app-confirmation-popup [is_confirm_to_text]="true" [edit_icon]="true" [show_cancel_icon]="true" #add_sub_project_confirmation [label]="params.parent_id ? 'Submit Sub-Project?':'Continue without sub-project?'" confirm_text_2="SUBMIT" confirmText="ADD SUB-PROJECT" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (confirm_modal_clicked2)="submit_form()" (close_modal_clicked)="add_sub_project_confirmation.close()">
+<app-confirmation-popup [is_confirm_to_text]="true" [edit_icon]="true" [show_cancel_icon]="params.parent_id ? false : true" #add_sub_project_confirmation [label]="params.parent_id ? 'Submit Sub-Project?':'Continue without sub-project?'" [confirm_text_2]="params.parent_id ? 'CANCEL' : 'SUBMIT'" [confirmText]="params.parent_id ? 'YES,SUBMIT' :'ADD SUB-PROJECT'" [is_mandatory]="true" (confirm_modal_clicked)="submit_form('Sub-Project')" (confirm_modal_clicked2)="params.parent_id ? add_sub_project_confirmation.close() : submit_form()" (close_modal_clicked)="add_sub_project_confirmation.close()">
     {{params.parent_id? "You're about to Submit a new sub-project Make sure all details are correct before submitting." : 'Proceed without adding subprojects? You can add them later if needed.'}}
 </app-confirmation-popup>
 <app-confirmation-popup [edit_icon]="true" #submit_popup_on_subproject_list label="Submit Project?" cancelText="CANCEL" confirmText="SUBMIT" [is_mandatory]="true" (confirm_modal_clicked)="back_to_page()" (close_modal_clicked)="back_to_page()">
