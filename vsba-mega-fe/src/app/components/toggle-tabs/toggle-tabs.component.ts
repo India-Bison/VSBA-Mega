@@ -1,5 +1,5 @@
 import { NgClass, NgFor } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -13,7 +13,7 @@ export class ToggleTabsComponent {
   @Input() tabs: { name: string, action: () => void }[] = [];
   @Input() defaultActive: string = '';
   @Input() width = '294px';
-  @Input() params_name = '294px';
+  @Input() params_name = 'type';
   @Input() params: any = {};
   @Input() disabled: any = false;
   @Input() value_on_params: boolean = false;
@@ -23,7 +23,11 @@ export class ToggleTabsComponent {
   ar = inject(ActivatedRoute)
 
   activeTab: string = '';
-
+ ngOnChanges(changes: SimpleChanges): void {
+    if (changes['defaultActive'] && changes['defaultActive'].currentValue) {
+      this.activeTab = changes['defaultActive'].currentValue;
+    }
+  }
   
   ngOnInit(): void {
     this.activeTab = this.defaultActive || (this.tabs.length ? this.tabs[0].name : '');

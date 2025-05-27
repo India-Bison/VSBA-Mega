@@ -24,7 +24,7 @@ import { SortListPipe } from '../../pipes/sort-list.pipe';
 
 @Component({
   selector: 'app-project-form-page',
-  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, RouterLink, SortListPipe],
+  imports: [ToggleTabsComponent, RadioComponent, TimeInputComponent, MultiSearchComponent, TextInputComponent, SelectInputComponent, TextAreaComponent, WeekDaysComponent, ButtonComponent, FormsModule, ReactiveFormsModule, NgFor, NgIf, ListComponent, CommonModule, HeaderComponent, DateRangePickerComponent, ConfirmationPopupComponent, ImageUploderComponent, DatePipe, HalfHrsOptionsListPipe, SubResourceTypePipe, SortListPipe],
   templateUrl: './project-form-page.component.html',
   standalone: true,
 })
@@ -40,6 +40,7 @@ export class ProjectFormPageComponent {
   @ViewChild('submit_Form_page') submit_Form_page: any;
   @ViewChild('discard_popup_toggle') discard_popup_toggle: any;
   @ViewChild('disabled_sub_project') disabled_sub_project: any;
+  @ViewChild('add_sub_project_confirmation') add_sub_project_confirmation: any;
   tabList: any[] = [
     {
       name: 'Project',
@@ -56,7 +57,7 @@ export class ProjectFormPageComponent {
       name: ['', [Validators.required]],
       short_name: ['', [Validators.required]],
       full_venue_required: ['', [Validators.required]],
-      resource_type: [''],
+      resource_type: ['', [Validators.required]],
       description: ['', [Validators.required]],
       audit_required: ['', [Validators.required]],
       project_start_date: ['', [Validators.required]],
@@ -73,8 +74,6 @@ export class ProjectFormPageComponent {
   }
   parent_project: any
   ngOnInit() {
-    console.log(this.form.get('type')?.value);
-
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
@@ -249,6 +248,9 @@ export class ProjectFormPageComponent {
   back_to_page() {
     this.route.navigate(['/project/list'], {})
   }
+  back_to_page_reload(){
+    window.history.back();
+  }
 
   async patch_project_form(data: any) {
     let dataa = await this.ps?.get(data);
@@ -405,5 +407,11 @@ export class ProjectFormPageComponent {
     }
   }
 
+  add_sub_project_confirmation_modal(){
+    this.form.markAllAsTouched();
+    if(this.form.valid){
+      this.add_sub_project_confirmation.open()
+    }
+  }
 
 }
