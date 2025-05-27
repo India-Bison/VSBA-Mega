@@ -57,7 +57,7 @@ export class ProjectFormPageComponent {
       name: ['', [Validators.required]],
       short_name: ['', [Validators.required]],
       full_venue_required: ['', [Validators.required]],
-      resource_type: [''],
+      resource_type: ['', [Validators.required]],
       description: ['', [Validators.required]],
       audit_required: ['', [Validators.required]],
       project_start_date: ['', [Validators.required]],
@@ -74,8 +74,6 @@ export class ProjectFormPageComponent {
   }
   parent_project: any
   ngOnInit() {
-    console.log(this.form.get('type')?.value);
-
     this.ar.queryParams.subscribe(async params => {
       this.params = { ...params };
       if (this.params.id) {
