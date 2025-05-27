@@ -1,9 +1,8 @@
 <div class="flex flex-col gap-2">
     <label class="text-sm font-medium text-[#3F41D1]">
-        {{lebal}}<span *ngIf="is_required"
-            class="col-span-2 text-[#212121] text-opacity-60">*</span>
+        {{lebal}}<span *ngIf="is_required" class="col-span-2 text-[#212121] text-opacity-60">*</span>
         <span class="ml-4 font-normal italic text-[#00000099] text-xs">
-            (Supported Only {{accept}})
+            (Supported Only {{accept}}) ({{maxFileSize}}MB)
         </span>
     </label>
     <div class="flex flex-wrap gap-3">
