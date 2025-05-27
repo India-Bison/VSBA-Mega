@@ -40,6 +40,7 @@ export class ProjectFormPageComponent {
   @ViewChild('submit_Form_page') submit_Form_page: any;
   @ViewChild('discard_popup_toggle') discard_popup_toggle: any;
   @ViewChild('disabled_sub_project') disabled_sub_project: any;
+  @ViewChild('add_sub_project_confirmation') add_sub_project_confirmation: any;
   tabList: any[] = [
     {
       name: 'Project',
@@ -405,5 +406,11 @@ export class ProjectFormPageComponent {
     }
   }
 
+  add_sub_project_confirmation_modal(){
+    this.form.markAllAsTouched();
+    if(this.form.valid){
+      this.add_sub_project_confirmation.open()
+    }
+  }
 
 }
