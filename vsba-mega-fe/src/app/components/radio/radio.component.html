@@ -5,7 +5,7 @@
   </label>
   <div class="flex flex-wrap gap-4 sm:gap-6 md:gap-8">
     <label *ngFor="let option of options" class="flex items-center gap-2 cursor-pointer whitespace-nowrap">
-      <input type="radio" [value]="option.value" [checked]="option.value == value" (change)="select(option.value)" class="form-radio text-blue-600 w-5 h-5 shrink-0" />
+      <input type="radio" style="accent-color : #3F41D1" [value]="option.value" [checked]="option.value == value" (change)="select(option.value)" class="form-radio text-blue-600 w-5 h-5 shrink-0" />
       <span [ngClass]="{
           'text-[#3F41D1] font-medium': option.value == value,
           'text-gray-700': option.value != value
