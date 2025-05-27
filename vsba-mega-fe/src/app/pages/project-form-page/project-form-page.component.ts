@@ -342,7 +342,7 @@ export class ProjectFormPageComponent {
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id,parent_id:item.parent_id, type: 'Project', view: 'true' } });
   }
   async delete(item: any, index: any) {
     this.delete_sub_project_row.open()
