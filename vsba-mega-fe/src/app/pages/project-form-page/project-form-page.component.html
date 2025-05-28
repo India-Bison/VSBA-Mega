@@ -39,8 +39,10 @@
                     </app-radio>
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-medium text-[#212121] text-opacity-60">Project Date *</label>
-                        <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date');slot_start_end_date[0] = project_start_end_date"
-                            [ngModelOptions]="{standalone: true}"></app-date-range-picker>
+                        <!-- <app-date-range-picker [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [(ngModel)]="project_start_end_date" (ngModelChange)="gs.start_end_date_formate_return(form, project_start_end_date, 'project_start_date', 'project_end_date');slot_start_end_date[0] = project_start_end_date"
+                            [ngModelOptions]="{standalone: true}"></app-date-range-picker> -->
+                        <app-date-range-picker [(ngModel)]="project_start_end_date" [not_allowed_past_date]="params.parent_id ? false : true" [min]="parent_project?.project_start_date" [max]="parent_project?.project_end_date" label="Project Date" [form_group]="form" start_control="project_start_date" end_control="project_end_date" (ngModelChange)="set_first_sub_project_dates($event)"
+                        [ngModelOptions]="{standalone: true}"></app-date-range-picker>
                         <div *ngIf="form.get('project_start_date')?.errors?.['required'] && (form.get('project_start_date')?.touched || form.get('project_start_date')?.dirty)">
                             <p class="text-red-500">Project Date is required.</p>
                         </div>
@@ -148,3 +150,5 @@
     This project will be {{ selected_disbaled_sub_project.status != 'Disabled' ? 'disabled' : 'enable'}} and become {{ selected_disbaled_sub_project.status != 'Disabled' ? 'inactive' : 'active'}} .
   {{ selected_disbaled_sub_project.status != 'Disabled' ? 'You can re-enable it anytime.' : ''}}
   </app-confirmation-popup>
+
+  {{form.value | json}}

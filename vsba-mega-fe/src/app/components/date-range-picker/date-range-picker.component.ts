@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
-import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { format } from 'date-fns';
 import { CapitalizStringPipe } from '../../pipes/capitaliz-string.pipe';
 import { ActivatedRoute } from '@angular/router';
@@ -30,7 +30,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() label = '';
-  @Input() form_group = '';
+  @Input() form_group!:any
   @Input() start_control = '';
   @Input() end_control = '';
   @Input() min:any = '';
@@ -104,6 +104,10 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       start: this.value.start ? format(this.value.start, 'yyyy-MM-dd') : null,
       end: this.value.end ? format(this.value.end, 'yyyy-MM-dd') : null,
     };
+    if(this.form_group && this.start_control && this.end_control) {
+      this.form_group.get(this.start_control).patchValue(formattedValue.start);
+      this.form_group.get(this.end_control).patchValue(formattedValue.end);
+    }
     this.onChange(formattedValue);
   }
 }

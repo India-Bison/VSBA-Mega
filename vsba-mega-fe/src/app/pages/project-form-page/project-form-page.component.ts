@@ -415,4 +415,10 @@ export class ProjectFormPageComponent {
     }
   }
 
+  set_first_sub_project_dates(date_range:any){
+    this.form.get('slot_groups')?.get('0')?.get('slot_start_date')?.setValue(this.form.get('project_start_date')?.value);
+    this.form.get('slot_groups')?.get('0')?.get('slot_end_date')?.setValue(this.form.get('project_end_date')?.value);
+    this.slot_start_end_date[0] = date_range
+  }
+
 }
