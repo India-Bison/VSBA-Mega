@@ -61,5 +61,6 @@
   <p class="text-red-500" *ngIf="control.errors.startDateInvalid">Start Date cannot be Greater the End Date</p>
   <p class="text-red-500" *ngIf="control.errors.endDateBeforeStartDate">End Date cannot be Lesser the Start Date</p>
 </div>
+<!-- {{form_group?.get(this.start_control)?.errors | json}} -->
+  <p class="text-red-500" *ngIf="form_group?.get(this.start_control)?.errors?.error && form_group?.get(this.start_control)?.dirty || form_group?.get(this.start_control)?.touched">{{form_group?.get(this.start_control)?.errors?.error}}</p>
 
-<!-- {{form_group?.get(this.start_control)?.errors}} -->

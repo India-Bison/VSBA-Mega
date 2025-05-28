@@ -99,9 +99,15 @@ export class ProjectFormPageComponent {
     this.discard_popup_toggle.open();
     this.selected_toggle = item
   }
+  should_be_between_project_date = (control:any)=>{
+    if(!control.parent?.value.project_start_date || !control.parent?.value.project_end_date){
+      return {error : 'Project start and end date are required for slot start date validation.'};
+    }
+    return null
+  }
   add_slot(): void {
     const slotGroup = this.fb.group({
-      slot_start_date: ['', Validators.required],
+      slot_start_date: ['', [Validators.required,this.should_be_between_project_date]],
       slot_end_date: ['', Validators.required],
       slot_time: [''],
       start_time: [''],
@@ -185,6 +191,8 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
+    this.form.updateValueAndValidity();
+    this.form.markAllAsTouched();
     try { 
       this.apply_slot_validations();
       if (this.form.valid) {
