@@ -1,9 +1,13 @@
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { Component, ElementRef, HostListener, Input, input, Renderer2, ViewChild } from '@angular/core';
+import { MatIcon } from '@angular/material/icon-module.d-BeibE7j0';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-mini-modal',
-  imports: [NgIf,CommonModule],
+  imports: [NgIf,CommonModule,MatIconModule,MatMenuModule,MatButtonModule],
   templateUrl: './mini-modal.component.html',
   styleUrl: './mini-modal.component.css'
 })

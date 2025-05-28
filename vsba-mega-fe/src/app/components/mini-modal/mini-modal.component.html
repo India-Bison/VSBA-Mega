@@ -5,7 +5,8 @@
         <ng-content></ng-content>
     </div>
 </div> -->
-<div class="relative inline-block text-left">
+
+<!-- <div class="relative inline-block text-left">
   <div #menuBtn (click)="toggleDropdown()">
      <img (click)="togglePopup($event)" [class]="image_class" [src]="image" alt="">
   </div>
@@ -15,4 +16,12 @@
        class="absolute right-0 z-[11] transition-all duration-200">
      <ng-content></ng-content>
   </div>
-</div>
+</div> -->
+
+
+<button mat-icon-button [matMenuTriggerFor]="menu" class="flex justify-center items-center">
+   <img [class]="image_class" [src]="image" alt="">
+</button>
+<mat-menu #menu="matMenu">
+  <ng-content></ng-content>
+</mat-menu>

@@ -18,24 +18,27 @@
 </div> -->
 
 
-<div [ngClass]="{'pointer-events-none': params.view || disabled}" class="w-full border rounded-md px-4 py-2 flex items-center gap-3 text-gray-600 cursor-pointer" (click)="openPicker()">
-  <div class="-ml-10">
+<div [ngClass]="{'pointer-events-none': params.view || disabled}" class="w-full border rounded-md px-4 h-full flex items-center gap-3 text-gray-600 cursor-pointer" (click)="openPicker()">
+  <div class="-ml-10 py-3">
     <mat-date-range-input [min]="min" [max]="max" [rangePicker]="picker" class="hidden text-[1px]">
-      <input class="hidden" matStartDate [(ngModel)]="value.start" (ngModelChange)="onDateChange()" placeholder="DD-MM-YY" />
-      <input class="hidden" matEndDate [(ngModel)]="value.end" (ngModelChange)="onDateChange()" placeholder="DD-MM-YY" />
+      <input class="hidden truncate" matStartDate [(ngModel)]="value.start" (ngModelChange)="onDateChange()" placeholder="DD-MM-YY" />
+      <input class="hidden truncate" matEndDate [(ngModel)]="value.end" (ngModelChange)="onDateChange()" placeholder="DD-MM-YY" />
     </mat-date-range-input>
 
 
     <mat-date-range-picker #picker></mat-date-range-picker>
   </div>
-  <img class="h-6 w-6" src="../../../assets/CalendarDots.svg" alt="">
+  <img *ngIf="value.end == null" class="h-6 w-6" src="../../../assets/CalendarDots.svg" alt="">
+  <div *ngIf="value.end != null"  class="w-auto px-1 py-1 -my-2 bg-[#3F41D1] rounded-lg flex justify-center items-center">
+    <img class="h-6 w-6 " src="../../../assets/CalendarDotsWhite.svg" alt="">
+  </div>
 
-  <div class="flex-1 flex justify-start whitespace-nowrap">
-    <span class="[word-spacing:0.16rem]" *ngIf="value.start && value.end; else placeholder">
+  <div class="flex-1 flex justify-start whitespace-nowrap w-min truncate py-3">
+    <span class="[word-spacing:0.16rem] w-auto truncate" *ngIf="value.start && value.end; else placeholder">
       {{ value.start | date: 'dd-MM-yyyy' }} To {{ value.end | date: 'dd-MM-yyyy' }}
     </span>
     <ng-template class="[word-spacing:0.16rem]" #placeholder>
-      <div class="[word-spacing:0.16rem]">
+      <div class="[word-spacing:0.16rem] w-min truncate">
         DD-MM-YYYY To DD-MM-YYYY
       </div>
     </ng-template>
