@@ -106,7 +106,7 @@ export class ProjectListComponent {
   }
   async view(item: any, index: any) {
     console.log(item, index, "item");
-    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true' } });
+    this.route.navigate(['/project/form'], { queryParams: { id: item.id, type: 'Project', view: 'true', parent_id: item.parent_id } });
   }
   async delete(item: any, index: any) {
     this.delete_project_row.open()
