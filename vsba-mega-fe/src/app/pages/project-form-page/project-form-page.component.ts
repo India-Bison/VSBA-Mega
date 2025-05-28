@@ -107,7 +107,7 @@ export class ProjectFormPageComponent {
   }
   add_slot(): void {
     const slotGroup = this.fb.group({
-      slot_start_date: ['', [Validators.required,this.should_be_between_project_date]],
+      slot_start_date: ['', [Validators.required]],
       slot_end_date: ['', Validators.required],
       slot_time: [''],
       start_time: [''],
