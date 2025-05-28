@@ -121,8 +121,8 @@ body {
 
 
 .custom-error-toast {
-  border-left: 4px solid #f97316;
-  color: #f97316;
+  border-left: 4px solid #ef4444;
+  color: #ef4444;
 }
 
 .custom-error-toast::before {

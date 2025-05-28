@@ -185,35 +185,39 @@ export class ProjectFormPageComponent {
   }
 
   async submit_form(route?: any) {
-    this.apply_slot_validations();
-    if (this.form.valid) {
-      const formData = {
-        ...this.form.value,
-      };
-      formData.type = this.params.type
-      formData.status = 'Pending'
-      if (!this.params.parent_id && this.params.type == 'Project') {
-        formData.type = 'Project'
-        let response: any = await this.ps.add(formData)
-        this.gs.toastr_shows_function(response.message, '', 'success')
-
-        if (route == 'Sub-Project') {
-          console.log(response);
-          this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: response.data.id }, queryParamsHandling: 'merge', })
-        } else {
-          this.route.navigate(['/project/list'], {})
+    try { 
+      this.apply_slot_validations();
+      if (this.form.valid) {
+        const formData = {
+          ...this.form.value,
+        };
+        formData.type = this.params.type
+        formData.status = 'Pending'
+        if (!this.params.parent_id && this.params.type == 'Project') {
+          formData.type = 'Project'
+          let response: any = await this.ps.add(formData)
+          this.gs.toastr_shows_function(response.message, '', 'success')
+  
+          if (route == 'Sub-Project') {
+            console.log(response);
+            this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: response.data.id }, queryParamsHandling: 'merge', })
+          } else {
+            this.route.navigate(['/project/list'], {})
+          }
+        } else if (this.params.parent_id) {
+          formData.parent_id = parseInt(this.params.parent_id)
+          formData.type = 'Sub-Project'
+          let response = await this.ps.add(formData)
+          this.gs.toastr_shows_function(response.message, '', 'success')
+  
+          this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
         }
-      } else if (this.params.parent_id) {
-        formData.parent_id = parseInt(this.params.parent_id)
-        formData.type = 'Sub-Project'
-        let response = await this.ps.add(formData)
-        this.gs.toastr_shows_function(response.message, '', 'success')
-
-        this.route.navigate([], { queryParams: { type: 'Sub-Project', parent_id: formData.parent_id || this.params.parent_id }, queryParamsHandling: 'merge', })
+      } else {
+        this.gs.toastr_shows_function('Please fill all required fields', '', 'error')
+        this.form.markAllAsTouched();
       }
-    } else {
-      this.gs.toastr_shows_function('Please fill all required fields', '', 'error')
-      this.form.markAllAsTouched();
+    } catch (error: any) {
+      this.gs.toastr_shows_function(error?.error?.error, '', 'error')
     }
   }
   async update() {
@@ -238,10 +242,6 @@ export class ProjectFormPageComponent {
       week_days: this.form.get('week_days')?.value,
       type: 'Sub-Project'
     });
-    console.log(this.parent_project, "ooooooooo");
-
-    console.log(this.form.value);
-
     this.route.navigate([], { queryParams: { type: 'Project', parent_id: this.params.parent_id || this.params.id } });
   }
 
