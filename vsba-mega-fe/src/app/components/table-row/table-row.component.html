@@ -56,7 +56,7 @@
                       <app-mini-modal image_class="h-6 min-w-6 -mb-2 cursor-pointer" image="https://static.thenounproject.com/png/2854151-200.png" >
                         <div class="bg-[#E8E8F9] h-auto rounded-[4px] shadow-md" (click)="$event.stopPropagation()">
                           <ng-container *ngFor="let action of column.actions">
-                            <div *ngIf="!action.show || action.show(item)" (click)="action.action(item,i); menuVisibleIndex = null" class="flex px-3 min-w-[175px] justify-start items-center text-sm font-normal leading-5 tracking-wide gap-3 py-2 my-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
+                            <div *ngIf="!action.show || action.show(item)" (click)="action.action(item,i); menuVisibleIndex = null" class="flex px-3 min-w-[175px] justify-start items-center text-sm font-normal leading-5 tracking-wide gap-3 py-2 cursor-pointer hover:bg-[#e2e0f9] transition-all">
                               <img [src]="action.icon" alt="" />
                               <span [ngClass]="{'text-red-500': action.title == 'Delete'}">{{ action.title }}</span>
                             </div>
